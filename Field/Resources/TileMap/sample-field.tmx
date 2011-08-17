@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="13" height="13" tilewidth="48" tileheight="48">
+    <tileset firstgid="1" name="texture" tilewidth="48" tileheight="48">
+            <image source="texture.png" width="64" height="128"/>
+    </tileset>
+    
+    <layer name="rock" width="13" height="13">
+        <properties>
+            <property name="deleted" value="1"/>
+            <property name="move" value="0"/>
+        </properties>
+        
+        <data encoding="base64" compression="zlib">
+            eJxjYCAdMI3iUUxHPAroBwA+jQE5
+        </data>
+    </layer>
+    
+    <layer name="Tile Layer 2" width="13" height="13">
+        <data encoding="base64" compression="zlib">
+            eJxjYKAcMA5CPYxINCMDcXrR1ZJjHynqsNmHzb3oZuOSw2U2NvOI8SMuOUJ6cOFRMPgBAGjkACo=
+        </data>
+    </layer>
+</map>

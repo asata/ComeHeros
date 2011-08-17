@@ -1,0 +1,10 @@
+// 지정된 좌표에 객체 출력
+- (void) printSprite:(CGPoint)thisArea {
+texture = [[CCTextureCache sharedTextureCache] addImage:@"npc.png"];
+CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(128, 128, 64, 64)];
+sprite = [CCSprite spriteWithSpriteFrame:frame];
+sprite.position = thisArea;
+sprite.scale = NPC_SCALE;
+
+[self addChild:sprite z:1];
+}
