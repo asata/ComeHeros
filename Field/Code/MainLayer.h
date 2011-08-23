@@ -32,6 +32,8 @@ CGSize deviceSize;
     
     unsigned int mapInfo[TILE_NUM][TILE_NUM];
     unsigned int moveTable[TILE_NUM][TILE_NUM];
+    
+    CGPoint startPoint;
 }
 
 @property (nonatomic, retain) CCTMXTiledMap *map;
@@ -59,6 +61,8 @@ CGSize deviceSize;
 //////////////////////////////////////////////
 // 이하 테스트용 코드 => Temp.txt에 이동
 //- (void) printSprite:(CGPoint)thisArea;
+
+- (void) createWarrior1:(id) sender;
 
 @property (nonatomic, retain) CCTMXLayer *layer;
 

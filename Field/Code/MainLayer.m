@@ -62,7 +62,7 @@
     
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:0.1];
-    //[self schedule:@selector(createWarrior:) interval:1];
+    [self schedule:@selector(createWarrior1:) interval:5];
     //[self schedule:@selector(removeWarrior:) interval:3];
     //[warriorList addObject:t_warrior];
     //[self initSprite];
@@ -91,6 +91,7 @@
         }
     }
     
+    startPoint = [self getCocoaPostion:ccp(0, 12)];
     // 이동 경로 탐색
 }
 
@@ -203,7 +204,10 @@
 }
 
 - (void) createWarrior {
-    Warrior *tWarrior = [[Warrior alloc] init];
+    Warrior *tWarrior = [[Warrior alloc] initWarrior:startPoint 
+                                            strength:100
+                                               speed:1 
+                                           direction:MoveRight]; 
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,10 +224,11 @@
     CCAnimate *leftAnimate = [[CCAnimate alloc] initWithAnimation:leftAnimation restoreOriginalFrame:NO];
    // [tWarrior setLeftAnimate:leftAnimate];
     CCSprite *leftSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniLeftFrames objectAtIndex:0]];
-    leftSprite.position = [self getCocoaPostion:ccp(0, 12)];
+    leftSprite.position = startPoint;
     leftSprite.scale = NPC_SCALE;
     [leftSprite setVisible:NO];
     [leftSprite runAction:[CCRepeatForever actionWithAction:leftAnimate]];
+    [leftAnimate release];
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,10 +245,11 @@
     //[tWarrior setLeftAnimate:rightAnimate];
     
     CCSprite *rightSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniRightFrames objectAtIndex:0]];
-    rightSprite.position = [self getCocoaPostion:ccp(0, 12)];
+    rightSprite.position = startPoint;
     rightSprite.scale = NPC_SCALE;
     [rightSprite setVisible:YES];
     [rightSprite runAction:[CCRepeatForever actionWithAction:rightAnimate]];
+    [rightAnimate release];
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,15 +257,15 @@
     
     [tWarrior setLeftSprite:leftSprite];
     [tWarrior setRightSprite:rightSprite];
-    [tWarrior setPosition:[self getCocoaPostion:ccp(0, 12)]];
-    [tWarrior setStrength:100];
-    [tWarrior setMoveSpeed:1];
-    [tWarrior setMoveDriection:MoveRight];
     
     [self addChild:leftSprite z:kWarriorLayer];
     [self addChild:rightSprite z:kWarriorLayer];
     
     [warriorList addObject:tWarrior];
+}
+
+- (void) createWarrior1:(id) sender {
+    [self createWarrior];
 }
 
 // 일정 간격으로 호출됨

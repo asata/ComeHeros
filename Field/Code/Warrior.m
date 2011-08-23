@@ -10,6 +10,17 @@
     return self;
 }
 
+- (id) initWarrior:(CGPoint)pos strength:(NSInteger)streng speed:(NSInteger)pSpeed direction:(NSInteger)pDirection {
+    if ((self = [super init])) {
+        position = pos;
+        strength = streng;
+        moveSpeed = pSpeed;
+        moveDirection = pDirection;
+    }
+    
+    return self;
+}
+
 - (void) setLeftSprite:(CCSprite *)p_sprite {
     leftSprite = p_sprite;
 }

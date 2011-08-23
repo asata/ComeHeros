@@ -14,6 +14,8 @@
 @property (nonatomic, retain) CCSprite *leftSprite;
 @property (nonatomic, retain) CCSprite *rightSprite;
 
+- (id) initWarrior:(CGPoint)pos strength:(NSInteger)streng speed:(NSInteger)pSpeed direction:(NSInteger)pDirection;
+
 - (void) setLeftSprite:(CCSprite *)p_spriteh;
 - (void) setRightSprite:(CCSprite *)p_spriteh;
 - (void) setPosition:(CGPoint)p_position;
