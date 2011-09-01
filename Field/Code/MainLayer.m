@@ -62,7 +62,7 @@
     
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:0.1];
-    [self schedule:@selector(createWarrior1:) interval:5];
+    [self schedule:@selector(createWarriorAtTime:) interval:5];
     //[self schedule:@selector(removeWarrior:) interval:3];
     //[warriorList addObject:t_warrior];
     //[self initSprite];
@@ -124,12 +124,10 @@
     for (int i = 0; i < [warriorList count]; i++) {
         // 현재 위치 및 정보를 가져옴
         Warrior *tWarrior = [warriorList objectAtIndex:i];
-        CCSprite *leftSprite = [tWarrior getLeftSprite];
-        CCSprite *rightSprite = [tWarrior getRightSprite];
+        CCSprite *tSprite = [tWarrior getSprite];
         CGPoint position = [tWarrior getPosition];
         
-        leftSprite.position = ccp(map.position.x + position.x, map.position.y + position.y);
-        rightSprite.position = ccp(map.position.x + position.x, map.position.y + position.y);
+        tSprite.position = ccp(map.position.x + position.x, map.position.y + position.y);
     }
 }
 
@@ -206,16 +204,14 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    NSInteger i = 0;
     NSMutableArray *aniLeftFrames = [NSMutableArray array];
-    for(; i < 2; i++) {
+    for(NSInteger i = 0; i < 2; i++) {
         CCSpriteFrame *leftFrame = [CCSpriteFrame frameWithTexture:texture
                                                               rect:CGRectMake(WARRIOR_SIZE * i, WARRIOR_SIZE, WARRIOR_SIZE, WARRIOR_SIZE)];
         [aniLeftFrames addObject:leftFrame];
     }
-    CCAnimation *leftAnimation = [CCAnimation animationWithFrames:aniLeftFrames delay:0.05f];
+    CCAnimation *leftAnimation = [CCAnimation animationWithFrames:aniLeftFrames delay:NPC_MOVE_ACTION];
     CCAnimate *leftAnimate = [[CCAnimate alloc] initWithAnimation:leftAnimation restoreOriginalFrame:NO];
-   // [tWarrior setLeftAnimate:leftAnimate];
     CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniLeftFrames objectAtIndex:0]];
     tSprite.position = startPoint;
     tSprite.scale = NPC_SCALE;
@@ -231,11 +227,10 @@
     [tWarrior setSprite:tSprite];
     
     [self addChild:tSprite z:kWarriorLayer];
-    
     [warriorList addObject:tWarrior];
 }
 
-- (void) createWarrior1:(id) sender {
+- (void) createWarriorAtTime:(id) sender {
     [self createWarrior];
 }
 

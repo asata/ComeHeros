@@ -62,7 +62,7 @@ CGSize deviceSize;
 // 이하 테스트용 코드 => Temp.txt에 이동
 //- (void) printSprite:(CGPoint)thisArea;
 
-- (void) createWarrior1:(id) sender;
+- (void) createWarriorAtTime:(id) sender;
 
 @property (nonatomic, retain) CCTMXLayer *layer;
 

@@ -9,6 +9,8 @@
 #define NPC_SCALE 0.75
 #define MAP_SCALE 1
 
+#define NPC_MOVE_ACTION 0.1f
+
 enum LayerIndex {
     kBackgroundLayer,
 
