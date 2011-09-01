@@ -181,21 +181,15 @@
         for (int i = 0; i < [warriorList count]; i++) {
             // 현재 위치 및 정보를 가져옴
             Warrior *tWarrior = [warriorList objectAtIndex:i];
-            CCSprite *leftSprite = [tWarrior getLeftSprite];
-            CCSprite *rightSprite = [tWarrior getRightSprite];
+            //CCSprite *leftSprite = [tWarrior getLeftSprite];
+            CCSprite *tSprite = [tWarrior getSprite];
             
             if([tWarrior getMoveDriection] == MoveLeft) {
                 [tWarrior setMoveDriection:MoveRight];
-                
-                rightSprite.position = leftSprite.position;
-                [leftSprite setVisible:NO];
-                [rightSprite setVisible:YES];
+                tSprite.flipX = NO;
             } else if([tWarrior getMoveDriection] == MoveRight) {
                 [tWarrior setMoveDriection:MoveLeft];
-                
-                leftSprite.position = rightSprite.position;
-                [leftSprite setVisible:YES];
-                [rightSprite setVisible:NO];
+                tSprite.flipX = YES;
             }
             
             [warriorList replaceObjectAtIndex:i withObject:tWarrior];
@@ -212,7 +206,6 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // 왼쪽 애니메이션
     NSInteger i = 0;
     NSMutableArray *aniLeftFrames = [NSMutableArray array];
     for(; i < 2; i++) {
@@ -223,43 +216,21 @@
     CCAnimation *leftAnimation = [CCAnimation animationWithFrames:aniLeftFrames delay:0.05f];
     CCAnimate *leftAnimate = [[CCAnimate alloc] initWithAnimation:leftAnimation restoreOriginalFrame:NO];
    // [tWarrior setLeftAnimate:leftAnimate];
-    CCSprite *leftSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniLeftFrames objectAtIndex:0]];
-    leftSprite.position = startPoint;
-    leftSprite.scale = NPC_SCALE;
-    [leftSprite setVisible:NO];
-    [leftSprite runAction:[CCRepeatForever actionWithAction:leftAnimate]];
-    [leftAnimate release];
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // 오른쪽 애니메이션
-    NSMutableArray *aniRightFrames = [NSMutableArray array];
-    for(; i < 4; i++) {
-        CCSpriteFrame *rightFrame = [CCSpriteFrame frameWithTexture:texture
-                                                               rect:CGRectMake(WARRIOR_SIZE * i, WARRIOR_SIZE, WARRIOR_SIZE, WARRIOR_SIZE)];
-        [aniRightFrames addObject:rightFrame];
-    }
-    CCAnimation *rightAnimation = [CCAnimation animationWithFrames:aniRightFrames delay:0.05f];
-    CCAnimate *rightAnimate = [[CCAnimate alloc] initWithAnimation:rightAnimation restoreOriginalFrame:NO];
-    //[tWarrior setLeftAnimate:rightAnimate];
-    
-    CCSprite *rightSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniRightFrames objectAtIndex:0]];
-    rightSprite.position = startPoint;
-    rightSprite.scale = NPC_SCALE;
-    [rightSprite setVisible:YES];
-    [rightSprite runAction:[CCRepeatForever actionWithAction:rightAnimate]];
-    [rightAnimate release];
+    CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniLeftFrames objectAtIndex:0]];
+    tSprite.position = startPoint;
+    tSprite.scale = NPC_SCALE;
+    tSprite.flipX = YES;
+    [tSprite setVisible:YES];
+    [tSprite runAction:[CCRepeatForever actionWithAction:leftAnimate]];
+    [tSprite release];
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    [tWarrior setLeftSprite:leftSprite];
-    [tWarrior setRightSprite:rightSprite];
+    [tWarrior setSprite:tSprite];
     
-    [self addChild:leftSprite z:kWarriorLayer];
-    [self addChild:rightSprite z:kWarriorLayer];
+    [self addChild:tSprite z:kWarriorLayer];
     
     [warriorList addObject:tWarrior];
 }
@@ -274,8 +245,7 @@
     for (int i = 0; i < [warriorList count]; i++) {
         // 현재 위치 및 정보를 가져옴
         Warrior *tWarrior = [warriorList objectAtIndex:i];
-        CCSprite *rightSprite = [tWarrior getRightSprite];
-        CCSprite *leftSprite = [tWarrior getLeftSprite];
+        CCSprite *tSprite = [tWarrior getSprite];
         NSInteger direction = [tWarrior getMoveDriection];
         CGPoint movePosition = [tWarrior getPosition];
         
@@ -290,23 +260,23 @@
         // 이동 및 기타 체크 처리
         if(direction == MoveLeft) {
             movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
-            leftSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
-            [tWarrior setLeftSprite:leftSprite];
+            tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
+            [tWarrior setSprite:tSprite];
             //NSLog(@"MoveLeft");
         } else if(direction == MoveUp) {
             movePosition = ccp(movePosition.x, movePosition.y + [tWarrior getMoveSpeed]);
-            rightSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
-            [tWarrior setRightSprite:rightSprite];
+            tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
+            [tWarrior setSprite:tSprite];
             //NSLog(@"MoveUp");
         } else if(direction == MoveRight) {
             movePosition = ccp(movePosition.x + [tWarrior getMoveSpeed], movePosition.y);
-            rightSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
-            [tWarrior setRightSprite:rightSprite];
+            tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
+            [tWarrior setSprite:tSprite];
             //NSLog(@"MoveRight");
         } else if(direction == MoveDown) {
             movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
-            rightSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
-            [tWarrior setRightSprite:rightSprite];
+            tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
+            [tWarrior setSprite:tSprite];
             //NSLog(@"MoveDown");
         }   
         

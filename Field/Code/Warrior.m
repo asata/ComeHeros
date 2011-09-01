@@ -1,7 +1,7 @@
 #import "Warrior.h"
 
 @implementation Warrior
-@synthesize leftSprite, rightSprite;
+@synthesize sprite;
 
 - (id)init {
     if ((self = [super init])) {
@@ -21,20 +21,12 @@
     return self;
 }
 
-- (void) setLeftSprite:(CCSprite *)p_sprite {
-    leftSprite = p_sprite;
+- (void) setSprite:(CCSprite *)p_sprite {
+    sprite = p_sprite;
 }
 
-- (CCSprite *) getLeftSprite {
-    return leftSprite;
-}
-
-- (void) setRightSprite:(CCSprite *)p_sprite {
-    rightSprite = p_sprite;
-}
-
-- (CCSprite *) getRightSprite {
-    return rightSprite;
+- (CCSprite *) getSprite {
+    return sprite;
 }
 
 - (void) setPosition:(CGPoint)p_position {
