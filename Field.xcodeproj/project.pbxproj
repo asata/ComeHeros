@@ -125,13 +125,10 @@
 		CB7B80CB13ED7D4100FADB50 /* sample-field.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C413ED7D4100FADB50 /* sample-field.tmx */; };
 		CB7B80CC13ED7D4100FADB50 /* coordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C513ED7D4100FADB50 /* coordinates.plist */; };
 		CB7B80CD13ED7D4100FADB50 /* npc2.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C613ED7D4100FADB50 /* npc2.png */; };
-		CB7B80CE13ED7D4100FADB50 /* sample-filed.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C713ED7D4100FADB50 /* sample-filed.png */; };
 		CB7B80CF13ED7D4100FADB50 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C813ED7D4100FADB50 /* texture.png */; };
-		CB7B80D013ED7D4100FADB50 /* tile1.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C913ED7D4100FADB50 /* tile1.png */; };
-		CB7B80D113ED7D4100FADB50 /* tile2.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80CA13ED7D4100FADB50 /* tile2.png */; };
-		CB7B80E113EEDCAD00FADB50 /* npc.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80E013EEDCAD00FADB50 /* npc.png */; };
 		CBAD463013EF66F80008F5FA /* Document.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBAD462F13EF66F80008F5FA /* Document.txt */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
+		CBB03BC11411E9C500ACBE1D /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB03BC01411E9C500ACBE1D /* Trap.m */; };
 		CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBEBE94D13EFA2D700CA3D8A /* Temp.txt */; };
 /* End PBXBuildFile section */
 
@@ -374,15 +371,13 @@
 		CB7B80C413ED7D4100FADB50 /* sample-field.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sample-field.tmx"; path = "Resources/TileMap/sample-field.tmx"; sourceTree = "<group>"; };
 		CB7B80C513ED7D4100FADB50 /* coordinates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = coordinates.plist; path = Resources/TileMap/coordinates.plist; sourceTree = "<group>"; };
 		CB7B80C613ED7D4100FADB50 /* npc2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = npc2.png; path = Resources/TileMap/npc2.png; sourceTree = "<group>"; };
-		CB7B80C713ED7D4100FADB50 /* sample-filed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sample-filed.png"; path = "Resources/TileMap/sample-filed.png"; sourceTree = "<group>"; };
 		CB7B80C813ED7D4100FADB50 /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture.png; path = Resources/TileMap/texture.png; sourceTree = "<group>"; };
-		CB7B80C913ED7D4100FADB50 /* tile1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile1.png; path = Resources/TileMap/tile1.png; sourceTree = "<group>"; };
-		CB7B80CA13ED7D4100FADB50 /* tile2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tile2.png; path = Resources/TileMap/tile2.png; sourceTree = "<group>"; };
-		CB7B80E013EEDCAD00FADB50 /* npc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = npc.png; path = Resources/TileMap/npc.png; sourceTree = "<group>"; };
 		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/define.h; sourceTree = "<group>"; };
 		CBAD462F13EF66F80008F5FA /* Document.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Document.txt; sourceTree = "<group>"; };
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
+		CBB03BBF1411E9C500ACBE1D /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
+		CBB03BC01411E9C500ACBE1D /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Trap.m; sourceTree = "<group>"; };
 		CBEBE94D13EFA2D700CA3D8A /* Temp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Temp.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -792,6 +787,8 @@
 				CBAD463213EF72E90008F5FA /* Warrior.m */,
 				CBAD462F13EF66F80008F5FA /* Document.txt */,
 				CBEBE94D13EFA2D700CA3D8A /* Temp.txt */,
+				CBB03BBF1411E9C500ACBE1D /* Trap.h */,
+				CBB03BC01411E9C500ACBE1D /* Trap.m */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -802,11 +799,7 @@
 				CB7B80C413ED7D4100FADB50 /* sample-field.tmx */,
 				CB7B80C513ED7D4100FADB50 /* coordinates.plist */,
 				CB7B80C613ED7D4100FADB50 /* npc2.png */,
-				CB7B80C713ED7D4100FADB50 /* sample-filed.png */,
 				CB7B80C813ED7D4100FADB50 /* texture.png */,
-				CB7B80E013EEDCAD00FADB50 /* npc.png */,
-				CB7B80C913ED7D4100FADB50 /* tile1.png */,
-				CB7B80CA13ED7D4100FADB50 /* tile2.png */,
 			);
 			name = TileMap;
 			sourceTree = "<group>";
@@ -870,11 +863,7 @@
 				CB7B80CB13ED7D4100FADB50 /* sample-field.tmx in Resources */,
 				CB7B80CC13ED7D4100FADB50 /* coordinates.plist in Resources */,
 				CB7B80CD13ED7D4100FADB50 /* npc2.png in Resources */,
-				CB7B80CE13ED7D4100FADB50 /* sample-filed.png in Resources */,
 				CB7B80CF13ED7D4100FADB50 /* texture.png in Resources */,
-				CB7B80D013ED7D4100FADB50 /* tile1.png in Resources */,
-				CB7B80D113ED7D4100FADB50 /* tile2.png in Resources */,
-				CB7B80E113EEDCAD00FADB50 /* npc.png in Resources */,
 				CBAD463013EF66F80008F5FA /* Document.txt in Resources */,
 				CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */,
 			);
@@ -986,6 +975,7 @@
 				CB7B80B113ED7B2C00FADB50 /* RootViewController.m in Sources */,
 				CB7B80C213ED7B9B00FADB50 /* MainLayer.m in Sources */,
 				CBAD463313EF72E90008F5FA /* Warrior.m in Sources */,
+				CBB03BC11411E9C500ACBE1D /* Trap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

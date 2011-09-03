@@ -51,17 +51,35 @@
     return self;
 }
 
+- (id)init:(NSInteger)p_level degree:(NSInteger)p_degree {
+    if ((self = [super init])) {
+        self.isTouchEnabled = YES;
+    }
+    
+    return self;
+}
+
 - (void) onEnterTransitionDidFinish {    
     [self initMap];
     
     // 필요한 항목 초기화
     warriorList = [[NSMutableArray alloc] init];
+    trapList = [[NSMutableArray alloc] init];
     texture = [[CCTextureCache sharedTextureCache] addImage:@"npc.png"];
+    
+    warriorNum = 0;
+    trapNum = 0;
     
     [self createWarrior];
     
+    Trap *tTrap = [[Trap alloc] initTrap:[self getCocoaPostion:ccp(5, 11)]
+                                 trapNum:trapNum 
+                                trapType:TILE_06 
+                                  demage:0];
+    [trapList addObject:tTrap];
+    
     // 일정한 간격으로 호출~
-    [self schedule:@selector(moveWarrior:) interval:0.1];
+    [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY];
     [self schedule:@selector(createWarriorAtTime:) interval:5];
     //[self schedule:@selector(removeWarrior:) interval:3];
     //[warriorList addObject:t_warrior];
@@ -133,7 +151,7 @@
 
 // 사용자가 터치를 할 경우 
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    touchType = YES;
+    touchType = TOUCH;
     
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
@@ -142,7 +160,7 @@
 
 // 사용자가 터치로 이동할 경우
 - (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {    
-    touchType = NO;
+    touchType = TOUCH_MOVE;
     
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInView: [touch view]];
@@ -168,26 +186,20 @@
         
         // 클릭한 위치 확인
         CGPoint thisArea = [self getTilePostion:location];
-        [layer setTileGID:1 at:thisArea];
-        
-        // 어떠한 물건을 설치할지 검사
-        
-        // 설치시 이동 경로 재 탐색
-        
-        
+        [layer setTileGID:TILE_03 at:thisArea];
+                
         // 터치시 좌우 변경
         for (int i = 0; i < [warriorList count]; i++) {
             // 현재 위치 및 정보를 가져옴
             Warrior *tWarrior = [warriorList objectAtIndex:i];
-            //CCSprite *leftSprite = [tWarrior getLeftSprite];
             CCSprite *tSprite = [tWarrior getSprite];
             
             if([tWarrior getMoveDriection] == MoveLeft) {
                 [tWarrior setMoveDriection:MoveRight];
-                tSprite.flipX = NO;
+                tSprite.flipX = WARRIOR_MOVE_RIGHT;
             } else if([tWarrior getMoveDriection] == MoveRight) {
                 [tWarrior setMoveDriection:MoveLeft];
-                tSprite.flipX = YES;
+                tSprite.flipX = WARRIOR_MOVE_LEFT;
             }
             
             [warriorList replaceObjectAtIndex:i withObject:tWarrior];
@@ -197,32 +209,38 @@
 
 - (void) createWarrior {
     Warrior *tWarrior = [[Warrior alloc] initWarrior:startPoint 
-                                            strength:100
+                                          warriorNum:warriorNum
+                                            strength:100 
+                                               power:10 
+                                           intellect:10 
+                                             defense:10 
                                                speed:1 
-                                           direction:MoveRight]; 
+                                           direction:MoveRight
+                                        attackRange:2]; 
+    warriorNum++;
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    NSMutableArray *aniLeftFrames = [NSMutableArray array];
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    NSInteger tNum = warriorNum % 3;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    NSMutableArray *aniFrames = [NSMutableArray array];
     for(NSInteger i = 0; i < 2; i++) {
-        CCSpriteFrame *leftFrame = [CCSpriteFrame frameWithTexture:texture
-                                                              rect:CGRectMake(WARRIOR_SIZE * i, WARRIOR_SIZE, WARRIOR_SIZE, WARRIOR_SIZE)];
-        [aniLeftFrames addObject:leftFrame];
+        CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture
+                                                          rect:CGRectMake(WARRIOR_SIZE * i, WARRIOR_SIZE * tNum, WARRIOR_SIZE, WARRIOR_SIZE)];
+        [aniFrames addObject:frame];
     }
-    CCAnimation *leftAnimation = [CCAnimation animationWithFrames:aniLeftFrames delay:NPC_MOVE_ACTION];
-    CCAnimate *leftAnimate = [[CCAnimate alloc] initWithAnimation:leftAnimation restoreOriginalFrame:NO];
-    CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniLeftFrames objectAtIndex:0]];
+    CCAnimation *animation = [CCAnimation animationWithFrames:aniFrames delay:WARRIOR_MOVE_ACTION];
+    CCAnimate *animate = [[CCAnimate alloc] initWithAnimation:animation restoreOriginalFrame:NO];
+    CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniFrames objectAtIndex:0]];
     tSprite.position = startPoint;
-    tSprite.scale = NPC_SCALE;
-    tSprite.flipX = YES;
+    tSprite.scale = WARRIOR_SCALE;
+    tSprite.flipX = WARRIOR_MOVE_RIGHT;
     [tSprite setVisible:YES];
-    [tSprite runAction:[CCRepeatForever actionWithAction:leftAnimate]];
+    [tSprite runAction:[CCRepeatForever actionWithAction:animate]];
     [tSprite release];
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     [tWarrior setSprite:tSprite];
     
@@ -244,51 +262,61 @@
         NSInteger direction = [tWarrior getMoveDriection];
         CGPoint movePosition = [tWarrior getPosition];
         
+        // 공격 대상 탐색
+        NSInteger attackEnmy = [self AttackEnmyFind:tWarrior];
+        if(attackEnmy != -1) NSLog(@"Finder Attack : %d - %d", [tWarrior getWarriorNum], attackEnmy);
+        
         // 이동 방향을 결정 하여 이동~
-        
-        //direction += 1;
-        //if(direction > MoveDown) direction = MoveLeft;
-        //[tWarrior setMoveDriection:direction];  
-        
-        //direction = [self selectDirection:tSprite pDirection:direction];
         
         // 이동 및 기타 체크 처리
         if(direction == MoveLeft) {
             movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
             tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
             [tWarrior setSprite:tSprite];
-            //NSLog(@"MoveLeft");
         } else if(direction == MoveUp) {
             movePosition = ccp(movePosition.x, movePosition.y + [tWarrior getMoveSpeed]);
             tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
-            [tWarrior setSprite:tSprite];
-            //NSLog(@"MoveUp");
+            [tWarrior setSprite:tSprite];       
         } else if(direction == MoveRight) {
             movePosition = ccp(movePosition.x + [tWarrior getMoveSpeed], movePosition.y);
             tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
             [tWarrior setSprite:tSprite];
-            //NSLog(@"MoveRight");
         } else if(direction == MoveDown) {
             movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
             tSprite.position = ccp(map.position.x + movePosition.x, map.position.y + movePosition.y);
             [tWarrior setSprite:tSprite];
-            //NSLog(@"MoveDown");
         }   
         
         [tWarrior setPosition:movePosition];
         
-        // 화면에서 사라질 경우 보이지 않게함
-        //if(tSprite.position.x > 480) {
-        //    NSLog(@"Hide");
-        //    [tSprite setVisible:NO];
-        //} else if(tSprite.position.x > 320) {
-        //}
-        //[tSprite setVisible:![tSprite visible]];
-        
-        // 맵에서 나갈 경우 제거
+        if(direction == MoveRight) {
+            if(movePosition.x + HALF_TILE_SIZE > mapSize.width) {
+                [tWarrior setMoveDriection:MoveUp];
+            }
+        }
         
         [warriorList replaceObjectAtIndex:i withObject:tWarrior];
     }
+}
+
+// 임시로 트랩으로 처리
+// 트랩은 해당 타일에 위치시 발동이 되도록 설정
+// 
+- (NSInteger) AttackEnmyFind:(Warrior*)pWarrior {
+    CGPoint wPoint = [pWarrior getPosition];
+    NSInteger wAttack = [pWarrior getAttackRange];
+    
+    for(int i = 0; i < [trapList count]; i++) {
+        Trap *tTrap = [trapList objectAtIndex:i];
+        CGPoint tPoint = [tTrap getPosition];
+        CGFloat distance = powf((wPoint.x - tPoint.x), 2) + powf((wPoint.y - tPoint.y), 2);
+        
+        if(distance < powf(wAttack * TILE_SIZE, 2)) {
+            return [tTrap getTrapNum];
+        }
+    }
+    
+    return NotFound;
 }
 
 // 이동 경로를 계산하여 별도의 테이블에 저장

@@ -1,6 +1,7 @@
 #import "cocos2d.h"
 #import "define.h"
 #import "Warrior.h"
+#import "Trap.h"
 
 CGSize deviceSize;
 
@@ -21,14 +22,19 @@ CGSize deviceSize;
     
     CCTMXLayer *layer;
     
+    NSInteger warriorNum;
+    NSInteger trapNum;
+    
     ////////////////////////////
-    NSMutableArray *warriorList;    // 용사 목록 List
+    NSMutableArray  *warriorList;   // 용사 목록 List
+    NSMutableArray  *trapList;      // 트랩 List
     ////////////////////////////
     
     CGSize mapSize;                 // 타일 맵 사이즈
     CGPoint prevPoint;              // 이전 터치 위치
     
     BOOL touchType;                 // 터치 상태(YES : 터치, NO : 이동)
+    BOOL gameFlag;                  // 게임 진행 상황 (YES : 진행중, NO : 대기)
     
     unsigned int mapInfo[TILE_NUM][TILE_NUM];
     unsigned int moveTable[TILE_NUM][TILE_NUM];
@@ -39,6 +45,8 @@ CGSize deviceSize;
 @property (nonatomic, retain) CCTMXTiledMap *map;
 @property (nonatomic, retain) CCTexture2D *texture;
 @property (nonatomic, retain) CCSprite *sprite;
+
+- (id)init:(NSInteger)p_level degree:(NSInteger)p_degree;
 
 // 맵 초기화
 - (void) initMap;
@@ -63,6 +71,7 @@ CGSize deviceSize;
 //- (void) printSprite:(CGPoint)thisArea;
 
 - (void) createWarriorAtTime:(id) sender;
+- (NSInteger) AttackEnmyFind:(Warrior*)pWarrior;
 
 @property (nonatomic, retain) CCTMXLayer *layer;
 
