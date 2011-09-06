@@ -75,25 +75,10 @@
     
     [self createWarrior];
     
-    ///////////////////////////////////////////////////////////////////////////////////
-    Trap *tTrap = [[Trap alloc] initTrap:[self convertMapToTile:ccp(3, 2)]
-                                 trapNum:trapNum 
-                                trapType:TILE_06 
-                                  demage:0];
-    trapNum++;
-    //Trap *tTrap1 = [[Trap alloc] initTrap:[self getCocoaPostion:ccp(5, 11)]
-    //                             trapNum:trapNum 
-    ///                            trapType:TILE_06 
-    //                               demage:0];
-    [trapList addObject:tTrap];
-    //[trapList addObject:tTrap1];
-    
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY];
-    //[self schedule:@selector(createWarriorAtTime:) interval:5];
+    [self schedule:@selector(createWarriorAtTime:) interval:2];
     //[self schedule:@selector(removeWarrior:) interval:3];
-    //[warriorList addObject:t_warrior];
-    //[self initSprite];
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 게임 초기화 End                                                                                         //
@@ -180,6 +165,16 @@
     } else if([[event allTouches] count] == 2) {
         // 멀티 터치
         NSLog(@"Multi Touch");
+        NSArray *touchArray = [[event allTouches] allObjects];
+        int i = 0;
+        
+        for (UITouch *touch in touchArray) {
+            CGPoint location = [touch locationInView:[touch view]];
+            CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+            
+            NSLog(@"%d %f %f", i, convertedLocation.x, convertedLocation.y);
+            i++;
+        }
     }
 }
 
@@ -267,7 +262,7 @@
                                                power:10 
                                            intellect:10 
                                              defense:10 
-                                               speed:1 
+                                               speed:8 
                                            direction:MoveDown
                                         attackRange:2]; 
     warriorNum++;
@@ -308,6 +303,9 @@
 // 일정 간격으로 호출됨
 // 용사 이동 및 기타 처리를 하도록 함
 - (void) moveWarrior:(id) sender {
+    NSMutableArray *deleteList = [[NSMutableArray alloc] init];
+    
+    [self pauseSchedulerAndActions];
     for (int i = 0; i < [warriorList count]; i++) {
         // 현재 위치 및 정보를 가져옴
         Warrior *tWarrior = [warriorList objectAtIndex:i];
@@ -343,10 +341,23 @@
         
         // 다음 이동 방향 검사 - 추가적인 테스트 필요
         // 이동 거리 설정시 24의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
-        [self selectDirection:tWarrior];
+        BOOL endFlag = [self selectDirection:tWarrior];
+        
+        if(endFlag) {
+            [deleteList addObject:tWarrior];
+            NSLog(@"ADD");
+        }
         
         [warriorList replaceObjectAtIndex:i withObject:tWarrior];
     }
+    
+    for(int j = [deleteList count]; j > 0; j--) {
+        Warrior *tWarrior = [deleteList objectAtIndex:(j - 1)];
+        [[tWarrior getSprite] setVisible:NO];
+        [warriorList removeObject:tWarrior];
+    }
+    
+    [self resumeSchedulerAndActions];
 }
 
 // 임시로 트랩으로 처리
@@ -476,7 +487,7 @@
 // 이동 방향 설정
 // 현재 용사가 있는 위치를 파악하여 해당 타일의 이동 방향으로 용사가 이동하도록 수정
 // 이동 경로를 별도의 테이블에 저장
-- (void) selectDirection:(Warrior *)pWarrior {
+- (BOOL) selectDirection:(Warrior *)pWarrior {
     CCSprite *tSprite = [pWarrior getSprite];
     
     if([pWarrior getMoveLength] == TILE_SIZE) {
@@ -490,33 +501,28 @@
         if(direction == MoveRight) {
             [pWarrior setMoveDriection:MoveRight];
             tSprite.flipX = WARRIOR_MOVE_RIGHT;
-            
-            NSLog(@"Move Right");
         } else if(direction == MoveDown) {
             [pWarrior setMoveDriection:MoveDown];
             tSprite.flipX = WARRIOR_MOVE_RIGHT;
-            
-            NSLog(@"Move Down");
         } else if(direction == MoveLeft) {
             [pWarrior setMoveDriection:MoveLeft];
             tSprite.flipX = WARRIOR_MOVE_LEFT;
-            
-            NSLog(@"Move Left");
         } else {
             [pWarrior setMoveDriection:MoveUp];
             tSprite.flipX = WARRIOR_MOVE_LEFT;
-            
-            NSLog(@"Move Up");
         }
         
         // 목적지일 경우
         if(x == EndPoint.x && y == EndPoint.y) {
             [pWarrior setMoveDriection:MoveNone];
-            [tSprite stopAllActions];
+            
+            return YES;
         }
         
         [pWarrior resetMoveLength];
     }
+    
+    return NO;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 이동 경로 계산 End                                                                                       //

@@ -8,3 +8,17 @@ sprite.scale = NPC_SCALE;
 
 [self addChild:sprite z:1];
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////
+Trap *tTrap = [[Trap alloc] initTrap:[self convertMapToTile:ccp(3, 2)]
+trapNum:trapNum 
+trapType:TILE_06 
+demage:0];
+trapNum++;
+//Trap *tTrap1 = [[Trap alloc] initTrap:[self getCocoaPostion:ccp(5, 11)]
+//                             trapNum:trapNum 
+///                            trapType:TILE_06 
+//                               demage:0];
+[trapList addObject:tTrap];
+//[trapList addObject:tTrap1];

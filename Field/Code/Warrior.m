@@ -125,7 +125,7 @@
 }
 
 - (void) plusMoveLength {
-    moveLength++;
+    moveLength = moveLength + moveSpeed;
 }
 - (void) resetMoveLength {
     moveLength = 0;

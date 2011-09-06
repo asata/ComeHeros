@@ -57,7 +57,7 @@ CGSize deviceSize;
 // 이동 경로 관련 함수
 - (void) initMoveValue;
 - (void) createMoveTable;
-- (void) selectDirection:(Warrior *)pWarrior;
+- (BOOL) selectDirection:(Warrior *)pWarrior;
 - (void) calcuationMoveValue:(int)x y:(int)y;
 - (void) choseDirection:(int)x y:(int)y;
 
