@@ -39,7 +39,10 @@ CGSize deviceSize;
     unsigned int mapInfo[TILE_NUM][TILE_NUM];
     unsigned int moveTable[TILE_NUM][TILE_NUM];
     
+    unsigned int tMoveValue[TILE_NUM][TILE_NUM];
+    
     CGPoint startPoint;
+    CGPoint destinationPoint;
 }
 
 @property (nonatomic, retain) CCTMXTiledMap *map;
@@ -51,9 +54,17 @@ CGSize deviceSize;
 // 맵 초기화
 - (void) initMap;
 
+// 이동 경로 관련 함수
+- (void) initMoveValue;
+- (void) createMoveTable;
+- (void) selectDirection:(Warrior *)pWarrior;
+- (void) calcuationMoveValue:(int)x y:(int)y;
+- (void) choseDirection:(int)x y:(int)y;
+
 // 좌표값 변환
-- (CGPoint) getTilePostion:(CGPoint)cocos2d;
-- (CGPoint) getCocoaPostion:(CGPoint)tile;
+- (CGPoint) convertMapToTile:(CGPoint)tile;
+- (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d;
+- (CGPoint) convertTileToCocoa:(CGPoint)tile;
 
 // 화면을 터치하여 이동시 처리하는 함수
 - (void) moveTouchMap:(CGPoint)currentPoint;
@@ -63,15 +74,14 @@ CGSize deviceSize;
 - (void) createWarrior;
 - (void) moveWarrior:(id) sender;
 - (void) removeWarrior:(NSInteger)index;
+- (NSInteger) AttackEnmyFind:(Warrior*)pWarrior;    // 적 탐지
 
-- (NSInteger) selectDirection:(CCSprite *)pSprite pDirection:(NSInteger)pDirection;
 
 //////////////////////////////////////////////
 // 이하 테스트용 코드 => Temp.txt에 이동
 //- (void) printSprite:(CGPoint)thisArea;
 
 - (void) createWarriorAtTime:(id) sender;
-- (NSInteger) AttackEnmyFind:(Warrior*)pWarrior;
 
 @property (nonatomic, retain) CCTMXLayer *layer;
 

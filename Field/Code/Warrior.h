@@ -10,6 +10,7 @@
     NSInteger   power;              // 힘
     NSInteger   intellect;          // 지능
     NSInteger   defense;            // 방어력
+    NSInteger   moveLength;          // 이동 거리
     NSInteger   moveSpeed;          // 이동 속도
     NSInteger   moveDirection;      // 이동 방향
     NSInteger   attackRange;        // 공격범위
@@ -27,6 +28,7 @@
 - (void) setPower:(NSInteger)p_power;
 - (void) setIntellect:(NSInteger)p_intellect;
 - (void) setDefense:(NSInteger)p_defense;
+- (void) setMoveLength:(NSInteger)p_length;
 - (void) setMoveSpeed:(NSInteger)p_speed;
 - (void) setMoveDriection:(NSInteger)p_direction;
 - (void) setAttackRange:(NSInteger)p_range;
@@ -38,7 +40,11 @@
 - (NSInteger) getPower;
 - (NSInteger) getIntellect;
 - (NSInteger) getDefense;
+- (NSInteger) getMoveLength;
 - (NSInteger) getMoveSpeed;
 - (NSInteger) getMoveDriection;
 - (NSInteger) getAttackRange;
+
+- (void) plusMoveLength;
+- (void) resetMoveLength;
 @end

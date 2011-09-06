@@ -1,4 +1,5 @@
 #import "Warrior.h"
+#import "define.h"
 
 @implementation Warrior
 @synthesize sprite;
@@ -31,11 +32,13 @@
        attackRange:(NSInteger)pAttackRange {
     if ((self = [super init])) {
         warriorNum = p_num;
-        position = pos;
+        position = pos;//ccp(pos.x, //pos.y + 320 - (TILE_NUM * TILE_SIZE));
         strength = pStrength;
         power = pPower;
         intellect = pIntellect;
         defense = pDefense;
+        
+        moveLength = 0;
         moveSpeed = pSpeed;
         moveDirection = pDirection;
         attackRange = pAttackRange;
@@ -93,6 +96,13 @@
     return defense;
 }
 
+- (void) setMoveLength:(NSInteger)p_length {
+    moveLength = p_length;
+}
+- (NSInteger) getMoveLength {
+    return moveLength;
+}
+
 - (void) setMoveSpeed:(NSInteger)p_speed {
     moveSpeed = p_speed;
 }
@@ -112,5 +122,12 @@
 }
 - (NSInteger) getAttackRange {
     return attackRange;
+}
+
+- (void) plusMoveLength {
+    moveLength++;
+}
+- (void) resetMoveLength {
+    moveLength = 0;
 }
 @end

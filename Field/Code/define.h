@@ -3,8 +3,8 @@
 #define TILE_SIZE       48
 #define TILE_NUM        13
 
-#define TILE_01         1
-#define TILE_02         2
+#define TILE_ROAD       1
+#define TILE_ROCK       2
 #define TILE_03         3
 #define TILE_04         4
 #define TILE_05         5
@@ -29,6 +29,8 @@
 #define REFRESH_DISPLAY     0.1
 
 #define NotFound            -1
+#define StartPoint          ccp(4, 0)
+#define EndPoint            ccp(9, 9)
 
 enum LayerIndex {
     kBackgroundLayer,
@@ -37,7 +39,7 @@ enum LayerIndex {
 };
 
 enum MoveDirection {
-    None = 0,
+    MoveNone = 0,
     MoveLeft,
     MoveUp,
     MoveRight,
