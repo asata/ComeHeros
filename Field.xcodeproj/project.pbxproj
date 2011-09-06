@@ -1,4 +1,4 @@
-지// !$*UTF8*$!
+// !$*UTF8*$!
 {
 	archiveVersion = 1;
 	classes = {
@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB4EF93C1415D44400868903 /* Document.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB4EF93B1415D44400868903 /* Document.txt */; };
+		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
+		CB4EF9431415D45600868903 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF9411415D45600868903 /* Trap.m */; };
 		CB7B7F4B13ED7B2200FADB50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7B7F4A13ED7B2200FADB50 /* QuartzCore.framework */; };
 		CB7B7F4D13ED7B2200FADB50 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7B7F4C13ED7B2200FADB50 /* OpenGLES.framework */; };
 		CB7B7F4F13ED7B2200FADB50 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7B7F4E13ED7B2200FADB50 /* OpenAL.framework */; };
@@ -127,14 +130,15 @@
 		CB7B80CD13ED7D4100FADB50 /* npc2.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C613ED7D4100FADB50 /* npc2.png */; };
 		CB7B80CF13ED7D4100FADB50 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C813ED7D4100FADB50 /* texture.png */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
-		CBB03BC11411E9C500ACBE1D /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB03BC01411E9C500ACBE1D /* Trap.m */; };
-		CBB03BCD14135DBE00ACBE1D /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB03BCC14135DBD00ACBE1D /* Monster.m */; };
-		CBB03BCF14135F5C00ACBE1D /* Stage.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBB03BCE14135F5C00ACBE1D /* Stage.plist */; };
-		CBB03BD11413628100ACBE1D /* Document.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBB03BD01413628100ACBE1D /* Document.txt */; };
 		CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBEBE94D13EFA2D700CA3D8A /* Temp.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB4EF93B1415D44400868903 /* Document.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Document.txt; sourceTree = "<group>"; };
+		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Monster.h; sourceTree = "<group>"; };
+		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Monster.m; sourceTree = "<group>"; };
+		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
+		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Trap.m; sourceTree = "<group>"; };
 		CB7B7F4613ED7B2200FADB50 /* Field.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Field.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7B7F4A13ED7B2200FADB50 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CB7B7F4C13ED7B2200FADB50 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -377,12 +381,6 @@
 		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/define.h; sourceTree = "<group>"; };
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
-		CBB03BBF1411E9C500ACBE1D /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
-		CBB03BC01411E9C500ACBE1D /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Trap.m; sourceTree = "<group>"; };
-		CBB03BCB14135DBD00ACBE1D /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Monster.h; sourceTree = "<group>"; };
-		CBB03BCC14135DBD00ACBE1D /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Monster.m; sourceTree = "<group>"; };
-		CBB03BCE14135F5C00ACBE1D /* Stage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage.plist; path = Resources/Stage.plist; sourceTree = "<group>"; };
-		CBB03BD01413628100ACBE1D /* Document.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Document.txt; sourceTree = "<group>"; };
 		CBEBE94D13EFA2D700CA3D8A /* Temp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Temp.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -440,7 +438,7 @@
 		CB7B7F5A13ED7B2200FADB50 /* Field */ = {
 			isa = PBXGroup;
 			children = (
-				CBB03BD01413628100ACBE1D /* Document.txt */,
+				CB4EF93B1415D44400868903 /* Document.txt */,
 				CB7B80BF13ED7B7C00FADB50 /* Code */,
 				CB7B80AC13ED7B2C00FADB50 /* AppDelegate.h */,
 				CB7B80AD13ED7B2C00FADB50 /* AppDelegate.m */,
@@ -468,7 +466,6 @@
 				CB7B7F6A13ED7B2200FADB50 /* Icon@2x.png */,
 				CB7B7F6C13ED7B2200FADB50 /* Info.plist */,
 				CB7B7F6D13ED7B2200FADB50 /* iTunesArtwork */,
-				CBB03BCE14135F5C00ACBE1D /* Stage.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -792,11 +789,11 @@
 				CB7B80C113ED7B9B00FADB50 /* MainLayer.m */,
 				CBAD463113EF72E80008F5FA /* Warrior.h */,
 				CBAD463213EF72E90008F5FA /* Warrior.m */,
+				CB4EF93E1415D45600868903 /* Monster.h */,
+				CB4EF93F1415D45600868903 /* Monster.m */,
+				CB4EF9401415D45600868903 /* Trap.h */,
+				CB4EF9411415D45600868903 /* Trap.m */,
 				CBEBE94D13EFA2D700CA3D8A /* Temp.txt */,
-				CBB03BBF1411E9C500ACBE1D /* Trap.h */,
-				CBB03BC01411E9C500ACBE1D /* Trap.m */,
-				CBB03BCB14135DBD00ACBE1D /* Monster.h */,
-				CBB03BCC14135DBD00ACBE1D /* Monster.m */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -873,8 +870,7 @@
 				CB7B80CD13ED7D4100FADB50 /* npc2.png in Resources */,
 				CB7B80CF13ED7D4100FADB50 /* texture.png in Resources */,
 				CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */,
-				CBB03BCF14135F5C00ACBE1D /* Stage.plist in Resources */,
-				CBB03BD11413628100ACBE1D /* Document.txt in Resources */,
+				CB4EF93C1415D44400868903 /* Document.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -984,8 +980,8 @@
 				CB7B80B113ED7B2C00FADB50 /* RootViewController.m in Sources */,
 				CB7B80C213ED7B9B00FADB50 /* MainLayer.m in Sources */,
 				CBAD463313EF72E90008F5FA /* Warrior.m in Sources */,
-				CBB03BC11411E9C500ACBE1D /* Trap.m in Sources */,
-				CBB03BCD14135DBE00ACBE1D /* Monster.m in Sources */,
+				CB4EF9421415D45600868903 /* Monster.m in Sources */,
+				CB4EF9431415D45600868903 /* Trap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
