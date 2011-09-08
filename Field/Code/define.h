@@ -5,10 +5,10 @@
 
 #define TILE_ROAD       1
 #define TILE_ROCK       2
-#define TILE_03         3
-#define TILE_04         4
-#define TILE_05         5
-#define TILE_06         6
+#define TILE_TRAP_ON    3
+#define TILE_TRAP_OFF   4
+#define TILE_BOX_ON     5
+#define TILE_BOX_OFF    6
 
 // 맵 관련 정의
 #define MAP_SCALE       1
@@ -29,6 +29,8 @@
 #define REFRESH_DISPLAY     0.1
 
 #define NotFound            -1
+
+// 추후 게임 설정 파일 로드시 파일에서 읽어들임
 #define StartPoint          ccp(4, 0)
 #define EndPoint            ccp(9, 9)
 

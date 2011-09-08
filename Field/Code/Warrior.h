@@ -10,7 +10,7 @@
     NSInteger   power;              // 힘
     NSInteger   intellect;          // 지능
     NSInteger   defense;            // 방어력
-    NSInteger   moveLength;          // 이동 거리
+    NSInteger   moveLength;         // 이동 거리
     NSInteger   moveSpeed;          // 이동 속도
     NSInteger   moveDirection;      // 이동 방향
     NSInteger   attackRange;        // 공격범위
