@@ -26,6 +26,8 @@
 #define TOUCH               YES
 #define TOUCH_MOVE          NO
 
+#define MULTI_SCALE     0.05f
+
 #define REFRESH_DISPLAY     0.1
 
 #define NotFound            -1

@@ -73,10 +73,12 @@ CGSize deviceSize;
 - (CGPoint) convertMapToTile:(CGPoint)tile;
 - (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d;
 - (CGPoint) convertTileToCocoa:(CGPoint)tile;
+- (CGPoint) getAbsCoordinate:(CGPoint)cocos2d;
 
 // 화면을 터치하여 이동시 처리하는 함수
 - (void) moveTouchMap:(CGPoint)currentPoint;        // 터치로 화면 이동시 맵 이동
 - (void) moveTouchWarrior;                          // 터치로 화면 이동시 용사 이동
+- (CGPoint) checkMovePosition:(CGPoint)position;
 
 // 용사 관련 함수
 - (void) createWarrior;                             // 용사 생성
@@ -87,6 +89,7 @@ CGSize deviceSize;
 
 - (CGFloat) calcuationMultiTouchLength:(NSArray *)touchArray;
 - (CGFloat) lineLength:(CGPoint)point1 point2:(CGPoint)point2;
+- (CGPoint) middlePoint:(NSArray *)touchArray;
 
 //////////////////////////////////////////////
 // 이하 테스트용 코드 => Temp.txt에 이동
