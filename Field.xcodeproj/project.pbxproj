@@ -127,10 +127,11 @@
 		CB7B80C213ED7B9B00FADB50 /* MainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80C113ED7B9B00FADB50 /* MainLayer.m */; };
 		CB7B80CB13ED7D4100FADB50 /* sample-field.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C413ED7D4100FADB50 /* sample-field.tmx */; };
 		CB7B80CC13ED7D4100FADB50 /* coordinates.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C513ED7D4100FADB50 /* coordinates.plist */; };
-		CB7B80CD13ED7D4100FADB50 /* npc2.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C613ED7D4100FADB50 /* npc2.png */; };
 		CB7B80CF13ED7D4100FADB50 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = CB7B80C813ED7D4100FADB50 /* texture.png */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
 		CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBEBE94D13EFA2D700CA3D8A /* Temp.txt */; };
+		CBF4D3F0141B4F47001528FA /* npc.png in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3EF141B4F47001528FA /* npc.png */; };
+		CBF4D3F8141B5C39001528FA /* Stage098.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage098.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -376,12 +377,13 @@
 		CB7B80C113ED7B9B00FADB50 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainLayer.m; path = Code/MainLayer.m; sourceTree = "<group>"; };
 		CB7B80C413ED7D4100FADB50 /* sample-field.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sample-field.tmx"; path = "Resources/TileMap/sample-field.tmx"; sourceTree = "<group>"; };
 		CB7B80C513ED7D4100FADB50 /* coordinates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = coordinates.plist; path = Resources/TileMap/coordinates.plist; sourceTree = "<group>"; };
-		CB7B80C613ED7D4100FADB50 /* npc2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = npc2.png; path = Resources/TileMap/npc2.png; sourceTree = "<group>"; };
 		CB7B80C813ED7D4100FADB50 /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture.png; path = Resources/TileMap/texture.png; sourceTree = "<group>"; };
 		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/define.h; sourceTree = "<group>"; };
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
 		CBEBE94D13EFA2D700CA3D8A /* Temp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Temp.txt; sourceTree = "<group>"; };
+		CBF4D3EF141B4F47001528FA /* npc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = npc.png; path = Resources/TileMap/npc.png; sourceTree = "<group>"; };
+		CBF4D3F7141B5C39001528FA /* Stage098.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage098.plist; path = Resources/StageInfo/Stage098.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,6 +457,7 @@
 		CB7B7F5B13ED7B2200FADB50 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CBF4D3F6141B5C13001528FA /* StageInfo */,
 				CB7B80C313ED7D0F00FADB50 /* TileMap */,
 				CB7B7F5C13ED7B2200FADB50 /* Default.png */,
 				CB7B7F5E13ED7B2200FADB50 /* fps_images.png */,
@@ -802,11 +805,19 @@
 			isa = PBXGroup;
 			children = (
 				CB7B80C413ED7D4100FADB50 /* sample-field.tmx */,
+				CBF4D3EF141B4F47001528FA /* npc.png */,
 				CB7B80C513ED7D4100FADB50 /* coordinates.plist */,
-				CB7B80C613ED7D4100FADB50 /* npc2.png */,
 				CB7B80C813ED7D4100FADB50 /* texture.png */,
 			);
 			name = TileMap;
+			sourceTree = "<group>";
+		};
+		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
+			isa = PBXGroup;
+			children = (
+				CBF4D3F7141B5C39001528FA /* Stage098.plist */,
+			);
+			name = StageInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -867,10 +878,11 @@
 				CB7B7F6E13ED7B2200FADB50 /* iTunesArtwork in Resources */,
 				CB7B80CB13ED7D4100FADB50 /* sample-field.tmx in Resources */,
 				CB7B80CC13ED7D4100FADB50 /* coordinates.plist in Resources */,
-				CB7B80CD13ED7D4100FADB50 /* npc2.png in Resources */,
 				CB7B80CF13ED7D4100FADB50 /* texture.png in Resources */,
 				CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */,
 				CB4EF93C1415D44400868903 /* Document.txt in Resources */,
+				CBF4D3F0141B4F47001528FA /* npc.png in Resources */,
+				CBF4D3F8141B5C39001528FA /* Stage098.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

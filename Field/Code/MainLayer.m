@@ -73,6 +73,8 @@
     viewScale = 1;
     
     // 파일로부터 맵 관련 파일을 읽어 들여 변수에 저장
+    NSString *path = [self createFilePath];
+    [self loadValueData:path];
     
     [self initMap];
     [self createWarrior];
@@ -118,9 +120,6 @@
         }
     }
     
-    startPoint = [self convertMapToTile:StartPoint];
-    destinationPoint = [self convertMapToTile:EndPoint];
-    
     // 이동 경로 탐색
     [self createMoveTable];
 }
@@ -148,49 +147,6 @@
         NSArray *touchArray = [[event allTouches] allObjects];
         prevMultiLength = [self calcuationMultiTouchLength:touchArray];        
     }
-}
-
-// 터치한 두 좌표간의 거리를 계산하여 반환
-- (CGFloat) calcuationMultiTouchLength:(NSArray *)touchArray {
-    CGFloat result = 0;
-    CGPoint point1;
-    CGPoint point2;
-    int i = 0;
-    
-    for (UITouch *touch in touchArray) {
-        CGPoint location = [touch locationInView:[touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
-     
-        if(i == 0) point1 = convertedLocation;
-        else point2 = convertedLocation;
-        
-        i++;
-    }
-    
-    result = [self lineLength:point2 point2:point1];
-    
-    return result;
-}
-
-// 터치된 두 지점 사이의 좌표값을 구함
-- (CGPoint) middlePoint:(NSArray *)touchArray {
-    CGPoint point1;
-    CGPoint point2;
-    int i = 0;
-    
-    for (UITouch *touch in touchArray) {
-        CGPoint location = [touch locationInView:[touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
-        
-        if(i == 0) point1 = convertedLocation;
-        else point2 = convertedLocation;
-        
-        i++;
-    }
-    
-    CGPoint result = ccp(ABS(point1.x + point2.x) / 2, ABS(point1.y + point2.y) / 2);
-    
-    return result;
 }
 
 // 사용자가 터치로 이동할 경우
@@ -361,8 +317,7 @@
     NSMutableArray *aniFrames = [NSMutableArray array];
     for(NSInteger i = 0; i < 2; i++) {
         CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture
-                                                          rect:CGRectMake(WARRIOR_SIZE * i, WARRIOR_SIZE * tNum, 
-                                                                          WARRIOR_SIZE, WARRIOR_SIZE)];
+                                                          rect:CGRectMake(WARRIOR_SIZE * i, WARRIOR_SIZE * tNum, WARRIOR_SIZE, WARRIOR_SIZE)];
         [aniFrames addObject:frame];
     }
     CCAnimation *animation = [CCAnimation animationWithFrames:aniFrames delay:WARRIOR_MOVE_ACTION];
@@ -650,10 +605,106 @@
 // 좌표 처리 End                                                          //
 //////////////////////////////////////////////////////////////////////////
 
+
+
+//////////////////////////////////////////////////////////////////////////
+// 기타 함수 Start                                                        //
+//////////////////////////////////////////////////////////////////////////
+// 터치한 두 좌표간의 거리를 계산하여 반환
+- (CGFloat) calcuationMultiTouchLength:(NSArray *)touchArray {
+    CGFloat result = 0;
+    CGPoint point1;
+    CGPoint point2;
+    int i = 0;
+    
+    for (UITouch *touch in touchArray) {
+        CGPoint location = [touch locationInView:[touch view]];
+        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        
+        if(i == 0) point1 = convertedLocation;
+        else point2 = convertedLocation;
+        
+        i++;
+    }
+    
+    result = [self lineLength:point2 point2:point1];
+    
+    return result;
+}
+
+// 터치된 두 지점 사이의 좌표값을 구함
+- (CGPoint) middlePoint:(NSArray *)touchArray {
+    CGPoint point1;
+    CGPoint point2;
+    int i = 0;
+    
+    for (UITouch *touch in touchArray) {
+        CGPoint location = [touch locationInView:[touch view]];
+        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        
+        if(i == 0) point1 = convertedLocation;
+        else point2 = convertedLocation;
+        
+        i++;
+    }
+    
+    CGPoint result = ccp(ABS(point1.x + point2.x) / 2, ABS(point1.y + point2.y) / 2);
+    
+    return result;
+}
+
 // 두 점 사이의 거리 계산
 - (CGFloat) lineLength:(CGPoint)point1 point2:(CGPoint)point2 {
     CGFloat result = powf((point2.x - point1.x), 2) + powf((point2.y - point2.y), 2);
     
     return result;
 }
+//////////////////////////////////////////////////////////////////////////
+// 기타 함수 End                                                          //
+//////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////
+// 파일 처리 Start                                                        //
+//////////////////////////////////////////////////////////////////////////
+- (NSString *) createFilePath {
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Stage098.plist"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    
+    if (![fileManager fileExistsAtPath: path]) {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Stage098" ofType:@"plist"];
+        
+        [fileManager copyItemAtPath:bundle toPath: path error:&error];
+    }
+    
+    return path;
+}
+
+- (void) loadValueData:(NSString *)path {
+    NSMutableDictionary *savedStock = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    
+    //load from savedStock example int value
+    int StageLevel = [[savedStock objectForKey:@"StageLevel"] intValue];
+    
+    CGPoint sPoint = CGPointMake([[savedStock objectForKey:@"StartPointX"] intValue], [[savedStock objectForKey:@"StartPointY"] intValue]);
+    CGPoint dPoint = CGPointMake([[savedStock objectForKey:@"EndPointX"] intValue], [[savedStock objectForKey:@"EndPointY"] intValue]);
+
+    startPoint = [self convertMapToTile:sPoint];
+    destinationPoint = [self convertMapToTile:dPoint];
+    
+    // map.tmx의 경우 문자열을 조합하여 불러들임 - 요걸로 하니 에러가 발생 ㅠㅠ 
+    //[savedStock objectForKey:@"MapName"];
+    NSDictionary *wList = [savedStock objectForKey:@"WarriorList"];
+    NSLog(@"WarriorList : %d", [wList count]);
+    
+    [savedStock release];
+}
+//////////////////////////////////////////////////////////////////////////
+// 파일 처리 End                                                          //
+//////////////////////////////////////////////////////////////////////////
 @end

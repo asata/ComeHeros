@@ -35,7 +35,7 @@ CGSize deviceSize;
     
     CGPoint         startPoint;         // 용사 시작지점
     CGPoint         destinationPoint;   // 용사 도착지점
-    
+        
     NSMutableArray  *warriorList;       // 용사 목록 List
     NSMutableArray  *trapList;          // 트랩 List
     
@@ -91,6 +91,8 @@ CGSize deviceSize;
 - (CGFloat) lineLength:(CGPoint)point1 point2:(CGPoint)point2;
 - (CGPoint) middlePoint:(NSArray *)touchArray;
 
+- (NSString *) createFilePath;
+- (void) loadValueData:(NSString *)path;
 //////////////////////////////////////////////
 // 이하 테스트용 코드 => Temp.txt에 이동
 //- (void) printSprite:(CGPoint)thisArea;
