@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "Field/Code/Warrior.m"
-         timestampString = "335244924.335454"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340283036.389494"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "68"
-         endingLineNumber = "68"
-         landmarkName = "-getPosition"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
+         landmarkName = "-onEnterTransitionDidFinish"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -23,12 +23,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "675"
-         endingLineNumber = "675"
-         landmarkName = "-createFilePath"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
+         landmarkName = "-loadWarriorData:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -37,12 +37,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "677"
-         endingLineNumber = "677"
-         landmarkName = "-createFilePath"
+         startingLineNumber = "194"
+         endingLineNumber = "194"
+         landmarkName = "-loadWarriorData:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -51,12 +51,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "676"
-         endingLineNumber = "676"
-         landmarkName = "-createFilePath"
+         startingLineNumber = "190"
+         endingLineNumber = "190"
+         landmarkName = "-loadWarriorData:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -65,12 +65,26 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "680"
-         endingLineNumber = "680"
-         landmarkName = "-createFilePath"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
+         landmarkName = "@implementation playMap"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "185"
+         endingLineNumber = "185"
+         landmarkName = "-loadWarriorData:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -79,12 +93,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "682"
-         endingLineNumber = "682"
-         landmarkName = "-createFilePath"
+         startingLineNumber = "247"
+         endingLineNumber = "247"
+         landmarkName = "-createWarrior:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -93,12 +107,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "689"
-         endingLineNumber = "689"
-         landmarkName = "-loadValueData:"
+         startingLineNumber = "171"
+         endingLineNumber = "171"
+         landmarkName = "-initWarrior"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -107,12 +121,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "691"
-         endingLineNumber = "691"
-         landmarkName = "-loadValueData:"
+         startingLineNumber = "173"
+         endingLineNumber = "173"
+         landmarkName = "-initWarrior"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -121,12 +135,180 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Field/Code/MainLayer.m"
-         timestampString = "337336422.175407"
+         timestampString = "340437695.345724"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "692"
-         endingLineNumber = "692"
-         landmarkName = "-loadValueData:"
+         startingLineNumber = "180"
+         endingLineNumber = "180"
+         landmarkName = "-loadWarriorData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "175"
+         endingLineNumber = "175"
+         landmarkName = "@implementation playMap"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
+         landmarkName = "-loadWarriorData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "195"
+         endingLineNumber = "195"
+         landmarkName = "-loadWarriorData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340283036.389494"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
+         landmarkName = "-onEnterTransitionDidFinish"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340283036.389494"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
+         landmarkName = "-onEnterTransitionDidFinish"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "191"
+         endingLineNumber = "191"
+         landmarkName = "-loadWarriorData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "194"
+         endingLineNumber = "194"
+         landmarkName = "-loadWarriorData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "244"
+         endingLineNumber = "244"
+         landmarkName = "-createWarrior:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "232"
+         endingLineNumber = "232"
+         landmarkName = "-createWarrior:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "233"
+         endingLineNumber = "233"
+         landmarkName = "-createWarrior:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "484"
+         endingLineNumber = "484"
+         landmarkName = "-createMoveTable"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "Field/Code/MainLayer.m"
+         timestampString = "340437695.345724"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "169"
+         endingLineNumber = "169"
+         landmarkName = "-initWarrior"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -1,27 +1,81 @@
-* 완료 항목
-1. 캐릭터 이동시 움직임 애니메이션 처리
-2. 캐릭터 공격 대상 탐색
-3. 캐릭터 속성
-4. 이동 경로 테이블 작성
-5. 맵 확대/축소
-- 확대/축소시 이동 속도 및 비율 조정 (완료)
-- 이동 속도 수정 시 이동경로를 파악 가능하도록 수정이 필요 (완료)
-- 각 좌표 정보 수정 필요 (완료)
+//////////////////////////////////////////////////////////////////////////
+// 트랩 처리 Start                                                        //
+//////////////////////////////////////////////////////////////////////////
+- (void) initTrap {
+// 설치 가능한 트랩 종류 확인
+// 스테이지 정보 파일에서 읽어 들임
+//trapImgList = [TILE_ROAD, TILE_ROCK, TILE_TRAP_ON, TILE_BOX_ON];
+}
 
+- (void) printTrapList:(CGPoint)iPoint {
+NSLog(@"Trap Setup : %f %f", iPoint.x, iPoint.y);
 
+CCSprite *tSprite = [CCSprite spriteWithFile:@"texture.png" rect:CGRectMake(0, 0, 48, 48)];
 
-* 작업 중 및 대기 항목
-2. 맵 타일 선택시 설치 가능한 타일 표시
- - 표시 방법 및 기타 처리 방안 고려
- - 게임 중일 경우 추가 설치 불가능
+tSprite.position = [self convertTileToCocoa:iPoint];
+tSprite.scale = 0.75;
+tSprite.visible = YES;
+[self addChild:tSprite];
+// 설치가 가능한 트랩을 화면에 출력
 
-3. 공격 효과 및 기타 처리
+// 터치한 위치에 트랩이 설치가 가능한지 검사
+// 이미 트랩이 있는지, 설치가 불가능한 곳인지를....
+// 돈이 있는지 등을 검사
+// mapInfo[iPoint.x][iPoint.y] = 설치된 타일 타입
 
-4. 스테이지 구성 정보 구성
- - 시작 위치, 종료 위치
- - 등장 순서 및 체력 정보
- - 스테이지 구성 정보 파일 읽기 관련 내용 처리
+// 트랩을 설치
 
-5. 맵 확대/축소
- - 확대/축소시 map.position 위치 보정 수정
- - 현재 좌표 기준으로 수정 하는 것을 맵 중앙 좌표 기준으로 변경
+// 이동 경로 재계산 필요 - 트랩이 설치된 경우
+[self createMoveTable];
+
+// 표시된 화면 닫음
+}
+
+- (void) createTrap:(CGPoint)iPoint {
+
+}
+
+// 탐지한 트랩에 따라 처리
+- (void) handlingTrap:(Warrior*)pWarrior {
+NSInteger trapType = [self trapFind:pWarrior];
+if(trapType == NotFound) return;
+
+if(trapType == TILE_TRAP_OFF) {
+// 닫힌 함정일 경우
+
+} else if(trapType == TILE_TRAP_ON) {
+// 열린 함정일 경우
+
+} else if(trapType == TILE_BOX_ON) {
+// 보물상자일 경우
+
+[self TreasureBox:pWarrior];
+}
+}
+
+// 근처에 트랩이 있는지 탐지
+// 트램의 경우 해당 타일에 위치할 경우 발동이 되므로 수정 필요
+- (NSInteger) trapFind:(Warrior*)pWarrior {
+CGPoint wPoint = [pWarrior getPosition];
+NSInteger wAttack = [pWarrior getAttackRange];
+
+for(int i = 0; i < [trapList count]; i++) {
+Trap *tTrap = [trapList objectAtIndex:i];
+CGPoint tPoint = [tTrap getPosition];
+CGFloat distance = [self lineLength:tPoint point2:wPoint];
+
+if(distance <= powf(wAttack * TILE_SIZE, 1)) {
+return [tTrap getTrapNum];
+}
+}
+
+return NotFound;
+}
+
+// 보물 상자일 경우
+- (void) TreasureBox:(Warrior*)pWarrior {
+
+}
+//////////////////////////////////////////////////////////////////////////
+// 트랩 처리 End                                                          //
+//////////////////////////////////////////////////////////////////////////

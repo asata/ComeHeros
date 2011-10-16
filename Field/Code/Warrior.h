@@ -5,7 +5,10 @@
 @private
     NSInteger   warriorNum;
     CCSprite    *sprite;
+    CCAnimate   *attackAnimate;     // 공격 애니메이션
+    CCAnimate   *defenseAnimate;    // 방어 애니메이션
     CGPoint     position;           // 현재 위치
+    
     NSInteger   strength;           // 체력
     NSInteger   power;              // 힘
     NSInteger   intellect;          // 지능
@@ -17,9 +20,14 @@
 }
 
 @property (nonatomic, retain) CCSprite *sprite;
+@property (nonatomic, retain) CCAnimate *attackAnimate;
+@property (nonatomic, retain) CCAnimate *defenseAnimate;
 
-//- (id) initWarrior:(CGPoint)pos strength:(NSInteger)streng speed:(NSInteger)pSpeed direction:(NSInteger)pDirection;
-- (id) initWarrior:(CGPoint)pos warriorNum:(NSInteger)p_num strength:(NSInteger)pStrength power:(NSInteger)pPower intellect:(NSInteger)pIntellect defense:(NSInteger)pDefense speed:(NSInteger)pSpeed direction:(NSInteger)pDirection attackRange:(NSInteger)pAttackRange;
+- (id) initWarrior:(CGPoint)pos warriorNum:(NSInteger)p_num 
+          strength:(NSInteger)pStrength power:(NSInteger)pPower 
+         intellect:(NSInteger)pIntellect defense:(NSInteger)pDefense 
+             speed:(NSInteger)pSpeed direction:(NSInteger)pDirection 
+       attackRange:(NSInteger)pAttackRange;
 
 - (void) setWarriorNum:(NSInteger)p_num;
 - (void) setSprite:(CCSprite *)p_spriteh;
@@ -32,6 +40,8 @@
 - (void) setMoveSpeed:(NSInteger)p_speed;
 - (void) setMoveDriection:(NSInteger)p_direction;
 - (void) setAttackRange:(NSInteger)p_range;
+- (void) setAttackAnimate:(CCAnimate *)p_attackAnimate;
+- (void) setDefenseAnimate:(CCAnimate *)p_defenseAnimate;
 
 - (NSInteger) getWarriorNum;
 - (CCSprite *) getSprite;
@@ -44,6 +54,8 @@
 - (NSInteger) getMoveSpeed;
 - (NSInteger) getMoveDriection;
 - (NSInteger) getAttackRange;
+- (CCAnimate *) getAttackAnimate;
+- (CCAnimate *) getDefenseAnimate;
 
 - (void) plusMoveLength;
 - (void) resetMoveLength;
