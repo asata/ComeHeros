@@ -126,8 +126,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "173"
          endingLineNumber = "173"
-         landmarkName = "-initWarrior"
-         landmarkType = "5">
+         landmarkName = "@implementation playMap"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -154,8 +154,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "175"
          endingLineNumber = "175"
-         landmarkName = "@implementation playMap"
-         landmarkType = "3">
+         landmarkName = "-loadWarriorData:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
