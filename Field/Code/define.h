@@ -33,9 +33,6 @@
 #define TILE_GROUND1    154
 #define TILE_GROUND2    155
 
-
-
-
 #define PLAY_MODE               YES     // 게임중
 #define WAIT_MODE               NO      // 대기중
 

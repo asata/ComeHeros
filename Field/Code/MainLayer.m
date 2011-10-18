@@ -83,9 +83,9 @@
     [self initMap];
     [self initWarrior];
     
-    [self createWarrior:ARCHER];
     //[self createWarrior:FIGHTER];
-    //[self createWarrior:MAGE];
+    [self createWarrior:MAGE];
+    //[self createWarrior:ARCHER];
 
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
@@ -166,7 +166,7 @@
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
 - (void) initWarrior {
-    NSString* path = [self loadFilePath:@"coordinates-character1.plist"];
+    NSString* path = [self loadFilePath:@"coordinates-character5.plist"];
     
     [self loadWarriorData:path];
 }
@@ -230,7 +230,7 @@
                                            intellect:10 
                                              defense:10 
                                                speed:2   //[[wInfo objectForKey:@"speed"] intValue] 
-                                           direction:MoveDown
+                                           direction:MoveUp
                                          attackRange:2]; 
     
     // 나타난 용사 수 증가
@@ -238,12 +238,13 @@
     
     CCSprite *tSprite = [idleSprite objectAtIndex:warriorType];
     tSprite.position = ccp((startPoint.x * viewScale) + map.position.x, (startPoint.y * viewScale) + map.position.y); 
-    tSprite.scale = 3.5;
-    tSprite.flipX = WARRIOR_MOVE_RIGHT;
+    [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
+    //[tSprite setScale:WARRIOR_SCALE * viewScale];
     [tSprite setVisible:YES];
     [tSprite runAction:[CCRepeatForever actionWithAction:[idleAnimate objectAtIndex:warriorType]]];
     [tSprite release];
-        
+    
+    [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
     
     [self addChild:tSprite z:kWarriorLayer];
@@ -261,11 +262,29 @@
         // 현재 위치 및 정보를 가져옴
         Warrior *tWarrior = [warriorList objectAtIndex:i];
         CCSprite *tSprite = [tWarrior getSprite];
-        NSInteger direction = [tWarrior getMoveDriection];
         CGPoint movePosition = [tWarrior getPosition];
         
+        // 다음 이동 방향 검사 - 추가적인 테스트 필요
+        // 이동 거리 설정시 24의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
+        // 1, 2, 3, 4, 6, 8, 12
+        BOOL endFlag = [self selectDirection:tWarrior];
+        
+        if(endFlag) {
+            // 목적지에 도달한 경우
+            [deleteList addObject:tWarrior];
+            
+            continue;
+        }
+        
+        // 목적지에 도달하지 않은 경우
+        // 이동 방향 확인
+        NSInteger direction = [tWarrior getMoveDriection];
+        
         // 공격 대상 탐색
-        //[self handlingTrap:tWarrior];
+        // 트랩 탐지 및 처리
+        [self handlingTrap:tWarrior];   
+        
+        // 적 유닛 확인 및 처리
         NSInteger attackEnmy = [self enmyFind:tWarrior];
         if(attackEnmy != -1) NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy);
         
@@ -287,23 +306,28 @@
         [tWarrior plusMoveLength];
         [tWarrior setPosition:movePosition];
         
-        // 다음 이동 방향 검사 - 추가적인 테스트 필요
-        // 이동 거리 설정시 24의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
-        // 1, 2, 3, 4, 6, 8, 12
-        BOOL endFlag = [self selectDirection:tWarrior];
-        
-        if(endFlag) {
-            [deleteList addObject:tWarrior];
-        }
         
         [warriorList replaceObjectAtIndex:i withObject:tWarrior];
     }
     
     // 용사 삭제
-    //[self removeWarriorList:deleteList];
+    [self removeWarriorList:deleteList];
     
     // 애니메이션 효과 재개
     [self resumeSchedulerAndActions];
+}
+
+// 지정된 용사 제거
+- (void) removeWarrior:(NSInteger)index {
+    [warriorList removeObjectAtIndex:index];
+}
+
+- (void) removeWarriorList:(NSMutableArray *)deleteList {
+    for(int i = [deleteList count]; i > 0; i--) {
+        Warrior *tWarrior = [deleteList objectAtIndex:(i - 1)];
+        [[tWarrior getSprite] setVisible:NO];
+        [warriorList removeObject:tWarrior];
+    }
 }
 
 // 일정거리 안에 적이 있는지 탐지
@@ -312,7 +336,7 @@
     CGPoint wPoint = [pWarrior getPosition];
     NSInteger wAttack = [pWarrior getAttackRange];
     
-    for(int i = 0; i < [trapList count]; i++) {
+    /*for(int i = 0; i < [trapList count]; i++) {
         Trap *tTrap = [trapList objectAtIndex:i];
         CGPoint tPoint = [tTrap getPosition];
         CGFloat distance = [self lineLength:tPoint point2:wPoint];
@@ -320,7 +344,7 @@
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
             return [tTrap getTrapNum];
         }
-    }
+    }*/
     
     return NotFound;
 }
@@ -441,6 +465,19 @@
 // 근처에 트랩이 있는지 탐지
 // 트램의 경우 해당 타일에 위치할 경우 발동이 되므로 수정 필요
 - (NSInteger) trapFind:(Warrior*)pWarrior {
+    // 캐릭터가 위치하는 타일에 트랩이 있는지 검사
+    // 함정, 바닥 타입 등을 탐지
+    
+    // 일정 거리 안에 보물상자나 폭발물이 있는지 탐지
+    // 보물 상자의 경우 바로 옆?
+    // 폭발물은 일정거리 이내
+    
+    
+    CCSprite *tSprite = [pWarrior getSprite];
+    
+    // 캐릭터의 현재 위치
+    CGPoint thisPoint = [self convertCocos2dToTile:tSprite.position];
+    
     CGPoint wPoint = [pWarrior getPosition];
     NSInteger wAttack = [pWarrior getAttackRange];
     
@@ -540,7 +577,14 @@
 }
 
 - (void) calcuatioDirection:(int)x y:(int)y {
-    if(x == StartPoint.x && y == StartPoint.y) return;
+    if(x == StartPoint.x && y == StartPoint.y) {
+        if(moveTable[x][y - 1] == MoveUp) moveTable[x][y] = MoveUp;
+        else if(moveTable[x][y + 1] == MoveDown) moveTable[x][y] = MoveDown;
+        else if(moveTable[x - 1][y] == MoveLeft) moveTable[x][y] = MoveLeft;
+        else if(moveTable[x + 1][y] == MoveRight) moveTable[x][y] = MoveRight;
+        
+        return;       
+    }
     
     if(tMoveValue[x][y] > tMoveValue[x][y - 1]) {
         moveTable[x][y - 1] = MoveDown;
@@ -694,7 +738,8 @@
         
         // 클릭한 위치 확인
         CGPoint thisArea = [self convertCocos2dToTile:location];
-
+        //NSLog(@"%f %f", thisArea.x, thisArea.y);
+        
         //[self printTrapList:thisArea];
     }
     

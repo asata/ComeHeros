@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB3B022C1447A670004A1258 /* coordinates-character1.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3B022A1447A670004A1258 /* coordinates-character1.plist */; };
+		CB1D968C144D1F87003D03AC /* coordinates-character5.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1D968B144D1F87003D03AC /* coordinates-character5.plist */; };
 		CB3B022D1447A670004A1258 /* texture-character.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3B022B1447A670004A1258 /* texture-character.png */; };
 		CB4EF93C1415D44400868903 /* Document.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB4EF93B1415D44400868903 /* Document.txt */; };
 		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
@@ -136,7 +136,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CB3B022A1447A670004A1258 /* coordinates-character1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character1.plist"; path = "Resources/TileMap/coordinates-character1.plist"; sourceTree = "<group>"; };
+		CB1D968B144D1F87003D03AC /* coordinates-character5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character5.plist"; path = "Resources/TileMap/coordinates-character5.plist"; sourceTree = "<group>"; };
 		CB3B022B1447A670004A1258 /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/TileMap/texture-character.png"; sourceTree = "<group>"; };
 		CB4EF93B1415D44400868903 /* Document.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Document.txt; sourceTree = "<group>"; };
 		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Monster.h; sourceTree = "<group>"; };
@@ -807,8 +807,8 @@
 			isa = PBXGroup;
 			children = (
 				CBBBEF3D14443D790079525D /* coordinates-tile.plist */,
-				CB3B022A1447A670004A1258 /* coordinates-character1.plist */,
 				CB3B022B1447A670004A1258 /* texture-character.png */,
+				CB1D968B144D1F87003D03AC /* coordinates-character5.plist */,
 				CBBBEF46144443910079525D /* sample.tmx */,
 				CBBBEF4014443D790079525D /* texture-tile.png */,
 			);
@@ -885,8 +885,8 @@
 				CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */,
 				CBBBEF4414443D790079525D /* texture-tile.png in Resources */,
 				CBBBEF47144443910079525D /* sample.tmx in Resources */,
-				CB3B022C1447A670004A1258 /* coordinates-character1.plist in Resources */,
 				CB3B022D1447A670004A1258 /* texture-character.png in Resources */,
+				CB1D968C144D1F87003D03AC /* coordinates-character5.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
