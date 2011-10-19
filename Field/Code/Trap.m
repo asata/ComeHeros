@@ -2,10 +2,11 @@
 
 @implementation Trap
 
-- (id) initTrap:(CGPoint)pos trapNum:(NSInteger)pNum trapType:(NSInteger)pType demage:(NSInteger)pDemage {
+- (id) initTrap:(CGPoint)pos abs:(CGPoint)abs trapNum:(NSInteger)pNum trapType:(NSInteger)pType demage:(NSInteger)pDemage {
     if (self = [super init]) {
         trapNum = pNum;
         position = pos;
+        absPosition = abs;
         trapType = pType;
         demage = pDemage;
     }
@@ -25,6 +26,12 @@
 }
 - (CGPoint) getPosition {
     return position;
+}
+- (void) setABSPosition:(CGPoint)pPosition {
+    absPosition = pPosition;
+}
+- (CGPoint) getABSPosition {
+    return absPosition;
 }
 
 - (void) setTrapType:(NSInteger)pType {

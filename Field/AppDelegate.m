@@ -79,7 +79,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     /* 홈버튼을 선택하여 나갈 경우 애니메이션이 중단된 후 다시 실행시 재개됨
      // 자동 재개가 아닌 재개여부를 선택하는 버튼을 두어 실행하도록 함 */
-	//[[CCDirector sharedDirector] resume];
+	[[CCDirector sharedDirector] resume];
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

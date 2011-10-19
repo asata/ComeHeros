@@ -109,16 +109,15 @@ CGSize deviceSize;
 - (void) printTrapList:(CGPoint)iPoint;
 - (void) printTrap:(CGPoint)iPoint;
 - (void) createTrap:(CGPoint)iPoint;                        // 트랩 설치
-- (void) handlingTrap:(Warrior*)pWarrior;                   // 트랩 탐지 관련 처리
-- (NSInteger) trapFind:(Warrior*)pWarrior;                  // 트랩 탐지
-- (void) TreasureBox:(Warrior*)pWarrior;                    // 보물상자 처리
-- (void) addTrap:(CGPoint)tPoint type:(NSInteger)tType;     // 트랩 목록에 트랩 추가
+- (BOOL) handlingTrap:(Warrior*)pWarrior;                   // 트랩 탐지 관련 처리
+- (void) addTrap:(CGPoint)tPoint abs:(CGPoint)abs type:(NSInteger)tType;     // 트랩 목록에 트랩 추가
 
 // 좌표값 변환
 - (CGPoint) getAbsCoordinate:(CGPoint)cocos2d;
 - (CGPoint) convertTileToMap:(CGPoint)tile;
 - (CGPoint) convertTileToCocoa:(CGPoint)tile;
 - (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d;
+- (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs;
 
 // 파일 처리 함수
 - (NSString *) loadFilePath:(NSString *)fileName;

@@ -84,8 +84,8 @@
     [self initWarrior];
     
     //[self createWarrior:FIGHTER];
-    [self createWarrior:MAGE];
-    //[self createWarrior:ARCHER];
+    //[self createWarrior:MAGE];
+    [self createWarrior:ARCHER];
 
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
@@ -127,8 +127,8 @@
 
 // 타일맵에 있는 타일을 읽어들임
 - (void) loadTileMap {
-    CCTMXLayer *layer1 = [map layerNamed:@"Layer 1"];
-    CCTMXLayer *layer2 = [map layerNamed:@"New Layer"];
+    CCTMXLayer *layer1 = [map layerNamed:MAP_LAYER1];
+    CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
     
     for(int i = 0; i < TILE_NUM; i++) {
         for(int j = 0; j < TILE_NUM; j++) {
@@ -150,11 +150,12 @@
             if(mapInfo[i][j] == TILE_TRAP_OPEN || mapInfo[i][j] == TILE_TRAP_CLOSE ||
                mapInfo[i][j] == TILE_TREASURE || mapInfo[i][j] == TILE_EXPLOSIVE)
             {
-                [self addTrap:[self convertTileToMap:ccp(i, j)] type:mapInfo[i][j]];
+                [self addTrap:ccp(i, j) abs:[self convertTileToMap:ccp(i, j)] type:mapInfo[i][j]];
             }                                                    
         }
     }
     
+    NSLog(@"Trap count : %d", [trapList count]);
 }
 //////////////////////////////////////////////////////////////////////////
 // 맵 처리 End                                                           //
@@ -239,7 +240,7 @@
     CCSprite *tSprite = [idleSprite objectAtIndex:warriorType];
     tSprite.position = ccp((startPoint.x * viewScale) + map.position.x, (startPoint.y * viewScale) + map.position.y); 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
-    //[tSprite setScale:WARRIOR_SCALE * viewScale];
+    [tSprite setScale:viewScale];
     [tSprite setVisible:YES];
     [tSprite runAction:[CCRepeatForever actionWithAction:[idleAnimate objectAtIndex:warriorType]]];
     [tSprite release];
@@ -265,8 +266,8 @@
         CGPoint movePosition = [tWarrior getPosition];
         
         // 다음 이동 방향 검사 - 추가적인 테스트 필요
-        // 이동 거리 설정시 24의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
-        // 1, 2, 3, 4, 6, 8, 12
+        // 이동 거리 설정시 32의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
+        // 1, 2, 4, 8, 16, 32
         BOOL endFlag = [self selectDirection:tWarrior];
         
         if(endFlag) {
@@ -282,13 +283,18 @@
         
         // 공격 대상 탐색
         // 트랩 탐지 및 처리
-        [self handlingTrap:tWarrior];   
+        BOOL survivalFlag = [self handlingTrap:tWarrior];   
+        if(!survivalFlag) {
+            [deleteList addObject:tWarrior];
+            continue;
+        }
         
         // 적 유닛 확인 및 처리
         NSInteger attackEnmy = [self enmyFind:tWarrior];
         if(attackEnmy != -1) NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy);
         
         // 생존 여부 확인 후 소멸 여부 처리
+        
         
         // 이동 및 기타 체크 처리
         if(direction == MoveLeft) {
@@ -333,8 +339,8 @@
 // 일정거리 안에 적이 있는지 탐지
 // 현재 트랩으로 지정됨 - 적으로 변경 필요
 - (NSInteger) enmyFind:(Warrior*)pWarrior {
-    CGPoint wPoint = [pWarrior getPosition];
-    NSInteger wAttack = [pWarrior getAttackRange];
+    //CGPoint wPoint = [pWarrior getPosition];
+    //NSInteger wAttack = [pWarrior getAttackRange];
     
     /*for(int i = 0; i < [trapList count]; i++) {
         Trap *tTrap = [trapList objectAtIndex:i];
@@ -445,63 +451,66 @@
 }
 
 // 탐지한 트랩에 따라 처리
-- (void) handlingTrap:(Warrior*)pWarrior {
-    NSInteger trapType = [self trapFind:pWarrior];
-    if(trapType == NotFound) return;
-    
-    if(trapType == TILE_TRAP_CLOSE) {
-        // 닫힌 함정일 경우
-        
-    } else if(trapType == TILE_TRAP_OPEN) {
-        // 열린 함정일 경우
-        
-    } else if(trapType == TILE_TREASURE) {
-        // 보물상자일 경우
-        
-        [self TreasureBox:pWarrior];
-    }
-}
-
-// 근처에 트랩이 있는지 탐지
-// 트램의 경우 해당 타일에 위치할 경우 발동이 되므로 수정 필요
-- (NSInteger) trapFind:(Warrior*)pWarrior {
-    // 캐릭터가 위치하는 타일에 트랩이 있는지 검사
-    // 함정, 바닥 타입 등을 탐지
-    
-    // 일정 거리 안에 보물상자나 폭발물이 있는지 탐지
-    // 보물 상자의 경우 바로 옆?
-    // 폭발물은 일정거리 이내
-    
-    
-    CCSprite *tSprite = [pWarrior getSprite];
-    
+- (BOOL) handlingTrap:(Warrior*)pWarrior {
     // 캐릭터의 현재 위치
-    CGPoint thisPoint = [self convertCocos2dToTile:tSprite.position];
+    CGPoint sPoint = [self convertTileToAbsCoordinate:[pWarrior getPosition]];   
+    CGPoint sPoint1 = [pWarrior getPosition];
     
-    CGPoint wPoint = [pWarrior getPosition];
-    NSInteger wAttack = [pWarrior getAttackRange];
-    
+    //NSLog(@"%f %f %d %d", sPoint.x, sPoint.y, tMoveValue[7][2], tMoveValue[(NSInteger) sPoint.x][(NSInteger) sPoint.y]);
     for(int i = 0; i < [trapList count]; i++) {
         Trap *tTrap = [trapList objectAtIndex:i];
         CGPoint tPoint = [tTrap getPosition];
-        CGFloat distance = [self lineLength:tPoint point2:wPoint];
+        CGPoint tPoint1 = [tTrap getABSPosition];
+        NSInteger trapType = [tTrap getTrapType];
+        CGFloat distance = [self lineLength:sPoint1 point2:tPoint1];
         
-        if(distance <= powf(wAttack * TILE_SIZE, 1)) {
-            return [tTrap getTrapNum];
+        if(trapType == TILE_TREASURE) {
+            //NSLog(@"%d %f", i, distance);
+        }
+        
+        if(trapType == TILE_TRAP_CLOSE) {
+            // 닫힌 함정일 경우
+            if(tPoint.x == sPoint.x && tPoint.y == sPoint.y) {
+                CGPoint point = [tTrap getPosition];
+                
+                // 닫힌 함정을 오픈
+                CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
+                [layer2 setTileGID:TILE_TRAP_OPEN at:point];
+                mapInfo[(NSInteger) point.x][(NSInteger) point.y] = TILE_TRAP_OPEN;
+                [tTrap setTrapType:TILE_TRAP_OPEN];
+                
+                NSLog(@"%f %f %f %f", tPoint.x, tPoint.y, sPoint.x, sPoint.y);
+                
+                // 캐릭터의 지능에 따라 통과 여부 결정
+                if([pWarrior getIntellect] < PASS_TRAP_INTELLECT) return DEATH;
+            }
+        } else if(trapType == TILE_TRAP_OPEN) {
+            // 열린 함정일 경우
+            
+            // 캐릭터의 지능에 따라 통과 여부 결정
+            if([pWarrior getIntellect] < PASS_TRAP_INTELLECT) return DEATH;
+        } else if(trapType == TILE_TREASURE) {
+            // 보물상자일 경우
+            
+            /*if(distance < powf(TILE_SIZE, 2)) {
+                [pWarrior setStrength:[pWarrior getStrength] - [tTrap getDemage]];
+                
+                NSLog(@"%f %f %f %f", tPoint.x, tPoint.y, sPoint.x, sPoint.y);
+                NSLog(@"Find Treasure Box");
+            }*/
+            
+            if([pWarrior getStrength] < 0) return DEATH;
+        } else if(trapType == TILE_EXPLOSIVE) {
+            // 폭발물일 경우
         }
     }
     
-    return NotFound;
-}
-
-// 보물 상자일 경우
-- (void) TreasureBox:(Warrior*)pWarrior {
-    
+    return SURVIVAL;
 }
 
 // 트랩 목록에 트랙 추가
-- (void) addTrap:(CGPoint)tPoint type:(NSInteger)tType {
-    Trap *tTrap = [[Trap alloc] initTrap:tPoint trapNum:trapNum trapType:tType demage:0];
+- (void) addTrap:(CGPoint)tPoint abs:(CGPoint)abs type:(NSInteger)tType {
+    Trap *tTrap = [[Trap alloc] initTrap:tPoint abs:abs trapNum:trapNum trapType:tType demage:10];
     
     [trapList addObject:tTrap];
 }
@@ -543,37 +552,40 @@
 - (void) calcuationMoveValue:(int)x y:(int)y {
     if(x == EndPoint.x && y == EndPoint.y) return;
     
+    NSInteger nextVale = tMoveValue[x][y] + 1;
     if (y > 0 && moveTable[x][y - 1] != -1) {
         // 상단 탐색    
-        if(tMoveValue[x][y - 1] == 999) {
-            tMoveValue[x][y - 1] = tMoveValue[x][y] + 1;
+        if(tMoveValue[x][y - 1] > nextVale) {
+            tMoveValue[x][y - 1] = nextVale;
             [self calcuationMoveValue:x y:(y - 1)];
         }
     }
     
     if(x < (TILE_NUM - 1) && moveTable[x + 1][y] != -1) {
         // 오른쪽 탐색
-        if(tMoveValue[x + 1][y] == 999) {
-            tMoveValue[x + 1][y] = tMoveValue[x][y] + 1;
+        if(tMoveValue[x + 1][y] > nextVale) {
+            tMoveValue[x + 1][y] = nextVale;
             [self calcuationMoveValue:(x + 1) y:y];
         }
     } 
     
     if(x > 0 && moveTable[x - 1][y] != -1) {
         // 왼쪽 탐색
-        if(tMoveValue[x - 1][y] == 999) {
-            tMoveValue[x - 1][y] = tMoveValue[x][y] + 1;
+        if(tMoveValue[x - 1][y] > nextVale) {
+            tMoveValue[x - 1][y] = nextVale;
             [self calcuationMoveValue:(x - 1) y:y];
         }
     } 
     
     if (y < (TILE_NUM - 1) && moveTable[x][y + 1] != -1) {
         // 아래 탐색    
-        if(tMoveValue[x][y + 1] == 999) {
-            tMoveValue[x][y + 1] = tMoveValue[x][y] + 1;
+        if(tMoveValue[x][y + 1] > nextVale) {
+            tMoveValue[x][y + 1] = nextVale;
             [self calcuationMoveValue:x y:(y + 1)];
         }
     }
+    
+    NSLog(@"%d %d %d", x, y, tMoveValue[7][2]);
 }
 
 - (void) calcuatioDirection:(int)x y:(int)y {
@@ -709,13 +721,13 @@
                                                    map.position.y + (deviceSize.height * changeScale))];
         
         // 용사 비율 조정
-        /*for(int i = 0; i < [warriorList count]; i++) {
+        for(int i = 0; i < [warriorList count]; i++) {
             Warrior *tWarrior = [warriorList objectAtIndex:i];
             CCSprite *tSprite = [tWarrior getSprite];
-            tSprite.scale = WARRIOR_SCALE * viewScale;
+            tSprite.scale = viewScale;
             tSprite.position = ccp(map.position.x + ([tWarrior getPosition].x * viewScale), 
                                    map.position.y + ([tWarrior getPosition].y * viewScale));
-        }*/
+        }
         
         prevMultiLength = length;
         
@@ -738,7 +750,7 @@
         
         // 클릭한 위치 확인
         CGPoint thisArea = [self convertCocos2dToTile:location];
-        //NSLog(@"%f %f", thisArea.x, thisArea.y);
+        NSLog(@"%f %f", thisArea.x, thisArea.y);
         
         //[self printTrapList:thisArea];
     }
@@ -849,6 +861,13 @@
     
     return CGPointMake(x, y);
 }
+
+- (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs {
+    CGFloat x = floorf(abs.x / TILE_SIZE);
+    CGFloat y = floorf(TILE_NUM - abs.y / TILE_SIZE);
+    
+    return CGPointMake(x, y);
+}
 //////////////////////////////////////////////////////////////////////////
 // 좌표 처리 End                                                          //
 //////////////////////////////////////////////////////////////////////////
@@ -903,9 +922,16 @@
 
 // 두 점 사이의 거리 계산
 - (CGFloat) lineLength:(CGPoint)point1 point2:(CGPoint)point2 {
-    CGFloat result = powf((point2.x - point1.x), 2) + powf((point2.y - point2.y), 2);
+    CGFloat x = 0;
+    CGFloat y = 0;
     
-    return result;
+    if(point1.x > point2.x) x = point1.x - point2.x;
+    else x = point2.x - point1.x;
+    
+    if(point1.y > point2.y) y = point1.y - point2.y;
+    else y = point2.y - point1.y;
+    
+    return (powf(x, 2) + powf(y, 2));
 }
 //////////////////////////////////////////////////////////////////////////
 // 기타 함수 End                                                          //
