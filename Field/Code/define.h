@@ -19,7 +19,7 @@
 #define TILE_GROUND1    154
 #define TILE_GROUND2    155
 
-#define PASS_TRAP_INTELLECT 5
+#define PASS_TRAP_INTELLECT 50
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@
 
 // 추후 게임 설정 파일 로드시 파일에서 읽어들임
 #define StartPoint          ccp(17, 0)
-#define EndPoint            ccp(5, 2) //ccp(8, 7)
+#define EndPoint            ccp(8, 7) //ccp(5, 2) //
 
 enum LayerIndex {
     kBackgroundLayer,
