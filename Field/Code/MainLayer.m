@@ -458,17 +458,12 @@
     CGPoint sPoint = [self convertTileToAbsCoordinate:[pWarrior getPosition]];   
     CGPoint sPoint1 = [pWarrior getPosition];
     
-    //NSLog(@"%f %f %d %d", sPoint.x, sPoint.y, tMoveValue[7][2], tMoveValue[(NSInteger) sPoint.x][(NSInteger) sPoint.y]);
     for(int i = 0; i < [trapList count]; i++) {
         Trap *tTrap = [trapList objectAtIndex:i];
         CGPoint tPoint = [tTrap getPosition];
         CGPoint tPoint1 = [tTrap getABSPosition];
         NSInteger trapType = [tTrap getTrapType];
         CGFloat distance = [self lineLength:sPoint1 point2:tPoint1];
-        
-        if(trapType == TILE_TREASURE) {
-            //NSLog(@"%d %f", i, distance);
-        }
         
         if(trapType == TILE_TRAP_CLOSE) {
             // 닫힌 함정일 경우
@@ -554,35 +549,35 @@
 - (void) calcuationMoveValue:(int)x y:(int)y {
     if(x == EndPoint.x && y == EndPoint.y) return;
     
-    NSInteger nextVale = tMoveValue[x][y] + 1;
+    NSInteger nextValue = tMoveValue[x][y] + 1;
     if (y > 0 && moveTable[x][y - 1] != -1) {
         // 상단 탐색    
-        if(tMoveValue[x][y - 1] > nextVale) {
-            tMoveValue[x][y - 1] = nextVale;
+        if(tMoveValue[x][y - 1] > nextValue) {
+            tMoveValue[x][y - 1] = nextValue;
             [self calcuationMoveValue:x y:(y - 1)];
         }
     }
     
     if(x < (TILE_NUM - 1) && moveTable[x + 1][y] != -1) {
         // 오른쪽 탐색
-        if(tMoveValue[x + 1][y] > nextVale) {
-            tMoveValue[x + 1][y] = nextVale;
+        if(tMoveValue[x + 1][y] > nextValue) {
+            tMoveValue[x + 1][y] = nextValue;
             [self calcuationMoveValue:(x + 1) y:y];
         }
     } 
     
     if(x > 0 && moveTable[x - 1][y] != -1) {
         // 왼쪽 탐색
-        if(tMoveValue[x - 1][y] > nextVale) {
-            tMoveValue[x - 1][y] = nextVale;
+        if(tMoveValue[x - 1][y] > nextValue) {
+            tMoveValue[x - 1][y] = nextValue;
             [self calcuationMoveValue:(x - 1) y:y];
         }
     } 
     
     if (y < (TILE_NUM - 1) && moveTable[x][y + 1] != -1) {
         // 아래 탐색    
-        if(tMoveValue[x][y + 1] > nextVale) {
-            tMoveValue[x][y + 1] = nextVale;
+        if(tMoveValue[x][y + 1] > nextValue) {
+            tMoveValue[x][y + 1] = nextValue;
             [self calcuationMoveValue:x y:(y + 1)];
         }
     }
