@@ -3,6 +3,7 @@
 #import "define.h"
 #import "Function.h"
 #import "Warrior.h"
+#import "TrapHandling.h"
 #import "Trap.h"
 
 // 메인 화면
@@ -18,6 +19,7 @@
 // 게임 화면
 @interface playMap : CCLayer {
     Function        *function;
+    TrapHandling    *trapHandling;
     //CCTMXLayer      *layer;             // 게임 레이어 정보 저장
     
     /////////////////////////////////////////////////////////
@@ -53,13 +55,10 @@
     
     // 현재 진행중인 맵에 나타는 목록
     NSMutableArray  *warriorList;       // 용사 목록 List
-    NSMutableArray  *trapList;          // 트랩 List
     
     NSInteger       warriorNum;         // 게임 시작 후 나타난 용사의 수
-    NSInteger       trapNum;            // 게임 시작 후 설치한 트랩의 수
     
     // 맵 관련 변수
-    unsigned int    mapInfo[TILE_NUM][TILE_NUM];    // 타일맵에 설치된 타일 정보
     unsigned int    moveTable[TILE_NUM][TILE_NUM];  // 이동 경로를 저장한 배열
     unsigned int    tMoveValue[TILE_NUM][TILE_NUM]; // 이동 경로 계산을 위한 임시 테이블
     /////////////////////////////////////////////////////////
@@ -69,6 +68,7 @@
 
 //@property (nonatomic, retain) CCTMXTiledMap *map;
 @property (nonatomic, retain) Function   *function;
+@property (nonatomic, retain) TrapHandling   *trapHandling;
 @property (nonatomic, retain) CCTexture2D   *texture;
 @property (nonatomic, retain) CCSprite      *sprite;
 @property (nonatomic, retain) CCTMXLayer    *layer;
@@ -103,19 +103,6 @@
 - (void) removeWarriorList:(NSMutableArray *)deleteList;    // 용사 제거
 - (NSInteger) enmyFind:(Warrior*)pWarrior;                  // 적 탐지
 - (BOOL) selectDirection:(Warrior *)pWarrior;               // 이동 방향 결정
-
-// 트랩 관련 함수
-- (void) initTrap;
-- (void) printTrapList:(CGPoint)iPoint;
-- (void) printTrap:(CGPoint)iPoint;
-- (void) createTrap:(CGPoint)iPoint;                        // 트랩 설치
-- (BOOL) handlingTrap:(Warrior*)pWarrior;                   // 트랩 탐지 관련 처리
-- (void) addTrap:(CGPoint)tPoint abs:(CGPoint)abs type:(NSInteger)tType;     // 트랩 목록에 트랩 추가
-
-- (NSInteger) trapCheckWarrior:(Warrior*)pWarrior;
-- (void) trapOpen:(Warrior*)pWarrior; 
-- (void) trapClose:(Warrior*)pWarrior tTrap:(Trap*)tTrap; 
-- (void) trapDemage:(Warrior*)pWarrior;
 
 // 파일 처리 함수
 - (NSString *) loadFilePath:(NSString *)fileName;

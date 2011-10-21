@@ -1,4 +1,5 @@
 #import "cocos2d.h"
+#import "define.h"
 
 @interface commonValue : NSObject {
 } 
@@ -10,6 +11,9 @@
 - (CCTMXTiledMap*) getTileMap;
 - (void) setMapPosition:(CGPoint)p_point;
 - (CGPoint) getMapPosition;
+- (void) initMapInfo:(unsigned int **)p_info;
+- (void) setMapInfo:(NSInteger)x y:(NSInteger)y tileType:(NSInteger)tileType;
+- (unsigned int) getMapInfo:(NSInteger)x y:(NSInteger)y;
 
 - (void) setDeviceSize:(CGSize)p_deviceSize;
 - (CGSize) getDeviceSize;
