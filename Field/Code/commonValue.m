@@ -4,6 +4,10 @@ static CCTMXTiledMap    *map;               // 타일 맵
 static CGSize           deviceSize;         // 디바이스의 크기
 static CGFloat          viewScale;          // 화면 확대/축소 비율
 static unsigned int     mapInfo[TILE_NUM][TILE_NUM];    // 타일맵에 설치된 타일 정보
+
+static CGPoint         startPoint;         // 용사 시작지점
+static CGPoint         destinationPoint;   // 용사 도착지점
+
 static commonValue      * _globalTest = nil;
 
 @implementation commonValue
@@ -77,6 +81,22 @@ static commonValue      * _globalTest = nil;
 }
 - (CGFloat) getViewScale {
     return viewScale;
+}
+
+// 시작 지점 좌표
+- (void) setStartPoint:(CGPoint)p_point {
+    startPoint = p_point;
+}
+- (CGPoint) getStartPoint {
+    return startPoint;
+}
+
+// 도착 지점 좌표
+- (void) setEndPoint:(CGPoint)p_point {
+    destinationPoint = p_point;
+}
+- (CGPoint) getEndPoint {
+    return destinationPoint;
 }
 
 @end

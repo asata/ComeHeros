@@ -21,5 +21,9 @@
 - (void) setViewScale:(CGFloat)p_scale;
 - (CGFloat) getViewScale;
 
+- (void) setStartPoint:(CGPoint)p_point;
+- (CGPoint) getStartPoint;
 
+- (void) setEndPoint:(CGPoint)p_point;
+- (CGPoint) getEndPoint;
 @end
