@@ -1,6 +1,7 @@
 #import "define.h"
 #import "commonValue.h"
 #import "Warrior.h"
+#import "File.h"
 #import "TrapHandling.h"
 
 
@@ -44,8 +45,4 @@
 
 - (void) setMoveTable:(NSInteger)x y:(NSInteger)y value:(NSInteger)value;
 - (NSInteger) getMoveTable:(NSInteger)x y:(NSInteger)y;
-
-
-
-- (NSString *) loadFilePath:(NSString *)fileName;
 @end

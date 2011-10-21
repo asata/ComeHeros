@@ -71,10 +71,11 @@
     function = [[Function alloc] init];
     trapHandling = [[TrapHandling alloc] init];
     warriorHandling = [[WarriorHandling alloc] init];
+    Coordinate *coordinate = [[Coordinate alloc] init];
     
     [[commonValue sharedSingleton] setViewScale:1];
-    [[commonValue sharedSingleton] setStartPoint:[function convertTileToMap:StartPoint]];
-    [[commonValue sharedSingleton] setEndPoint:[function convertTileToMap:EndPoint]];
+    [[commonValue sharedSingleton] setStartPoint:[coordinate convertTileToMap:StartPoint]];
+    [[commonValue sharedSingleton] setEndPoint:[coordinate convertTileToMap:EndPoint]];
     
     [self initMap];
     [warriorHandling initWarrior];
@@ -90,8 +91,6 @@
 }
 
 - (void) dealloc {
-    [stageInfo release];
-    
     [super dealloc];
 }
 //////////////////////////////////////////////////////////////////////////
@@ -124,6 +123,8 @@
 
 // 타일맵에 있는 타일을 읽어들임
 - (void) loadTileMap {
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     CCTMXLayer *layer1 = [map layerNamed:MAP_LAYER1];
     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
@@ -149,7 +150,7 @@
             if(tileType == TILE_TRAP_OPEN || tileType == TILE_TRAP_CLOSE ||
                tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
             {
-                [trapHandling addTrap:ccp(i, j) abs:[function convertTileToMap:ccp(i, j)] type:tileType];
+                [trapHandling addTrap:ccp(i, j) abs:[coordinate convertTileToMap:ccp(i, j)] type:tileType];
             }                                                    
         }
     }
@@ -292,7 +293,8 @@
         CGPoint location = [touch locationInView: [touch view]];
         
         // 클릭한 위치 확인
-        CGPoint thisArea = [function convertCocos2dToTile:location];
+        Coordinate *coordinate = [[Coordinate alloc] init];
+        CGPoint thisArea = [coordinate convertCocos2dToTile:location];
         NSLog(@"%f %f", thisArea.x, thisArea.y);
         
         //[self printTrapList:thisArea];
@@ -368,74 +370,5 @@
 }
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 End                                                        //
-//////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////////
-// 파일 처리 Start                                                        //
-//////////////////////////////////////////////////////////////////////////
-- (NSString *) loadFilePath:(NSString *)fileName {
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSArray* sName = [fileName componentsSeparatedByString:@"."];
-    if (![fileManager fileExistsAtPath: path]) {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:[sName objectAtIndex:0] ofType:[sName objectAtIndex:1]];
-        
-        [fileManager copyItemAtPath:bundle toPath: path error:&error];
-    }
-    
-    return path;
-}
-
-- (NSString *) loadFilePath {
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Stage097.plist"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    
-    if (![fileManager fileExistsAtPath: path]) {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Stage097" ofType:@"plist"];
-        
-        [fileManager copyItemAtPath:bundle toPath: path error:&error];
-    }
-    
-    return path;
-}
-
-- (void) loadStageData:(NSString *)path {
-    //NSMutableDictionary *
-    stageInfo = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
-    
-    //load from savedStock example int value
-    //int StageLevel = [[savedStock objectForKey:@"StageLevel"] intValue];
-    
-    CGPoint sPoint = CGPointMake([[stageInfo objectForKey:@"StartPointX"] intValue], 
-                                 [[stageInfo objectForKey:@"StartPointY"] intValue]);
-    CGPoint dPoint = CGPointMake([[stageInfo objectForKey:@"EndPointX"] intValue], 
-                                 [[stageInfo objectForKey:@"EndPointY"] intValue]);
-    
-    [[commonValue sharedSingleton] setStartPoint:[function convertTileToMap:sPoint]];
-    [[commonValue sharedSingleton] setEndPoint:[function convertTileToMap:dPoint]];
-    
-    // map.tmx의 경우 문자열을 조합하여 불러들임 - 요걸로 하니 에러가 발생 ㅠㅠ 
-    //[savedStock objectForKey:@"MapName"];
-    NSDictionary *tList = [stageInfo objectForKey:@"WarriorList"];
-    wCount = [tList count];
-}
-
-- (NSDictionary *) loadWarriorInfo:(NSInteger)index {
-    NSDictionary *tList = [stageInfo objectForKey:@"WarriorList"];
-    NSDictionary *data = [tList objectForKey:[NSString stringWithFormat:@"%d", index]];
-    
-    return data;
-}
-//////////////////////////////////////////////////////////////////////////
-// 파일 처리 End                                                          //
 //////////////////////////////////////////////////////////////////////////
 @end

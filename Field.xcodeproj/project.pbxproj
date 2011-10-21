@@ -10,8 +10,10 @@
 		CB1D968C144D1F87003D03AC /* coordinates-character5.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1D968B144D1F87003D03AC /* coordinates-character5.plist */; };
 		CB29B95E1451A49E005D7C1E /* TrapHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B95D1451A49E005D7C1E /* TrapHandling.m */; };
 		CB29B9631451AE5C005D7C1E /* WarriorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9621451AE5C005D7C1E /* WarriorHandling.m */; };
+		CB29B9661451BAE9005D7C1E /* MonsterHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9651451BAE9005D7C1E /* MonsterHandling.m */; };
+		CB29B9701451BB93005D7C1E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B96F1451BB93005D7C1E /* File.m */; };
+		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
 		CB3B022D1447A670004A1258 /* texture-character.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3B022B1447A670004A1258 /* texture-character.png */; };
-		CB4EF93C1415D44400868903 /* Document.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB4EF93B1415D44400868903 /* Document.txt */; };
 		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
 		CB4EF9431415D45600868903 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF9411415D45600868903 /* Trap.m */; };
 		CB64DA2914515A4B00C3D1C0 /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2814515A4B00C3D1C0 /* Function.m */; };
@@ -135,7 +137,6 @@
 		CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF3D14443D790079525D /* coordinates-tile.plist */; };
 		CBBBEF4414443D790079525D /* texture-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF4014443D790079525D /* texture-tile.png */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
-		CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */ = {isa = PBXBuildFile; fileRef = CBEBE94D13EFA2D700CA3D8A /* Temp.txt */; };
 		CBF4D3F8141B5C39001528FA /* Stage097.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage097.plist */; };
 /* End PBXBuildFile section */
 
@@ -145,8 +146,13 @@
 		CB29B95D1451A49E005D7C1E /* TrapHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrapHandling.m; path = Code/Handling/TrapHandling.m; sourceTree = "<group>"; };
 		CB29B9611451AE5C005D7C1E /* WarriorHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarriorHandling.h; path = Code/Handling/WarriorHandling.h; sourceTree = "<group>"; };
 		CB29B9621451AE5C005D7C1E /* WarriorHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WarriorHandling.m; path = Code/Handling/WarriorHandling.m; sourceTree = "<group>"; };
+		CB29B9641451BAE9005D7C1E /* MonsterHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MonsterHandling.h; path = Code/Handling/MonsterHandling.h; sourceTree = "<group>"; };
+		CB29B9651451BAE9005D7C1E /* MonsterHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MonsterHandling.m; path = Code/Handling/MonsterHandling.m; sourceTree = "<group>"; };
+		CB29B96E1451BB93005D7C1E /* File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = File.h; path = Code/CommonFunction/File.h; sourceTree = "<group>"; };
+		CB29B96F1451BB93005D7C1E /* File.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = File.m; path = Code/CommonFunction/File.m; sourceTree = "<group>"; };
+		CB29B9711451BF2F005D7C1E /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Coordinate.h; path = Code/CommonFunction/Coordinate.h; sourceTree = "<group>"; };
+		CB29B9721451BF2F005D7C1E /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Coordinate.m; path = Code/CommonFunction/Coordinate.m; sourceTree = "<group>"; };
 		CB3B022B1447A670004A1258 /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/TileMap/texture-character.png"; sourceTree = "<group>"; };
-		CB4EF93B1415D44400868903 /* Document.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Document.txt; sourceTree = "<group>"; };
 		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Monster.h; sourceTree = "<group>"; };
 		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Monster.m; sourceTree = "<group>"; };
 		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
@@ -396,7 +402,6 @@
 		CBBBEF3D14443D790079525D /* coordinates-tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-tile.plist"; path = "Resources/TileMap/coordinates-tile.plist"; sourceTree = "<group>"; };
 		CBBBEF4014443D790079525D /* texture-tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-tile.png"; path = "Resources/TileMap/texture-tile.png"; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
-		CBEBE94D13EFA2D700CA3D8A /* Temp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Temp.txt; sourceTree = "<group>"; };
 		CBF4D3F7141B5C39001528FA /* Stage097.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage097.plist; path = Resources/StageInfo/Stage097.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -426,8 +431,58 @@
 				CB29B95D1451A49E005D7C1E /* TrapHandling.m */,
 				CB29B9611451AE5C005D7C1E /* WarriorHandling.h */,
 				CB29B9621451AE5C005D7C1E /* WarriorHandling.m */,
+				CB29B9641451BAE9005D7C1E /* MonsterHandling.h */,
+				CB29B9651451BAE9005D7C1E /* MonsterHandling.m */,
 			);
 			name = Handling;
+			sourceTree = "<group>";
+		};
+		CB29B9671451BAF1005D7C1E /* Common Function */ = {
+			isa = PBXGroup;
+			children = (
+				CB64DA2714515A4B00C3D1C0 /* Function.h */,
+				CB64DA2814515A4B00C3D1C0 /* Function.m */,
+				CB29B96E1451BB93005D7C1E /* File.h */,
+				CB29B96F1451BB93005D7C1E /* File.m */,
+				CB29B9711451BF2F005D7C1E /* Coordinate.h */,
+				CB29B9721451BF2F005D7C1E /* Coordinate.m */,
+			);
+			name = "Common Function";
+			sourceTree = "<group>";
+		};
+		CB29B96A1451BB1C005D7C1E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CBAD463113EF72E80008F5FA /* Warrior.h */,
+				CBAD463213EF72E90008F5FA /* Warrior.m */,
+				CB4EF93E1415D45600868903 /* Monster.h */,
+				CB4EF93F1415D45600868903 /* Monster.m */,
+				CB4EF9401415D45600868903 /* Trap.h */,
+				CB4EF9411415D45600868903 /* Trap.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		CB29B9741451C0B8005D7C1E /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				CB3B022B1447A670004A1258 /* texture-character.png */,
+				CB1D968B144D1F87003D03AC /* coordinates-character5.plist */,
+			);
+			name = Character;
+			sourceTree = "<group>";
+		};
+		CB29B9751451C0E0005D7C1E /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				CB7B7F6013ED7B2200FADB50 /* Icon-72.png */,
+				CB7B7F6213ED7B2200FADB50 /* Icon-Small-50.png */,
+				CB7B7F6413ED7B2200FADB50 /* Icon-Small.png */,
+				CB7B7F6613ED7B2200FADB50 /* Icon-Small@2x.png */,
+				CB7B7F6813ED7B2200FADB50 /* Icon.png */,
+				CB7B7F6A13ED7B2200FADB50 /* Icon@2x.png */,
+			);
+			name = Icon;
 			sourceTree = "<group>";
 		};
 		CB7B7F3B13ED7B2100FADB50 = {
@@ -465,7 +520,6 @@
 		CB7B7F5A13ED7B2200FADB50 /* Field */ = {
 			isa = PBXGroup;
 			children = (
-				CB4EF93B1415D44400868903 /* Document.txt */,
 				CB7B80BF13ED7B7C00FADB50 /* Code */,
 				CB7B80AC13ED7B2C00FADB50 /* AppDelegate.h */,
 				CB7B80AD13ED7B2C00FADB50 /* AppDelegate.m */,
@@ -482,16 +536,12 @@
 		CB7B7F5B13ED7B2200FADB50 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CB29B9751451C0E0005D7C1E /* Icon */,
+				CB29B9741451C0B8005D7C1E /* Character */,
 				CBF4D3F6141B5C13001528FA /* StageInfo */,
 				CB7B80C313ED7D0F00FADB50 /* TileMap */,
 				CB7B7F5C13ED7B2200FADB50 /* Default.png */,
 				CB7B7F5E13ED7B2200FADB50 /* fps_images.png */,
-				CB7B7F6013ED7B2200FADB50 /* Icon-72.png */,
-				CB7B7F6213ED7B2200FADB50 /* Icon-Small-50.png */,
-				CB7B7F6413ED7B2200FADB50 /* Icon-Small.png */,
-				CB7B7F6613ED7B2200FADB50 /* Icon-Small@2x.png */,
-				CB7B7F6813ED7B2200FADB50 /* Icon.png */,
-				CB7B7F6A13ED7B2200FADB50 /* Icon@2x.png */,
 				CB7B7F6C13ED7B2200FADB50 /* Info.plist */,
 				CB7B7F6D13ED7B2200FADB50 /* iTunesArtwork */,
 			);
@@ -812,21 +862,14 @@
 		CB7B80BF13ED7B7C00FADB50 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				CB29B9671451BAF1005D7C1E /* Common Function */,
+				CB29B96A1451BB1C005D7C1E /* Data */,
 				CB29B9601451A4A5005D7C1E /* Handling */,
 				CB7B80E213EEDCF400FADB50 /* define.h */,
 				CB64DA24145156D900C3D1C0 /* commonValue.h */,
 				CB64DA2A1451623200C3D1C0 /* commonValue.m */,
 				CB7B80C013ED7B9B00FADB50 /* MainLayer.h */,
 				CB7B80C113ED7B9B00FADB50 /* MainLayer.m */,
-				CBAD463113EF72E80008F5FA /* Warrior.h */,
-				CBAD463213EF72E90008F5FA /* Warrior.m */,
-				CB4EF93E1415D45600868903 /* Monster.h */,
-				CB4EF93F1415D45600868903 /* Monster.m */,
-				CB4EF9401415D45600868903 /* Trap.h */,
-				CB4EF9411415D45600868903 /* Trap.m */,
-				CBEBE94D13EFA2D700CA3D8A /* Temp.txt */,
-				CB64DA2714515A4B00C3D1C0 /* Function.h */,
-				CB64DA2814515A4B00C3D1C0 /* Function.m */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -835,8 +878,6 @@
 			isa = PBXGroup;
 			children = (
 				CBBBEF3D14443D790079525D /* coordinates-tile.plist */,
-				CB3B022B1447A670004A1258 /* texture-character.png */,
-				CB1D968B144D1F87003D03AC /* coordinates-character5.plist */,
 				CBBBEF46144443910079525D /* sample.tmx */,
 				CBBBEF4014443D790079525D /* texture-tile.png */,
 			);
@@ -907,8 +948,6 @@
 				CB7B7F6913ED7B2200FADB50 /* Icon.png in Resources */,
 				CB7B7F6B13ED7B2200FADB50 /* Icon@2x.png in Resources */,
 				CB7B7F6E13ED7B2200FADB50 /* iTunesArtwork in Resources */,
-				CBEBE94E13EFA2D700CA3D8A /* Temp.txt in Resources */,
-				CB4EF93C1415D44400868903 /* Document.txt in Resources */,
 				CBF4D3F8141B5C39001528FA /* Stage097.plist in Resources */,
 				CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */,
 				CBBBEF4414443D790079525D /* texture-tile.png in Resources */,
@@ -1030,6 +1069,9 @@
 				CB64DA2B1451623200C3D1C0 /* commonValue.m in Sources */,
 				CB29B95E1451A49E005D7C1E /* TrapHandling.m in Sources */,
 				CB29B9631451AE5C005D7C1E /* WarriorHandling.m in Sources */,
+				CB29B9661451BAE9005D7C1E /* MonsterHandling.m in Sources */,
+				CB29B9701451BB93005D7C1E /* File.m in Sources */,
+				CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

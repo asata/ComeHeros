@@ -1,12 +1,14 @@
 #import "commonValue.h"
 
-static CCTMXTiledMap    *map;               // 타일 맵
-static CGSize           deviceSize;         // 디바이스의 크기
-static CGFloat          viewScale;          // 화면 확대/축소 비율
+static CCTMXTiledMap    *map;                           // 타일 맵
+static CGSize           deviceSize;                     // 디바이스의 크기
+static CGFloat          viewScale;                      // 화면 확대/축소 비율
 static unsigned int     mapInfo[TILE_NUM][TILE_NUM];    // 타일맵에 설치된 타일 정보
 
-static CGPoint         startPoint;         // 용사 시작지점
-static CGPoint         destinationPoint;   // 용사 도착지점
+static CGPoint         startPoint;                      // 용사 시작지점
+static CGPoint         destinationPoint;                // 용사 도착지점
+
+static NSInteger        stageWarriorCount;
 
 static commonValue      * _globalTest = nil;
 
@@ -99,4 +101,11 @@ static commonValue      * _globalTest = nil;
     return destinationPoint;
 }
 
+// 스테이지에 나올 총 캐릭터 수
+- (void) setStageWarriorCount:(NSInteger)count {
+    stageWarriorCount = count;
+}
+- (NSInteger) getStageWarriorCount {
+    return stageWarriorCount;
+}
 @end

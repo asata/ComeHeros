@@ -29,7 +29,8 @@
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
 - (void) initWarrior {
-    NSString* path = [self loadFilePath:@"coordinates-character5.plist"];
+    File *file = [[File alloc] init];
+    NSString* path = [file loadFilePath:@"coordinates-character5.plist"];
     
     [self loadWarriorData:path];
 }
@@ -116,7 +117,6 @@
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
     
-    //[self addChild:tSprite z:kWarriorLayer];
     [warriorList addObject:tWarrior];
     
     return tSprite;
@@ -387,21 +387,4 @@
 //////////////////////////////////////////////////////////////////////////
 // 이동 경로 계산 End                                                     //
 //////////////////////////////////////////////////////////////////////////
-
-- (NSString *) loadFilePath:(NSString *)fileName {
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSArray* sName = [fileName componentsSeparatedByString:@"."];
-    if (![fileManager fileExistsAtPath: path]) {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:[sName objectAtIndex:0] ofType:[sName objectAtIndex:1]];
-        
-        [fileManager copyItemAtPath:bundle toPath: path error:&error];
-    }
-    
-    return path;
-}
 @end

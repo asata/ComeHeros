@@ -26,4 +26,7 @@
 
 - (void) setEndPoint:(CGPoint)p_point;
 - (CGPoint) getEndPoint;
+
+- (void) setStageWarriorCount:(NSInteger)count;
+- (NSInteger) getStageWarriorCount;
 @end

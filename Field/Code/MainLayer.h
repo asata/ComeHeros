@@ -2,6 +2,7 @@
 #import "commonValue.h"
 #import "define.h"
 #import "Function.h"
+#import "Coordinate.h"
 #import "Warrior.h"
 #import "TrapHandling.h"
 #import "WarriorHandling.h"
@@ -45,7 +46,6 @@
     NSInteger       stageDegree;        // 게임 난이도
     
     // 게임 설정 - 설정 파일에서 로드
-    NSMutableDictionary *stageInfo;
     NSInteger       wCount;             // 해당 스테이지의 총 용사 수
     
     
@@ -76,11 +76,6 @@
 - (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
 - (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
 - (CGPoint) checkMovePosition:(CGPoint)position;
-
-// 파일 처리 함수
-- (NSString *) loadFilePath:(NSString *)fileName;
-- (void) loadStageData:(NSString *)path;
-- (NSDictionary *) loadWarriorInfo:(NSInteger)index;
 
 // 용사 관련 함수
 - (void) createWarrior:(NSInteger)index;
