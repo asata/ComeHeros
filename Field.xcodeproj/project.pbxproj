@@ -12,6 +12,8 @@
 		CB4EF93C1415D44400868903 /* Document.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB4EF93B1415D44400868903 /* Document.txt */; };
 		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
 		CB4EF9431415D45600868903 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF9411415D45600868903 /* Trap.m */; };
+		CB64DA2914515A4B00C3D1C0 /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2814515A4B00C3D1C0 /* Function.m */; };
+		CB64DA2B1451623200C3D1C0 /* commonValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2A1451623200C3D1C0 /* commonValue.m */; };
 		CB7B7F4B13ED7B2200FADB50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7B7F4A13ED7B2200FADB50 /* QuartzCore.framework */; };
 		CB7B7F4D13ED7B2200FADB50 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7B7F4C13ED7B2200FADB50 /* OpenGLES.framework */; };
 		CB7B7F4F13ED7B2200FADB50 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7B7F4E13ED7B2200FADB50 /* OpenAL.framework */; };
@@ -143,6 +145,10 @@
 		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Monster.m; sourceTree = "<group>"; };
 		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
 		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Trap.m; sourceTree = "<group>"; };
+		CB64DA24145156D900C3D1C0 /* commonValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonValue.h; path = Code/commonValue.h; sourceTree = "<group>"; };
+		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Function.h; path = Code/Function.h; sourceTree = "<group>"; };
+		CB64DA2814515A4B00C3D1C0 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Function.m; path = Code/Function.m; sourceTree = "<group>"; };
+		CB64DA2A1451623200C3D1C0 /* commonValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = commonValue.m; path = Code/commonValue.m; sourceTree = "<group>"; };
 		CB7B7F4613ED7B2200FADB50 /* Field.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Field.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7B7F4A13ED7B2200FADB50 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CB7B7F4C13ED7B2200FADB50 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -790,6 +796,8 @@
 			isa = PBXGroup;
 			children = (
 				CB7B80E213EEDCF400FADB50 /* define.h */,
+				CB64DA24145156D900C3D1C0 /* commonValue.h */,
+				CB64DA2A1451623200C3D1C0 /* commonValue.m */,
 				CB7B80C013ED7B9B00FADB50 /* MainLayer.h */,
 				CB7B80C113ED7B9B00FADB50 /* MainLayer.m */,
 				CBAD463113EF72E80008F5FA /* Warrior.h */,
@@ -799,6 +807,8 @@
 				CB4EF9401415D45600868903 /* Trap.h */,
 				CB4EF9411415D45600868903 /* Trap.m */,
 				CBEBE94D13EFA2D700CA3D8A /* Temp.txt */,
+				CB64DA2714515A4B00C3D1C0 /* Function.h */,
+				CB64DA2814515A4B00C3D1C0 /* Function.m */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -998,6 +1008,8 @@
 				CBAD463313EF72E90008F5FA /* Warrior.m in Sources */,
 				CB4EF9421415D45600868903 /* Monster.m in Sources */,
 				CB4EF9431415D45600868903 /* Trap.m in Sources */,
+				CB64DA2914515A4B00C3D1C0 /* Function.m in Sources */,
+				CB64DA2B1451623200C3D1C0 /* commonValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

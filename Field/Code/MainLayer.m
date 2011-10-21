@@ -9,7 +9,8 @@
 
 - (id)init {
     if ((self = [super init])) {
-        deviceSize = [[CCDirector sharedDirector] winSize];
+        CGSize deviceSize = [[CCDirector sharedDirector] winSize];
+        [[commonValue sharedSingleton]setDeviceSize:deviceSize];
         
         CCMenuItemToggle *techniqueItem1 = [CCMenuItemToggle 
                                             itemWithTarget:self
@@ -39,7 +40,8 @@
 // 게임 화면
 @class Warrior;
 @implementation playMap
-@synthesize map, texture, sprite;
+@synthesize texture, sprite;
+@synthesize function;
 @synthesize layer;
 
 //////////////////////////////////////////////////////////////////////////
@@ -66,6 +68,8 @@
 
 - (void) onEnterTransitionDidFinish {    
     // 필요한 항목 초기화
+    function = [[Function alloc] init];
+    
     warriorList = [[NSMutableArray alloc] init];
     trapList = [[NSMutableArray alloc] init];
     idleSprite = [[NSMutableArray alloc] init];
@@ -75,10 +79,10 @@
     warriorNum = 0;
     trapNum = 0;
     
-    viewScale = 1;
+    [[commonValue sharedSingleton]setViewScale:1];
     
-    startPoint = [self convertTileToMap:StartPoint];
-    destinationPoint = [self convertTileToMap:EndPoint];
+    startPoint = [function convertTileToMap:StartPoint];
+    destinationPoint = [function convertTileToMap:EndPoint];
     
     [self initMap];
     [self initWarrior];
@@ -86,7 +90,7 @@
     //[self createWarrior:FIGHTER];
     //[self createWarrior:MAGE];
     [self createWarrior:ARCHER];
-
+    
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
     //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
@@ -110,10 +114,11 @@
 // 타일맵 등록
 - (void) initMap {
     // 타일 맵 등록
-    map = [CCTMXTiledMap tiledMapWithTMXFile:@"sample.tmx"];
-    map.scale = MAP_SCALE * viewScale;
+    CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"sample.tmx"];
+    map.scale = MAP_SCALE * [[commonValue sharedSingleton] getViewScale];
     // 왼쪽 상단에 맵 왼쪽 상단이 위치하도록 설정(하지 않을 경우 왼쪽 하단에 맵 왼쪽 하단이 위치) 
-    map.position = ccp(0, deviceSize.height - (TILE_NUM * TILE_SIZE));  
+    map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
+    [[commonValue sharedSingleton] setTileMap:map];
     mapSize = [map contentSize];
     mapSize = CGSizeMake([map contentSize].width * MAP_SCALE, [map contentSize].height * MAP_SCALE);
     [self addChild:map z:kBackgroundLayer];
@@ -127,6 +132,7 @@
 
 // 타일맵에 있는 타일을 읽어들임
 - (void) loadTileMap {
+    CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     CCTMXLayer *layer1 = [map layerNamed:MAP_LAYER1];
     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
     
@@ -150,7 +156,7 @@
             if(mapInfo[i][j] == TILE_TRAP_OPEN || mapInfo[i][j] == TILE_TRAP_CLOSE ||
                mapInfo[i][j] == TILE_TREASURE || mapInfo[i][j] == TILE_EXPLOSIVE)
             {
-                [self addTrap:ccp(i, j) abs:[self convertTileToMap:ccp(i, j)] type:mapInfo[i][j]];
+                [self addTrap:ccp(i, j) abs:[function convertTileToMap:ccp(i, j)] type:mapInfo[i][j]];
             }                                                    
         }
     }
@@ -237,8 +243,11 @@
     // 나타난 용사 수 증가
     warriorNum++;
     
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
     CCSprite *tSprite = [idleSprite objectAtIndex:warriorType];
-    tSprite.position = ccp((startPoint.x * viewScale) + map.position.x, (startPoint.y * viewScale) + map.position.y); 
+    tSprite.position = ccp((startPoint.x * viewScale) + mapPosition.x, (startPoint.y * viewScale) + mapPosition.y); 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
     [tSprite setScale:viewScale];
     [tSprite setVisible:YES];
@@ -301,6 +310,8 @@
             continue;
         }
         
+        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+        CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
         
         // 이동 및 기타 체크 처리
         if(direction == MoveLeft) {
@@ -312,7 +323,7 @@
         } else if(direction == MoveDown) {
             movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
         }   
-        tSprite.position = ccp(map.position.x + (movePosition.x * viewScale), map.position.y + (movePosition.y * viewScale));
+        tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
         [tWarrior setSprite:tSprite];
         
         [tWarrior plusMoveLength];
@@ -459,7 +470,7 @@
 // 탐지한 트랩에 따라 처리
 - (BOOL) handlingTrap:(Warrior*)pWarrior {
     // 캐릭터의 현재 위치
-    CGPoint sPoint = [self convertTileToAbsCoordinate:[pWarrior getPosition]];   
+    CGPoint sPoint = [function convertTileToAbsCoordinate:[pWarrior getPosition]];   
     CGPoint sPoint1 = [pWarrior getPosition];
     
     for(int i = 0; i < [trapList count]; i++) {
@@ -467,13 +478,14 @@
         CGPoint tPoint = [tTrap getPosition];
         CGPoint tPoint1 = [tTrap getABSPosition];
         NSInteger trapType = [tTrap getTrapType];
-        CGFloat distance = [self lineLength:sPoint1 point2:tPoint1];
+        CGFloat distance = [function lineLength:sPoint1 point2:tPoint1];
         
         if(trapType == TILE_TRAP_CLOSE) {
             // 닫힌 함정일 경우
             if(tPoint1.x == sPoint1.x && tPoint1.y == sPoint1.y) {
                 // 캐릭터의 지능에 따라 통과 여부 결정
                 if([pWarrior getIntellect] < PASS_TRAP_INTELLECT && [pWarrior getStrength] != 0) {
+                    CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
                     
                     // 닫힌 함정을 오픈                        
                     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
@@ -530,6 +542,7 @@
 
 - (void) trapClose:(Warrior*)pWarrior tTrap:(Trap*)tTrap  {
     CGPoint tPoint = [tTrap getPosition];
+    CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     
     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
     [layer2 setTileGID:TILE_TRAP_CLOSE at:tPoint];
@@ -667,31 +680,6 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-// 파일 처리 Start                                                        //
-//////////////////////////////////////////////////////////////////////////
-- (NSString *) loadFilePath:(NSString *)fileName {
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSArray* sName = [fileName componentsSeparatedByString:@"."];
-    if (![fileManager fileExistsAtPath: path]) {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:[sName objectAtIndex:0] ofType:[sName objectAtIndex:1]];
-        
-        [fileManager copyItemAtPath:bundle toPath: path error:&error];
-    }
-    
-    return path;
-}
-//////////////////////////////////////////////////////////////////////////
-// 파일 처리 End                                                          //
-//////////////////////////////////////////////////////////////////////////
-
-
-
-//////////////////////////////////////////////////////////////////////////
 // Touch 처리 Start                                                      //
 //////////////////////////////////////////////////////////////////////////
 // 사용자가 터치를 할 경우 
@@ -707,7 +695,7 @@
     } else if([[event allTouches] count] == 2) {
         // 멀티 터치
         NSArray *touchArray = [[event allTouches] allObjects];
-        prevMultiLength = [self calcuationMultiTouchLength:touchArray];        
+        prevMultiLength = [function calcuationMultiTouchLength:touchArray];        
     }
 }
 
@@ -732,8 +720,12 @@
     } else if([[event allTouches] count] == 2) {
         // 멀티 터치
         // 확대/축소시 map.position의 위치를 지정부분 수정 필요
+        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+        CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
+        CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
+        
         NSArray *touchArray = [[event allTouches] allObjects];
-        CGFloat length = [self calcuationMultiTouchLength:touchArray];
+        CGFloat length = [function calcuationMultiTouchLength:touchArray];
         CGFloat changeScale;
         
         // prevMultiLength 와 length 비교 - 늘어나면 확대, 줄어들면 축소
@@ -771,6 +763,8 @@
                                    map.position.y + ([tWarrior getPosition].y * viewScale));
         }
         
+        [[commonValue sharedSingleton] setViewScale:viewScale];
+        [[commonValue sharedSingleton] setTileMap:map];
         prevMultiLength = length;
         
         // 일시 정지 해제
@@ -791,7 +785,7 @@
         CGPoint location = [touch locationInView: [touch view]];
         
         // 클릭한 위치 확인
-        CGPoint thisArea = [self convertCocos2dToTile:location];
+        CGPoint thisArea = [function convertCocos2dToTile:location];
         NSLog(@"%f %f", thisArea.x, thisArea.y);
         
         //[self printTrapList:thisArea];
@@ -802,33 +796,42 @@
 
 // 화면 터치로 이동시 맵타일 이동
 - (void) moveTouchMap:(CGPoint)currentPoint {
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
     CGPoint movePoint = CGPointMake(currentPoint.x - prevPoint.x, currentPoint.y - prevPoint.y);
-    CGPoint mapMove = [self checkMovePosition:CGPointMake(map.position.x + movePoint.x, map.position.y + movePoint.y)];
+    CGPoint mapMove = [self checkMovePosition:CGPointMake(mapPosition.x + movePoint.x, mapPosition.y + movePoint.y)];
     
     prevPoint = currentPoint;
-    map.position = CGPointMake(mapMove.x, mapMove.y);
+    [[commonValue sharedSingleton] setMapPosition:CGPointMake(mapMove.x, mapMove.y)];
 }
 
 // 화면 터치로 이동시 용사 이동~
 - (void) moveTouchWarrior {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
     for (int i = 0; i < [warriorList count]; i++) {
         // 현재 위치 및 정보를 가져옴
         Warrior *tWarrior = [warriorList objectAtIndex:i];
         CCSprite *tSprite = [tWarrior getSprite];
         CGPoint position = [tWarrior getPosition];
         
-        tSprite.position = ccp(map.position.x + (position.x * viewScale), 
-                               map.position.y + (position.y * viewScale));
+        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
+                               mapPosition.y + (position.y * viewScale));
     }
 }
 
 // 터치로 화면 이동시 맵 밖으로 이동 못하게 차단
 - (CGPoint) checkMovePosition:(CGPoint)position {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
     if (position.x > 0 && 
         position.y < -(mapSize.height * viewScale - deviceSize.height)) {
         // 좌상단
         position = ccp(0, -(mapSize.height * viewScale - deviceSize.height)); 
-    } else if (map.position.y < -(mapSize.height * viewScale - deviceSize.height)) {
+    } else if (mapPosition.y < -(mapSize.height * viewScale - deviceSize.height)) {
         // 상단        
         position = ccp(position.x, -(mapSize.height * viewScale - deviceSize.height));
     } else if (position.x < -(mapSize.width * viewScale - deviceSize.width) && 
@@ -836,10 +839,10 @@
         // 우상단
         position = ccp(-(mapSize.width * viewScale - deviceSize.width), 
                        -(mapSize.height * viewScale - deviceSize.height));
-    } else if (map.position.x < -(mapSize.width * viewScale - deviceSize.width)) {
+    } else if (mapPosition.x < -(mapSize.width * viewScale - deviceSize.width)) {
         // 오른쪽
         position = ccp(-(mapSize.width * viewScale - deviceSize.width), position.y);
-    } else if(map.position.x < -(mapSize.width * viewScale - deviceSize.width) && 
+    } else if(mapPosition.x < -(mapSize.width * viewScale - deviceSize.width) && 
               position.y > 0) {
         // 우하단
         position = ccp(-(mapSize.width * viewScale - deviceSize.width), 0);
@@ -861,129 +864,26 @@
 //////////////////////////////////////////////////////////////////////////
 
 
-
-//////////////////////////////////////////////////////////////////////////
-// 좌표 처리 Start                                                        //
-//////////////////////////////////////////////////////////////////////////
-// 터치된 좌표 값을 타일맵 좌표로 변환
-// [self convertCocos2dToTile:cocos2d]
-// cocos2d : cocos2d 좌표값
-- (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d {
-    // 확대/축소에 따라 비율 조정이 필요
-    CGPoint cocoa = [[CCDirector sharedDirector] convertToGL:cocos2d];
-    CGFloat x = (cocoa.x - map.position.x) / (TILE_SIZE * viewScale);
-    CGFloat y = ((TILE_SIZE * TILE_NUM * viewScale) - deviceSize.height + cocos2d.y + map.position.y) / (TILE_SIZE * viewScale);
-    
-    return CGPointMake(floorf(x), floorf(y));
-}
-
-- (CGPoint) convertTileToMap:(CGPoint)tile {
-    CGFloat x = (TILE_SIZE * tile.x) + 16;
-    CGFloat y = (TILE_SIZE * (TILE_NUM - tile.y - 1)) + 16;
-    
-    return CGPointMake(floorf(x), floorf(y));
-}
-
-// 타일맵 좌표값을 코코아 좌표로 변환
-// [self convertTileToCocoa:tile];
-// tile : 타일맵 좌표값
-//- (CGPoint) getCocoaPostion:(CGPoint)tile {
-- (CGPoint) convertTileToCocoa:(CGPoint)tile {
-    CGFloat x = (tile.x + 1) * TILE_SIZE + map.position.x - (TILE_SIZE / 2);
-    CGFloat y = (12 - tile.y) * TILE_SIZE + map.position.y + (TILE_SIZE / 2);
-    
-    return CGPointMake(floorf(x), floorf(y));
-}
-
-// 절대 좌표값 반환 - 좌상단(0, 0) 기준
-- (CGPoint) getAbsCoordinate:(CGPoint)cocos2d {
-    CGFloat x = (cocos2d.x - map.position.x) / viewScale;
-    CGFloat y = ((TILE_SIZE * TILE_NUM * viewScale) - deviceSize.height + map.position.y + cocos2d.y) / viewScale;
-    
-    
-    return CGPointMake(x, y);
-}
-
-- (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs {
-    CGFloat x = floorf(abs.x / TILE_SIZE);
-    CGFloat y = floorf(TILE_NUM - abs.y / TILE_SIZE);
-    
-    return CGPointMake(x, y);
-}
-//////////////////////////////////////////////////////////////////////////
-// 좌표 처리 End                                                          //
-//////////////////////////////////////////////////////////////////////////
-
-
-
-//////////////////////////////////////////////////////////////////////////
-// 기타 함수 Start                                                        //
-//////////////////////////////////////////////////////////////////////////
-// 터치한 두 좌표간의 거리를 계산하여 반환
-- (CGFloat) calcuationMultiTouchLength:(NSArray *)touchArray {
-    CGFloat result = 0;
-    CGPoint point1;
-    CGPoint point2;
-    int i = 0;
-    
-    for (UITouch *touch in touchArray) {
-        CGPoint location = [touch locationInView:[touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
-        
-        if(i == 0) point1 = convertedLocation;
-        else point2 = convertedLocation;
-        
-        i++;
-    }
-    
-    result = [self lineLength:point2 point2:point1];
-    
-    return result;
-}
-
-// 터치된 두 지점 사이의 좌표값을 구함
-- (CGPoint) middlePoint:(NSArray *)touchArray {
-    CGPoint point1;
-    CGPoint point2;
-    int i = 0;
-    
-    for (UITouch *touch in touchArray) {
-        CGPoint location = [touch locationInView:[touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
-        
-        if(i == 0) point1 = convertedLocation;
-        else point2 = convertedLocation;
-        
-        i++;
-    }
-    
-    CGPoint result = ccp(ABS(point1.x + point2.x) / 2, ABS(point1.y + point2.y) / 2);
-    
-    return result;
-}
-
-// 두 점 사이의 거리 계산
-- (CGFloat) lineLength:(CGPoint)point1 point2:(CGPoint)point2 {
-    CGFloat x = 0;
-    CGFloat y = 0;
-    
-    if(point1.x > point2.x) x = point1.x - point2.x;
-    else x = point2.x - point1.x;
-    
-    if(point1.y > point2.y) y = point1.y - point2.y;
-    else y = point2.y - point1.y;
-    
-    return (powf(x, 2) + powf(y, 2));
-}
-//////////////////////////////////////////////////////////////////////////
-// 기타 함수 End                                                          //
-//////////////////////////////////////////////////////////////////////////
-
-
-
 //////////////////////////////////////////////////////////////////////////
 // 파일 처리 Start                                                        //
 //////////////////////////////////////////////////////////////////////////
+- (NSString *) loadFilePath:(NSString *)fileName {
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSArray* sName = [fileName componentsSeparatedByString:@"."];
+    if (![fileManager fileExistsAtPath: path]) {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:[sName objectAtIndex:0] ofType:[sName objectAtIndex:1]];
+        
+        [fileManager copyItemAtPath:bundle toPath: path error:&error];
+    }
+    
+    return path;
+}
+
 - (NSString *) loadFilePath {
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
@@ -1013,8 +913,8 @@
     CGPoint dPoint = CGPointMake([[stageInfo objectForKey:@"EndPointX"] intValue], 
                                  [[stageInfo objectForKey:@"EndPointY"] intValue]);
     
-    startPoint = [self convertTileToMap:sPoint];
-    destinationPoint = [self convertTileToMap:dPoint];
+    startPoint = [function convertTileToMap:sPoint];
+    destinationPoint = [function convertTileToMap:dPoint];
     
     // map.tmx의 경우 문자열을 조합하여 불러들임 - 요걸로 하니 에러가 발생 ㅠㅠ 
     //[savedStock objectForKey:@"MapName"];

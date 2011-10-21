@@ -1,9 +1,9 @@
 #import "cocos2d.h"
+#import "commonValue.h"
 #import "define.h"
+#import "Function.h"
 #import "Warrior.h"
 #import "Trap.h"
-
-CGSize deviceSize;
 
 // 메인 화면
 @interface MainLayer : CCLayer {
@@ -17,14 +17,13 @@ CGSize deviceSize;
 
 // 게임 화면
 @interface playMap : CCLayer {
-    CCTMXTiledMap   *map;               // 타일 맵
+    Function        *function;
     //CCTMXLayer      *layer;             // 게임 레이어 정보 저장
     
     /////////////////////////////////////////////////////////
     // 게임 관련 변수 Start                                   //
     /////////////////////////////////////////////////////////
     CGSize          mapSize;            // 타일 맵 사이즈
-    CGFloat         viewScale;          // 화면 확대/축소 비율
     
     // 터치 관련 변수
     CGPoint         prevPoint;          // 이전 터치 위치
@@ -68,7 +67,8 @@ CGSize deviceSize;
     /////////////////////////////////////////////////////////
 }
 
-@property (nonatomic, retain) CCTMXTiledMap *map;
+//@property (nonatomic, retain) CCTMXTiledMap *map;
+@property (nonatomic, retain) Function   *function;
 @property (nonatomic, retain) CCTexture2D   *texture;
 @property (nonatomic, retain) CCSprite      *sprite;
 @property (nonatomic, retain) CCTMXLayer    *layer;
@@ -117,20 +117,9 @@ CGSize deviceSize;
 - (void) trapClose:(Warrior*)pWarrior tTrap:(Trap*)tTrap; 
 - (void) trapDemage:(Warrior*)pWarrior;
 
-// 좌표값 변환
-- (CGPoint) getAbsCoordinate:(CGPoint)cocos2d;
-- (CGPoint) convertTileToMap:(CGPoint)tile;
-- (CGPoint) convertTileToCocoa:(CGPoint)tile;
-- (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d;
-- (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs;
-
 // 파일 처리 함수
 - (NSString *) loadFilePath:(NSString *)fileName;
 - (void) loadStageData:(NSString *)path;
 - (NSDictionary *) loadWarriorInfo:(NSInteger)index;
 
-// 기타 함수
-- (CGFloat) calcuationMultiTouchLength:(NSArray *)touchArray;   // 터치한 두 좌표간의 거리를 계산하여 반환
-- (CGFloat) lineLength:(CGPoint)point1 point2:(CGPoint)point2;  // 두 점 사이의 거리 계산
-- (CGPoint) middlePoint:(NSArray *)touchArray;                  // 터치된 두 지점 사이의 좌표값을 구함
 @end
