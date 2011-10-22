@@ -20,6 +20,23 @@
         idleAnimate = [[NSMutableArray alloc] init];
         
         texture = [[CCTextureCache sharedTextureCache] addImage:@"texture-character.png"];
+        
+        trapHandling = [[TrapHandling alloc] init];
+    }
+    
+    return self;
+}
+- (id) init:(TrapHandling*)p_trapHandling {
+    if ((self = [super init])) {
+        warriorList = [[NSMutableArray alloc] init];
+        warriorNum = 0;
+        
+        idleSprite = [[NSMutableArray alloc] init];
+        idleAnimate = [[NSMutableArray alloc] init];
+        
+        texture = [[CCTextureCache sharedTextureCache] addImage:@"texture-character.png"];
+        
+        trapHandling = p_trapHandling;
     }
     
     return self;
@@ -89,17 +106,18 @@
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
+    Coordinate *coordinate = [[Coordinate alloc] init];
     
-    NSLog(@"Create");
+    NSLog(@"Create %d", warriorNum);
     
     // 용사 생성
-    Warrior *tWarrior = [[Warrior alloc] initWarrior:sPoint
+    Warrior *tWarrior = [[Warrior alloc] initWarrior:[coordinate convertTileToMap:sPoint]
                                           warriorNum:warriorNum
                                             strength:100 
                                                power:10 
                                            intellect:10 
                                              defense:10 
-                                               speed:2   //[[wInfo objectForKey:@"speed"] intValue] 
+                                               speed:8   //[[wInfo objectForKey:@"speed"] intValue] 
                                            direction:MoveUp
                                          attackRange:2]; 
     
@@ -124,7 +142,7 @@
 
 // 일정 간격으로 호출됨
 // 용사 이동 및 기타 처리를 하도록 함
-- (void) moveWarrior:(TrapHandling*) trapHandling {
+- (void) moveWarrior {
     NSMutableArray *deleteList = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [warriorList count]; i++) {
@@ -153,7 +171,7 @@
         
         // 공격 대상 탐색
         // 트랩 탐지 및 처리
-        BOOL survivalFlag = [trapHandling handlingTrap:tWarrior];   
+        BOOL survivalFlag = [trapHandling handlingTrap:tWarrior wList:warriorList];  
         if(!survivalFlag) {
             [deleteList addObject:tWarrior];
             continue;
@@ -258,7 +276,8 @@
         }
         
         // 목적지일 경우
-        if(x == EndPoint.x && y == EndPoint.y) {
+        CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
+        if(x == ePoint.x && y == ePoint.y) {
             [pWarrior setMoveDriection:MoveNone];
             
             return YES;
@@ -272,6 +291,9 @@
 
 - (NSInteger) warriorCount {
     return [warriorList count];
+}
+- (NSInteger) warriorNum {
+    return warriorNum;
 }
 - (Warrior*) warriorInfo:(NSInteger)index {
     return [warriorList objectAtIndex:index];
@@ -287,19 +309,22 @@
 // 이동 경로를 계산하여 별도의 테이블에 저장
 // 맵 초기화 및 중간에 장애물 설치시 이동 경로 재계산 필요
 - (void) createMoveTable {
+    CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
+    CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
+    
     [self initMoveValue];
     
     // 시작 지점의 가중치를 0로 둠
-    tMoveValue[(int) StartPoint.x][(int) StartPoint.y] = 0;
+    tMoveValue[(int) sPoint.x][(int) sPoint.y] = 0;
     
     // 최단 거리 계산을 위한 테이블을 작성
-    [self calcuationMoveValue:StartPoint.x y:StartPoint.y];
+    [self calcuationMoveValue:sPoint.x y:sPoint.y];
     
     // 작성한 테이블을 기준으로 이동 테이블 작성 - 종료지점에서 역으로 시작 지점을 탐색
     // 경로 테이블 작성 이전에 가능한 경로인지 체크 - 불가일 경우 게임 시작 불가처리
-    if(tMoveValue[(int) EndPoint.x][(int) EndPoint.y] == 999) return;
+    if(tMoveValue[(int) ePoint.x][(int) ePoint.y] == 999) return;
     
-    [self calcuatioDirection:EndPoint.x y:EndPoint.y];
+    [self calcuatioDirection:ePoint.x y:ePoint.y];
 }
 
 - (void) initMoveValue {
@@ -311,7 +336,9 @@
 }
 
 - (void) calcuationMoveValue:(int)x y:(int)y {
-    if(x == EndPoint.x && y == EndPoint.y) return;
+    CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
+    
+    if(x == ePoint.x && y == ePoint.y) return;
     
     NSInteger nextValue = tMoveValue[x][y] + 1;
     if (y > 0 && moveTable[x][y - 1] != -1) {
@@ -348,7 +375,9 @@
 }
 
 - (void) calcuatioDirection:(int)x y:(int)y {
-    if(x == StartPoint.x && y == StartPoint.y) {
+    CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
+    
+    if(x == sPoint.x && y == sPoint.y) {
         if(moveTable[x][y - 1] == MoveUp) moveTable[x][y] = MoveUp;
         else if(moveTable[x][y + 1] == MoveDown) moveTable[x][y] = MoveDown;
         else if(moveTable[x - 1][y] == MoveLeft) moveTable[x][y] = MoveLeft;

@@ -70,7 +70,7 @@
 }
 
 // 탐지한 트랩에 따라 처리
-- (BOOL) handlingTrap:(Warrior*)pWarrior {
+- (BOOL) handlingTrap:(Warrior*)pWarrior wList:(NSMutableArray*)warriorList{
     // 캐릭터의 현재 위치
     //Function *function = [[Function alloc] init];
     //CGPoint sPoint = [function convertTileToAbsCoordinate:[pWarrior getPosition]];   
@@ -78,32 +78,25 @@
     
     for(int i = 0; i < [trapList count]; i++) {
         Trap *tTrap = [trapList objectAtIndex:i];
-        CGPoint tPoint = [tTrap getPosition];
+        //CGPoint tPoint = [tTrap getPosition];
         CGPoint tPoint1 = [tTrap getABSPosition];
         NSInteger trapType = [tTrap getTrapType];
         //CGFloat distance = [function lineLength:sPoint1 point2:tPoint1];
         
         if(trapType == TILE_TRAP_CLOSE) {
             // 닫힌 함정일 경우
-            if(tPoint1.x == sPoint1.x && tPoint1.y == sPoint1.y) {
+            if(tPoint1.x == sPoint1.x && tPoint1.y == sPoint1.y && [pWarrior getIntellect] < PASS_TRAP_INTELLECT) {
                 // 캐릭터의 지능에 따라 통과 여부 결정
-                if([pWarrior getIntellect] < PASS_TRAP_INTELLECT && [pWarrior getStrength] != 0) {
-                    CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
-                    
-                    // 닫힌 함정을 오픈                        
-                    CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
-                    [layer2 setTileGID:TILE_TRAP_OPEN at:tPoint];
-                    [[commonValue sharedSingleton] setMapInfo:(NSInteger) tPoint.x y:(NSInteger) tPoint.y tileType:TILE_TRAP_OPEN];
-                    [tTrap setTrapType:TILE_TRAP_OPEN];
+                    [self trapOpen:pWarrior tTrap:tTrap];
                     
                     // 트랩 데미지를 입힘
                     [self trapDemage:pWarrior];
-                }
+                
             }
         } else if(trapType == TILE_TRAP_OPEN) {
             // 열린 함정일 경우
             // 캐릭터의 지능에 따라 통과 여부 결정
-            if([pWarrior getIntellect] < PASS_TRAP_INTELLECT) {
+            if(tPoint1.x == sPoint1.x && tPoint1.y == sPoint1.y && [pWarrior getIntellect] < PASS_TRAP_INTELLECT) {
                 // 트랩 데미지를 입힘
                 [self trapDemage:pWarrior];
                 
@@ -111,7 +104,7 @@
                 if([pWarrior getStrength] == 0) {
                     
                     // 트랩에 다른 적이 있는지 확인~~~
-                    NSInteger tOnWarrior = [self trapCheckWarrior:pWarrior];
+                    NSInteger tOnWarrior = [self trapCheckWarrior:pWarrior wList:warriorList];
                     if(tOnWarrior == 0) [self trapClose:pWarrior tTrap:tTrap];
                 }
             }
@@ -143,10 +136,19 @@
     [pWarrior setStrength:[pWarrior getStrength] - 10];
 }
 
-- (void) trapOpen:(Warrior*)pWarrior {
+// 닫힌 함정을 오픈
+- (void) trapOpen:(Warrior*)pWarrior tTrap:(Trap*)tTrap {
+    CGPoint tPoint = [tTrap getPosition];
+    CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     
+    // 닫힌 함정을 오픈                        
+    CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
+    [layer2 setTileGID:TILE_TRAP_OPEN at:tPoint];
+    [[commonValue sharedSingleton] setMapInfo:(NSInteger) tPoint.x y:(NSInteger) tPoint.y tileType:TILE_TRAP_OPEN];
+    [tTrap setTrapType:TILE_TRAP_OPEN];
 }
 
+// 열린 함정을 닫음
 - (void) trapClose:(Warrior*)pWarrior tTrap:(Trap*)tTrap  {
     CGPoint tPoint = [tTrap getPosition];
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
@@ -157,17 +159,17 @@
     [tTrap setTrapType:TILE_TRAP_CLOSE];
 }
 
-- (NSInteger) trapCheckWarrior:(Warrior*)pWarrior {
+- (NSInteger) trapCheckWarrior:(Warrior*)pWarrior wList:(NSMutableArray*)warriorList{
     NSInteger result = 0;
-    
-    /*for (Warrior *tWarrior in warriorList) {
+
+    for (Warrior *tWarrior in warriorList) {
         if(tWarrior == pWarrior) continue;
         
         if([pWarrior getPosition].x == [tWarrior getPosition].x &&
            [pWarrior getPosition].y == [tWarrior getPosition].y &&
            [tWarrior getStrength] > 0)
             result++;
-    }*/
+    }
     
     return result;
 }

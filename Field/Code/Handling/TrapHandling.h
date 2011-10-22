@@ -14,11 +14,11 @@
 - (void) printTrapList:(CGPoint)iPoint;
 - (void) printTrap:(CGPoint)iPoint;
 - (void) createTrap:(CGPoint)iPoint;                        // 트랩 설치
-- (BOOL) handlingTrap:(Warrior*)pWarrior;                   // 트랩 탐지 관련 처리
+- (BOOL) handlingTrap:(Warrior*)pWarrior wList:(NSMutableArray*)warriorList; // 트랩 탐지 관련 처리
 - (void) addTrap:(CGPoint)tPoint abs:(CGPoint)abs type:(NSInteger)tType;     // 트랩 목록에 트랩 추가
 
-- (NSInteger) trapCheckWarrior:(Warrior*)pWarrior;
-- (void) trapOpen:(Warrior*)pWarrior; 
+- (NSInteger) trapCheckWarrior:(Warrior*)pWarrior wList:(NSMutableArray*)warriorList;
+- (void) trapOpen:(Warrior*)pWarrior tTrap:(Trap*)tTrap; 
 - (void) trapClose:(Warrior*)pWarrior tTrap:(Trap*)tTrap; 
 - (void) trapDemage:(Warrior*)pWarrior;
 

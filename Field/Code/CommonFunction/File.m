@@ -31,7 +31,7 @@
     return path;
 }
 
-- (NSString *) loadFilePath {
+/*- (NSString *) loadFilePath {
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -46,11 +46,9 @@
     }
     
     return path;
-}
+}*/
 
 - (void) loadStageData:(NSString *)path {
-    Coordinate *coordinate = [[Coordinate alloc] init];
-    
     stageInfo = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
     
     //load from savedStock example int value
@@ -60,8 +58,8 @@
                                  [[stageInfo objectForKey:@"StartPointY"] intValue]);
     CGPoint dPoint = CGPointMake([[stageInfo objectForKey:@"EndPointX"] intValue], 
                                  [[stageInfo objectForKey:@"EndPointY"] intValue]);
-    [[commonValue sharedSingleton] setStartPoint:[coordinate convertTileToMap:sPoint]];
-    [[commonValue sharedSingleton] setEndPoint:[coordinate convertTileToMap:dPoint]];
+    [[commonValue sharedSingleton] setStartPoint:sPoint];
+    [[commonValue sharedSingleton] setEndPoint:dPoint];
     
     // map.tmx의 경우 문자열을 조합하여 불러들임 - 요걸로 하니 에러가 발생 ㅠㅠ 
     //[savedStock objectForKey:@"MapName"];

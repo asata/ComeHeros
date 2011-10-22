@@ -70,12 +70,17 @@
     // 필요한 항목 초기화
     function = [[Function alloc] init];
     trapHandling = [[TrapHandling alloc] init];
-    warriorHandling = [[WarriorHandling alloc] init];
-    Coordinate *coordinate = [[Coordinate alloc] init];
+    warriorHandling = [[WarriorHandling alloc] init:trapHandling];
+    //Coordinate *coordinate = [[Coordinate alloc] init];
     
     [[commonValue sharedSingleton] setViewScale:1];
-    [[commonValue sharedSingleton] setStartPoint:[coordinate convertTileToMap:StartPoint]];
-    [[commonValue sharedSingleton] setEndPoint:[coordinate convertTileToMap:EndPoint]];
+    
+    File *file = [[File alloc] init];
+    NSString *path = [file loadFilePath:@"Stage097.plist"];
+    [file loadStageData:path];
+    
+    //[[commonValue sharedSingleton] setStartPoint:[coordinate convertTileToMap:StartPoint]];
+    //[[commonValue sharedSingleton] setEndPoint:[coordinate convertTileToMap:EndPoint]];
     
     [self initMap];
     [warriorHandling initWarrior];
@@ -86,7 +91,7 @@
     
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
-    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
     //[self schedule:@selector(removeWarrior:) interval:3];
 }
 
@@ -170,11 +175,22 @@
     [self addChild:tSprite z:kWarriorLayer];
 }
 
+- (void) createWarriorAtTime:(id) sender {
+    if([[commonValue sharedSingleton] getStageWarriorCount] > [warriorHandling warriorNum]) {
+        File *file = [[File alloc] init];
+        NSDictionary *wInfo = [file loadWarriorInfo:[warriorHandling warriorNum]];
+        
+        CCSprite *tSprite = [warriorHandling createWarrior:[[wInfo objectForKey:@"name"] intValue]];
+        
+        [self addChild:tSprite z:kWarriorLayer];
+    }
+}
+
 - (void) moveWarrior:(id) sender {
     // 잠시 애니메이션 효과 중단
     [self pauseSchedulerAndActions];
     
-    [warriorHandling moveWarrior:trapHandling];
+    [warriorHandling moveWarrior];
     
     // 애니메이션 효과 재개
     [self resumeSchedulerAndActions];

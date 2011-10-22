@@ -35,6 +35,8 @@
 #define WARRIOR_SIZE    32      // 용사 이미지 크기
 
 #define WARRIOR_MOVE_ACTION     0.1f    // 이동 속도
+#define CREATE_WARRIOR_TIME     0.5f    // 캐릭터 생성 속도
+
 #define WARRIOR_MOVE_RIGHT      NO      // 오른쪽
 #define WARRIOR_MOVE_LEFT       YES     // 왼쪽
 
@@ -51,7 +53,6 @@
 
 
 #define REFRESH_DISPLAY_TIME    0.1
-#define CREATE_WARRIOR_TIME     2
 
 #define NotFound                -1
 

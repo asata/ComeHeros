@@ -45,13 +45,6 @@
     NSInteger       stageLevel;         // 게임 레벨
     NSInteger       stageDegree;        // 게임 난이도
     
-    // 게임 설정 - 설정 파일에서 로드
-    NSInteger       wCount;             // 해당 스테이지의 총 용사 수
-    
-    
-    // 현재 진행중인 맵에 나타는 목록
-    
-    // 맵 관련 변수
     /////////////////////////////////////////////////////////
     // 게임 관련 변수 End                                     //
     /////////////////////////////////////////////////////////
@@ -79,5 +72,6 @@
 
 // 용사 관련 함수
 - (void) createWarrior:(NSInteger)index;
+- (void) createWarriorAtTime:(id) sender;
 - (void) moveWarrior:(id) sender;
 @end
