@@ -137,7 +137,7 @@
 		CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF3D14443D790079525D /* coordinates-tile.plist */; };
 		CBBBEF4414443D790079525D /* texture-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF4014443D790079525D /* texture-tile.png */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
-		CBF4D3F8141B5C39001528FA /* Stage094.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage094.plist */; };
+		CBF4D3F8141B5C39001528FA /* Stage097.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage097.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -402,7 +402,7 @@
 		CBBBEF3D14443D790079525D /* coordinates-tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-tile.plist"; path = "Resources/TileMap/coordinates-tile.plist"; sourceTree = "<group>"; };
 		CBBBEF4014443D790079525D /* texture-tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-tile.png"; path = "Resources/TileMap/texture-tile.png"; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
-		CBF4D3F7141B5C39001528FA /* Stage094.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage094.plist; path = Resources/StageInfo/Stage094.plist; sourceTree = "<group>"; };
+		CBF4D3F7141B5C39001528FA /* Stage097.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage097.plist; path = Resources/StageInfo/Stage097.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -887,7 +887,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CBF4D3F7141B5C39001528FA /* Stage094.plist */,
+				CBF4D3F7141B5C39001528FA /* Stage097.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -951,7 +951,7 @@
 				CB7B7F6913ED7B2200FADB50 /* Icon.png in Resources */,
 				CB7B7F6B13ED7B2200FADB50 /* Icon@2x.png in Resources */,
 				CB7B7F6E13ED7B2200FADB50 /* iTunesArtwork in Resources */,
-				CBF4D3F8141B5C39001528FA /* Stage094.plist in Resources */,
+				CBF4D3F8141B5C39001528FA /* Stage097.plist in Resources */,
 				CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */,
 				CBBBEF4414443D790079525D /* texture-tile.png in Resources */,
 				CBBBEF47144443910079525D /* sample.tmx in Resources */,

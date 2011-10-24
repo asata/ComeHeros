@@ -76,11 +76,11 @@
     [[commonValue sharedSingleton] setViewScale:1];
     
     File *file = [[File alloc] init];
-    NSString *path = [file loadFilePath:@"Stage094.plist"];
+    NSString *path = [file loadFilePath:@"Stage097.plist"];
     [file loadStageData:path];
     
-    NSLog(@"%f %f", [[commonValue sharedSingleton] getStartPoint].x, [[commonValue sharedSingleton] getStartPoint].y);
-    NSLog(@"%f %f", [[commonValue sharedSingleton] getEndPoint].x, [[commonValue sharedSingleton] getEndPoint].y);
+    //[[commonValue sharedSingleton] setStartPoint:[coordinate convertTileToMap:StartPoint]];
+    //[[commonValue sharedSingleton] setEndPoint:[coordinate convertTileToMap:EndPoint]];
     
     [self initMap];
     [warriorHandling initWarrior];

@@ -19,8 +19,7 @@
 #define TILE_GROUND1    154
 #define TILE_GROUND2    155
 
-#define PASS_TRAP_INTELLECT 50  // 함정을 통과할 최소 지능
-#define MOVE_INTELLECT      80  // 최단 경로로 이동할 지능
+#define PASS_TRAP_INTELLECT 50
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

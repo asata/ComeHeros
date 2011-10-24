@@ -3,7 +3,7 @@
 #import "Warrior.h"
 #import "File.h"
 #import "TrapHandling.h"
-#include <stdlib.h>
+
 
 @interface WarriorHandling : NSObject {
     NSMutableArray  *warriorList;       // 용사 목록 List
@@ -36,11 +36,7 @@
 - (void) removeWarrior:(NSInteger)index;                    // 용사 제거
 - (void) removeWarriorList:(NSMutableArray *)deleteList;    // 용사 제거
 - (NSInteger) enmyFind:(Warrior*)pWarrior;                  // 적 탐지
-
-
-- (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y;
-- (BOOL) selectDirectDirection:(Warrior *)pWarrior;         // 최단 이동 방향 결정
-- (BOOL) selectDirection:(Warrior *)pWarrior;               // 랜덤 이동 방향 결정
+- (BOOL) selectDirection:(Warrior *)pWarrior;               // 이동 방향 결정
 
 - (NSInteger) warriorCount;
 - (NSInteger) warriorNum;
