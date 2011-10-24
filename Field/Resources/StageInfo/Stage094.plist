@@ -17,16 +17,16 @@
 		<key>0</key>
 		<dict>
 			<key>name</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>speed</key>
-			<integer>2</integer>
+			<integer>4</integer>
 		</dict>
 		<key>1</key>
 		<dict>
 			<key>name</key>
-			<integer>1</integer>
+			<integer>0</integer>
 			<key>speed</key>
-			<integer>4</integer>
+			<integer>2</integer>
 		</dict>
 	</dict>
 </dict>

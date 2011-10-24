@@ -30,12 +30,15 @@
 - (void) initWarrior;
 - (void) loadWarriorData:(NSString *)path;
 - (NSMutableArray*) getImageFrame:(NSDictionary*)wList imgList:(NSArray*)imgList; // 지정한캐릭터 이미지를 읽어들임
-- (CCSprite*) createWarrior:(NSInteger)warriorType;              // 용사 생성
+- (CCSprite*) createWarrior:(NSDictionary*)wInfo;           // 용사 생성
 
-- (void) moveWarrior;                           // 일정 시간 간격으로 용사 이동
+- (void) moveWarrior;                                       // 일정 시간 간격으로 용사 이동
 - (void) removeWarrior:(NSInteger)index;                    // 용사 제거
 - (void) removeWarriorList:(NSMutableArray *)deleteList;    // 용사 제거
 - (NSInteger) enmyFind:(Warrior*)pWarrior;                  // 적 탐지
+
+- (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y;
+- (BOOL) selectShortDirection:(Warrior *)pWarrior;          // 이동 방향 결정
 - (BOOL) selectDirection:(Warrior *)pWarrior;               // 이동 방향 결정
 
 - (NSInteger) warriorCount;

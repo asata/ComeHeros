@@ -102,20 +102,20 @@
     return result;
 }
 
-- (CCSprite*) createWarrior:(NSInteger)warriorType {
+- (CCSprite*) createWarrior:(NSDictionary*)wInfo {
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
     Coordinate *coordinate = [[Coordinate alloc] init];
     
-    NSLog(@"Create %d", warriorNum);
+    NSInteger warriorType = [[wInfo objectForKey:@"name"] intValue];
     
     // 용사 생성
     Warrior *tWarrior = [[Warrior alloc] initWarrior:[coordinate convertTileToMap:sPoint]
                                           warriorNum:warriorNum
                                             strength:100 
                                                power:10 
-                                           intellect:10 
+                                           intellect:40 * (warriorNum + 1)
                                              defense:10 
                                                speed:8   //[[wInfo objectForKey:@"speed"] intValue] 
                                            direction:MoveUp
@@ -154,12 +154,20 @@
         // 다음 이동 방향 검사 - 추가적인 테스트 필요
         // 이동 거리 설정시 32의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
         // 1, 2, 4, 8, 16, 32
-        BOOL endFlag = [self selectDirection:tWarrior];
+        BOOL endFlag = NO;
+        if ([tWarrior getMoveLength] == TILE_SIZE) {
+            if(MOVE_INTELLECT <= [tWarrior getIntellect]) {
+                // 최단 경로
+                endFlag = [self selectShortDirection:tWarrior];
+            } else {
+                 // 무작위 경로
+                endFlag = [self selectDirection:tWarrior];
+            }
+        }
         
         if(endFlag) {
             // 목적지에 도달한 경우
-            [deleteList addObject:tWarrior];
-            
+            [deleteList addObject:tWarrior];            
             continue;
         }
         
@@ -247,44 +255,111 @@
     return NotFound;
 }
 
+- (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y {
+    if ([[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL1 || 
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL2 || 
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_TREASURE ||
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_EXPLOSIVE)
+        return NO;
+    
+    if(x < 0) return NO;
+    if(y < 0) return NO;
+    if(x > TILE_NUM) return NO;
+    if(y > TILE_NUM) return NO;
+    
+    return YES;
+}
+
 // 이동 방향 설정
-// 현재 용사가 있는 위치를 파악하여 해당 타일의 이동 방향으로 용사가 이동하도록 수정
-// 이동 경로를 별도의 테이블에 저장
 - (BOOL) selectDirection:(Warrior *)pWarrior {
+    if([pWarrior getMoveLength] != TILE_SIZE) return NO;
+    
+    CGPoint point = [pWarrior getPosition];
+    int x = ((int) point.x - HALF_TILE_SIZE) / TILE_SIZE;
+    int y = TILE_NUM - ((int) point.y - HALF_TILE_SIZE) / TILE_SIZE - 1;
+    
+    // 종료 지점일 경우
+    CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
+    if(x == ePoint.x && y == ePoint.y) {
+        [pWarrior setMoveDriection:MoveNone];
+        
+        return YES;
+    }
+    
+    NSMutableArray *choseDirection = [[NSMutableArray alloc] init];
     CCSprite *tSprite = [pWarrior getSprite];
     
-    if([pWarrior getMoveLength] == TILE_SIZE) {
-        // 이동 테이블에서 이동 방향을 확인
-        CGPoint point = [pWarrior getPosition];
-        int x = ((int) point.x - HALF_TILE_SIZE) / TILE_SIZE;
-        int y = TILE_NUM - ((int) point.y - HALF_TILE_SIZE) / TILE_SIZE - 1;
-        
-        NSInteger direction = moveTable[x][y];
-        
-        if(direction == MoveRight) {
-            [pWarrior setMoveDriection:MoveRight];
-            tSprite.flipX = WARRIOR_MOVE_RIGHT;
-        } else if(direction == MoveDown) {
-            [pWarrior setMoveDriection:MoveDown];
-            tSprite.flipX = WARRIOR_MOVE_RIGHT;
-        } else if(direction == MoveLeft) {
-            [pWarrior setMoveDriection:MoveLeft];
-            tSprite.flipX = WARRIOR_MOVE_LEFT;
-        } else {
-            [pWarrior setMoveDriection:MoveUp];
-            tSprite.flipX = WARRIOR_MOVE_LEFT;
-        }
-        
-        // 목적지일 경우
-        CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
-        if(x == ePoint.x && y == ePoint.y) {
-            [pWarrior setMoveDriection:MoveNone];
-            
-            return YES;
-        }
-        
-        [pWarrior resetMoveLength];
+    NSInteger preDirection = [pWarrior getMoveDriection];
+    
+    // 이동해온 방향을 제외하고 이동이 가능한 경로가 있는지 검사하여 있을 경우 배열에 저장    
+    if([self checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
+        [choseDirection addObject:[NSNumber numberWithInt:MoveUp]];
     }
+    if([self checkMoveTile:x y:(y + 1)] && preDirection != MoveUp) {
+        [choseDirection addObject:[NSNumber numberWithInt:MoveDown]];
+    }
+    if([self checkMoveTile:(x - 1) y:y] && preDirection != MoveRight) {
+        [choseDirection addObject:[NSNumber numberWithInt:MoveLeft]];
+    }
+    if([self checkMoveTile:(x + 1) y:y] && preDirection != MoveLeft) {
+        [choseDirection addObject:[NSNumber numberWithInt:MoveRight]];
+    }    
+    
+    // 이동 가능한 경로에서 랜덤하게 선택
+    NSInteger direction;
+    if([choseDirection count] != 0) {
+        NSInteger r = arc4random() % [choseDirection count];
+        direction = [[choseDirection objectAtIndex:r] intValue];
+    } else {
+        if(preDirection == MoveUp) direction = MoveDown;
+        else if(preDirection == MoveDown) direction = MoveUp;
+        else if(preDirection == MoveLeft) direction = MoveRight;
+        else if(preDirection == MoveRight) direction = MoveLeft;
+    }
+    
+    // 선택된 방향으로 이동
+    [pWarrior setMoveDriection:direction];
+    if(direction == MoveRight || direction == MoveDown) {
+        tSprite.flipX = WARRIOR_MOVE_RIGHT;
+    } else if(direction == MoveLeft || direction == MoveUp) {
+        tSprite.flipX = WARRIOR_MOVE_LEFT;
+    }
+    
+    // 필요 없는 항목 해제
+    [pWarrior resetMoveLength];
+    [choseDirection removeAllObjects];
+    [choseDirection release];
+    
+    return NO;
+}
+- (BOOL) selectShortDirection:(Warrior *)pWarrior {
+    if([pWarrior getMoveLength] != TILE_SIZE) return NO;
+    
+    // 이동 테이블에서 이동 방향을 확인
+    CCSprite *tSprite = [pWarrior getSprite];
+    CGPoint point = [pWarrior getPosition];
+    int x = ((int) point.x - HALF_TILE_SIZE) / TILE_SIZE;
+    int y = TILE_NUM - ((int) point.y - HALF_TILE_SIZE) / TILE_SIZE - 1;
+    
+    // 목적지일 경우
+    CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
+    if(x == ePoint.x && y == ePoint.y) {
+        [pWarrior setMoveDriection:MoveNone];
+        
+        return YES;
+    }
+    
+    // 이동 가능한 경로 확인
+    NSInteger direction = moveTable[x][y];
+    [pWarrior setMoveDriection:direction];
+    if(direction == MoveRight || direction == MoveDown) {
+        tSprite.flipX = WARRIOR_MOVE_RIGHT;
+    } else if(direction == MoveLeft || direction == MoveUp) {
+        tSprite.flipX = WARRIOR_MOVE_LEFT;
+    }
+    
+    
+    [pWarrior resetMoveLength];
     
     return NO;
 }

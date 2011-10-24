@@ -19,9 +19,11 @@
 
 // 게임 화면
 @interface playMap : CCLayer {
+    File            *file;
     Function        *function;
     TrapHandling    *trapHandling;
     WarriorHandling *warriorHandling;
+    
     //CCTMXLayer      *layer;             // 게임 레이어 정보 저장
     
     /////////////////////////////////////////////////////////
@@ -71,7 +73,6 @@
 - (CGPoint) checkMovePosition:(CGPoint)position;
 
 // 용사 관련 함수
-- (void) createWarrior:(NSInteger)index;
 - (void) createWarriorAtTime:(id) sender;
 - (void) moveWarrior:(id) sender;
 @end
