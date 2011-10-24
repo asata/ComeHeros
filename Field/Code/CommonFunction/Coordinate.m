@@ -29,6 +29,7 @@
     return CGPointMake(floorf(x), floorf(y));
 }
 
+// 타일맵 좌표를 맵 좌표로 변환
 - (CGPoint) convertTileToMap:(CGPoint)tile {
     CGFloat x = (TILE_SIZE * tile.x) + 16;
     CGFloat y = (TILE_SIZE * (TILE_NUM - tile.y - 1)) + 16;
@@ -39,7 +40,6 @@
 // 타일맵 좌표값을 코코아 좌표로 변환
 // [self convertTileToCocoa:tile];
 // tile : 타일맵 좌표값
-//- (CGPoint) getCocoaPostion:(CGPoint)tile {
 - (CGPoint) convertTileToCocoa:(CGPoint)tile {
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     
@@ -62,6 +62,7 @@
     return CGPointMake(x, y);
 }
 
+// 절대 좌표 값을 타일맵 좌표로 변환
 - (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs {
     CGFloat x = floorf(abs.x / TILE_SIZE);
     CGFloat y = floorf(TILE_NUM - abs.y / TILE_SIZE);

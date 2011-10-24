@@ -14,6 +14,7 @@
 //////////////////////////////////////////////////////////////////////////
 // 파일 처리 Start                                                        //
 //////////////////////////////////////////////////////////////////////////
+// 지정된 plist 파일을 읽어들임
 - (NSString *) loadFilePath:(NSString *)fileName {
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
@@ -31,23 +32,7 @@
     return path;
 }
 
-/*- (NSString *) loadFilePath {
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Stage097.plist"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    
-    if (![fileManager fileExistsAtPath: path]) {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Stage097" ofType:@"plist"];
-        
-        [fileManager copyItemAtPath:bundle toPath: path error:&error];
-    }
-    
-    return path;
-}*/
-
+// 스테이지 정보를 읽어 전역 변수에 저장
 - (void) loadStageData:(NSString *)path {
     stageInfo = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
     
@@ -67,6 +52,7 @@
     [[commonValue sharedSingleton] setStageWarriorCount:[tList count]];
 }
 
+// 캐릭터 정보를 읽어들임
 - (NSDictionary *) loadWarriorInfo:(NSInteger)index {
     NSDictionary *tList = [stageInfo objectForKey:@"WarriorList"];
     NSDictionary *data = [tList objectForKey:[NSString stringWithFormat:@"%d", index]];
