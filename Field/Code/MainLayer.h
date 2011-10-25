@@ -6,6 +6,7 @@
 #import "Warrior.h"
 #import "TrapHandling.h"
 #import "WarriorHandling.h"
+#import "MonsterHandling.h"
 
 // 메인 화면
 @interface MainLayer : CCLayer {
@@ -23,6 +24,7 @@
     Function        *function;
     TrapHandling    *trapHandling;
     WarriorHandling *warriorHandling;
+    MonsterHandling *monsterHandling;
     
     //CCTMXLayer      *layer;             // 게임 레이어 정보 저장
     
@@ -75,4 +77,9 @@
 // 용사 관련 함수
 - (void) createWarriorAtTime:(id) sender;
 - (void) moveWarrior:(id) sender;
+
+// Trap 관련 함수
+- (void) addTrap:(CGPoint)point tType:(NSInteger)tType;
+
+- (void) createMonster;
 @end

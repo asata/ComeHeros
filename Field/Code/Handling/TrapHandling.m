@@ -72,16 +72,17 @@
 // 탐지한 트랩에 따라 처리
 - (BOOL) handlingTrap:(Warrior*)pWarrior wList:(NSMutableArray*)warriorList{
     // 캐릭터의 현재 위치
-    //Function *function = [[Function alloc] init];
-    //CGPoint sPoint = [function convertTileToAbsCoordinate:[pWarrior getPosition]];   
+    Function *function = [[Function alloc] init];
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    CGPoint sPoint = [coordinate convertTileToAbsCoordinate:[pWarrior getPosition]];   
     CGPoint sPoint1 = [pWarrior getPosition];
     
     for(int i = 0; i < [trapList count]; i++) {
         Trap *tTrap = [trapList objectAtIndex:i];
-        //CGPoint tPoint = [tTrap getPosition];
+        CGPoint tPoint = [tTrap getPosition];
         CGPoint tPoint1 = [tTrap getABSPosition];
         NSInteger trapType = [tTrap getTrapType];
-        //CGFloat distance = [function lineLength:sPoint1 point2:tPoint1];
+        CGFloat distance = [function lineLength:sPoint1 point2:tPoint1];
         
         if(trapType == TILE_TRAP_CLOSE) {
             // 닫힌 함정일 경우
@@ -110,13 +111,12 @@
             }
         } else if(trapType == TILE_TREASURE) {
             // 보물상자일 경우
-            
-            /*if(distance < powf(TILE_SIZE, 2)) {
-             [pWarrior setStrength:[pWarrior getStrength] - [tTrap getDemage]];
-             
-             NSLog(@"%f %f %f %f", tPoint.x, tPoint.y, sPoint.x, sPoint.y);
-             NSLog(@"Find Treasure Box");
-             }*/
+            if(distance < powf(TILE_SIZE, 2)) {
+                //[pWarrior setStrength:[pWarrior getStrength] - [tTrap getDemage]];
+                
+                NSLog(@"%f %f %f %f %f", distance, tPoint.x, tPoint.y, sPoint.x, sPoint.y);
+                NSLog(@"Find Treasure Box");
+             }
             
             if([pWarrior getStrength] < 0) return DEATH;
         } else if(trapType == TILE_EXPLOSIVE) {
@@ -176,7 +176,11 @@
 
 // 트랩 목록에 트랙 추가
 - (void) addTrap:(CGPoint)tPoint abs:(CGPoint)abs type:(NSInteger)tType {
+    CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
+    
+    CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
     Trap *tTrap = [[Trap alloc] initTrap:tPoint abs:abs trapNum:trapNum trapType:tType demage:10];
+    [layer2 setTileGID:tType at:tPoint];
     
     [trapList addObject:tTrap];
 }

@@ -71,22 +71,27 @@
     file = [[File alloc] init];
     function = [[Function alloc] init];
     trapHandling = [[TrapHandling alloc] init];
+    monsterHandling = [[MonsterHandling alloc] init];
     warriorHandling = [[WarriorHandling alloc] init:trapHandling];
-    //Coordinate *coordinate = [[Coordinate alloc] init];
     
     [[commonValue sharedSingleton] setViewScale:1];
     
-    NSString *path = [file loadFilePath:@"Stage094.plist"];
+    NSString *path = [file loadFilePath:@"Stage150.plist"];
     [file loadStageData:path];
     
     [self initMap];
-    [warriorHandling initWarrior];
+    //[monsterHandling initMonster];
+    //[warriorHandling initWarrior];
     
+    [self addTrap:ccp(7, 2) tType:TILE_TREASURE];
+    
+    [self createMonster];
+
     // 일정한 간격으로 호출~
-    [self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
-    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    //[self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
+    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
     //[self schedule:@selector(removeWarrior:) interval:3];
-}
+    }
 
 - (void) dealloc {
     [super dealloc];
@@ -103,7 +108,7 @@
 // 타일맵 등록
 - (void) initMap {
     // 타일 맵 등록
-    CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"sample.tmx"];
+    CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:FILE_TILE_MAP];
     map.scale = MAP_SCALE * [[commonValue sharedSingleton] getViewScale];
     // 왼쪽 상단에 맵 왼쪽 상단이 위치하도록 설정(하지 않을 경우 왼쪽 하단에 맵 왼쪽 하단이 위치) 
     map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
@@ -185,6 +190,44 @@
 //////////////////////////////////////////////////////////////////////////
 
 
+
+//////////////////////////////////////////////////////////////////////////
+// 몬스터 Start                                                           //
+//////////////////////////////////////////////////////////////////////////
+- (void) createMonster {
+    CCSprite *tSprite = [monsterHandling createMonster:1 position:ccp(0, 0)];
+    [self addChild:tSprite z:kWarriorLayer];
+    
+    NSLog(@"Add Monster");
+}
+//////////////////////////////////////////////////////////////////////////
+// 몬스터 End                                                             //
+//////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////
+// Trap Start                                                           //
+//////////////////////////////////////////////////////////////////////////
+- (void) addTrap:(CGPoint)point tType:(NSInteger)tType {
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    
+    [trapHandling addTrap:point abs:[coordinate convertTileToMap:point] type:tType];
+    [[commonValue sharedSingleton] setMapInfo:point.x y:point.y tileType:tType];
+    
+    if(tType == TILE_NONE || 
+       tType == TILE_WALL1 || tType == TILE_WALL2 || 
+       tType == TILE_TREASURE || tType == TILE_EXPLOSIVE)
+        [warriorHandling setMoveTable:point.x y:point.y value:-1];
+    else
+        [warriorHandling setMoveTable:point.x y:point.y value:MoveNone];
+    
+    // 이동 경로 재계산
+    [warriorHandling createMoveTable];
+}
+//////////////////////////////////////////////////////////////////////////
+// Trap End                                                             //
+//////////////////////////////////////////////////////////////////////////
 
 
 

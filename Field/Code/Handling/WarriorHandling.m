@@ -18,8 +18,9 @@
         
         idleSprite = [[NSMutableArray alloc] init];
         idleAnimate = [[NSMutableArray alloc] init];
+        fightAniFrame = [[NSMutableArray alloc] init];
         
-        texture = [[CCTextureCache sharedTextureCache] addImage:@"texture-character.png"];
+        texture = [[CCTextureCache sharedTextureCache] addImage:FILE_CHARATER_IMG];
         
         trapHandling = [[TrapHandling alloc] init];
     }
@@ -33,8 +34,9 @@
         
         idleSprite = [[NSMutableArray alloc] init];
         idleAnimate = [[NSMutableArray alloc] init];
+        fightAniFrame = [[NSMutableArray alloc] init];
         
-        texture = [[CCTextureCache sharedTextureCache] addImage:@"texture-character.png"];
+        texture = [[CCTextureCache sharedTextureCache] addImage:FILE_CHARATER_IMG];
         
         trapHandling = p_trapHandling;
     }
@@ -47,7 +49,7 @@
 //////////////////////////////////////////////////////////////////////////
 - (void) initWarrior {
     File *file = [[File alloc] init];
-    NSString* path = [file loadFilePath:@"coordinates-character5.plist"];
+    NSString* path = [file loadFilePath:FILE_CHARATER_PLIST];
     
     [self loadWarriorData:path];
 }
@@ -124,17 +126,18 @@
     // 나타난 용사 수 증가
     warriorNum++;
     
+    NSLog(@"warriorType : %d", warriorType);
     CCSprite *tSprite = [idleSprite objectAtIndex:warriorType];
     tSprite.position = ccp((sPoint.x * viewScale) + mapPosition.x, (sPoint.y * viewScale) + mapPosition.y); 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
     [tSprite setScale:viewScale];
     [tSprite setVisible:YES];
     [tSprite runAction:[CCRepeatForever actionWithAction:[idleAnimate objectAtIndex:warriorType]]];
-    [tSprite release];
     
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
     
+    [tSprite release];
     [warriorList addObject:tWarrior];
     
     return tSprite;
@@ -256,16 +259,16 @@
 }
 
 - (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y {
+    if(x < 0) return NO;
+    if(y < 0) return NO;
+    if(x > TILE_NUM) return NO;
+    if(y > TILE_NUM) return NO;
+    
     if ([[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL1 || 
         [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL2 || 
         [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_TREASURE ||
         [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_EXPLOSIVE)
         return NO;
-    
-    if(x < 0) return NO;
-    if(y < 0) return NO;
-    if(x > TILE_NUM) return NO;
-    if(y > TILE_NUM) return NO;
     
     return YES;
 }

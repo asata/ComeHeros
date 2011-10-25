@@ -3,6 +3,7 @@
 #import "Warrior.h"
 #import "Trap.h"
 #import "Function.h"
+#import "Coordinate.h"
 
 @interface TrapHandling : NSObject {
     NSMutableArray  *trapList;          // 트랩 List
