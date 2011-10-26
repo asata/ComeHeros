@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB1D968C144D1F87003D03AC /* coordinates-character15.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1D968B144D1F87003D03AC /* coordinates-character15.plist */; };
+		CB1D968C144D1F87003D03AC /* coordinates-character4.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1D968B144D1F87003D03AC /* coordinates-character4.plist */; };
 		CB29B95E1451A49E005D7C1E /* TrapHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B95D1451A49E005D7C1E /* TrapHandling.m */; };
 		CB29B9631451AE5C005D7C1E /* WarriorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9621451AE5C005D7C1E /* WarriorHandling.m */; };
 		CB29B9661451BAE9005D7C1E /* MonsterHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9651451BAE9005D7C1E /* MonsterHandling.m */; };
@@ -135,15 +135,18 @@
 		CB7B80AE13ED7B2C00FADB50 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80AD13ED7B2C00FADB50 /* AppDelegate.m */; };
 		CB7B80B113ED7B2C00FADB50 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80B013ED7B2C00FADB50 /* RootViewController.m */; };
 		CB7B80C213ED7B9B00FADB50 /* MainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80C113ED7B9B00FADB50 /* MainLayer.m */; };
+		CB96AD701457D7EB00CAA1C5 /* House.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD6F1457D7EA00CAA1C5 /* House.m */; };
+		CB96AD73145805C500CAA1C5 /* Stage156.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage156.plist */; };
+		CB96AD75145812C400CAA1C5 /* Tile in Resources */ = {isa = PBXBuildFile; fileRef = CB96AD74145812C400CAA1C5 /* Tile */; };
+		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
 		CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF3D14443D790079525D /* coordinates-tile.plist */; };
 		CBBBEF4414443D790079525D /* texture-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF4014443D790079525D /* texture-tile.png */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
-		CBF4D3F8141B5C39001528FA /* Stage150.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage150.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CB1D968B144D1F87003D03AC /* coordinates-character15.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character15.plist"; path = "Resources/TileMap/coordinates-character15.plist"; sourceTree = "<group>"; };
+		CB1D968B144D1F87003D03AC /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/TileMap/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB29B95C1451A49E005D7C1E /* TrapHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrapHandling.h; path = Code/Handling/TrapHandling.h; sourceTree = "<group>"; };
 		CB29B95D1451A49E005D7C1E /* TrapHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrapHandling.m; path = Code/Handling/TrapHandling.m; sourceTree = "<group>"; };
 		CB29B9611451AE5C005D7C1E /* WarriorHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarriorHandling.h; path = Code/Handling/WarriorHandling.h; sourceTree = "<group>"; };
@@ -401,12 +404,17 @@
 		CB7B80C013ED7B9B00FADB50 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainLayer.h; path = Code/MainLayer.h; sourceTree = "<group>"; };
 		CB7B80C113ED7B9B00FADB50 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainLayer.m; path = Code/MainLayer.m; sourceTree = "<group>"; };
 		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/define.h; sourceTree = "<group>"; };
+		CB96AD6E1457D7E900CAA1C5 /* House.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = House.h; path = Code/House.h; sourceTree = "<group>"; };
+		CB96AD6F1457D7EA00CAA1C5 /* House.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = House.m; path = Code/House.m; sourceTree = "<group>"; };
+		CB96AD74145812C400CAA1C5 /* Tile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Tile; path = Resources/TileMap/Tile; sourceTree = "<group>"; };
+		CB96AD761458452000CAA1C5 /* HouseHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HouseHandling.h; path = Code/Handling/HouseHandling.h; sourceTree = "<group>"; };
+		CB96AD771458452100CAA1C5 /* HouseHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HouseHandling.m; path = Code/Handling/HouseHandling.m; sourceTree = "<group>"; };
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
 		CBBBEF3D14443D790079525D /* coordinates-tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-tile.plist"; path = "Resources/TileMap/coordinates-tile.plist"; sourceTree = "<group>"; };
 		CBBBEF4014443D790079525D /* texture-tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-tile.png"; path = "Resources/TileMap/texture-tile.png"; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
-		CBF4D3F7141B5C39001528FA /* Stage150.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage150.plist; path = Resources/StageInfo/Stage150.plist; sourceTree = "<group>"; };
+		CBF4D3F7141B5C39001528FA /* Stage156.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage156.plist; path = Resources/StageInfo/Stage156.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +445,8 @@
 				CB29B9621451AE5C005D7C1E /* WarriorHandling.m */,
 				CB29B9641451BAE9005D7C1E /* MonsterHandling.h */,
 				CB29B9651451BAE9005D7C1E /* MonsterHandling.m */,
+				CB96AD761458452000CAA1C5 /* HouseHandling.h */,
+				CB96AD771458452100CAA1C5 /* HouseHandling.m */,
 			);
 			name = Handling;
 			sourceTree = "<group>";
@@ -463,6 +473,8 @@
 				CB4EF93F1415D45600868903 /* Monster.m */,
 				CB4EF9401415D45600868903 /* Trap.h */,
 				CB4EF9411415D45600868903 /* Trap.m */,
+				CB96AD6E1457D7E900CAA1C5 /* House.h */,
+				CB96AD6F1457D7EA00CAA1C5 /* House.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -471,7 +483,7 @@
 			isa = PBXGroup;
 			children = (
 				CB3B022B1447A670004A1258 /* texture-character.png */,
-				CB1D968B144D1F87003D03AC /* coordinates-character15.plist */,
+				CB1D968B144D1F87003D03AC /* coordinates-character4.plist */,
 			);
 			name = Character;
 			sourceTree = "<group>";
@@ -891,6 +903,7 @@
 		CB7B80C313ED7D0F00FADB50 /* TileMap */ = {
 			isa = PBXGroup;
 			children = (
+				CB96AD74145812C400CAA1C5 /* Tile */,
 				CBBBEF3D14443D790079525D /* coordinates-tile.plist */,
 				CBBBEF46144443910079525D /* sample.tmx */,
 				CBBBEF4014443D790079525D /* texture-tile.png */,
@@ -901,7 +914,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CBF4D3F7141B5C39001528FA /* Stage150.plist */,
+				CBF4D3F7141B5C39001528FA /* Stage156.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -956,6 +969,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB96AD73145805C500CAA1C5 /* Stage156.plist in Resources */,
 				CB7B7F5D13ED7B2200FADB50 /* Default.png in Resources */,
 				CB7B7F5F13ED7B2200FADB50 /* fps_images.png in Resources */,
 				CB7B7F6113ED7B2200FADB50 /* Icon-72.png in Resources */,
@@ -965,14 +979,14 @@
 				CB7B7F6913ED7B2200FADB50 /* Icon.png in Resources */,
 				CB7B7F6B13ED7B2200FADB50 /* Icon@2x.png in Resources */,
 				CB7B7F6E13ED7B2200FADB50 /* iTunesArtwork in Resources */,
-				CBF4D3F8141B5C39001528FA /* Stage150.plist in Resources */,
 				CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */,
 				CBBBEF4414443D790079525D /* texture-tile.png in Resources */,
 				CBBBEF47144443910079525D /* sample.tmx in Resources */,
 				CB3B022D1447A670004A1258 /* texture-character.png in Resources */,
-				CB1D968C144D1F87003D03AC /* coordinates-character15.plist in Resources */,
+				CB1D968C144D1F87003D03AC /* coordinates-character4.plist in Resources */,
 				CB6B28381456AE6500DB68B9 /* coordinates-monster.plist in Resources */,
 				CB6B28391456AE6500DB68B9 /* texture-monster.png in Resources */,
+				CB96AD75145812C400CAA1C5 /* Tile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1105,8 @@
 				CB29B9661451BAE9005D7C1E /* MonsterHandling.m in Sources */,
 				CB29B9701451BB93005D7C1E /* File.m in Sources */,
 				CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */,
+				CB96AD701457D7EB00CAA1C5 /* House.m in Sources */,
+				CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1101,7 +1117,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (

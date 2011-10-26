@@ -1,11 +1,3 @@
-//
-//  WarriorHandling.m
-//  Field
-//
-//  Created by Kang Jeonghun on 11. 10. 21..
-//  Copyright (c) 2011년 __MyCompanyName__. All rights reserved.
-//
-
 #import "WarriorHandling.h"
 
 @implementation WarriorHandling
@@ -13,14 +5,6 @@
 
 - (id) init {
     if ((self = [super init])) {
-        warriorList = [[NSMutableArray alloc] init];
-        warriorNum = 0;
-        
-        idleSprite = [[NSMutableArray alloc] init];
-        idleAnimate = [[NSMutableArray alloc] init];
-        fightAniFrame = [[NSMutableArray alloc] init];
-        
-        texture = [[CCTextureCache sharedTextureCache] addImage:FILE_CHARATER_IMG];
         
         trapHandling = [[TrapHandling alloc] init];
     }
@@ -29,15 +13,6 @@
 }
 - (id) init:(TrapHandling*)p_trapHandling {
     if ((self = [super init])) {
-        warriorList = [[NSMutableArray alloc] init];
-        warriorNum = 0;
-        
-        idleSprite = [[NSMutableArray alloc] init];
-        idleAnimate = [[NSMutableArray alloc] init];
-        fightAniFrame = [[NSMutableArray alloc] init];
-        
-        texture = [[CCTextureCache sharedTextureCache] addImage:FILE_CHARATER_IMG];
-        
         trapHandling = p_trapHandling;
     }
     
@@ -47,61 +22,41 @@
 //////////////////////////////////////////////////////////////////////////
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
-- (void) initWarrior {
-    File *file = [[File alloc] init];
-    NSString* path = [file loadFilePath:FILE_CHARATER_PLIST];
+- (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
     
-    [self loadWarriorData:path];
+    CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                            spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-1.png", spriteName]];
+     
+    return frame;
 }
 
-// 파일로부터 캐릭터 이미지를 읽어들임
-- (void) loadWarriorData:(NSString *)path {
-    NSArray *warriorType = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
-    
-    charInfo = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
-    NSDictionary *tList = [charInfo objectForKey:@"frames"];
-    
-    for (NSString* type in warriorType) {
-        NSArray *warriorIdle = [NSArray arrayWithObjects: 
-                                [NSString stringWithFormat:@"%@%@%@", @"character-", type, @"-idle-1.png"],
-                                [NSString stringWithFormat:@"%@%@%@", @"character-", type, @"-idle-2.png"], 
-                                nil];
+- (CCAnimation*) loadWarriorWalk:(NSString*)spriteName {
+    NSMutableArray* walkImgList = [NSMutableArray array];
+    for(NSInteger i = 1; i < 3; i++) {
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                                spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-%d.png", spriteName, i]];
         
-        NSArray *warriorAttack = [NSArray arrayWithObjects:     
-                                  [NSString stringWithFormat:@"%@%@%@", @"character-", type, @"-attack-1.png"],
-                                  [NSString stringWithFormat:@"%@%@%@", @"character-", type, @"-attack-2.png"], 
-                                  nil];
-        
-        NSDictionary *wList = [tList objectForKey:type];
-        
-        // 이동 이미지를 읽어들임
-        NSMutableArray *aniIdleFrames = [self getImageFrame:wList imgList:warriorIdle];
-        CCAnimation *animation = [CCAnimation animationWithFrames:aniIdleFrames delay:WARRIOR_MOVE_ACTION];
-        [idleAnimate addObject:[[CCAnimate alloc] initWithAnimation:animation restoreOriginalFrame:NO]];
-        [idleSprite addObject:[CCSprite spriteWithSpriteFrame:(CCSpriteFrame*) [aniIdleFrames objectAtIndex:0]]];
-        
-        // 공격 애니메이션용 이미지를 읽어들여 저장
-        [fightAniFrame addObject:[self getImageFrame:wList imgList:warriorAttack]];
+        [walkImgList addObject:frame];
     }
+    
+    CCAnimation *animation = [CCAnimation animationWithFrames:walkImgList delay:WARRIOR_MOVE_ACTION];
+    
+    return animation;
 }
 
-// 각 캐릭터별로 필요한 이미지 파일을 읽어들임
-- (NSMutableArray*) getImageFrame:(NSDictionary*)wList imgList:(NSArray*)imgList {
-    NSMutableArray *result = [NSMutableArray array];
-    
-    for (NSString* imgName in imgList) {
-        NSDictionary *spliteInfo = [wList objectForKey:imgName];
-        NSInteger x = [[spliteInfo objectForKey:@"x"] intValue];
-        NSInteger y = [[spliteInfo objectForKey:@"y"] intValue];
-        NSInteger width = [[spliteInfo objectForKey:@"width"] intValue];
-        NSInteger height = [[spliteInfo objectForKey:@"height"] intValue];
+- (CCAnimation*) loadWarriorAttack:(NSString*)spriteName {
+    NSMutableArray* attackImgList = [NSMutableArray array];
+    for(NSInteger i = 1; i < 3; i++) {
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                                spriteFrameByName:[NSString stringWithFormat:@"character-%@-attack-%d.png", spriteName, i]];
         
-        CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture
-                                                          rect:CGRectMake(x, y, width, height)];
-        [result addObject:frame];
+        [attackImgList addObject:frame];
     }
     
-    return result;
+    CCAnimation *animation = [CCAnimation animationWithFrames:attackImgList delay:WARRIOR_MOVE_ACTION];
+    
+    return animation;
 }
 
 - (CCSprite*) createWarrior:(NSDictionary*)wInfo {
@@ -114,31 +69,32 @@
     
     // 용사 생성
     Warrior *tWarrior = [[Warrior alloc] initWarrior:[coordinate convertTileToMap:sPoint]
-                                          warriorNum:warriorNum
+                                          warriorNum:[[commonValue sharedSingleton] getWarriorNum]
                                             strength:100 
                                                power:10 
-                                           intellect:40 * (warriorNum + 1)
+                                           intellect:30
                                              defense:10 
-                                               speed:8   //[[wInfo objectForKey:@"speed"] intValue] 
+                                               speed:4   //[[wInfo objectForKey:@"speed"] intValue] 
                                            direction:MoveUp
                                          attackRange:2]; 
     
     // 나타난 용사 수 증가
-    warriorNum++;
+    [[commonValue sharedSingleton] plusWarriorNum];
     
-    NSLog(@"warriorType : %d", warriorType);
-    CCSprite *tSprite = [idleSprite objectAtIndex:warriorType];
+    NSArray *warriorName = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
+    CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadWarriorSprite:[warriorName objectAtIndex:warriorType]]];
     tSprite.position = ccp((sPoint.x * viewScale) + mapPosition.x, (sPoint.y * viewScale) + mapPosition.y); 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
     [tSprite setScale:viewScale];
     [tSprite setVisible:YES];
-    [tSprite runAction:[CCRepeatForever actionWithAction:[idleAnimate objectAtIndex:warriorType]]];
+    [tSprite runAction:[CCRepeatForever actionWithAction:
+                        [[CCAnimate alloc] initWithAnimation:[self loadWarriorWalk:[warriorName objectAtIndex:warriorType]]
+                                        restoreOriginalFrame:NO]]];
     
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
     
-    [tSprite release];
-    [warriorList addObject:tWarrior];
+    [[commonValue sharedSingleton] addWarrior:tWarrior];
     
     return tSprite;
 }
@@ -148,9 +104,9 @@
 - (void) moveWarrior {
     NSMutableArray *deleteList = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < [warriorList count]; i++) {
+    for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
         // 현재 위치 및 정보를 가져옴
-        Warrior *tWarrior = [warriorList objectAtIndex:i];
+        Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i];
         CCSprite *tSprite = [tWarrior getSprite];
         CGPoint movePosition = [tWarrior getPosition];
         
@@ -182,7 +138,7 @@
         
         // 공격 대상 탐색
         // 트랩 탐지 및 처리
-        BOOL survivalFlag = [trapHandling handlingTrap:tWarrior wList:warriorList];  
+        BOOL survivalFlag = [trapHandling handlingTrap:tWarrior];
         if(!survivalFlag) {
             [deleteList addObject:tWarrior];
             continue;
@@ -218,7 +174,7 @@
         [tWarrior setPosition:movePosition];
         
         
-        [warriorList replaceObjectAtIndex:i withObject:tWarrior];
+        [[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
     }
     
     // 용사 삭제
@@ -228,14 +184,14 @@
 
 // 지정된 용사 제거
 - (void) removeWarrior:(NSInteger)index {
-    [warriorList removeObjectAtIndex:index];
+    [[commonValue sharedSingleton] removeWarriorAtIndex:index];
 }
 
 - (void) removeWarriorList:(NSMutableArray *)deleteList {
     for(int i = [deleteList count]; i > 0; i--) {
         Warrior *tWarrior = [deleteList objectAtIndex:(i - 1)];
         [[tWarrior getSprite] setVisible:NO];
-        [warriorList removeObject:tWarrior];
+        [[commonValue sharedSingleton] removeWarrior:tWarrior];
     }
 }
 
@@ -314,10 +270,14 @@
         NSInteger r = arc4random() % [choseDirection count];
         direction = [[choseDirection objectAtIndex:r] intValue];
     } else {
-        if(preDirection == MoveUp) direction = MoveDown;
-        else if(preDirection == MoveDown) direction = MoveUp;
-        else if(preDirection == MoveLeft) direction = MoveRight;
-        else if(preDirection == MoveRight) direction = MoveLeft;
+        if(preDirection == MoveUp)
+            direction = MoveDown;
+        else if(preDirection == MoveDown)
+            direction = MoveUp;
+        else if(preDirection == MoveLeft) 
+            direction = MoveRight;
+        else if(preDirection == MoveRight)
+            direction = MoveLeft;  
     }
     
     // 선택된 방향으로 이동
@@ -365,16 +325,6 @@
     [pWarrior resetMoveLength];
     
     return NO;
-}
-
-- (NSInteger) warriorCount {
-    return [warriorList count];
-}
-- (NSInteger) warriorNum {
-    return warriorNum;
-}
-- (Warrior*) warriorInfo:(NSInteger)index {
-    return [warriorList objectAtIndex:index];
 }
 //////////////////////////////////////////////////////////////////////////
 // 용사 End                                                              //

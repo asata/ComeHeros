@@ -1,8 +1,9 @@
+//////////////////////////////////////////////////////////////////
+// Monster에 관련된 Class                                         //
+//////////////////////////////////////////////////////////////////
 #import "Monster.h"
 
 @implementation Monster
-@synthesize sprite;
-@synthesize attackAnimate, defenseAnimate;
 
 //////////////////////////////////////////////////////////////////////////
 // 몬스터 초기화 Start                                                      //
@@ -13,7 +14,7 @@
     
     return self;
 }
-- (id) initWarrior:(CGPoint)pos 
+- (id) initMonster:(CGPoint)pos 
         monsterNum:(NSInteger)p_num 
           strength:(NSInteger)pStrength 
              power:(NSInteger)pPower 
@@ -21,19 +22,21 @@
            defense:(NSInteger)pDefense 
              speed:(NSInteger)pSpeed 
          direction:(NSInteger)pDirection 
-       attackRange:(NSInteger)pAttackRange {
+       attackRange:(NSInteger)pAttackRange 
+          houseNum:(NSInteger)pHouse
+{
     if ((self = [super init])) {
-        monsterNum = p_num;
-        position = pos;
-        strength = pStrength;
-        power = pPower;
-        intellect = pIntellect;
-        defense = pDefense;
+        [super initWarrior:pos 
+                warriorNum:p_num 
+                  strength:pStrength 
+                     power:pPower 
+                 intellect:pIntellect 
+                   defense:pDefense
+                     speed:pSpeed 
+                 direction:pDirection 
+               attackRange:pAttackRange];
         
-        moveLength = 0;
-        moveSpeed = pSpeed;
-        moveDirection = pDirection;
-        attackRange = pAttackRange;
+        houseNum = pHouse;
     }
     
     return self;

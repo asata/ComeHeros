@@ -26,7 +26,7 @@
 }
 
 - (void) menuCallBack:(id) sender {
-    [(CCLayerMultiplex*)parent_ switchTo:1];
+    [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
 
 @end
@@ -73,25 +73,22 @@
     trapHandling = [[TrapHandling alloc] init];
     monsterHandling = [[MonsterHandling alloc] init];
     warriorHandling = [[WarriorHandling alloc] init:trapHandling];
+    houseHandling  = [[HouseHandling alloc] init];
     
+    [[commonValue sharedSingleton] initCommonValue];
     [[commonValue sharedSingleton] setViewScale:1];
     
-    NSString *path = [file loadFilePath:@"Stage150.plist"];
+    NSString *path = [file loadFilePath:@"Stage156.plist"];
     [file loadStageData:path];
     
-    [self initMap];
-    //[monsterHandling initMonster];
-    //[warriorHandling initWarrior];
+    [self initMap]; 
+    [self initTileSetupMenu];
     
-    [self addTrap:ccp(7, 2) tType:TILE_TREASURE];
-    
-    [self createMonster];
-
     // 일정한 간격으로 호출~
-    //[self schedule:@selector(moveWarrior:) interval:REFRESH_DISPLAY_TIME];
-    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
-    //[self schedule:@selector(removeWarrior:) interval:3];
-    }
+    [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
+    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
+}
 
 - (void) dealloc {
     [super dealloc];
@@ -126,8 +123,6 @@
 
 // 타일맵에 있는 타일을 읽어들임
 - (void) loadTileMap {
-    Coordinate *coordinate = [[Coordinate alloc] init];
-    
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     CCTMXLayer *layer1 = [map layerNamed:MAP_LAYER1];
     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
@@ -137,11 +132,13 @@
             // 타일맵에 위치한 타일 타입을 읽어들임
             if([layer2 tileGIDAt:ccp(i, j)] != TILE_NONE) 
                 [[commonValue sharedSingleton] setMapInfo:i y:j tileType:[layer2 tileGIDAt:ccp(i, j)]];
-            else
+            else 
                 [[commonValue sharedSingleton] setMapInfo:i y:j tileType:[layer1 tileGIDAt:ccp(i, j)]];
             
             unsigned int tileType = [[commonValue sharedSingleton] getMapInfo:i y:j];
+            
             // 타일 타입에 따라 이동이 가능한지 검사
+            // 이동 불가일 경우 -1
             if(tileType == TILE_NONE || 
                tileType == TILE_WALL1 || tileType == TILE_WALL2 || 
                tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
@@ -153,8 +150,13 @@
             if(tileType == TILE_TRAP_OPEN || tileType == TILE_TRAP_CLOSE ||
                tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
             {
-                [trapHandling addTrap:ccp(i, j) abs:[coordinate convertTileToMap:ccp(i, j)] type:tileType];
-            }                                                    
+                [trapHandling addTrap:ccp(i, j) type:tileType];
+            }                                             
+            
+            if (tileType == TILE_MONSTER_HOUSE1) {
+                // 몬스터 집이 있는 경우
+                [self addHouse:ccp(i, j) tType:tileType];
+            }
         }
     }
 }
@@ -168,19 +170,24 @@
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
 - (void) createWarriorAtTime:(id) sender {
-    if([[commonValue sharedSingleton] getStageWarriorCount] > [warriorHandling warriorNum]) {
-        NSDictionary *wInfo = [file loadWarriorInfo:[warriorHandling warriorNum]];
+    if([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
+        NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
         [self addChild:tSprite z:kWarriorLayer];
     }
 }
 
-- (void) moveWarrior:(id) sender {
+- (void) moveAction:(id) sender {
     // 잠시 애니메이션 효과 중단
     [self pauseSchedulerAndActions];
     
     [warriorHandling moveWarrior];
+    [monsterHandling moveMonster];
+
+    // 몬스터 생성은 일정 간격으로 처리
+    // 추가적인 값을 두어 천천히 생산되게 수정
+    //[self createMonster];
     
     // 애니메이션 효과 재개
     [self resumeSchedulerAndActions];
@@ -194,11 +201,15 @@
 //////////////////////////////////////////////////////////////////////////
 // 몬스터 Start                                                           //
 //////////////////////////////////////////////////////////////////////////
-- (void) createMonster {
-    CCSprite *tSprite = [monsterHandling createMonster:1 position:ccp(0, 0)];
-    [self addChild:tSprite z:kWarriorLayer];
-    
-    NSLog(@"Add Monster");
+- (void) createMonsterAtTime:(id)sender {
+    for (House *tHouse in [[commonValue sharedSingleton] getHouseList]) {
+        if([tHouse getMadeMonsterNum] < [tHouse getMaxiumMonsterNum]) {
+            // 집에서 최대치로 생산됐는지 검사
+            CCSprite *tSprite = [monsterHandling createMonster:0 position:[tHouse getPosition] houseNum:[tHouse getHouseNum]];
+            [self addChild:tSprite z:kWarriorLayer];
+            [tHouse pluseMadeNum];
+        }
+    }
 }
 //////////////////////////////////////////////////////////////////////////
 // 몬스터 End                                                             //
@@ -207,13 +218,24 @@
 
 
 //////////////////////////////////////////////////////////////////////////
+// House Start                                                          //
+//////////////////////////////////////////////////////////////////////////
+- (void) addHouse:(CGPoint)point tType:(NSInteger)tType {
+    [houseHandling addHouse:point type:tType];
+    
+    [trapHandling tileChange:point type:tType];
+}
+//////////////////////////////////////////////////////////////////////////
+// House End                                                            //
+//////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////
 // Trap Start                                                           //
 //////////////////////////////////////////////////////////////////////////
 - (void) addTrap:(CGPoint)point tType:(NSInteger)tType {
-    Coordinate *coordinate = [[Coordinate alloc] init];
-    
-    [trapHandling addTrap:point abs:[coordinate convertTileToMap:point] type:tType];
-    [[commonValue sharedSingleton] setMapInfo:point.x y:point.y tileType:tType];
+    [trapHandling addTrap:point type:tType]; 
     
     if(tType == TILE_NONE || 
        tType == TILE_WALL1 || tType == TILE_WALL2 || 
@@ -224,6 +246,70 @@
     
     // 이동 경로 재계산
     [warriorHandling createMoveTable];
+}
+- (void) initTileSetupMenu {
+    CCMenuItemImage *tileItem1 = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-object-1.png" 
+                                                        selectedImage:@"Tile/tile-object-1.png" 
+                                                               target:self 
+                                                             selector:@selector(tileSetupExplosive:)];
+    CCMenuItemImage *tileItem2 = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-object-2.png" 
+                                                        selectedImage:@"Tile/tile-object-2.png" 
+                                                               target:self 
+                                                             selector:@selector(tileSetupTreasure:)];
+    CCMenuItemImage *tileItem3 = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-object-3.png" 
+                                                        selectedImage:@"Tile/tile-object-3.png" 
+                                                               target:self 
+                                                             selector:@selector(tileSetupTrap:)];
+    CCMenuItemImage *tileItem4 = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-floor-0.png" 
+                                                        selectedImage:@"Tile/tile-floor-0.png" 
+                                                               target:self 
+                                                             selector:@selector(tileSetupMonsterHouse1:)];
+    
+    menu1 = [CCMenu menuWithItems:tileItem1, tileItem2, nil];
+    [menu1 alignItemsVerticallyWithPadding:5];
+    [menu1 setVisible:NO];
+    menu2 = [CCMenu menuWithItems:tileItem3, tileItem4, nil];
+    [menu2 alignItemsVerticallyWithPadding:5];
+    [menu2 setVisible:NO];
+    
+    [self addChild:menu1 z:kTileMenuLayer];
+    [self addChild:menu2 z:kTileMenuLayer];
+    
+}
+- (void) tileSetupExplosive:(id)sender {
+    [trapHandling addTrap:tileSetupPoint type:TILE_EXPLOSIVE];
+    
+    [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:-1];
+    
+    // 이동 경로 재계산
+    [warriorHandling createMoveTable];
+    
+    [menu1 setVisible:NO];
+    [menu2 setVisible:NO];
+}
+- (void) tileSetupTreasure:(id)sender {
+    [trapHandling addTrap:tileSetupPoint type:TILE_TREASURE];
+    
+    [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:-1];
+    
+    // 이동 경로 재계산
+    [warriorHandling createMoveTable];
+    
+    [menu1 setVisible:NO];
+    [menu2 setVisible:NO];
+}
+- (void) tileSetupTrap:(id)sender {
+    [trapHandling addTrap:tileSetupPoint type:TILE_TRAP_CLOSE];
+    
+    [menu1 setVisible:NO];
+    [menu2 setVisible:NO];
+}
+- (void) tileSetupMonsterHouse1:(id)sender {
+    // monsterHandling에 addHouse 등록하여 처리가 필요
+    [trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
+    
+    [menu1 setVisible:NO];
+    [menu2 setVisible:NO];
 }
 //////////////////////////////////////////////////////////////////////////
 // Trap End                                                             //
@@ -236,7 +322,9 @@
 //////////////////////////////////////////////////////////////////////////
 // 사용자가 터치를 할 경우 
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    // 터치만 처리
+    [menu1 setVisible:NO];
+    [menu2 setVisible:NO];
+    
     if([[event allTouches] count] == 1) {
         // 멀티 터치가 아닌 경우 
         touchType = TOUCH;
@@ -266,6 +354,7 @@
         
         [self moveTouchMap:convertedLocation];
         [self moveTouchWarrior];
+        [self moveTouchMonster];
         
         // 일시 정지 해제
         [self resumeSchedulerAndActions];
@@ -307,12 +396,20 @@
                                                    map.position.y + (deviceSize.height * changeScale))];
         
         // 용사 비율 조정
-        for(int i = 0; i < [warriorHandling warriorCount]; i++) {
-            Warrior *tWarrior = [warriorHandling warriorInfo:i];
+        for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
+            Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
             CCSprite *tSprite = [tWarrior getSprite];
             tSprite.scale = viewScale;
             tSprite.position = ccp(map.position.x + ([tWarrior getPosition].x * viewScale), 
                                    map.position.y + ([tWarrior getPosition].y * viewScale));
+        }
+        // 몬스터 비율 조정
+        for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
+            Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i]; 
+            CCSprite *tSprite = [tMonster getSprite];
+            tSprite.scale = viewScale;
+            tSprite.position = ccp(map.position.x + ([tMonster getPosition].x * viewScale), 
+                                   map.position.y + ([tMonster getPosition].y * viewScale));
         }
         
         [[commonValue sharedSingleton] setViewScale:viewScale];
@@ -335,17 +432,33 @@
         // 다른곳 터치시 트랩 설치화면 닫음
         UITouch *touch = [touches anyObject];
         CGPoint location = [touch locationInView: [touch view]];
+        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
         
         // 클릭한 위치 확인
         Coordinate *coordinate = [[Coordinate alloc] init];
         CGPoint thisArea = [coordinate convertCocos2dToTile:location];
-        NSLog(@"%f %f", thisArea.x, thisArea.y);
         
-        //[self printTrapList:thisArea];
+        // 설치된 타일 확인
+        unsigned int tType = [[commonValue sharedSingleton] getMapInfo:(int)thisArea.x y:(int)thisArea.y];
+        if(tType == TILE_WALL1) {
+            [trapHandling addTrap:thisArea type:TILE_WALL2];
+        } else if(tType == TILE_WALL2) {
+            [trapHandling addTrap:thisArea type:TILE_GROUND2];
+        } else if(tType == TILE_GROUND1 || tType == TILE_GROUND2) {
+            // 트랩 설치 화면 출력
+            tileSetupPoint = thisArea;
+            
+            [menu1 setPosition:ccp(convertedLocation.x - HALF_TILE_SIZE, convertedLocation.y)];
+            [menu2 setPosition:ccp(convertedLocation.x + HALF_TILE_SIZE, convertedLocation.y)];
+            
+            [menu1 setVisible:YES];        
+            [menu2 setVisible:YES];         
+        }
     }
     
     // 멀티 터치는 처리하지 않음
 }
+
 
 // 화면 터치로 이동시 맵타일 이동
 - (void) moveTouchMap:(CGPoint)currentPoint {
@@ -363,9 +476,23 @@
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     
-    for (int i = 0; i < [warriorHandling warriorCount]; i++) {
+    for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
         // 현재 위치 및 정보를 가져옴
-        Warrior *tWarrior = [warriorHandling warriorInfo:i];//[warriorList objectAtIndex:i];
+        Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
+        CCSprite *tSprite = [tWarrior getSprite];
+        CGPoint position = [tWarrior getPosition];
+        
+        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
+                               mapPosition.y + (position.y * viewScale));
+    }
+}
+- (void) moveTouchMonster {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
+    for (int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
+        // 현재 위치 및 정보를 가져옴
+        Warrior *tWarrior = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
         CCSprite *tSprite = [tWarrior getSprite];
         CGPoint position = [tWarrior getPosition];
         

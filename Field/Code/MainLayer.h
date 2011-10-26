@@ -3,10 +3,12 @@
 #import "define.h"
 #import "Function.h"
 #import "Coordinate.h"
+#import "House.h"
 #import "Warrior.h"
 #import "TrapHandling.h"
 #import "WarriorHandling.h"
 #import "MonsterHandling.h"
+#import "HouseHandling.h"
 
 // 메인 화면
 @interface MainLayer : CCLayer {
@@ -25,6 +27,12 @@
     TrapHandling    *trapHandling;
     WarriorHandling *warriorHandling;
     MonsterHandling *monsterHandling;
+    HouseHandling   *houseHandling;
+    
+    CCMenu          *menu1;
+    CCMenu          *menu2;
+    
+    CGPoint         tileSetupPoint;
     
     //CCTMXLayer      *layer;             // 게임 레이어 정보 저장
     
@@ -58,8 +66,8 @@
 @property (nonatomic, retain) Function          *function;
 @property (nonatomic, retain) TrapHandling      *trapHandling;
 @property (nonatomic, retain) WarriorHandling   *warriorHandling;
-@property (nonatomic, retain) CCSprite      *sprite;
-@property (nonatomic, retain) CCTMXLayer    *layer;
+@property (nonatomic, retain) CCSprite          *sprite;
+@property (nonatomic, retain) CCTMXLayer        *layer;
 
 // 게임 초기화
 - (id)init:(NSInteger)p_level degree:(NSInteger)p_degree;
@@ -72,14 +80,26 @@
 // 화면을 터치하여 이동시 처리하는 함수
 - (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
 - (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
+- (void) moveTouchMonster;
 - (CGPoint) checkMovePosition:(CGPoint)position;
 
 // 용사 관련 함수
 - (void) createWarriorAtTime:(id) sender;
-- (void) moveWarrior:(id) sender;
+- (void) moveAction:(id) sender;
 
 // Trap 관련 함수
 - (void) addTrap:(CGPoint)point tType:(NSInteger)tType;
 
-- (void) createMonster;
+//
+- (void) addHouse:(CGPoint)point tType:(NSInteger)tType;
+
+// 몬스터 관련 함수
+- (void) createMonsterAtTime:(id)sender;
+
+// 트랩 설치 관련 메뉴
+- (void) initTileSetupMenu;
+- (void) tileSetupExplosive:(id)sender;
+- (void) tileSetupTreasure:(id)sender;
+- (void) tileSetupTrap:(id)sender;
+- (void) tileSetupMonsterHouse1:(id)sender;
 @end

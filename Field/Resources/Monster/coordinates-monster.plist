@@ -98,11 +98,11 @@
 			<key>height</key>
 			<integer>32</integer>
 			<key>offsetX</key>
-			<real>-16</real>
+			<integer>0</integer>
 			<key>offsetY</key>
 			<real>0</real>
 			<key>originalWidth</key>
-			<integer>64</integer>
+			<integer>32</integer>
 			<key>originalHeight</key>
 			<integer>32</integer>
 		</dict>
@@ -117,11 +117,11 @@
 			<key>height</key>
 			<integer>32</integer>
 			<key>offsetX</key>
-			<real>-16</real>
+			<integer>0</integer>
 			<key>offsetY</key>
 			<real>0</real>
 			<key>originalWidth</key>
-			<integer>64</integer>
+			<integer>32</integer>
 			<key>originalHeight</key>
 			<integer>32</integer>
 		</dict>
@@ -136,11 +136,11 @@
 			<key>height</key>
 			<integer>32</integer>
 			<key>offsetX</key>
-			<real>-16</real>
+			<integer>0</integer>
 			<key>offsetY</key>
 			<real>0</real>
 			<key>originalWidth</key>
-			<integer>64</integer>
+			<integer>32</integer>
 			<key>originalHeight</key>
 			<integer>32</integer>
 		</dict>
@@ -155,11 +155,11 @@
 			<key>height</key>
 			<integer>32</integer>
 			<key>offsetX</key>
-			<real>-14</real>
+			<integer>0</integer>
 			<key>offsetY</key>
 			<real>0</real>
 			<key>originalWidth</key>
-			<integer>64</integer>
+			<integer>32</integer>
 			<key>originalHeight</key>
 			<integer>32</integer>
 		</dict>
@@ -212,9 +212,9 @@
 			<key>height</key>
 			<integer>28</integer>
 			<key>offsetX</key>
-			<real>-2</real>
+			<integer>0</integer>
 			<key>offsetY</key>
-			<real>2</real>
+			<integer>0</integer>
 			<key>originalWidth</key>
 			<integer>32</integer>
 			<key>originalHeight</key>
@@ -231,9 +231,9 @@
 			<key>height</key>
 			<integer>28</integer>
 			<key>offsetX</key>
-			<real>2</real>
+			<integer>0</integer>
 			<key>offsetY</key>
-			<real>2</real>
+			<integer>0</integer>
 			<key>originalWidth</key>
 			<integer>32</integer>
 			<key>originalHeight</key>

@@ -4,16 +4,13 @@
 #import "File.h"
 
 @interface MonsterHandling : NSObject{
-    NSMutableArray      *monsterList;       // 용사 목록 List
-    NSInteger           monsterNum;         // 게임 시작 후 나타난 용사의 수
-    
-    NSMutableArray      *idleAnimate;
-    NSMutableArray      *idleSprite;
-    NSMutableArray      *fightAniFrame;
 }
 
-- (void) initMonster;
+- (CCSprite*) createMonster:(NSInteger)monsterType position:(CGPoint)position houseNum:(NSInteger)pHouse;
 
-- (CCSprite*) createMonster:(NSInteger)monsterType position:(CGPoint)position;
+- (CCSpriteFrame*) loadMonsterSprite:(NSString*)spriteName;
+- (CCAnimation*) loadMonsterWalk:(NSString*)spriteName;
 
+- (void) moveMonster;
+- (BOOL) selectDirection:(Monster *)pMonster;
 @end

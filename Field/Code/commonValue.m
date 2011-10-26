@@ -10,6 +10,16 @@ static CGPoint         destinationPoint;                // 용사 도착지점
 
 static NSInteger        stageWarriorCount;
 
+static NSMutableArray   *trapList;          // 트랩 List
+static NSInteger        trapNum;            // 게임 시작 후 설치한 트랩의 수
+static NSMutableArray   *warriorList;       // 용사 목록 List
+static NSInteger        warriorNum;         // 게임 시작 후 나타난 용사의 수
+static NSMutableArray   *monsterList;       // 몬스터 목록 List
+static NSInteger        monsterNum;         // 게임 시작 후 나타난 몬스터의 수
+static NSMutableArray   *houseList;         // 용사 집 List
+static NSInteger        houseNum;           // 게임 시작 후 나타난 잡의 수
+
+
 static commonValue      * _globalTest = nil;
 
 @implementation commonValue
@@ -39,6 +49,103 @@ static commonValue      * _globalTest = nil;
     return nil;
 }
 
+- (void) initCommonValue {
+    trapList    = [[NSMutableArray alloc] init];
+    warriorList = [[NSMutableArray alloc] init];
+    monsterList = [[NSMutableArray alloc] init];
+    houseList   = [[NSMutableArray alloc] init];   
+    
+    trapNum     = 0;
+    warriorNum  = 0;
+    monsterNum  = 0;
+    houseNum    = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+- (void) setWarriorList:(NSMutableArray*)pList {
+    warriorList = pList;
+}
+- (void) addWarrior:(Warrior*)pWarrior {
+    [warriorList addObject:pWarrior];
+}
+- (void) replaceWarrior:(NSInteger)index pWarrior:(Warrior*)pWarrior {
+    [warriorList replaceObjectAtIndex:index withObject:pWarrior];
+}
+- (NSMutableArray*) getWarriorList {
+    return warriorList;
+}
+- (Warrior*) getWarriorListAtIndex:(NSInteger)index {
+    return [warriorList objectAtIndex:index];
+}
+- (NSInteger) warriorListCount {
+    return [warriorList count];
+}
+- (void) removeWarriorAtIndex:(NSInteger)index {
+    [warriorList removeObjectAtIndex:index];
+}
+- (void) removeWarrior:(Warrior*)pWarrior {
+    [warriorList removeObject:pWarrior];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+- (void) setMonsterList:(NSMutableArray*)pList {
+    monsterList = pList;
+}
+- (void) addMonster:(Monster*)pMonster {
+    [monsterList addObject:pMonster];
+}
+- (NSMutableArray*) getMonsterList {
+    return monsterList;
+}
+- (Monster*) getMonsterListAtIndex:(NSInteger)index {
+    return [monsterList objectAtIndex:index];
+}
+- (NSInteger) monsterListCount {
+    return [monsterList count];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+- (void) setTrapList:(NSMutableArray*)pList {
+    trapList = pList;
+}
+- (void) addTrap:(Trap*)pTrap {
+    [trapList addObject:pTrap];
+}
+- (NSMutableArray*) getTrapList {
+    return trapList;
+}
+- (Trap*) getTrapListAtIndex:(NSInteger)index {
+    return [trapList objectAtIndex:index];
+}
+- (NSInteger) trapListCount {
+    return [trapList count];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+- (void) setHouseList:(NSMutableArray*)pList {
+    houseList = pList;
+}
+- (NSMutableArray*) getHouseList {
+    return houseList;
+}
+- (void) addHouseList:(House*)pHouse {
+    [houseList addObject:pHouse];
+}
+- (NSInteger) houseListCount {
+    return [houseList count];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // 타일맵 관련
 - (void) setTileMap:(CCTMXTiledMap*)p_map {
     map = p_map;
@@ -108,4 +215,31 @@ static commonValue      * _globalTest = nil;
 - (NSInteger) getStageWarriorCount {
     return stageWarriorCount;
 }
+
+
+- (void) plusTrapNum {
+    trapNum += 1;
+}
+- (void) plusWarriorNum {
+    warriorNum += 1;
+}
+- (void) plusMonsterNum {
+    monsterNum += 1;
+}
+- (void) plusHouseNum {
+    houseNum += 1;
+}
+- (NSInteger) getTrapNum {
+    return trapNum;
+}
+- (NSInteger) getWarriorNum {
+    return warriorNum;
+}
+- (NSInteger) getMonsterNum {
+    return monsterNum;
+}
+- (NSInteger) getHouseNum {
+    return houseNum;
+}
+
 @end

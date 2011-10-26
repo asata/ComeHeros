@@ -60,6 +60,22 @@
     
     return (powf(x, 2) + powf(y, 2));
 }
+
+// 이동 가능한 경로인지 검사
+- (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y {
+    if(x < 0) return NO;
+    if(y < 0) return NO;
+    if(x > TILE_NUM) return NO;
+    if(y > TILE_NUM) return NO;
+    
+    if ([[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL1 || 
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL2 || 
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_TREASURE ||
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_EXPLOSIVE)
+        return NO;
+    
+    return YES;
+}
 //////////////////////////////////////////////////////////////////////////
 // 기타 함수 End                                                          //
 //////////////////////////////////////////////////////////////////////////

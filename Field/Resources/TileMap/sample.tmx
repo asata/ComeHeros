@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="8" tileheight="8">
- <tileset firstgid="1" name="texture-tile" tilewidth="8" tileheight="8" margin="1">
-  <image source="texture-tile.png"/>
- </tileset>
- <tileset firstgid="50" name="texture-tile" tilewidth="8" tileheight="8" margin="2">
-  <image source="texture-tile.png"/>
- </tileset>
- <tileset firstgid="99" name="texture-tile" tilewidth="8" tileheight="8" spacing="1">
-  <image source="texture-tile.png"/>
- </tileset>
- <tileset firstgid="148" name="texture-tile" tilewidth="8" tileheight="8" spacing="1" margin="1">
+ <tileset firstgid="1" name="texture-tile" tilewidth="8" tileheight="8" spacing="1" margin="1">
   <image source="texture-tile.png"/>
  </tileset>
  <layer name="Layer 1" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VuwqEMBRF0fx/bSp/ViwEkdwYizyQVaxqLIa70ZNTSrnBFjh/21+eod11z5paIz3G94ga6TGnx/O90KNvjy/7cb9/qQ/jW9W+X/TtUbp7tPGz/+/f1bbF/dfoYS/m9oj2Q4816LEW+w0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwLwesFDE9QJwAAA==
+   H4sIAAAAAAAAA+3DAQkAAAwEofv+pQfLoeCqqaqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq/wC5xd0EQJwAAA==
   </data>
  </layer>
  <layer name="New Layer" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VMQoAIAwDwP7/Ayp+VhdB3KUd7iB7IJRGUM14Qq57i57cBfcBwB/nx7edmVkEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoYQG7xfeHQJwAAA==
+   H4sIAAAAAAAAA+3VMQqAMAxA0Q4qev8LS0GhQ1UQGiO8B8HBzW9IKffWh/fE0iMXPXLRIxc9crnqsXaG8Z56LMfoEaO3B3Wm4zkXPSLZj1jnt7y6Ae5HrLc9GKP2qDegvQn+++/Yj1z0+Bc98mhvCt9z03OpHbaiBwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQyw703izSQJwAAA==
   </data>
  </layer>
 </map>
