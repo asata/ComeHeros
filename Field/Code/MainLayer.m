@@ -78,7 +78,7 @@
     [[commonValue sharedSingleton] initCommonValue];
     [[commonValue sharedSingleton] setViewScale:1];
     
-    NSString *path = [file loadFilePath:@"Stage156.plist"];
+    NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadStageData:path];
     
     [self initMap]; 
