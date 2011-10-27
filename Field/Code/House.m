@@ -73,4 +73,7 @@ madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirec
 - (void) pluseMadeNum {
     madeMonsterNum += 1;
 }
+- (void) minusMadeNum {
+    madeMonsterNum -= 1;
+}
 @end

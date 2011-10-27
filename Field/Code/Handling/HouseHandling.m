@@ -15,7 +15,7 @@
                                houseNum:[[commonValue sharedSingleton] getHouseNum] 
                               houseType:tType 
                          madeMonsterNum:0 
-                       maxiumMonsterNum:10
+                       maxiumMonsterNum:5
                           moveDirection:MoveRight];
     
     [[commonValue sharedSingleton] addHouseList:tHouse];

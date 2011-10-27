@@ -28,7 +28,6 @@
 - (void) removeWarriorList:(NSMutableArray *)deleteList;    // 용사 제거
 - (NSInteger) enmyFind:(Warrior*)pWarrior;                  // 적 탐지
 
-- (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y;
 - (BOOL) selectShortDirection:(Warrior *)pWarrior;          // 이동 방향 결정
 - (BOOL) selectDirection:(Warrior *)pWarrior;               // 이동 방향 결정
 

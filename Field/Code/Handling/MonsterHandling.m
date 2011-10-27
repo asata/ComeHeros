@@ -40,6 +40,19 @@
     
     return animation;
 }
+- (CCAnimation*) loadMonsterAttack:(NSString*)spriteName {
+    NSMutableArray* attackImgList = [NSMutableArray array];
+    for(NSInteger i = 2; i < 4; i++) {
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                                spriteFrameByName:[NSString stringWithFormat:@"monster-%@%04d.png", spriteName, i]];
+        
+        [attackImgList addObject:frame];
+    }
+    
+    CCAnimation *animation = [CCAnimation animationWithFrames:attackImgList delay:WARRIOR_MOVE_ACTION];
+    
+    return animation;
+}
 
 - (CCSprite*) createMonster:(NSInteger)monsterType position:(CGPoint)position houseNum:(NSInteger)pHouse {
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
@@ -69,7 +82,7 @@
     [tSprite setVisible:YES];
     [tSprite runAction:[CCRepeatForever actionWithAction:
                         [[CCAnimate alloc] initWithAnimation:[self loadMonsterWalk:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:NO]]];
-    
+    [tMonster setAttackAnimate:[[CCAnimate alloc] initWithAnimation:[self loadMonsterAttack:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:NO]];
     [tMonster setMoveLength:TILE_SIZE];
     [tMonster setSprite:tSprite];
     
@@ -79,6 +92,8 @@
 }
 
 - (void) moveMonster {
+    NSMutableArray *deleteMonster = [[NSMutableArray alloc] init];
+    
     for (int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
         // 현재 위치 및 정보를 가져옴
         Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
@@ -92,23 +107,36 @@
             [self selectDirection:tMonster];
         }
         
-        NSInteger direction = [tMonster getMoveDriection];
-        // 이동 및 기타 체크 처리
-        if(direction == MoveLeft) {
-            movePosition = ccp(movePosition.x - [tMonster getMoveSpeed], movePosition.y);
-        } else if(direction == MoveUp) {
-            movePosition = ccp(movePosition.x, movePosition.y + [tMonster getMoveSpeed]);
-        } else if(direction == MoveRight) {
-            movePosition = ccp(movePosition.x + [tMonster getMoveSpeed], movePosition.y);
-        } else if(direction == MoveDown) {
-            movePosition = ccp(movePosition.x, movePosition.y - [tMonster getMoveSpeed]);
-        }   
-        tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
-        [tMonster setSprite:tSprite];
+        NSInteger attackEnmy = [self enmyFind:tMonster];
+        if(attackEnmy != -1) {
+            [tSprite runAction:[CCSequence actions:[tMonster getAttackAnimate], nil]];
+            //NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy); 
+        } else {
+            NSInteger direction = [tMonster getMoveDriection];
+            // 이동 및 기타 체크 처리
+            if(direction == MoveLeft) {
+                movePosition = ccp(movePosition.x - [tMonster getMoveSpeed], movePosition.y);
+            } else if(direction == MoveUp) {
+                movePosition = ccp(movePosition.x, movePosition.y + [tMonster getMoveSpeed]);
+            } else if(direction == MoveRight) {
+                movePosition = ccp(movePosition.x + [tMonster getMoveSpeed], movePosition.y);
+            } else if(direction == MoveDown) {
+                movePosition = ccp(movePosition.x, movePosition.y - [tMonster getMoveSpeed]);
+            }   
+            tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
+            [tMonster setSprite:tSprite];
+            
+            [tMonster plusMoveLength];
+            [tMonster setPosition:movePosition];
+        }
         
-        [tMonster plusMoveLength];
-        [tMonster setPosition:movePosition];
+        if ([tMonster getStrength] < 0) {
+            // 소멸 처리
+            [deleteMonster addObject:tMonster];
+        }
     }
+    
+    if([deleteMonster count] != 0) [self removeMonster:deleteMonster];
 }
 
 - (BOOL) selectDirection:(Monster *)pMonster {
@@ -121,7 +149,6 @@
     int y = TILE_NUM - ((int) point.y - HALF_TILE_SIZE) / TILE_SIZE - 1;
     
     // 집에 도착시
-    
     NSInteger direction = [pMonster getMoveDriection];
     if([pMonster getMoveDriection] == MoveUp) {
         if(![function checkMoveTile:x y:(y - 1)]) direction = MoveDown;
@@ -143,5 +170,39 @@
     [pMonster resetMoveLength];
     
     return NO;
+}
+
+// 죽은 몬스터 제거
+- (void) removeMonster:(NSMutableArray*)dMonstList {
+    for (Monster *dMonster in dMonstList) {
+        for (House *tHouse in [[commonValue sharedSingleton] getHouseList]) {
+            if([tHouse getHouseNum] == [dMonster getHouseNum]) [tHouse minusMadeNum];
+        }
+        
+        [[dMonster getSprite] setVisible:NO];
+        
+        [[commonValue sharedSingleton] removeMonster:dMonster];
+    }
+} 
+
+- (NSInteger) enmyFind:(Monster*)pMonster {
+    CGPoint wPoint = [pMonster getPosition];
+    NSInteger wAttack = [pMonster getAttackRange];
+    Function *function = [[Function alloc] init];
+    
+    for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
+        Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i];
+        CGPoint tPoint = [tWarrior getPosition];
+        CGFloat distance = [function lineLength:tPoint point2:wPoint];
+        
+        if(distance <= powf(wAttack * TILE_SIZE, 2)) {
+            NSInteger demage = [pMonster getPower] - [tWarrior getDefense];
+            if(demage > 0) [tWarrior setStrength:[tWarrior getStrength] - demage];
+            
+            return [tWarrior getWarriorNum];
+        }
+    }
+    
+    return NotFound;
 }
 @end

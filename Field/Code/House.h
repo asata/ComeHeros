@@ -41,4 +41,5 @@ madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirec
 - (NSInteger) getMoveDirection;
 
 - (void) pluseMadeNum;
+- (void) minusMadeNum;
 @end

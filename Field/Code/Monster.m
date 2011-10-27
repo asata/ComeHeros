@@ -36,6 +36,7 @@
                  direction:pDirection 
                attackRange:pAttackRange];
         
+        monsterNum = p_num;
         houseNum = pHouse;
     }
     
@@ -45,4 +46,18 @@
 // 몬스터 초기화 End                                                        //
 //////////////////////////////////////////////////////////////////////////
 
+- (void) setMonsterNum:(NSInteger)pNum {
+    monsterNum = pNum;
+    [super setWarriorNum:pNum];
+}
+- (void) setHouseNum:(NSInteger)pHouseNum {
+    houseNum = pHouseNum;
+}
+
+- (NSInteger) getMonsterNum {
+    return monsterNum;
+}
+- (NSInteger) getHouseNum {
+    return houseNum;
+}
 @end

@@ -33,4 +33,10 @@
          intellect:(NSInteger)pIntellect    defense:(NSInteger)pDefense 
              speed:(NSInteger)pSpeed        direction:(NSInteger)pDirection 
        attackRange:(NSInteger)pAttackRange  houseNum:(NSInteger)pHouse;
+
+- (void) setMonsterNum:(NSInteger)pNum;
+- (void) setHouseNum:(NSInteger)pHouseNum;
+
+- (NSInteger) getMonsterNum;
+- (NSInteger) getHouseNum;
 @end

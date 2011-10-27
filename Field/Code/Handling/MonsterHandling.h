@@ -10,7 +10,11 @@
 
 - (CCSpriteFrame*) loadMonsterSprite:(NSString*)spriteName;
 - (CCAnimation*) loadMonsterWalk:(NSString*)spriteName;
+- (CCAnimation*) loadMonsterAttack:(NSString*)spriteName;
 
 - (void) moveMonster;
 - (BOOL) selectDirection:(Monster *)pMonster;
+- (void) removeMonster:(NSMutableArray*)dMonstList;
+
+- (NSInteger) enmyFind:(Monster*)pMonster;
 @end

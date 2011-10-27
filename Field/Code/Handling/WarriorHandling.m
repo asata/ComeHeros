@@ -71,7 +71,7 @@
     Warrior *tWarrior = [[Warrior alloc] initWarrior:[coordinate convertTileToMap:sPoint]
                                           warriorNum:[[commonValue sharedSingleton] getWarriorNum]
                                             strength:100 
-                                               power:10 
+                                               power:20 
                                            intellect:30
                                              defense:10 
                                                speed:4   //[[wInfo objectForKey:@"speed"] intValue] 
@@ -90,7 +90,9 @@
     [tSprite runAction:[CCRepeatForever actionWithAction:
                         [[CCAnimate alloc] initWithAnimation:[self loadWarriorWalk:[warriorName objectAtIndex:warriorType]]
                                         restoreOriginalFrame:NO]]];
-    
+    CCAnimate *attackAnimate = [[CCAnimate alloc] initWithAnimation:[self loadWarriorAttack:[warriorName objectAtIndex:warriorType]]
+                                               restoreOriginalFrame:NO];
+    [tWarrior setAttackAnimate:attackAnimate];
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
     
@@ -146,7 +148,29 @@
         
         // 적 유닛 확인 및 처리
         NSInteger attackEnmy = [self enmyFind:tWarrior];
-        if(attackEnmy != -1) NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy);
+        if(attackEnmy != -1) {
+            [tSprite runAction:[CCSequence actions:[tWarrior getAttackAnimate], nil]];
+            //NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy); 
+        } else {
+            CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+            CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+            
+            // 이동 및 기타 체크 처리
+            if(direction == MoveLeft) {
+                movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
+            } else if(direction == MoveUp) {
+                movePosition = ccp(movePosition.x, movePosition.y + [tWarrior getMoveSpeed]);
+            } else if(direction == MoveRight) {
+                movePosition = ccp(movePosition.x + [tWarrior getMoveSpeed], movePosition.y);
+            } else if(direction == MoveDown) {
+                movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
+            }   
+            tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
+            [tWarrior setSprite:tSprite];
+            
+            [tWarrior plusMoveLength];
+            [tWarrior setPosition:movePosition];
+        }
         
         // 생존 여부 확인 후 소멸 여부 처리
         if([tWarrior getStrength] <= 0) {
@@ -154,32 +178,11 @@
             continue;
         }
         
-        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-        CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-        
-        // 이동 및 기타 체크 처리
-        if(direction == MoveLeft) {
-            movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
-        } else if(direction == MoveUp) {
-            movePosition = ccp(movePosition.x, movePosition.y + [tWarrior getMoveSpeed]);
-        } else if(direction == MoveRight) {
-            movePosition = ccp(movePosition.x + [tWarrior getMoveSpeed], movePosition.y);
-        } else if(direction == MoveDown) {
-            movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
-        }   
-        tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
-        [tWarrior setSprite:tSprite];
-        
-        [tWarrior plusMoveLength];
-        [tWarrior setPosition:movePosition];
-        
-        
         [[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
     }
     
     // 용사 삭제
     [self removeWarriorList:deleteList];
-
 }
 
 // 지정된 용사 제거
@@ -198,40 +201,30 @@
 // 일정거리 안에 적이 있는지 탐지
 // 현재 트랩으로 지정됨 - 적으로 변경 필요
 - (NSInteger) enmyFind:(Warrior*)pWarrior {
-    //CGPoint wPoint = [pWarrior getPosition];
-    //NSInteger wAttack = [pWarrior getAttackRange];
+    CGPoint wPoint = [pWarrior getPosition];
+    NSInteger wAttack = [pWarrior getAttackRange];
+    Function *function = [[Function alloc] init];
     
-    /*for(int i = 0; i < [trapList count]; i++) {
-     Trap *tTrap = [trapList objectAtIndex:i];
-     CGPoint tPoint = [tTrap getPosition];
-     CGFloat distance = [self lineLength:tPoint point2:wPoint];
-     
-     if(distance <= powf(wAttack * TILE_SIZE, 2)) {
-     return [tTrap getTrapNum];
-     }
-     }*/
+    for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
+        Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
+        CGPoint tPoint = [tMonster getPosition];
+        CGFloat distance = [function lineLength:tPoint point2:wPoint];
+        
+        if(distance <= powf(wAttack * TILE_SIZE, 2)) {
+            NSInteger demage = [pWarrior getPower] - [tMonster getDefense];
+            if(demage > 0) [tMonster setStrength:[tMonster getStrength] - demage];
+            
+            return [tMonster getWarriorNum];
+        }
+    }
     
     return NotFound;
-}
-
-- (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y {
-    if(x < 0) return NO;
-    if(y < 0) return NO;
-    if(x > TILE_NUM) return NO;
-    if(y > TILE_NUM) return NO;
-    
-    if ([[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL1 || 
-        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL2 || 
-        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_TREASURE ||
-        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_EXPLOSIVE)
-        return NO;
-    
-    return YES;
 }
 
 // 이동 방향 설정
 - (BOOL) selectDirection:(Warrior *)pWarrior {
     if([pWarrior getMoveLength] != TILE_SIZE) return NO;
+    Function *function = [[Function alloc] init];
     
     CGPoint point = [pWarrior getPosition];
     int x = ((int) point.x - HALF_TILE_SIZE) / TILE_SIZE;
@@ -251,16 +244,16 @@
     NSInteger preDirection = [pWarrior getMoveDriection];
     
     // 이동해온 방향을 제외하고 이동이 가능한 경로가 있는지 검사하여 있을 경우 배열에 저장    
-    if([self checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
+    if([function checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
         [choseDirection addObject:[NSNumber numberWithInt:MoveUp]];
     }
-    if([self checkMoveTile:x y:(y + 1)] && preDirection != MoveUp) {
+    if([function checkMoveTile:x y:(y + 1)] && preDirection != MoveUp) {
         [choseDirection addObject:[NSNumber numberWithInt:MoveDown]];
     }
-    if([self checkMoveTile:(x - 1) y:y] && preDirection != MoveRight) {
+    if([function checkMoveTile:(x - 1) y:y] && preDirection != MoveRight) {
         [choseDirection addObject:[NSNumber numberWithInt:MoveLeft]];
     }
-    if([self checkMoveTile:(x + 1) y:y] && preDirection != MoveLeft) {
+    if([function checkMoveTile:(x + 1) y:y] && preDirection != MoveLeft) {
         [choseDirection addObject:[NSNumber numberWithInt:MoveRight]];
     }    
     

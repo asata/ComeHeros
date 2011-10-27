@@ -83,6 +83,7 @@
     tSprite.flipX = !tSprite.flipX;
     tSprite.scale = tSprite.scale * 0.9;
     [pWarrior setMoveSpeed:0];
+    [pWarrior setPower:0];
     [pWarrior setStrength:[pWarrior getStrength] - 10];
 }
 

@@ -174,7 +174,7 @@
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
-        [self addChild:tSprite z:kWarriorLayer];
+        [self addChild:tSprite z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount])];
     }
 }
 
@@ -206,7 +206,7 @@
         if([tHouse getMadeMonsterNum] < [tHouse getMaxiumMonsterNum]) {
             // 집에서 최대치로 생산됐는지 검사
             CCSprite *tSprite = [monsterHandling createMonster:0 position:[tHouse getPosition] houseNum:[tHouse getHouseNum]];
-            [self addChild:tSprite z:kWarriorLayer];
+            [self addChild:tSprite z:(kMonsterLayer - [[commonValue sharedSingleton] monsterListCount])];
             [tHouse pluseMadeNum];
         }
     }
