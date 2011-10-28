@@ -27,6 +27,8 @@
 
 // File Name
 #define FILE_TILE_MAP           @"sample.tmx"
+
+#define FILE_STAGE_PLIST        @"Stage156.plist"
 #define FILE_CHARATER_PLIST     @"coordinates-character4.plist"
 #define FILE_MONSTER_PLIST      @"coordinates-monster.plist"
 #define FILE_TILE_PLIST         @"coordinates-tile.plist"
