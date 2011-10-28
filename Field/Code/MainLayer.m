@@ -81,6 +81,8 @@
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadStageData:path];
     
+    //NSLog(@"Start Point : %f %f", [[commonValue sharedSingleton] getStartPoint].x, [[commonValue sharedSingleton] getStartPoint].y);
+    //NSLog(@"Start Point : %f %f", [[commonValue sharedSingleton] getEndPoint].x, [[commonValue sharedSingleton] getEndPoint].y);
     [self initMap]; 
     [self initTileSetupMenu];
     
@@ -129,31 +131,41 @@
     
     for(int i = 0; i < TILE_NUM; i++) {
         for(int j = 0; j < TILE_NUM; j++) {
-            // 타일맵에 위치한 타일 타입을 읽어들임
-            if([layer2 tileGIDAt:ccp(i, j)] != TILE_NONE) 
-                [[commonValue sharedSingleton] setMapInfo:i y:j tileType:[layer2 tileGIDAt:ccp(i, j)]];
-            else 
-                [[commonValue sharedSingleton] setMapInfo:i y:j tileType:[layer1 tileGIDAt:ccp(i, j)]];
+            unsigned int tileType = [layer2 tileGIDAt:ccp(i, j)];
             
-            unsigned int tileType = [[commonValue sharedSingleton] getMapInfo:i y:j];
+            // 타일맵에 위치한 타일 타입을 읽어들임
+            if(tileType != TILE_NONE) {
+                if(tileType == TILE_WALL10) {
+                    [[commonValue sharedSingleton] setMapInfo:i y:j tileType:TILE_WALL10];
+                    
+                    NSInteger r = arc4random() % 4;
+                    if (r == 0) [layer2 setTileGID:TILE_WALL10 at:ccp(i, j)];
+                    else if (r == 1) [layer2 setTileGID:TILE_WALL11 at:ccp(i, j)];
+                    else if (r == 2) [layer2 setTileGID:TILE_WALL12 at:ccp(i, j)];
+                    else [layer2 setTileGID:TILE_WALL13 at:ccp(i, j)];
+                } else {
+                    [[commonValue sharedSingleton] setMapInfo:i y:j tileType:tileType];
+                }
+            } else {
+                tileType = [layer1 tileGIDAt:ccp(i, j)];
+                
+                [[commonValue sharedSingleton] setMapInfo:i y:j tileType:tileType];
+            }
             
             // 타일 타입에 따라 이동이 가능한지 검사
             // 이동 불가일 경우 -1
-            if(tileType == TILE_NONE || 
-               tileType == TILE_WALL1 || tileType == TILE_WALL2 || 
-               tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
+            if(![trapHandling checkMoveTile:tileType])
                 [warriorHandling setMoveTable:i y:j value:-1];
             else
                 [warriorHandling setMoveTable:i y:j value:MoveNone];
             
             // 타일에 설치된 트랩이 있는지 확인
-            if(tileType == TILE_TRAP_OPEN || tileType == TILE_TRAP_CLOSE ||
-               tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
+            if([trapHandling checkObstacleTile:tileType])
             {
                 [trapHandling addTrap:ccp(i, j) type:tileType];
             }                                             
             
-            if (tileType == TILE_MONSTER_HOUSE1) {
+            if ([trapHandling checkHouseTile:tileType]) {
                 // 몬스터 집이 있는 경우
                 [self addHouse:ccp(i, j) tType:tileType];
             }
@@ -237,9 +249,7 @@
 - (void) addTrap:(CGPoint)point tType:(NSInteger)tType {
     [trapHandling addTrap:point type:tType]; 
     
-    if(tType == TILE_NONE || 
-       tType == TILE_WALL1 || tType == TILE_WALL2 || 
-       tType == TILE_TREASURE || tType == TILE_EXPLOSIVE)
+    if(![trapHandling checkMoveTile:tType])
         [warriorHandling setMoveTable:point.x y:point.y value:-1];
     else
         [warriorHandling setMoveTable:point.x y:point.y value:MoveNone];
@@ -276,10 +286,54 @@
     [self addChild:menu2 z:kTileMenuLayer];
     
 }
-- (void) tileSetupExplosive:(id)sender {
-    [trapHandling addTrap:tileSetupPoint type:TILE_EXPLOSIVE];
+- (BOOL) installTileCheck:(NSInteger)tileType {
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    CGPoint tPoint = [coordinate convertTileToMap:tileSetupPoint];
     
-    [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:-1];
+    // 해당 타일에 용사나 몬스터가 있는 경우
+    for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
+        CGPoint wPoint = [tWarrior getPosition];
+        
+        if (tPoint.x - TILE_SIZE < wPoint.x && tPoint.x + TILE_SIZE > wPoint.x && 
+            tPoint.y - TILE_SIZE < wPoint.y && tPoint.y + TILE_SIZE > wPoint.y) {
+            NSLog(@"Warrior");
+
+            return NO;
+        }
+    }
+    
+    for (Monster *tMonster in [[commonValue sharedSingleton] getMonsterList]) {
+        CGPoint mPoint = [tMonster getPosition];
+        
+        if (tPoint.x - TILE_SIZE < mPoint.x && tPoint.x + TILE_SIZE > mPoint.x && 
+            tPoint.y - TILE_SIZE < mPoint.y && tPoint.y + TILE_SIZE > mPoint.y) {
+            NSLog(@"Monster");
+
+            return NO;
+        }
+    }
+    
+    // 목적지까지 가능 경로가 없을 경우
+    NSInteger moveDirection = [warriorHandling getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
+    if (![trapHandling checkMoveTile:tileType]) {
+        [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:-1];
+        NSLog(@"Done Moved");
+    }
+        
+    if(![warriorHandling checkConnectRoad]) {
+        NSLog(@"Connect Road");
+        [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:moveDirection];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+- (void) tileSetupExplosive:(id)sender {
+    // 설치가능한 경로인지 검사
+    if(![self installTileCheck:TILE_EXPLOSIVE]) return;
+    
+    [trapHandling addTrap:tileSetupPoint type:TILE_EXPLOSIVE];
     
     // 이동 경로 재계산
     [warriorHandling createMoveTable];
@@ -288,9 +342,10 @@
     [menu2 setVisible:NO];
 }
 - (void) tileSetupTreasure:(id)sender {
-    [trapHandling addTrap:tileSetupPoint type:TILE_TREASURE];
+    // 설치가능한 경로인지 검사
+    if(![self installTileCheck:TILE_TREASURE]) return;
     
-    [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:-1];
+    [trapHandling addTrap:tileSetupPoint type:TILE_TREASURE];
     
     // 이동 경로 재계산
     [warriorHandling createMoveTable];
@@ -299,12 +354,18 @@
     [menu2 setVisible:NO];
 }
 - (void) tileSetupTrap:(id)sender {
+    // 설치가능한 경로인지 검사
+    if(![self installTileCheck:TILE_TRAP_CLOSE]) return;
+    
     [trapHandling addTrap:tileSetupPoint type:TILE_TRAP_CLOSE];
     
     [menu1 setVisible:NO];
     [menu2 setVisible:NO];
 }
 - (void) tileSetupMonsterHouse1:(id)sender {
+    // 설치가능한 경로인지 검사
+    if(![self installTileCheck:TILE_MONSTER_HOUSE1]) return;
+    
     // monsterHandling에 addHouse 등록하여 처리가 필요
     [trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
     
@@ -440,9 +501,9 @@
         
         // 설치된 타일 확인
         unsigned int tType = [[commonValue sharedSingleton] getMapInfo:(int)thisArea.x y:(int)thisArea.y];
-        if(tType == TILE_WALL1) {
-            [trapHandling addTrap:thisArea type:TILE_WALL2];
-        } else if(tType == TILE_WALL2) {
+        if(tType == TILE_WALL10) {
+            [trapHandling addTrap:thisArea type:TILE_WALL01];
+        } else if(tType == TILE_WALL01) {
             [trapHandling addTrap:thisArea type:TILE_GROUND2];
         } else if(tType == TILE_GROUND1 || tType == TILE_GROUND2) {
             // 트랩 설치 화면 출력
@@ -454,6 +515,8 @@
             [menu1 setVisible:YES];        
             [menu2 setVisible:YES];         
         }
+        
+        NSLog(@"%d %d", (int) thisArea.x, (int) thisArea.y);
     }
     
     // 멀티 터치는 처리하지 않음

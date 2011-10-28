@@ -17,6 +17,30 @@
     return self;
 }
 
+- (BOOL) checkMoveTile:(NSInteger)tileType {
+    if(tileType == TILE_NONE ||  tileType == TILE_WALL01 || tileType == TILE_WALL10 || 
+       tileType == TILE_WALL11 || tileType == TILE_WALL12 || tileType == TILE_WALL13 || 
+       tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
+        return NO;
+    
+    return YES;
+}
+
+- (BOOL) checkObstacleTile:(NSInteger)tileType {
+    if(tileType == TILE_TRAP_OPEN || tileType == TILE_TRAP_CLOSE ||
+       tileType == TILE_TREASURE || tileType == TILE_EXPLOSIVE)
+        return YES;
+    
+    return NO;
+}
+- (BOOL) checkHouseTile:(NSInteger)tileType {
+    if(tileType == TILE_MONSTER_HOUSE1)
+        return YES;
+    
+    return NO;
+}
+
+
 //////////////////////////////////////////////////////////////////////////
 // 트랩 처리 Start                                                        //
 //////////////////////////////////////////////////////////////////////////

@@ -347,6 +347,24 @@
     
     [self calcuatioDirection:ePoint.x y:ePoint.y];
 }
+- (BOOL) checkConnectRoad {
+    CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
+    CGPoint ePoint = [[commonValue sharedSingleton] getEndPoint];
+    
+    [self initMoveValue];
+    
+    // 시작 지점의 가중치를 0로 둠
+    tMoveValue[(int) sPoint.x][(int) sPoint.y] = 0;
+    
+    // 최단 거리 계산을 위한 테이블을 작성
+    [self calcuationMoveValue:sPoint.x y:sPoint.y];
+    
+    // 작성한 테이블을 기준으로 이동 테이블 작성 - 종료지점에서 역으로 시작 지점을 탐색
+    // 경로 테이블 작성 이전에 가능한 경로인지 체크 - 불가일 경우 게임 시작 불가처리
+    if(tMoveValue[(int) ePoint.x][(int) ePoint.y] == 999) return NO;
+    
+    return YES;
+}
 
 - (void) initMoveValue {
     for(int i = 0; i < TILE_NUM; i++) {

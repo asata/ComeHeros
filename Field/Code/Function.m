@@ -68,8 +68,8 @@
     if(x > TILE_NUM) return NO;
     if(y > TILE_NUM) return NO;
     
-    if ([[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL1 || 
-        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL2 || 
+    if ([[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL01 || 
+        [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_WALL10 || 
         [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_TREASURE ||
         [[commonValue sharedSingleton] getMapInfo:x y:y] == TILE_EXPLOSIVE)
         return NO;

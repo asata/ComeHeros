@@ -136,7 +136,7 @@
 		CB7B80B113ED7B2C00FADB50 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80B013ED7B2C00FADB50 /* RootViewController.m */; };
 		CB7B80C213ED7B9B00FADB50 /* MainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80C113ED7B9B00FADB50 /* MainLayer.m */; };
 		CB96AD701457D7EB00CAA1C5 /* House.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD6F1457D7EA00CAA1C5 /* House.m */; };
-		CB96AD73145805C500CAA1C5 /* Stage156.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage156.plist */; };
+		CB96AD73145805C500CAA1C5 /* Stage161.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage161.plist */; };
 		CB96AD75145812C400CAA1C5 /* Tile in Resources */ = {isa = PBXBuildFile; fileRef = CB96AD74145812C400CAA1C5 /* Tile */; };
 		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
@@ -414,7 +414,7 @@
 		CBBBEF3D14443D790079525D /* coordinates-tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-tile.plist"; path = "Resources/TileMap/coordinates-tile.plist"; sourceTree = "<group>"; };
 		CBBBEF4014443D790079525D /* texture-tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-tile.png"; path = "Resources/TileMap/texture-tile.png"; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
-		CBF4D3F7141B5C39001528FA /* Stage156.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage156.plist; path = Resources/StageInfo/Stage156.plist; sourceTree = "<group>"; };
+		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -914,7 +914,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CBF4D3F7141B5C39001528FA /* Stage156.plist */,
+				CBF4D3F7141B5C39001528FA /* Stage161.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -969,7 +969,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB96AD73145805C500CAA1C5 /* Stage156.plist in Resources */,
+				CB96AD73145805C500CAA1C5 /* Stage161.plist in Resources */,
 				CB7B7F5D13ED7B2200FADB50 /* Default.png in Resources */,
 				CB7B7F5F13ED7B2200FADB50 /* fps_images.png in Resources */,
 				CB7B7F6113ED7B2200FADB50 /* Icon-72.png in Resources */,

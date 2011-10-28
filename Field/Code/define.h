@@ -7,18 +7,21 @@
 // 타일 관련 정의
 #define HALF_TILE_SIZE      16
 #define TILE_SIZE           32
-#define TILE_NUM            100
+#define TILE_NUM            50
 
 #define TILE_NONE           0
-#define TILE_WALL1          1
-#define TILE_WALL2          2
-#define TILE_TRAP_OPEN      3
-#define TILE_TRAP_CLOSE     4
-#define TILE_TREASURE       5
-#define TILE_EXPLOSIVE      6
-#define TILE_GROUND1        7
-#define TILE_GROUND2        8
-#define TILE_MONSTER_HOUSE1 9
+#define TILE_WALL01         1
+#define TILE_WALL10         2
+#define TILE_WALL11         3
+#define TILE_WALL12         4
+#define TILE_WALL13         5
+#define TILE_GROUND1        6
+#define TILE_GROUND2        7
+#define TILE_TREASURE       8
+#define TILE_EXPLOSIVE      9
+#define TILE_TRAP_CLOSE     10
+#define TILE_TRAP_OPEN      11
+#define TILE_MONSTER_HOUSE1 12
 
 
 ////////////////////////////////////////////////////////////
@@ -28,7 +31,7 @@
 // File Name
 #define FILE_TILE_MAP           @"sample.tmx"
 
-#define FILE_STAGE_PLIST        @"Stage156.plist"
+#define FILE_STAGE_PLIST        @"Stage161.plist"
 #define FILE_CHARATER_PLIST     @"coordinates-character4.plist"
 #define FILE_MONSTER_PLIST      @"coordinates-monster.plist"
 #define FILE_TILE_PLIST         @"coordinates-tile.plist"

@@ -33,6 +33,7 @@
 
 // 이동 경로 계산 관련 함수
 - (void) initMoveValue;                                     // 이동 방향 테이블 초기화
+- (BOOL) checkConnectRoad;
 - (void) createMoveTable;                                   // 이동 방향 계산을 위한 테이블 생성
 - (void) calcuationMoveValue:(int)x y:(int)y;               // 이동방향을 계산하여 저장
 - (void) calcuatioDirection:(int)x y:(int)y;                // 지정된 타일의 이동 방향을 선택

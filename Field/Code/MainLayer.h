@@ -98,6 +98,7 @@
 
 // 트랩 설치 관련 메뉴
 - (void) initTileSetupMenu;
+- (BOOL) installTileCheck:(NSInteger)tileType;
 - (void) tileSetupExplosive:(id)sender;
 - (void) tileSetupTreasure:(id)sender;
 - (void) tileSetupTrap:(id)sender;

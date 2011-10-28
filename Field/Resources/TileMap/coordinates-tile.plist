@@ -5,37 +5,18 @@
 	<key>texture</key>
 	<dict>
 		<key>width</key>
-		<integer>64</integer>
+		<integer>128</integer>
 		<key>height</key>
-		<integer>64</integer>
+		<integer>128</integer>
 	</dict>
 	<key>frames</key>
 	<dict>
-		<key>tile-floor-0.png</key>
+		<key>tile-wall0020.png</key>
 		<dict>
 			<key>x</key>
-			<integer>10</integer>
+			<integer>55</integer>
 			<key>y</key>
 			<integer>10</integer>
-			<key>width</key>
-			<integer>8</integer>
-			<key>height</key>
-			<integer>7</integer>
-			<key>offsetX</key>
-			<real>0</real>
-			<key>offsetY</key>
-			<real>-0.5</real>
-			<key>originalWidth</key>
-			<integer>8</integer>
-			<key>originalHeight</key>
-			<integer>8</integer>
-		</dict>
-		<key>tile-object-2.png</key>
-		<dict>
-			<key>x</key>
-			<integer>37</integer>
-			<key>y</key>
-			<integer>1</integer>
 			<key>width</key>
 			<integer>8</integer>
 			<key>height</key>
@@ -49,12 +30,31 @@
 			<key>originalHeight</key>
 			<integer>8</integer>
 		</dict>
-		<key>tile-object-4.png</key>
+		<key>tile-wall0015.png</key>
+		<dict>
+			<key>x</key>
+			<integer>10</integer>
+			<key>y</key>
+			<integer>10</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0016.png</key>
 		<dict>
 			<key>x</key>
 			<integer>19</integer>
 			<key>y</key>
-			<integer>1</integer>
+			<integer>10</integer>
 			<key>width</key>
 			<integer>8</integer>
 			<key>height</key>
@@ -68,67 +68,67 @@
 			<key>originalHeight</key>
 			<integer>8</integer>
 		</dict>
-		<key>tile-object-3.png</key>
+		<key>tile-wall0017.png</key>
 		<dict>
 			<key>x</key>
 			<integer>28</integer>
 			<key>y</key>
-			<integer>1</integer>
-			<key>width</key>
-			<integer>8</integer>
-			<key>height</key>
-			<integer>8</integer>
-			<key>offsetX</key>
-			<real>0</real>
-			<key>offsetY</key>
-			<real>0</real>
-			<key>originalWidth</key>
-			<integer>8</integer>
-			<key>originalHeight</key>
-			<integer>8</integer>
-		</dict>
-		<key>tile-object-1.png</key>
-		<dict>
-			<key>x</key>
-			<integer>47</integer>
-			<key>y</key>
-			<integer>1</integer>
-			<key>width</key>
-			<integer>6</integer>
-			<key>height</key>
-			<integer>8</integer>
-			<key>offsetX</key>
-			<real>0</real>
-			<key>offsetY</key>
-			<real>0</real>
-			<key>originalWidth</key>
-			<integer>8</integer>
-			<key>originalHeight</key>
-			<integer>8</integer>
-		</dict>
-		<key>tile-wall-2.png</key>
-		<dict>
-			<key>x</key>
-			<integer>1</integer>
-			<key>y</key>
-			<integer>1</integer>
-			<key>width</key>
-			<integer>8</integer>
-			<key>height</key>
-			<integer>8</integer>
-			<key>offsetX</key>
-			<real>0</real>
-			<key>offsetY</key>
-			<real>0</real>
-			<key>originalWidth</key>
-			<integer>8</integer>
-			<key>originalHeight</key>
-			<integer>8</integer>
-		</dict>
-		<key>tile-wall-1.png</key>
-		<dict>
-			<key>x</key>
 			<integer>10</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0018.png</key>
+		<dict>
+			<key>x</key>
+			<integer>37</integer>
+			<key>y</key>
+			<integer>10</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0019.png</key>
+		<dict>
+			<key>x</key>
+			<integer>46</integer>
+			<key>y</key>
+			<integer>10</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0005.png</key>
+		<dict>
+			<key>x</key>
+			<integer>46</integer>
 			<key>y</key>
 			<integer>1</integer>
 			<key>width</key>
@@ -144,7 +144,7 @@
 			<key>originalHeight</key>
 			<integer>8</integer>
 		</dict>
-		<key>tile-floor-2.png</key>
+		<key>tile-wall0006.png</key>
 		<dict>
 			<key>x</key>
 			<integer>55</integer>
@@ -163,12 +163,240 @@
 			<key>originalHeight</key>
 			<integer>8</integer>
 		</dict>
-		<key>tile-floor-1.png</key>
+		<key>tile-wall0007.png</key>
+		<dict>
+			<key>x</key>
+			<integer>64</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0008.png</key>
+		<dict>
+			<key>x</key>
+			<integer>73</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0009.png</key>
+		<dict>
+			<key>x</key>
+			<integer>82</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0010.png</key>
+		<dict>
+			<key>x</key>
+			<integer>91</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0011.png</key>
+		<dict>
+			<key>x</key>
+			<integer>100</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>7</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-0.5</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0012.png</key>
+		<dict>
+			<key>x</key>
+			<integer>109</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0013.png</key>
+		<dict>
+			<key>x</key>
+			<integer>118</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0014.png</key>
 		<dict>
 			<key>x</key>
 			<integer>1</integer>
 			<key>y</key>
 			<integer>10</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0000.png</key>
+		<dict>
+			<key>x</key>
+			<integer>1</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0001.png</key>
+		<dict>
+			<key>x</key>
+			<integer>10</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0002.png</key>
+		<dict>
+			<key>x</key>
+			<integer>19</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0003.png</key>
+		<dict>
+			<key>x</key>
+			<integer>28</integer>
+			<key>y</key>
+			<integer>1</integer>
+			<key>width</key>
+			<integer>8</integer>
+			<key>height</key>
+			<integer>8</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>8</integer>
+			<key>originalHeight</key>
+			<integer>8</integer>
+		</dict>
+		<key>tile-wall0004.png</key>
+		<dict>
+			<key>x</key>
+			<integer>37</integer>
+			<key>y</key>
+			<integer>1</integer>
 			<key>width</key>
 			<integer>8</integer>
 			<key>height</key>
