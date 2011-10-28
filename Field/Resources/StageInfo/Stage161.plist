@@ -5,11 +5,11 @@
 	<key>StageLevel</key>
 	<integer>1</integer>
 	<key>StartPointX</key>
-	<integer>8</integer>
+	<integer>10</integer>
 	<key>StartPointY</key>
 	<integer>0</integer>
 	<key>EndPointX</key>
-	<integer>18</integer>
+	<integer>16</integer>
 	<key>EndPointY</key>
 	<integer>7</integer>
 	<key>WarriorList</key>
