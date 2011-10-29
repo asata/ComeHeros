@@ -215,11 +215,14 @@
 //////////////////////////////////////////////////////////////////////////
 - (void) createMonsterAtTime:(id)sender {
     for (House *tHouse in [[commonValue sharedSingleton] getHouseList]) {
-        if([tHouse getMadeMonsterNum] < [tHouse getMaxiumMonsterNum]) {
+        if([houseHandling checkCreateMonter:tHouse]) {
             // 집에서 최대치로 생산됐는지 검사
             CCSprite *tSprite = [monsterHandling createMonster:0 position:[tHouse getPosition] houseNum:[tHouse getHouseNum]];
             [self addChild:tSprite z:(kMonsterLayer - [[commonValue sharedSingleton] monsterListCount])];
             [tHouse pluseMadeNum];
+        } else {
+            if([tHouse getTotalMonsterNum] >= [tHouse getMaxiumTotalNum])
+                [self unschedule:@selector(createMonsterAtTime:)];
         }
     }
 }

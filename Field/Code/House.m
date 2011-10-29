@@ -12,22 +12,27 @@
         houseNum = 0;               // 집의 고유 번호
         houseType = 0;              // 집의 종류
         madeMonsterNum = 0;         // 만든 Monster의 수
+        maxiumMapNum = 0;
+        maxiumTotalNum = 0;
         moveDirection = MoveNone;
     }
     
     return self;
 }
 
-- (id)init:(CGPoint)pos houseNum:(NSInteger)pNum houseType:(NSInteger)pType 
-madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirection:(NSInteger)pDirection {
+- (id)init:(CGPoint)pos houseNum:(NSInteger)pNum houseType:(NSInteger)pType maxiumMapNum:(NSInteger)pMapMaxium 
+maxiumTotalNum:(NSInteger)pTotalpMaxium moveDirection:(NSInteger)pDirection {
     if (self = [super init]) {
         position = pos;       // 집의 위치
         houseNum = pNum;       // 집의 고유 번호
         houseType = pType;      // 집의 종류
-        madeMonsterNum = pMadeNum; // 만든 Monster의 수
-        maxiumMonsterNum = pMaxium;
+        maxiumMapNum = pMapMaxium;
+        maxiumTotalNum = pTotalpMaxium;
         moveDirection = pDirection;
     }
+    
+    totalMonsterNum = 0;
+    madeMonsterNum = 0;
     
     return self;
 }
@@ -44,8 +49,14 @@ madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirec
 - (void) setMadeMonsterNum:(NSInteger)pMadeNum {
     madeMonsterNum = pMadeNum;
 }
-- (void) setMaxiumMonsterNum:(NSInteger)pMadeNum {
-    maxiumMonsterNum = pMadeNum;
+- (void) setTotalMonsterNum:(NSInteger)pMadeNum {
+    totalMonsterNum = pMadeNum;
+}
+- (void) setMaxiumMapNum:(NSInteger)pMadeNum {
+    maxiumMapNum = pMadeNum;
+}
+- (void) setMaxiumTotalNum:(NSInteger)pMadeNum {
+    maxiumTotalNum = pMadeNum;
 }
 - (void) setMoveDirection:(NSInteger)pDirection {
     moveDirection = pDirection;
@@ -63,8 +74,14 @@ madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirec
 - (NSInteger) getMadeMonsterNum {
     return madeMonsterNum;
 }
-- (NSInteger) getMaxiumMonsterNum {
-    return maxiumMonsterNum;
+- (NSInteger) getTotalMonsterNum {
+    return totalMonsterNum;
+}
+- (NSInteger) getMaxiumMapNum {
+    return maxiumMapNum;
+}
+- (NSInteger) getMaxiumTotalNum {
+    return maxiumTotalNum;
 }
 - (NSInteger) getMoveDirection {
     return moveDirection;
@@ -72,6 +89,7 @@ madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirec
 
 - (void) pluseMadeNum {
     madeMonsterNum += 1;
+    totalMonsterNum += 1;
 }
 - (void) minusMadeNum {
     madeMonsterNum -= 1;

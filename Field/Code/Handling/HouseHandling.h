@@ -6,5 +6,6 @@
 }
 
 - (void) addHouse:(CGPoint)tPoint type:(NSInteger)tType;   
+- (BOOL) checkCreateMonter:(House*)tHouse;
 
 @end

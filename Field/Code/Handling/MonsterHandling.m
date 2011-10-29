@@ -109,7 +109,10 @@
         
         NSInteger attackEnmy = [self enmyFind:tMonster];
         if(attackEnmy != -1) {
-            [tSprite runAction:[CCSequence actions:[tMonster getAttackAnimate], nil]];
+            [tSprite runAction:[CCSequence actions:[tMonster getAttackAnimate], 
+                                [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
+                                nil]];
+            //[tSprite runAction:[CCSequence actions:[tMonster getAttackAnimate], nil]];
             //NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy); 
         } else {
             NSInteger direction = [tMonster getMoveDriection];
@@ -170,6 +173,12 @@
     [pMonster resetMoveLength];
     
     return NO;
+}
+
+- (void) attackCompleteHandler {
+    // 에러 발생시 걷기 애니메이션을 상단에서 중단하였다가 이곳에서 재개하는 방향으로 구현
+    //NSLog(@"Warrior Start Walk");
+    //[
 }
 
 // 죽은 몬스터 제거

@@ -6,7 +6,8 @@
 
 @implementation Warrior
 @synthesize sprite;
-@synthesize attackAnimate, defenseAnimate;
+//@synthesize walkAnimate, defenseAnimate;
+@synthesize attackAnimate;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -76,6 +77,14 @@
     return position;
 }
 
+// 용사 이동 애니메이션
+/*- (void) setWalkAnimate:(CCAnimate *)p_walkAnimate {
+    walkAnimate = p_walkAnimate;
+}
+- (CCAnimate *) getWalkAnimate {
+    return walkAnimate;
+}*/
+
 // 용사 공격 애니메이션
 - (void) setAttackAnimate:(CCAnimate *)p_attackAnimate {
     attackAnimate = p_attackAnimate;
@@ -85,12 +94,12 @@
 }
 
 // 용사 방어 애니메이션
-- (void) setDefenseAnimate:(CCAnimate *)p_defenseAnimate {
+/*- (void) setDefenseAnimate:(CCAnimate *)p_defenseAnimate {
     defenseAnimate = p_defenseAnimate;
 }
 - (CCAnimate *) getDefenseAnimate {
     return defenseAnimate;
-}
+}*/
 //////////////////////////////////////////////////////////////////////////
 // 용사 기초 정보 End                                                      //
 //////////////////////////////////////////////////////////////////////////

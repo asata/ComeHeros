@@ -4,7 +4,6 @@
 #import "File.h"
 #import "TrapHandling.h"
 
-
 @interface WarriorHandling : NSObject {
     unsigned int    moveTable[TILE_NUM][TILE_NUM];  // 이동 경로를 저장한 배열
     unsigned int    tMoveValue[TILE_NUM][TILE_NUM]; // 이동 경로 계산을 위한 임시 테이블
@@ -24,6 +23,7 @@
 - (CCAnimation*) loadWarriorAttack:(NSString*)spriteName;
 
 - (void) moveWarrior;                                       // 일정 시간 간격으로 용사 이동
+- (void) attackCompleteHandler;
 - (void) removeWarrior:(NSInteger)index;                    // 용사 제거
 - (void) removeWarriorList:(NSMutableArray *)deleteList;    // 용사 제거
 - (NSInteger) enmyFind:(Warrior*)pWarrior;                  // 적 탐지

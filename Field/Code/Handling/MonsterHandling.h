@@ -13,6 +13,7 @@
 - (CCAnimation*) loadMonsterAttack:(NSString*)spriteName;
 
 - (void) moveMonster;
+- (void) attackCompleteHandler;
 - (BOOL) selectDirection:(Monster *)pMonster;
 - (void) removeMonster:(NSMutableArray*)dMonstList;
 

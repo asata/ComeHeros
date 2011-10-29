@@ -15,29 +15,35 @@
 
 @interface House : NSObject {
 @private
-    CGPoint     position;       // 집의 위치
-    NSInteger   houseNum;       // 집의 고유 번호
-    NSInteger   houseType;      // 집의 종류
-    NSInteger   madeMonsterNum; // 만든 Monster의 수
-    NSInteger   moveDirection;  // 만든 Monster의 이동 방향
-    NSInteger   maxiumMonsterNum;
+    CGPoint     position;           // 집의 위치
+    NSInteger   houseNum;           // 집의 고유 번호
+    NSInteger   houseType;          // 집의 종류
+    NSInteger   moveDirection;      // 만든 Monster의 이동 방향
+    NSInteger   madeMonsterNum;     // 만든 Monster의 수
+    NSInteger   totalMonsterNum;
+    NSInteger   maxiumMapNum;       // 현재 맵에 나올 수 있는 몬스터 수
+    NSInteger   maxiumTotalNum;     // 최대 생산 가능한 몬스터 수
 }
 
-- (id)init:(CGPoint)pos houseNum:(NSInteger)pNum houseType:(NSInteger)pType 
-madeMonsterNum:(NSInteger)pMadeNum maxiumMonsterNum:(NSInteger)pMaxium moveDirection:(NSInteger)pDirection;
+- (id)init:(CGPoint)pos houseNum:(NSInteger)pNum houseType:(NSInteger)pType maxiumMapNum:(NSInteger)pMapMaxium 
+maxiumTotalNum:(NSInteger)pTotalpMaxium moveDirection:(NSInteger)pDirection;
 
 - (void) setPosition:(CGPoint)pos;
 - (void) setHouseNum:(NSInteger)pNum;
 - (void) setHouseType:(NSInteger)pType;
 - (void) setMadeMonsterNum:(NSInteger)pMadeNum;
-- (void) setMaxiumMonsterNum:(NSInteger)pMadeNum;
+- (void) setTotalMonsterNum:(NSInteger)pMadeNum;
+- (void) setMaxiumMapNum:(NSInteger)pMadeNum;
+- (void) setMaxiumTotalNum:(NSInteger)pMadeNum;
 - (void) setMoveDirection:(NSInteger)pDirection;
 
 - (CGPoint) getPosition;
 - (NSInteger) getHouseNum;
 - (NSInteger) getHouseType;
 - (NSInteger) getMadeMonsterNum;
-- (NSInteger) getMaxiumMonsterNum;
+- (NSInteger) getTotalMonsterNum;
+- (NSInteger) getMaxiumMapNum;
+- (NSInteger) getMaxiumTotalNum;
 - (NSInteger) getMoveDirection;
 
 - (void) pluseMadeNum;

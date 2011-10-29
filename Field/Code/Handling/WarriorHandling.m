@@ -87,11 +87,14 @@
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
     [tSprite setScale:viewScale];
     [tSprite setVisible:YES];
-    [tSprite runAction:[CCRepeatForever actionWithAction:
-                        [[CCAnimate alloc] initWithAnimation:[self loadWarriorWalk:[warriorName objectAtIndex:warriorType]]
-                                        restoreOriginalFrame:NO]]];
+    
+    CCAnimate *walkAnimate = [[CCAnimate alloc] initWithAnimation:[self loadWarriorWalk:[warriorName objectAtIndex:warriorType]]
+                                             restoreOriginalFrame:NO];
     CCAnimate *attackAnimate = [[CCAnimate alloc] initWithAnimation:[self loadWarriorAttack:[warriorName objectAtIndex:warriorType]]
                                                restoreOriginalFrame:NO];
+    [tSprite runAction:[CCRepeatForever actionWithAction:walkAnimate]];
+    
+    //[tWarrior setWalkAnimate:walkAnimate];
     [tWarrior setAttackAnimate:attackAnimate];
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
@@ -128,7 +131,11 @@
         
         if(endFlag) {
             // 목적지에 도달한 경우
-            [deleteList addObject:tWarrior];            
+            [tWarrior setMoveSpeed:0];
+            [tWarrior setDefense:9999];
+            [tWarrior setStrength:9999];
+            
+            //[deleteList addObject:tWarrior];            
             continue;
         }
         
@@ -149,8 +156,10 @@
         // 적 유닛 확인 및 처리
         NSInteger attackEnmy = [self enmyFind:tWarrior];
         if(attackEnmy != -1) {
-            [tSprite runAction:[CCSequence actions:[tWarrior getAttackAnimate], nil]];
-            //NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy); 
+            //[tSprite stopAllActions];
+            [tSprite runAction:[CCSequence actions:[tWarrior getAttackAnimate], 
+                                [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
+                                nil]];
         } else {
             CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
             CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
@@ -183,6 +192,11 @@
     
     // 용사 삭제
     [self removeWarriorList:deleteList];
+}
+
+- (void) attackCompleteHandler {
+    // 에러 발생시 걷기 애니메이션을 상단에서 중단하였다가 이곳에서 재개하는 방향으로 구현
+    //NSLog(@"Warrior Start Walk");
 }
 
 // 지정된 용사 제거
