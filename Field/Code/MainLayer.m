@@ -284,12 +284,16 @@
     menu1 = [CCMenu menuWithItems:tileItem1, tileItem2, nil];
     [menu1 alignItemsVerticallyWithPadding:5];
     [menu1 setVisible:NO];
-    menu2 = [CCMenu menuWithItems:tileItem3, tileItem4, nil];
+    menu2 = [CCMenu menuWithItems:nil];
     [menu2 alignItemsVerticallyWithPadding:5];
     [menu2 setVisible:NO];
+    menu3 = [CCMenu menuWithItems:tileItem3, tileItem4, nil];
+    [menu3 alignItemsVerticallyWithPadding:5];
+    [menu3 setVisible:NO];
     
     [self addChild:menu1 z:kTileMenuLayer];
     [self addChild:menu2 z:kTileMenuLayer];
+    [self addChild:menu3 z:kTileMenuLayer];
     
 }
 - (BOOL) installTileCheck:(NSInteger)tileType {
@@ -381,6 +385,7 @@
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [menu1 setVisible:NO];
     [menu2 setVisible:NO];
+    [menu3 setVisible:NO];
     
     if([[event allTouches] count] == 1) {
         // 멀티 터치가 아닌 경우 
@@ -489,7 +494,7 @@
         // 다른곳 터치시 트랩 설치화면 닫음
         UITouch *touch = [touches anyObject];
         CGPoint location = [touch locationInView: [touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        //CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
         
         // 클릭한 위치 확인
         Coordinate *coordinate = [[Coordinate alloc] init];
@@ -509,11 +514,14 @@
             // 트랩 설치 화면 출력
             tileSetupPoint = thisArea;
             
-            [menu1 setPosition:ccp(convertedLocation.x - HALF_TILE_SIZE, convertedLocation.y)];
-            [menu2 setPosition:ccp(convertedLocation.x + HALF_TILE_SIZE, convertedLocation.y)];
+            CGPoint point = [coordinate convertTileToCocoa:thisArea];
+            [menu1 setPosition:ccp(point.x - TILE_SIZE, point.y)];
+            [menu2 setPosition:ccp(point.x, point.y)];
+            [menu3 setPosition:ccp(point.x + TILE_SIZE, point.y)];
             
             [menu1 setVisible:YES];        
-            [menu2 setVisible:YES];         
+            [menu2 setVisible:YES];       
+            [menu3 setVisible:YES];         
         }
         
         NSLog(@"Touch Position : %d %d", (int) thisArea.x, (int) thisArea.y);

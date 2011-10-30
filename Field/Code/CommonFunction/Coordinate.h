@@ -9,5 +9,6 @@
 - (CGPoint) convertTileToCocoa:(CGPoint)tile;
 - (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d;
 - (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs;
+- (CGPoint) convertTileToCocos2d:(CGPoint)tile;
 
 @end

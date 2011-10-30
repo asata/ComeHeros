@@ -31,6 +31,7 @@
     
     CCMenu          *menu1;
     CCMenu          *menu2;
+    CCMenu          *menu3;
     
     CGPoint         tileSetupPoint;
     

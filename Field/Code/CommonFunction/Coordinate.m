@@ -17,7 +17,6 @@
 // [self convertCocos2dToTile:cocos2d]
 // cocos2d : cocos2d 좌표값
 - (CGPoint) convertCocos2dToTile:(CGPoint)cocos2d {
-    // 확대/축소에 따라 비율 조정이 필요
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
@@ -27,6 +26,20 @@
     CGFloat y = ((TILE_SIZE * TILE_NUM * viewScale) - deviceSize.height + cocos2d.y + mapPosition.y) / (TILE_SIZE * viewScale);
     
     return CGPointMake(floorf(x), floorf(y));
+}
+
+- (CGPoint) convertTileToCocos2d:(CGPoint)tile {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
+    CGFloat x = (tile.x * TILE_SIZE * viewScale) + mapPosition.x;
+    CGFloat y = (tile.y * TILE_SIZE * viewScale) + deviceSize.height - mapPosition.y - (TILE_SIZE * TILE_NUM * viewScale);
+    
+    CGPoint result = [[CCDirector sharedDirector] convertToUI: CGPointMake(floorf(x), floorf(y))];
+    //result.y = floorf(y);
+    
+    return result;
 }
 
 // 타일맵 좌표를 맵 좌표로 변환
@@ -42,9 +55,12 @@
 // tile : 타일맵 좌표값
 - (CGPoint) convertTileToCocoa:(CGPoint)tile {
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     
-    CGFloat x = (tile.x + 1) * TILE_SIZE + map.position.x - (TILE_SIZE / 2);
-    CGFloat y = (12 - tile.y) * TILE_SIZE + map.position.y + (TILE_SIZE / 2);
+    CGFloat x = ((tile.x + 1) * TILE_SIZE * viewScale) + map.position.x - (HALF_TILE_SIZE  * viewScale);
+    CGFloat y = ((TILE_NUM - (tile.y + 1)) * TILE_SIZE * viewScale) + map.position.y + (HALF_TILE_SIZE  * viewScale);
+    NSLog(@"asdf %f %f", x * viewScale, y * viewScale);
+
     
     return CGPointMake(floorf(x), floorf(y));
 }
