@@ -59,8 +59,6 @@
     
     CGFloat x = ((tile.x + 1) * TILE_SIZE * viewScale) + map.position.x - (HALF_TILE_SIZE  * viewScale);
     CGFloat y = ((TILE_NUM - (tile.y + 1)) * TILE_SIZE * viewScale) + map.position.y + (HALF_TILE_SIZE  * viewScale);
-    NSLog(@"asdf %f %f", x * viewScale, y * viewScale);
-
     
     return CGPointMake(floorf(x), floorf(y));
 }
