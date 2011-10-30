@@ -76,7 +76,7 @@
                                              defense:10 
                                                speed:4   //[[wInfo objectForKey:@"speed"] intValue] 
                                            direction:MoveUp
-                                         attackRange:2]; 
+                                         attackRange:1]; 
     
     // 나타난 용사 수 증가
     [[commonValue sharedSingleton] plusWarriorNum];
@@ -115,6 +115,11 @@
         CCSprite *tSprite = [tWarrior getSprite];
         CGPoint movePosition = [tWarrior getPosition];
         
+        if([tWarrior getStrength] <= 0) {
+            [deleteList addObject:tWarrior];
+            continue;
+        }
+        
         // 다음 이동 방향 검사 - 추가적인 테스트 필요
         // 이동 거리 설정시 32의 약수로 지정해야 함 : 안 그럴 경우 타일 중앙에 위치를 하는 경우가 없어 제멋대로 이동함
         // 1, 2, 4, 8, 16, 32
@@ -131,63 +136,63 @@
         
         if(endFlag) {
             // 목적지에 도달한 경우
+            // 목적지 도착시 처리가 필요
+            // 게임 종료 or Life 감소
             [tWarrior setMoveSpeed:0];
             [tWarrior setDefense:9999];
             [tWarrior setStrength:9999];
             
             //[deleteList addObject:tWarrior];            
             continue;
-        }
-        
-        // 목적지에 도달하지 않은 경우
-        // 이동 방향 확인 
-        // 일정 지능 이상일 경우 최단 경로
-        //         이하일 경우 랜덤한 경로
-        NSInteger direction = [tWarrior getMoveDriection];
-        
-        // 공격 대상 탐색
-        // 트랩 탐지 및 처리
-        BOOL survivalFlag = [trapHandling handlingTrap:tWarrior];
-        if(!survivalFlag) {
-            [deleteList addObject:tWarrior];
-            continue;
-        }
-        
-        // 적 유닛 확인 및 처리
-        NSInteger attackEnmy = [self enmyFind:tWarrior];
-        if(attackEnmy != -1) {
-            //[tSprite stopAllActions];
-            [tSprite runAction:[CCSequence actions:[tWarrior getAttackAnimate], 
-                                [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
-                                nil]];
         } else {
-            CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-            CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+            // 일정 지능 이상일 경우 최단 경로
+            //         이하일 경우 랜덤한 경로
+            NSInteger direction = [tWarrior getMoveDriection];
             
-            // 이동 및 기타 체크 처리
-            if(direction == MoveLeft) {
-                movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
-            } else if(direction == MoveUp) {
-                movePosition = ccp(movePosition.x, movePosition.y + [tWarrior getMoveSpeed]);
-            } else if(direction == MoveRight) {
-                movePosition = ccp(movePosition.x + [tWarrior getMoveSpeed], movePosition.y);
-            } else if(direction == MoveDown) {
-                movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
-            }   
-            tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
-            [tWarrior setSprite:tSprite];
+            // 공격 대상 탐색
+            // 트랩 탐지 및 처리
+            BOOL survivalFlag = [trapHandling handlingTrap:tWarrior];
+            if(!survivalFlag) {
+                [deleteList addObject:tWarrior];
+                continue;
+            }
             
-            [tWarrior plusMoveLength];
-            [tWarrior setPosition:movePosition];
+            // 적 유닛 확인 및 처리
+            NSInteger attackEnmy = [self enmyFind:tWarrior];
+            if(attackEnmy != -1) {
+                //[tSprite stopAllActions];
+                [tSprite runAction:[CCSequence actions:[tWarrior getAttackAnimate], 
+                                    [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
+                                    nil]];
+            } else {
+                CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+                CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+                
+                // 이동 및 기타 체크 처리
+                if(direction == MoveLeft) {
+                    movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
+                } else if(direction == MoveUp) {
+                    movePosition = ccp(movePosition.x, movePosition.y + [tWarrior getMoveSpeed]);
+                } else if(direction == MoveRight) {
+                    movePosition = ccp(movePosition.x + [tWarrior getMoveSpeed], movePosition.y);
+                } else if(direction == MoveDown) {
+                    movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
+                }   
+                tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
+                [tWarrior setSprite:tSprite];
+                
+                [tWarrior plusMoveLength];
+                [tWarrior setPosition:movePosition];
+            }
+            
+            // 생존 여부 확인 후 소멸 여부 처리
+            if([tWarrior getStrength] <= 0) {
+                [deleteList addObject:tWarrior];
+                continue;
+            }
+            
+            [[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
         }
-        
-        // 생존 여부 확인 후 소멸 여부 처리
-        if([tWarrior getStrength] <= 0) {
-            [deleteList addObject:tWarrior];
-            continue;
-        }
-        
-        [[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
     }
     
     // 용사 삭제
@@ -197,13 +202,13 @@
 - (void) attackCompleteHandler {
     // 에러 발생시 걷기 애니메이션을 상단에서 중단하였다가 이곳에서 재개하는 방향으로 구현
     //NSLog(@"Warrior Start Walk");
+    //[self resumeSchedulerAndActions];
 }
 
 // 지정된 용사 제거
 - (void) removeWarrior:(NSInteger)index {
     [[commonValue sharedSingleton] removeWarriorAtIndex:index];
 }
-
 - (void) removeWarriorList:(NSMutableArray *)deleteList {
     for(int i = [deleteList count]; i > 0; i--) {
         Warrior *tWarrior = [deleteList objectAtIndex:(i - 1)];
@@ -320,7 +325,7 @@
     }
     
     // 이동 가능한 경로 확인
-    NSInteger direction = moveTable[x][y];
+    NSInteger direction = [[commonValue sharedSingleton] getMoveTable:x y:y];
     [pWarrior setMoveDriection:direction];
     if(direction == MoveRight || direction == MoveDown) {
         tSprite.flipX = WARRIOR_MOVE_RIGHT;
@@ -394,7 +399,7 @@
     if(x == ePoint.x && y == ePoint.y) return;
     
     NSInteger nextValue = tMoveValue[x][y] + 1;
-    if (y > 0 && moveTable[x][y - 1] != -1) {
+    if (y > 0 && [[commonValue sharedSingleton] getMoveTable:x y:(y - 1)] != -1) {
         // 상단 탐색    
         if(tMoveValue[x][y - 1] > nextValue) {
             tMoveValue[x][y - 1] = nextValue;
@@ -402,7 +407,7 @@
         }
     }
     
-    if(x < (TILE_NUM - 1) && moveTable[x + 1][y] != -1) {
+    if(x < (TILE_NUM - 1) && [[commonValue sharedSingleton] getMoveTable:(x + 1) y:y] != -1) {
         // 오른쪽 탐색
         if(tMoveValue[x + 1][y] > nextValue) {
             tMoveValue[x + 1][y] = nextValue;
@@ -410,7 +415,7 @@
         }
     } 
     
-    if(x > 0 && moveTable[x - 1][y] != -1) {
+    if(x > 0 && [[commonValue sharedSingleton] getMoveTable:(x - 1) y:y] != -1) {
         // 왼쪽 탐색
         if(tMoveValue[x - 1][y] > nextValue) {
             tMoveValue[x - 1][y] = nextValue;
@@ -418,7 +423,7 @@
         }
     } 
     
-    if (y < (TILE_NUM - 1) && moveTable[x][y + 1] != -1) {
+    if (y < (TILE_NUM - 1) && [[commonValue sharedSingleton] getMoveTable:x y:(y + 1)] != -1) {
         // 아래 탐색    
         if(tMoveValue[x][y + 1] > nextValue) {
             tMoveValue[x][y + 1] = nextValue;
@@ -431,41 +436,45 @@
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
     
     if(x == sPoint.x && y == sPoint.y) {
-        if(moveTable[x][y - 1] == MoveUp) moveTable[x][y] = MoveUp;
-        else if(moveTable[x][y + 1] == MoveDown) moveTable[x][y] = MoveDown;
-        else if(moveTable[x - 1][y] == MoveLeft) moveTable[x][y] = MoveLeft;
-        else if(moveTable[x + 1][y] == MoveRight) moveTable[x][y] = MoveRight;
+        if([[commonValue sharedSingleton] getMoveTable:x y:(y - 1)] == MoveUp) 
+            [[commonValue sharedSingleton] setMoveTable:x y:y direction:MoveUp];
+        else if([[commonValue sharedSingleton] getMoveTable:x y:(y + 1)] == MoveDown)
+            [[commonValue sharedSingleton] setMoveTable:x y:y direction:MoveDown];
+        else if([[commonValue sharedSingleton] getMoveTable:(x - 1) y:y] == MoveLeft)
+            [[commonValue sharedSingleton] setMoveTable:x y:y direction:MoveDown];
+        else if([[commonValue sharedSingleton] getMoveTable:(x + 1) y:y] == MoveRight)
+            [[commonValue sharedSingleton] setMoveTable:x y:y direction:MoveRight];
         
         return;       
     }
     
     if(tMoveValue[x][y] > tMoveValue[x][y - 1]) {
-        moveTable[x][y - 1] = MoveDown;
+        [[commonValue sharedSingleton] setMoveTable:x y:(y - 1) direction:MoveDown];
         [self calcuatioDirection:x y:(y - 1)];
     }
     
     if(tMoveValue[x][y] > tMoveValue[x][y + 1]) {
-        moveTable[x][y + 1] = MoveUp;
+        [[commonValue sharedSingleton] setMoveTable:x y:(y + 1) direction:MoveUp];
         [self calcuatioDirection:x y:(y + 1)];
     }
     
     if(tMoveValue[x][y] > tMoveValue[x - 1][y]) {
-        moveTable[x - 1][y] = MoveRight;
+        [[commonValue sharedSingleton] setMoveTable:(x - 1) y:y direction:MoveRight];
         [self calcuatioDirection:(x - 1) y:y];
     }
     
     if(tMoveValue[x][y] > tMoveValue[x + 1][y]) {
-        moveTable[x + 1][y] = MoveLeft;
+        [[commonValue sharedSingleton] setMoveTable:(x + 1) y:y direction:MoveLeft];
         [self calcuatioDirection:(x + 1) y:y];
     }
 }
 
-- (void) setMoveTable:(NSInteger)x y:(NSInteger)y value:(NSInteger)value {
+/*- (void) setMoveTable:(NSInteger)x y:(NSInteger)y value:(NSInteger)value {
     moveTable[x][y] = value;
 }
 - (NSInteger) getMoveTable:(NSInteger)x y:(NSInteger)y {
     return moveTable[x][y];
-}
+}*/
 //////////////////////////////////////////////////////////////////////////
 // 이동 경로 계산 End                                                     //
 //////////////////////////////////////////////////////////////////////////

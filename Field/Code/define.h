@@ -23,6 +23,10 @@
 #define TILE_TRAP_OPEN      11
 #define TILE_MONSTER_HOUSE1 12
 
+#define RANGE_TREASURE      1
+#define RANGE_EXPLOSIVE     2
+
+#define DEMAGE_TRAP         10
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -58,7 +62,7 @@
 
 #define REFRESH_DISPLAY_TIME    0.20f    // 화면 갱신 속도
 #define WARRIOR_MOVE_ACTION     0.10f    // Sprite 이미지 전환 속도
-#define CREATE_WARRIOR_TIME     1.50f    // 캐릭터 생성 속도
+#define CREATE_WARRIOR_TIME     2.50f    // 캐릭터 생성 속도
 #define CREATE_MONSTER_TIME     3.00f
 
 #define WARRIOR_MOVE_LEFT       YES     // 왼쪽

@@ -4,9 +4,10 @@ static CCTMXTiledMap    *map;                           // 타일 맵
 static CGSize           deviceSize;                     // 디바이스의 크기
 static CGFloat          viewScale;                      // 화면 확대/축소 비율
 static unsigned int     mapInfo[TILE_NUM][TILE_NUM];    // 타일맵에 설치된 타일 정보
+static unsigned int     moveTable[TILE_NUM][TILE_NUM];  // 이동 경로를 저장한 배열
 
-static CGPoint         startPoint;                      // 용사 시작지점
-static CGPoint         destinationPoint;                // 용사 도착지점
+static CGPoint          startPoint;                      // 용사 시작지점
+static CGPoint          destinationPoint;                // 용사 도착지점
 
 static NSInteger        stageWarriorCount;
 
@@ -129,6 +130,9 @@ static commonValue      * _globalTest = nil;
 - (NSInteger) trapListCount {
     return [trapList count];
 }
+- (void) removeTrap:(Trap*)pTrap {
+    [trapList removeObject:pTrap];
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -177,6 +181,22 @@ static commonValue      * _globalTest = nil;
 }
 - (unsigned int) getMapInfo:(NSInteger)x y:(NSInteger)y {
     return mapInfo[x][y];
+}
+
+- (void) initMoveTable:(unsigned int **)p_info {
+    int i, j;
+    
+    for(i = 0; i < TILE_NUM; i++) {
+        for (j = 0; j < TILE_NUM; j++) {
+            moveTable[i][j] = p_info[i][j];
+        }
+    }
+}
+- (void) setMoveTable:(NSInteger)x y:(NSInteger)y direction:(NSInteger)direction {
+    moveTable[x][y] = direction;
+}
+- (unsigned int) getMoveTable:(NSInteger)x y:(NSInteger)y {
+    return moveTable[x][y];
 }
 
 // 디바이스 크기 

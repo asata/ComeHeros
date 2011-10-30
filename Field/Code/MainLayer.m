@@ -81,15 +81,14 @@
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadStageData:path];
     
-    //NSLog(@"Start Point : %f %f", [[commonValue sharedSingleton] getStartPoint].x, [[commonValue sharedSingleton] getStartPoint].y);
-    //NSLog(@"Start Point : %f %f", [[commonValue sharedSingleton] getEndPoint].x, [[commonValue sharedSingleton] getEndPoint].y);
     [self initMap]; 
     [self initTileSetupMenu];
+    [self createWarrior];
     
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
-    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
-    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
+    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    //[self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
 }
 
 - (void) dealloc {
@@ -155,9 +154,9 @@
             // 타일 타입에 따라 이동이 가능한지 검사
             // 이동 불가일 경우 -1
             if(![trapHandling checkMoveTile:tileType])
-                [warriorHandling setMoveTable:i y:j value:-1];
+                [[commonValue sharedSingleton] setMoveTable:i y:j direction:(-1)];
             else
-                [warriorHandling setMoveTable:i y:j value:MoveNone];
+                [[commonValue sharedSingleton] setMoveTable:i y:j direction:MoveNone];
             
             // 타일에 설치된 트랩이 있는지 확인
             if([trapHandling checkObstacleTile:tileType])
@@ -188,6 +187,11 @@
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
         [self addChild:tSprite z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount])];
     }
+}
+- (void) createWarrior {
+    NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
+    CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
+    [self addChild:tSprite z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount])];
 }
 
 - (void) moveAction:(id) sender {
@@ -253,9 +257,9 @@
     [trapHandling addTrap:point type:tType]; 
     
     if(![trapHandling checkMoveTile:tType])
-        [warriorHandling setMoveTable:point.x y:point.y value:-1];
+        [[commonValue sharedSingleton] setMoveTable:point.x y:point.y direction:(-1)];
     else
-        [warriorHandling setMoveTable:point.x y:point.y value:MoveNone];
+        [[commonValue sharedSingleton] setMoveTable:point.x y:point.y direction:MoveNone];
     
     // 이동 경로 재계산
     [warriorHandling createMoveTable];
@@ -298,35 +302,25 @@
         CGPoint wPoint = [tWarrior getPosition];
         
         if (tPoint.x - TILE_SIZE < wPoint.x && tPoint.x + TILE_SIZE > wPoint.x && 
-            tPoint.y - TILE_SIZE < wPoint.y && tPoint.y + TILE_SIZE > wPoint.y) {
-            NSLog(@"Warrior");
-
-            return NO;
-        }
+            tPoint.y - TILE_SIZE < wPoint.y && tPoint.y + TILE_SIZE > wPoint.y) return NO;
     }
     
     for (Monster *tMonster in [[commonValue sharedSingleton] getMonsterList]) {
         CGPoint mPoint = [tMonster getPosition];
         
         if (tPoint.x - TILE_SIZE < mPoint.x && tPoint.x + TILE_SIZE > mPoint.x && 
-            tPoint.y - TILE_SIZE < mPoint.y && tPoint.y + TILE_SIZE > mPoint.y) {
-            NSLog(@"Monster");
-
-            return NO;
-        }
+            tPoint.y - TILE_SIZE < mPoint.y && tPoint.y + TILE_SIZE > mPoint.y) return NO;
     }
     
     // 목적지까지 가능 경로가 없을 경우
-    NSInteger moveDirection = [warriorHandling getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
+    NSInteger moveDirection = [[commonValue sharedSingleton] getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
+    //[warriorHandling getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
     if (![trapHandling checkMoveTile:tileType]) {
-        [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:-1];
-        NSLog(@"Done Moved");
+        [[commonValue sharedSingleton] setMoveTable:tileSetupPoint.x y:tileSetupPoint.y direction:(-1)];
     }
         
     if(![warriorHandling checkConnectRoad]) {
-        NSLog(@"Connect Road");
-        [warriorHandling setMoveTable:tileSetupPoint.x y:tileSetupPoint.y value:moveDirection];
-        
+        [[commonValue sharedSingleton] setMoveTable:tileSetupPoint.x y:tileSetupPoint.y direction:moveDirection];
         return NO;
     }
     
@@ -508,6 +502,10 @@
             [trapHandling addTrap:thisArea type:TILE_WALL01];
         } else if(tType == TILE_WALL01) {
             [trapHandling addTrap:thisArea type:TILE_GROUND2];
+            
+            // 이동 경로 재계산
+            [[commonValue sharedSingleton] setMoveTable:(int)thisArea.x y:(int)thisArea.y direction:MoveNone];
+            [warriorHandling createMoveTable];
         } else if(tType == TILE_GROUND1 || tType == TILE_GROUND2) {
             // 트랩 설치 화면 출력
             tileSetupPoint = thisArea;
@@ -519,7 +517,7 @@
             [menu2 setVisible:YES];         
         }
         
-        NSLog(@"%d %d", (int) thisArea.x, (int) thisArea.y);
+        NSLog(@"Touch Position : %d %d", (int) thisArea.x, (int) thisArea.y);
     }
     
     // 멀티 터치는 처리하지 않음

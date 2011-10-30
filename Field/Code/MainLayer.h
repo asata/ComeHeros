@@ -84,6 +84,7 @@
 - (CGPoint) checkMovePosition:(CGPoint)position;
 
 // 용사 관련 함수
+- (void) createWarrior;
 - (void) createWarriorAtTime:(id) sender;
 - (void) moveAction:(id) sender;
 

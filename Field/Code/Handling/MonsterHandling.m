@@ -59,7 +59,7 @@
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     Coordinate *coordinate = [[Coordinate alloc] init];
     
-    // 용사 생성
+    // 몬스터 생성
     Monster *tMonster = [[Monster alloc] initMonster:[coordinate convertTileToMap:position]
                                           monsterNum:[[commonValue sharedSingleton] getMonsterNum]
                                             strength:100 
@@ -71,7 +71,7 @@
                                          attackRange:2 
                                             houseNum:pHouse]; 
     
-    // 나타난 용사 수 증가
+    // 나타난 몬스터 수 증가
     [[commonValue sharedSingleton] plusMonsterNum];
     
     NSArray *monsterName = [NSArray arrayWithObjects: @"vampire", @"skeleton", @"spirite", nil]; 
@@ -112,8 +112,6 @@
             [tSprite runAction:[CCSequence actions:[tMonster getAttackAnimate], 
                                 [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
                                 nil]];
-            //[tSprite runAction:[CCSequence actions:[tMonster getAttackAnimate], nil]];
-            //NSLog(@"Found Enmy!!!(Warrior Num : %d, Trap Num : %d)", [tWarrior getWarriorNum], attackEnmy); 
         } else {
             NSInteger direction = [tMonster getMoveDriection];
             // 이동 및 기타 체크 처리
@@ -178,7 +176,7 @@
 - (void) attackCompleteHandler {
     // 에러 발생시 걷기 애니메이션을 상단에서 중단하였다가 이곳에서 재개하는 방향으로 구현
     //NSLog(@"Warrior Start Walk");
-    //[
+    
 }
 
 // 죽은 몬스터 제거

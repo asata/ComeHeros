@@ -4,8 +4,7 @@
 #import "File.h"
 #import "TrapHandling.h"
 
-@interface WarriorHandling : NSObject {
-    unsigned int    moveTable[TILE_NUM][TILE_NUM];  // 이동 경로를 저장한 배열
+@interface WarriorHandling : CCLayer {
     unsigned int    tMoveValue[TILE_NUM][TILE_NUM]; // 이동 경로 계산을 위한 임시 테이블
     
     TrapHandling    *trapHandling;
@@ -38,6 +37,6 @@
 - (void) calcuationMoveValue:(int)x y:(int)y;               // 이동방향을 계산하여 저장
 - (void) calcuatioDirection:(int)x y:(int)y;                // 지정된 타일의 이동 방향을 선택
 
-- (void) setMoveTable:(NSInteger)x y:(NSInteger)y value:(NSInteger)value;
-- (NSInteger) getMoveTable:(NSInteger)x y:(NSInteger)y;
+//- (void) setMoveTable:(NSInteger)x y:(NSInteger)y value:(NSInteger)value;
+//- (NSInteger) getMoveTable:(NSInteger)x y:(NSInteger)y;
 @end
