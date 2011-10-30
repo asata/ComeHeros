@@ -134,7 +134,14 @@
         } else if(trapType == TILE_EXPLOSIVE) {
             // 폭발물일 경우
             if ([self adjacentTrap:tPoint point:wPoint range:RANGE_EXPLOSIVE] && [pWarrior getStrength] > 0) {
-                [self bombExplosive:tTrap];
+                fineTrapList = [[NSMutableArray alloc] init];
+                
+                // 연쇄 폭발할 폭발물 검색(검색시 보물상자는 제외시킴)
+                [self findExplosive:tTrap];
+                for (Trap *fTrap in fineTrapList) {
+                    [self bombExplosive:fTrap];
+                }
+                
             }
             
             if([pWarrior getStrength] < 0) return DEATH;
@@ -148,6 +155,28 @@
 /********************************************************/
 /* 폭발물 처리 부분 시작                                     */
 /********************************************************/
+// 연쇄 폭발할 폭발물 검색
+- (void) findExplosive:(Trap*)pTrap {
+    [fineTrapList addObject:pTrap];
+    
+    for (Trap *tTrap in [[commonValue sharedSingleton] getTrapList]) {
+        if ([tTrap getTrapType] != TILE_EXPLOSIVE) continue;
+        if ([pTrap getTrapNum] == [tTrap getTrapNum]) continue;
+        if ([self existExplosiveList:tTrap]) continue;
+        if (![self adjacentTrap:[pTrap getPosition] point:[tTrap getPosition] range:RANGE_EXPLOSIVE]) continue;
+        
+        [self findExplosive:tTrap];
+    }
+}
+// 이전에 찾은 폭발물인지 검사
+- (BOOL) existExplosiveList:(Trap*)pTrap {
+    for (Trap *tTrap in fineTrapList) {
+        if ([pTrap getTrapNum] == [tTrap getTrapNum]) return YES;
+    }
+    
+    return NO;
+}
+// 폭발물 폭파
 - (void) bombExplosive:(Trap*)pTrap {
     // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {

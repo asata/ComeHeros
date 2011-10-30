@@ -6,6 +6,7 @@
 #import "Coordinate.h"
 
 @interface TrapHandling : CCLayer {
+    NSMutableArray *fineTrapList;
 }
 
 - (BOOL) checkMoveTile:(NSInteger)tileType;
@@ -25,5 +26,7 @@
 - (void) trapDemage:(Warrior*)pWarrior;
 
 - (void) bombTreasure:(Trap*)pTrap;
+- (void) findExplosive:(Trap*)pTrap;
+- (BOOL) existExplosiveList:(Trap*)pTrap;
 - (void) bombExplosive:(Trap*)pTrap;
 @end

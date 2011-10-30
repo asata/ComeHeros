@@ -83,12 +83,11 @@
     
     [self initMap]; 
     [self initTileSetupMenu];
-    [self createWarrior];
     
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
-    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
-    //[self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
+    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
 }
 
 - (void) dealloc {
