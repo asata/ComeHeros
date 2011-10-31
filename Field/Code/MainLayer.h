@@ -31,11 +31,11 @@
     
     CCMenu          *menu1;
     CCMenu          *menu2;
-    CCMenu          *menu3;
+    CCMenu          *menu3;    
+    CCMenu          *menuPause;
+    CCMenu          *menuResume;
     
-    CGPoint         tileSetupPoint;
-    
-    //CCTMXLayer      *layer;             // 게임 레이어 정보 저장
+    CGPoint         tileSetupPoint;     // 타일 설치 위치
     
     /////////////////////////////////////////////////////////
     // 게임 관련 변수 Start                                   //
@@ -46,13 +46,8 @@
     CGPoint         prevPoint;          // 이전 터치 위치
     CGFloat         prevMultiLength;    // 이전 멀티 터치
     BOOL            touchType;          // 터치 상태(YES : 터치, NO : 이동)
-    BOOL            gameFlag;           // 게임 진행 상황 (YES : 진행중, NO : 대기) - 현재 미사용
+    BOOL            gameFlag;           // 게임 진행 상황 (YES : 진행중, NO : 대기)
     
-    // 게임 진행에 관련된 변수
-    NSInteger       stagePoint;         // 게임 점수
-    NSInteger       stageMoney;         // 게임에 필요한 돈
-    NSInteger       stageTime;          // 게임 시간
-    NSInteger       stageLive;          // 생명
     
     // 게임 설정 - 사용자 선택 부분
     NSInteger       stageLevel;         // 게임 레벨
@@ -72,6 +67,9 @@
 
 // 게임 초기화
 - (id)init:(NSInteger)p_level degree:(NSInteger)p_degree;
+
+- (void) initMenu;
+- (void) gamePause:(id)sender;
 
 // 맵 초기화
 - (void) initMap;
@@ -101,6 +99,7 @@
 // 트랩 설치 관련 메뉴
 - (void) initTileSetupMenu;
 - (BOOL) installTileCheck:(NSInteger)tileType;
+- (BOOL) installMoneyCheck:(NSInteger)money;
 - (void) tileSetupExplosive:(id)sender;
 - (void) tileSetupTreasure:(id)sender;
 - (void) tileSetupTrap:(id)sender;

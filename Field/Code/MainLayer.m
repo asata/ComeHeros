@@ -82,6 +82,7 @@
     [file loadStageData:path];
     
     [self initMap]; 
+    [self initMenu];
     [self initTileSetupMenu];
     
     // 일정한 간격으로 호출~
@@ -92,6 +93,42 @@
 
 - (void) dealloc {
     [super dealloc];
+}
+- (void) initMenu {
+    CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-floor-0.png" 
+                                               selectedImage:@"Tile/tile-floor-0.png" 
+                                                      target:self 
+                                                    selector:@selector(gamePause:)];
+    
+    CCMenuItem *resume = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-object-3.png" 
+                                                selectedImage:@"Tile/tile-object-3.png" 
+                                                       target:self 
+                                                     selector:@selector(gamePause:)];
+
+    menuPause = [CCMenu menuWithItems:pause, nil];
+    menuPause.position = PAUSE_MENU_POSITION;
+    menuPause.visible = YES;
+    
+    menuResume = [CCMenu menuWithItems:resume, nil];
+    menuResume.position = PAUSE_MENU_POSITION;
+    menuResume.visible = NO;
+    
+    [self addChild:menuPause z:kMainMenuLayer];
+    [self addChild:menuResume z:kMainMenuLayer];
+}
+- (void) gamePause:(id)sender {
+    // 게임 일시 정지
+    if(gameFlag) {
+        [self pauseSchedulerAndActions];   
+        menuResume.visible = YES;
+        menuPause.visible = NO;
+    }else {
+        [self resumeSchedulerAndActions];   
+        menuResume.visible = NO;
+        menuPause.visible = YES;
+    }
+    
+    gameFlag = !gameFlag;
 }
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 End                                                        //
@@ -159,14 +196,12 @@
             
             // 타일에 설치된 트랩이 있는지 확인
             if([trapHandling checkObstacleTile:tileType])
-            {
                 [trapHandling addTrap:ccp(i, j) type:tileType];
-            }                                             
+                                                     
             
-            if ([trapHandling checkHouseTile:tileType]) {
+            if ([trapHandling checkHouseTile:tileType]) 
                 // 몬스터 집이 있는 경우
                 [self addHouse:ccp(i, j) tType:tileType];
-            }
         }
     }
 }
@@ -186,6 +221,8 @@
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
         [self addChild:tSprite z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount])];
     }
+    
+    [[commonValue sharedSingleton] plusStageTime];
 }
 - (void) createWarrior {
     NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
@@ -332,7 +369,9 @@
 - (void) tileSetupExplosive:(id)sender {
     // 설치가능한 경로인지 검사
     if(![self installTileCheck:TILE_EXPLOSIVE]) return;
+    if(![self installMoneyCheck:MONEY_EXPLOSIVE]) return;
     
+    [[commonValue sharedSingleton] minusStageMoney:MONEY_EXPLOSIVE];
     [trapHandling addTrap:tileSetupPoint type:TILE_EXPLOSIVE];
     
     // 이동 경로 재계산
@@ -344,7 +383,9 @@
 - (void) tileSetupTreasure:(id)sender {
     // 설치가능한 경로인지 검사
     if(![self installTileCheck:TILE_TREASURE]) return;
+    if(![self installMoneyCheck:MONEY_TREASURE]) return;
     
+    [[commonValue sharedSingleton] minusStageMoney:MONEY_TREASURE];
     [trapHandling addTrap:tileSetupPoint type:TILE_TREASURE];
     
     // 이동 경로 재계산
@@ -356,7 +397,9 @@
 - (void) tileSetupTrap:(id)sender {
     // 설치가능한 경로인지 검사
     if(![self installTileCheck:TILE_TRAP_CLOSE]) return;
+    if(![self installMoneyCheck:MONEY_TRAP]) return;
     
+    [[commonValue sharedSingleton] minusStageMoney:MONEY_TRAP];
     [trapHandling addTrap:tileSetupPoint type:TILE_TRAP_CLOSE];
     
     [menu1 setVisible:NO];
@@ -365,12 +408,19 @@
 - (void) tileSetupMonsterHouse1:(id)sender {
     // 설치가능한 경로인지 검사
     if(![self installTileCheck:TILE_MONSTER_HOUSE1]) return;
+    if(![self installMoneyCheck:MONEY_HOUSE]) return;
     
+    [[commonValue sharedSingleton] minusStageMoney:MONEY_HOUSE];
     // monsterHandling에 addHouse 등록하여 처리가 필요
     [trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
     
     [menu1 setVisible:NO];
     [menu2 setVisible:NO];
+}
+- (BOOL) installMoneyCheck:(NSInteger)money {
+    if ([[commonValue sharedSingleton] getStageMoney] > money) return NO;
+    
+    return YES;
 }
 //////////////////////////////////////////////////////////////////////////
 // Trap End                                                             //
@@ -506,6 +556,7 @@
             [trapHandling addTrap:thisArea type:TILE_WALL01];
         } else if(tType == TILE_WALL01) {
             [trapHandling addTrap:thisArea type:TILE_GROUND2];
+            [[commonValue sharedSingleton] plusStageMoney:MONEY_DESTORY_WALL];
             
             // 이동 경로 재계산
             [[commonValue sharedSingleton] setMoveTable:(int)thisArea.x y:(int)thisArea.y direction:MoveNone];

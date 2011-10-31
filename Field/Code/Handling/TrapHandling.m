@@ -85,7 +85,7 @@
 // 탐지한 트랩에 따라 처리
 - (BOOL) handlingTrap:(Warrior*)pWarrior {
     // 캐릭터의 현재 위치
-    Function *function = [[Function alloc] init];
+    //Function *function = [[Function alloc] init];
     Coordinate *coordinate = [[Coordinate alloc] init];
     CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[pWarrior getPosition]];   
     CGPoint wPoint1 = [pWarrior getPosition];
@@ -95,7 +95,7 @@
         CGPoint tPoint = [tTrap getPosition];
         CGPoint tPoint1 = [tTrap getABSPosition];
         NSInteger trapType = [tTrap getTrapType];
-        CGFloat distance = [function lineLength:wPoint1 point2:tPoint1];
+        //CGFloat distance = [function lineLength:wPoint1 point2:tPoint1];
         
         if(trapType == TILE_TRAP_CLOSE) {
             // 닫힌 함정일 경우

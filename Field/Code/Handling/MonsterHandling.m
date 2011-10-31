@@ -11,9 +11,9 @@
 @implementation MonsterHandling
 
 - (id) init {
-    /*if ((self = [super init])) {
-        monsterNum = 0;
-    }*/
+    if ((self = [super init])) {
+        removeSpriteList = [[NSMutableArray alloc] init];
+    }
     
     return self;
 }
@@ -53,7 +53,21 @@
     
     return animation;
 }
-
+- (CCAnimation*) loadMonsterDeath:(NSString*)spriteName {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_DEATH_MONSTER_PLIST textureFile:FILE_DEATH_MONSTER_IMG];
+    
+    NSMutableArray* walkImgList = [NSMutableArray array];
+    for(NSInteger i = 0; i < 8; i++) {
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                                spriteFrameByName:[NSString stringWithFormat:@"monster-%@%04d.png", spriteName, i]];
+        
+        [walkImgList addObject:frame];
+    }
+    
+    CCAnimation *animation = [CCAnimation animationWithFrames:walkImgList delay:DEATH_MONSTER_TIME];
+    
+    return animation;
+}
 - (CCSprite*) createMonster:(NSInteger)monsterType position:(CGPoint)position houseNum:(NSInteger)pHouse {
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
@@ -83,6 +97,7 @@
     [tSprite runAction:[CCRepeatForever actionWithAction:
                         [[CCAnimate alloc] initWithAnimation:[self loadMonsterWalk:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:NO]]];
     [tMonster setAttackAnimate:[[CCAnimate alloc] initWithAnimation:[self loadMonsterAttack:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:NO]];
+    [tMonster setDeathAnimate:[[CCAnimate alloc] initWithAnimation:[self loadMonsterDeath:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:YES]];
     [tMonster setMoveLength:TILE_SIZE];
     [tMonster setSprite:tSprite];
     
@@ -131,7 +146,7 @@
             [tMonster setPosition:movePosition];
         }
         
-        if ([tMonster getStrength] < 0) {
+        if ([tMonster getStrength] < 0 && [tMonster getDeath] == SURVIVAL) {
             // 소멸 처리
             [deleteMonster addObject:tMonster];
         }
@@ -176,19 +191,31 @@
 - (void) attackCompleteHandler {
     // 에러 발생시 걷기 애니메이션을 상단에서 중단하였다가 이곳에서 재개하는 방향으로 구현
     //NSLog(@"Warrior Start Walk");
-    
 }
+- (void) deathCompleteHandler:(id)sender {
+    if ([removeSpriteList count] == 0) return;
 
-// 죽은 몬스터 제거
+    CCSprite *rSprite = [[[removeSpriteList objectAtIndex:0] retain] autorelease];
+    rSprite.visible = NO;
+    [rSprite release];
+    [removeSpriteList removeObjectAtIndex:0];
+}
 - (void) removeMonster:(NSMutableArray*)dMonstList {
-    for (Monster *dMonster in dMonstList) {
+    for (Monster *tMonster in dMonstList) {        
+        CCSprite *tSprite = [tMonster getSprite];
+        
+        [tSprite runAction:[CCSequence actions:[tMonster getDeathAnimate], 
+                            [CCCallFunc actionWithTarget:self selector:@selector(deathCompleteHandler:)], 
+                            nil]];
+        
+        [tMonster setDeath:DEATH];
+        [removeSpriteList addObject:tSprite];
+        
         for (House *tHouse in [[commonValue sharedSingleton] getHouseList]) {
-            if([tHouse getHouseNum] == [dMonster getHouseNum]) [tHouse minusMadeNum];
+            if([tHouse getHouseNum] == [tMonster getHouseNum]) [tHouse minusMadeNum];
         }
         
-        [[dMonster getSprite] setVisible:NO];
-        
-        [[commonValue sharedSingleton] removeMonster:dMonster];
+        [[commonValue sharedSingleton] removeMonster:tMonster];
     }
 } 
 
@@ -204,7 +231,9 @@
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
             NSInteger demage = [pMonster getPower] - [tWarrior getDefense];
-            if(demage > 0) [tWarrior setStrength:[tWarrior getStrength] - demage];
+            if(demage > 0) {
+                [tWarrior setStrength:[tWarrior getStrength] - demage];
+            }
             
             return [tWarrior getWarriorNum];
         }

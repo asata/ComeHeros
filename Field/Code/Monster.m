@@ -23,8 +23,7 @@
              speed:(NSInteger)pSpeed 
          direction:(NSInteger)pDirection 
        attackRange:(NSInteger)pAttackRange 
-          houseNum:(NSInteger)pHouse
-{
+          houseNum:(NSInteger)pHouse {
     if ((self = [super init])) {
         [super initWarrior:pos 
                 warriorNum:p_num 
@@ -53,11 +52,17 @@
 - (void) setHouseNum:(NSInteger)pHouseNum {
     houseNum = pHouseNum;
 }
+- (void) setDeathAnimate:(CCAnimate *)pAnimate {
+    deathAnimate = pAnimate;
+}
 
 - (NSInteger) getMonsterNum {
     return monsterNum;
 }
 - (NSInteger) getHouseNum {
     return houseNum;
+}
+- (CCAnimate*) getDeathAnimate {
+    return deathAnimate;
 }
 @end

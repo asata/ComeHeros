@@ -40,6 +40,8 @@
         moveSpeed = pSpeed;
         moveDirection = pDirection;
         attackRange = pAttackRange;
+        
+        death = SURVIVAL;
     }
     
     return self;
@@ -53,6 +55,15 @@
 //////////////////////////////////////////////////////////////////////////
 // 용사 기초 정보 Start                                                    //
 //////////////////////////////////////////////////////////////////////////
+- (void) setVisibleNum:(NSInteger)p_visible {
+    visibleNum = p_visible;
+}
+- (void) resetVisibleNum { 
+    visibleNum = 0;
+}
+- (NSInteger) getVisibleNum {
+    return visibleNum;
+}
 // 용사 고유 번호
 - (void) setWarriorNum:(NSInteger)p_num {
     warriorNum = p_num;
@@ -100,6 +111,12 @@
 - (CCAnimate *) getDefenseAnimate {
     return defenseAnimate;
 }*/
+- (void) setDeath:(BOOL)pDeath {
+    death = pDeath;
+}
+- (BOOL) getDeath {
+    return death;
+}
 //////////////////////////////////////////////////////////////////////////
 // 용사 기초 정보 End                                                      //
 //////////////////////////////////////////////////////////////////////////

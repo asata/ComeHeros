@@ -20,6 +20,11 @@ static NSInteger        monsterNum;         // 게임 시작 후 나타난 몬�
 static NSMutableArray   *houseList;         // 용사 집 List
 static NSInteger        houseNum;           // 게임 시작 후 나타난 잡의 수
 
+// 게임 진행에 관련된 변수
+static NSInteger       stagePoint;         // 게임 점수
+static NSInteger       stageMoney;         // 게임에 필요한 돈
+static NSInteger       stageTime;          // 게임 시간
+static NSInteger       stageLife;          // 생명
 
 static commonValue      * _globalTest = nil;
 
@@ -60,6 +65,54 @@ static commonValue      * _globalTest = nil;
     warriorNum  = 0;
     monsterNum  = 0;
     houseNum    = 0;
+    
+    stageTime = 0;
+    stagePoint = 0;
+    stageMoney = 0;
+    stageLife = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+- (void) setStageTime:(NSInteger)pTime {
+    stageTime = pTime;
+}
+- (void) plusStageTime {
+    stageTime++;
+}
+- (NSInteger) getStageTime {
+    return stageTime;
+}
+
+- (void) setStagePoint:(NSInteger)pPoint {
+    stagePoint = pPoint;
+}
+- (void) plusStagePoint:(NSInteger)pPoint {
+    stagePoint += pPoint;
+}
+- (NSInteger) getStagePoint {
+    return stagePoint;
+}
+
+- (void) setStageMoney:(NSInteger)pMoney {
+    stageMoney = pMoney;
+}
+- (void) plusStageMoney:(NSInteger)pMoney {
+    stageMoney += pMoney;
+}
+- (void) minusStageMoney:(NSInteger)pMoney {
+    stagePoint -= pMoney;    
+}
+- (NSInteger) getStageMoney {
+    return stageMoney;
+}
+
+- (void) setStageLife:(NSInteger)pLife {
+    stageLife = pLife;
+}
+- (NSInteger) getStageLife {
+    return stageLife;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

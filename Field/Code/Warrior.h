@@ -31,6 +31,9 @@
     //CCAnimate   *defenseAnimate;    // 방어 애니메이션
     CGPoint     position;           // 현재 위치
     
+    BOOL        death;
+    
+    NSInteger   visibleNum;
     NSInteger   strength;           // 체력
     NSInteger   power;              // 힘
     NSInteger   intellect;          // 지능
@@ -55,6 +58,7 @@
 - (void) setWarriorNum:(NSInteger)p_num;
 - (void) setSprite:(CCSprite *)p_spriteh;
 - (void) setPosition:(CGPoint)p_position;
+- (void) setVisibleNum:(NSInteger)p_visible;
 - (void) setStrength:(NSInteger)p_strength;
 - (void) setPower:(NSInteger)p_power;
 - (void) setIntellect:(NSInteger)p_intellect;
@@ -66,10 +70,13 @@
 //- (void) setWalkAnimate:(CCAnimate *)p_walkAnimate;
 - (void) setAttackAnimate:(CCAnimate *)p_attackAnimate;
 //- (void) setDefenseAnimate:(CCAnimate *)p_defenseAnimate;
+- (void) setDeath:(BOOL)pDeath;
 
+- (BOOL) getDeath;
 - (NSInteger) getWarriorNum;
 - (CCSprite *) getSprite;
 - (CGPoint) getPosition;
+- (NSInteger) getVisibleNum;
 - (NSInteger) getStrength;
 - (NSInteger) getPower;
 - (NSInteger) getIntellect;
@@ -82,6 +89,7 @@
 - (CCAnimate *) getAttackAnimate;
 //- (CCAnimate *) getDefenseAnimate;
 
+- (void) resetVisibleNum;
 - (void) plusMoveLength;
 - (void) resetMoveLength;
 @end

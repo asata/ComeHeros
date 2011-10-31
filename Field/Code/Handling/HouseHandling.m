@@ -26,7 +26,7 @@
     House *tHouse = [[House alloc] init:tPoint 
                                houseNum:[[commonValue sharedSingleton] getHouseNum] 
                               houseType:tType 
-                           maxiumMapNum:5
+                           maxiumMapNum:1
                          maxiumTotalNum:7
                           moveDirection:MoveRight];
     

@@ -28,21 +28,29 @@
 
 #define DEMAGE_TRAP         10
 
+#define MONEY_DESTORY_WALL  5
+#define MONEY_TRAP          50
+#define MONEY_TREASURE      50
+#define MONEY_EXPLOSIVE     50
+#define MONEY_HOUSE         100
+
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 
 // File Name
-#define FILE_TILE_MAP           @"sample.tmx"
+#define FILE_TILE_MAP               @"sample.tmx"
 
-#define FILE_STAGE_PLIST        @"Stage161.plist"
-#define FILE_CHARATER_PLIST     @"coordinates-character4.plist"
-#define FILE_MONSTER_PLIST      @"coordinates-monster.plist"
-#define FILE_TILE_PLIST         @"coordinates-tile.plist"
+#define FILE_STAGE_PLIST            @"Stage161.plist"
+#define FILE_CHARATER_PLIST         @"coordinates-character4.plist"
+#define FILE_MONSTER_PLIST          @"coordinates-monster.plist"
+#define FILE_DEATH_MONSTER_PLIST    @"monster.plist"
+#define FILE_TILE_PLIST             @"coordinates-tile.plist"
 
-#define FILE_CHARATER_IMG       @"texture-character.png"
-#define FILE_MONSTER_IMG        @"texture-monster.png"
-#define FILE_TILE_IMG           @"texture-tile.png"
+#define FILE_CHARATER_IMG           @"texture-character.png"
+#define FILE_MONSTER_IMG            @"texture-monster.png"
+#define FILE_DEATH_MONSTER_IMG      @"monster.png"
+#define FILE_TILE_IMG               @"texture-tile.png"
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -62,8 +70,9 @@
 
 #define REFRESH_DISPLAY_TIME    0.20f    // 화면 갱신 속도
 #define WARRIOR_MOVE_ACTION     0.10f    // Sprite 이미지 전환 속도
-#define CREATE_WARRIOR_TIME     2.50f    // 캐릭터 생성 속도
+#define CREATE_WARRIOR_TIME     1.00f    // 캐릭터 생성 속도
 #define CREATE_MONSTER_TIME     3.00f
+#define DEATH_MONSTER_TIME      0.50f
 
 #define WARRIOR_MOVE_LEFT       YES     // 왼쪽
 #define WARRIOR_MOVE_RIGHT      NO      // 오른쪽
@@ -75,7 +84,7 @@
 #define MAIN_LAYER          0
 #define GAME_LAYER          1
 
-
+#define PAUSE_MENU_POSITION ccp(460, 300)
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -95,10 +104,11 @@
 enum LayerIndex {
     kBackgroundLayer    = 1,
 
-    kMonsterLayer       = 500,
-    kWarriorLayer,
+    kMonsterLayer       = 100,
+    kWarriorLayer       = 200,
     
-    kTileMenuLayer      = 999
+    kTileMenuLayer      = 999,
+    kMainMenuLayer
 };
 
 enum MoveDirection {

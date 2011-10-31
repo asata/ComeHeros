@@ -15,6 +15,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 - (void) initCommonValue;
 
+- (void) setStageTime:(NSInteger)pTime;
+- (void) plusStageTime;
+- (NSInteger) getStageTime;
+
+- (void) setStagePoint:(NSInteger)pPoint;
+- (void) plusStagePoint:(NSInteger)pPoint;
+- (NSInteger) getStagePoint;
+
+- (void) setStageMoney:(NSInteger)pMoney;
+- (void) plusStageMoney:(NSInteger)pMoney;
+- (void) minusStageMoney:(NSInteger)pMoney;
+- (NSInteger) getStageMoney;
+
+- (void) setStageLife:(NSInteger)pLife;
+- (NSInteger) getStageLife;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

@@ -14,6 +14,8 @@
 		CB29B9701451BB93005D7C1E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B96F1451BB93005D7C1E /* File.m */; };
 		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
 		CB3B022D1447A670004A1258 /* texture-character.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3B022B1447A670004A1258 /* texture-character.png */; };
+		CB3F480B145E848500637665 /* monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3F4809145E848500637665 /* monster.plist */; };
+		CB3F480C145E848500637665 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3F480A145E848500637665 /* monster.png */; };
 		CB40EEEE145D6E1600E48B34 /* Info in Resources */ = {isa = PBXBuildFile; fileRef = CB40EEED145D6E1600E48B34 /* Info */; };
 		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
 		CB4EF9431415D45600868903 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF9411415D45600868903 /* Trap.m */; };
@@ -159,6 +161,8 @@
 		CB29B9711451BF2F005D7C1E /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Coordinate.h; path = Code/CommonFunction/Coordinate.h; sourceTree = "<group>"; };
 		CB29B9721451BF2F005D7C1E /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Coordinate.m; path = Code/CommonFunction/Coordinate.m; sourceTree = "<group>"; };
 		CB3B022B1447A670004A1258 /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/TileMap/texture-character.png"; sourceTree = "<group>"; };
+		CB3F4809145E848500637665 /* monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = monster.plist; path = Resources/Monster/monster.plist; sourceTree = "<group>"; };
+		CB3F480A145E848500637665 /* monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster.png; path = Resources/Monster/monster.png; sourceTree = "<group>"; };
 		CB40EEED145D6E1600E48B34 /* Info */ = {isa = PBXFileReference; lastKnownFileType = file; name = Info; path = Document/Info; sourceTree = "<group>"; };
 		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Monster.h; sourceTree = "<group>"; };
 		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Monster.m; sourceTree = "<group>"; };
@@ -514,6 +518,8 @@
 		CB6B28351456AE3600DB68B9 /* Monster */ = {
 			isa = PBXGroup;
 			children = (
+				CB3F4809145E848500637665 /* monster.plist */,
+				CB3F480A145E848500637665 /* monster.png */,
 				CB6B28361456AE6500DB68B9 /* coordinates-monster.plist */,
 				CB6B28371456AE6500DB68B9 /* texture-monster.png */,
 			);
@@ -999,6 +1005,8 @@
 				CB6B28391456AE6500DB68B9 /* texture-monster.png in Resources */,
 				CB96AD75145812C400CAA1C5 /* Tile in Resources */,
 				CB40EEEE145D6E1600E48B34 /* Info in Resources */,
+				CB3F480B145E848500637665 /* monster.plist in Resources */,
+				CB3F480C145E848500637665 /* monster.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

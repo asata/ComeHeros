@@ -231,7 +231,9 @@
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
             NSInteger demage = [pWarrior getPower] - [tMonster getDefense];
-            if(demage > 0) [tMonster setStrength:[tMonster getStrength] - demage];
+            if(demage > 0) {
+                [tMonster setStrength:[tMonster getStrength] - demage];
+            }
             
             return [tMonster getWarriorNum];
         }
