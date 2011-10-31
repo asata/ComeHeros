@@ -10,4 +10,5 @@
 
 
 - (BOOL) checkMoveTile:(NSInteger)x y:(NSInteger)y;
+- (BOOL) positionSprite:(NSInteger)direction point1:(CGPoint)point1 point2:(CGPoint)point2;
 @end

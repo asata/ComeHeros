@@ -112,6 +112,8 @@
     for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
         // 현재 위치 및 정보를 가져옴
         Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i];
+        
+        if ([tWarrior getDeath] == DEATH) continue;
         CCSprite *tSprite = [tWarrior getSprite];
         CGPoint movePosition = [tWarrior getPosition];
         
@@ -226,10 +228,12 @@
     
     for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
         Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
-        CGPoint tPoint = [tMonster getPosition];
-        CGFloat distance = [function lineLength:tPoint point2:wPoint];
+        CGPoint mPoint = [tMonster getPosition];
+        CGFloat distance = [function lineLength:mPoint point2:wPoint];
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
+            if (![function positionSprite:[pWarrior getMoveDriection] point1:wPoint point2:mPoint]) continue;
+            
             NSInteger demage = [pWarrior getPower] - [tMonster getDefense];
             if(demage > 0) {
                 [tMonster setStrength:[tMonster getStrength] - demage];

@@ -76,6 +76,19 @@
     
     return YES;
 }
+
+- (BOOL) positionSprite:(NSInteger)direction point1:(CGPoint)point1 point2:(CGPoint)point2 {
+    if (direction == MoveUp || direction == MoveDown) return YES;
+    else if (direction == MoveLeft) {
+        if (point1.x > point2.x) return YES;
+        else return NO;
+    } else if (direction == MoveRight) {
+        if (point1.x < point2.x) return YES;
+        else return NO;
+    }
+
+    return NO;
+}
 //////////////////////////////////////////////////////////////////////////
 // 기타 함수 End                                                          //
 //////////////////////////////////////////////////////////////////////////

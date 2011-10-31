@@ -112,6 +112,8 @@
     for (int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
         // 현재 위치 및 정보를 가져옴
         Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
+        
+        if ([tMonster getDeath] == DEATH) continue;
         CCSprite *tSprite = [tMonster getSprite];
         CGPoint movePosition = [tMonster getPosition];
         
@@ -195,7 +197,9 @@
 - (void) deathCompleteHandler:(id)sender {
     if ([removeSpriteList count] == 0) return;
 
-    CCSprite *rSprite = [[[removeSpriteList objectAtIndex:0] retain] autorelease];
+    Monster *rMonster = [[[removeSpriteList objectAtIndex:0] retain] autorelease];
+    CCSprite *rSprite = [rMonster getSprite];
+    [[commonValue sharedSingleton] removeMonster:rMonster];
     rSprite.visible = NO;
     [rSprite release];
     [removeSpriteList removeObjectAtIndex:0];
@@ -209,27 +213,29 @@
                             nil]];
         
         [tMonster setDeath:DEATH];
-        [removeSpriteList addObject:tSprite];
+        [removeSpriteList addObject:tMonster];
         
         for (House *tHouse in [[commonValue sharedSingleton] getHouseList]) {
             if([tHouse getHouseNum] == [tMonster getHouseNum]) [tHouse minusMadeNum];
         }
         
-        [[commonValue sharedSingleton] removeMonster:tMonster];
     }
 } 
 
 - (NSInteger) enmyFind:(Monster*)pMonster {
-    CGPoint wPoint = [pMonster getPosition];
+    CGPoint mPoint = [pMonster getPosition];
     NSInteger wAttack = [pMonster getAttackRange];
     Function *function = [[Function alloc] init];
     
     for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
         Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i];
-        CGPoint tPoint = [tWarrior getPosition];
-        CGFloat distance = [function lineLength:tPoint point2:wPoint];
+        CGPoint wPoint = [tWarrior getPosition];
+        CGFloat distance = [function lineLength:wPoint point2:mPoint];
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
+            // 뒤에 있는 적은 공격을 못함
+            if (![function positionSprite:[pMonster getMoveDriection] point1:mPoint point2:wPoint]) continue;
+            
             NSInteger demage = [pMonster getPower] - [tWarrior getDefense];
             if(demage > 0) {
                 [tWarrior setStrength:[tWarrior getStrength] - demage];
