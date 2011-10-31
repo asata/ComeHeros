@@ -58,6 +58,28 @@
     
     return animation;
 }
+- (CCSpriteFrame*) loadWarriorTombstone {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_TOMBSTONE_PLIST textureFile:FILE_TOMBSTONE_IMG];
+    
+    CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                            spriteFrameByName:[NSString stringWithFormat:@"dead0003.png"]];
+    
+    return frame;
+}
+- (CCAnimation*) loadWarriorTombstoneAnimation {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_TOMBSTONE_PLIST textureFile:FILE_TOMBSTONE_IMG];
+    NSMutableArray* tombstoneImgList = [NSMutableArray array];
+    for(NSInteger i = 0; i < 4; i++) {
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                                spriteFrameByName:[NSString stringWithFormat:@"dead%04d.png", i]];
+        
+        [tombstoneImgList addObject:frame];
+    }
+    
+    CCAnimation *animation = [CCAnimation animationWithFrames:tombstoneImgList delay:INSTALL_TOMBSTONE_TIME];
+    
+    return animation;
+}
 
 - (CCSprite*) createWarrior:(NSDictionary*)wInfo {
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
@@ -92,10 +114,13 @@
                                              restoreOriginalFrame:NO];
     CCAnimate *attackAnimate = [[CCAnimate alloc] initWithAnimation:[self loadWarriorAttack:[warriorName objectAtIndex:warriorType]]
                                                restoreOriginalFrame:NO];
+    CCAnimate *tombstoneAnimate = [[CCAnimate alloc] initWithAnimation:[self loadWarriorTombstoneAnimation]
+                                                  restoreOriginalFrame:NO];
     [tSprite runAction:[CCRepeatForever actionWithAction:walkAnimate]];
     
     //[tWarrior setWalkAnimate:walkAnimate];
     [tWarrior setAttackAnimate:attackAnimate];
+    [tWarrior setDeathAnimate:tombstoneAnimate];
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
     
@@ -188,12 +213,12 @@
             }
             
             // 생존 여부 확인 후 소멸 여부 처리
-            if([tWarrior getStrength] <= 0) {
+            if([tWarrior getStrength] <= 0 && [tWarrior getDeath] == SURVIVAL) {
                 [deleteList addObject:tWarrior];
                 continue;
             }
             
-            [[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
+            //[[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
         }
     }
     
@@ -212,13 +237,27 @@
     [[commonValue sharedSingleton] removeWarriorAtIndex:index];
 }
 - (void) removeWarriorList:(NSMutableArray *)deleteList {
-    for(int i = [deleteList count]; i > 0; i--) {
-        Warrior *tWarrior = [deleteList objectAtIndex:(i - 1)];
-        [[tWarrior getSprite] setVisible:NO];
-        [[commonValue sharedSingleton] removeWarrior:tWarrior];
+    for (Warrior *tWarrior in deleteList) {
+        CCSprite *tSprite = [tWarrior getSprite]; 
+
+        if ([tSprite scale] != 1) {
+            [[commonValue sharedSingleton] removeWarrior:tWarrior];
+            [tSprite setVisible:NO];
+            [tSprite release];
+        } else {
+            [tSprite stopAllActions];
+            
+            [tSprite runAction:[CCSequence actions:[tWarrior getDeathAnimate], 
+                                [CCCallFunc actionWithTarget:self selector:@selector(tombstoneCompleteHandler:)], 
+                                nil]];
+            [tWarrior setDeath:DEATH];     
+            [deleteList removeObject:tWarrior];
+        }
     }
 }
-
+- (void) tombstoneCompleteHandler:(id)sender {
+    
+}
 // 일정거리 안에 적이 있는지 탐지
 // 현재 트랩으로 지정됨 - 적으로 변경 필요
 - (NSInteger) enmyFind:(Warrior*)pWarrior {
@@ -228,10 +267,12 @@
     
     for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
         Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
+        if ([tMonster getDeath] == DEATH) continue;
         CGPoint mPoint = [tMonster getPosition];
         CGFloat distance = [function lineLength:mPoint point2:wPoint];
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
+            // 뒤에 있는 적은 공격을 못함
             if (![function positionSprite:[pWarrior getMoveDriection] point1:wPoint point2:mPoint]) continue;
             
             NSInteger demage = [pWarrior getPower] - [tMonster getDefense];

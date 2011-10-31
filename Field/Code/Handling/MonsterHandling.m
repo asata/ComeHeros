@@ -229,6 +229,7 @@
     
     for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
         Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i];
+        if ([tWarrior getDeath] == DEATH) continue;
         CGPoint wPoint = [tWarrior getPosition];
         CGFloat distance = [function lineLength:wPoint point2:mPoint];
         

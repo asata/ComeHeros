@@ -18,6 +18,7 @@
 - (void) setStageTime:(NSInteger)pTime;
 - (void) plusStageTime;
 - (NSInteger) getStageTime;
+- (NSString*) getStageTimeString;
 
 - (void) setStagePoint:(NSInteger)pPoint;
 - (void) plusStagePoint:(NSInteger)pPoint;
@@ -27,6 +28,7 @@
 - (void) plusStageMoney:(NSInteger)pMoney;
 - (void) minusStageMoney:(NSInteger)pMoney;
 - (NSInteger) getStageMoney;
+- (NSString*) getStageMoneyString;
 
 - (void) setStageLife:(NSInteger)pLife;
 - (NSInteger) getStageLife;

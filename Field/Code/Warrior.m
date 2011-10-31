@@ -5,9 +5,9 @@
 #import "define.h"
 
 @implementation Warrior
-@synthesize sprite;
+@synthesize sprite, tombstone;
 //@synthesize walkAnimate, defenseAnimate;
-@synthesize attackAnimate;
+@synthesize attackAnimate, deathAnimate;
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -42,6 +42,7 @@
         attackRange = pAttackRange;
         
         death = SURVIVAL;
+        deathReOrder = YES;
     }
     
     return self;
@@ -88,14 +89,6 @@
     return position;
 }
 
-// 용사 이동 애니메이션
-/*- (void) setWalkAnimate:(CCAnimate *)p_walkAnimate {
-    walkAnimate = p_walkAnimate;
-}
-- (CCAnimate *) getWalkAnimate {
-    return walkAnimate;
-}*/
-
 // 용사 공격 애니메이션
 - (void) setAttackAnimate:(CCAnimate *)p_attackAnimate {
     attackAnimate = p_attackAnimate;
@@ -104,13 +97,13 @@
     return attackAnimate;
 }
 
-// 용사 방어 애니메이션
-/*- (void) setDefenseAnimate:(CCAnimate *)p_defenseAnimate {
-    defenseAnimate = p_defenseAnimate;
+- (void) setDeathAnimate:(CCAnimate *)pAnimate {
+    deathAnimate = pAnimate;
 }
-- (CCAnimate *) getDefenseAnimate {
-    return defenseAnimate;
-}*/
+- (CCAnimate*) getDeathAnimate {
+    return deathAnimate;
+}
+
 - (void) setDeath:(BOOL)pDeath {
     death = pDeath;
 }
@@ -196,6 +189,12 @@
 }
 - (void) resetMoveLength {
     moveLength = 0;
+}
+- (void) changeDeathOrder {
+    deathReOrder = !deathReOrder;
+}
+- (BOOL) getDeathReOrder {
+    return deathReOrder;
 }
 //////////////////////////////////////////////////////////////////////////
 // 용사 이동 관련 End                                                      //

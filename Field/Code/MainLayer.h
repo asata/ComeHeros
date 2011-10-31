@@ -35,6 +35,9 @@
     CCMenu          *menuPause;
     CCMenu          *menuResume;
     
+    CCLabelAtlas    *labelTime;
+    CCLabelAtlas    *labelMoney;
+    
     CGPoint         tileSetupPoint;     // 타일 설치 위치
     
     /////////////////////////////////////////////////////////
@@ -68,6 +71,8 @@
 // 게임 초기화
 - (id)init:(NSInteger)p_level degree:(NSInteger)p_degree;
 
+- (void) initLabel;
+- (void) updateLabel;
 - (void) initMenu;
 - (void) gamePause:(id)sender;
 
@@ -98,6 +103,7 @@
 
 // 트랩 설치 관련 메뉴
 - (void) initTileSetupMenu;
+- (void) installTrapMenuVisible:(BOOL)flag;
 - (BOOL) installTileCheck:(NSInteger)tileType;
 - (BOOL) installMoneyCheck:(NSInteger)money;
 - (void) tileSetupExplosive:(id)sender;

@@ -26,12 +26,12 @@
 @private
     NSInteger   warriorNum;
     CCSprite    *sprite;
-    //CCAnimate   *walkAnimate;     // 공격 애니메이션
     CCAnimate   *attackAnimate;     // 공격 애니메이션
-    //CCAnimate   *defenseAnimate;    // 방어 애니메이션
+    CCAnimate   *deathAnimate;      // 죽는 애니메이션
     CGPoint     position;           // 현재 위치
     
     BOOL        death;
+    BOOL        deathReOrder;
     
     NSInteger   visibleNum;
     NSInteger   strength;           // 체력
@@ -45,9 +45,9 @@
 }
 
 @property (nonatomic, retain) CCSprite *sprite;
-//@property (nonatomic, retain) CCAnimate *walkAnimate;
+@property (nonatomic, retain) CCSprite *tombstone;
 @property (nonatomic, retain) CCAnimate *attackAnimate;
-//@property (nonatomic, retain) CCAnimate *defenseAnimate;
+@property (nonatomic, retain) CCAnimate *deathAnimate;
 
 - (id) initWarrior:(CGPoint)pos warriorNum:(NSInteger)p_num 
           strength:(NSInteger)pStrength power:(NSInteger)pPower 
@@ -67,12 +67,10 @@
 - (void) setMoveSpeed:(NSInteger)p_speed;
 - (void) setMoveDriection:(NSInteger)p_direction;
 - (void) setAttackRange:(NSInteger)p_range;
-//- (void) setWalkAnimate:(CCAnimate *)p_walkAnimate;
 - (void) setAttackAnimate:(CCAnimate *)p_attackAnimate;
-//- (void) setDefenseAnimate:(CCAnimate *)p_defenseAnimate;
+- (void) setDeathAnimate:(CCAnimate*)pAnimate;
 - (void) setDeath:(BOOL)pDeath;
 
-- (BOOL) getDeath;
 - (NSInteger) getWarriorNum;
 - (CCSprite *) getSprite;
 - (CGPoint) getPosition;
@@ -85,11 +83,13 @@
 - (NSInteger) getMoveSpeed;
 - (NSInteger) getMoveDriection;
 - (NSInteger) getAttackRange;
-//- (CCAnimate *) getWalkAnimate;
 - (CCAnimate *) getAttackAnimate;
-//- (CCAnimate *) getDefenseAnimate;
+- (CCAnimate*) getDeathAnimate;
+- (BOOL) getDeath;
+- (BOOL) getDeathReOrder;
 
 - (void) resetVisibleNum;
 - (void) plusMoveLength;
 - (void) resetMoveLength;
+- (void) changeDeathOrder;
 @end

@@ -26,9 +26,6 @@
 @private
     NSInteger   monsterNum;
     NSInteger   houseNum;
-    
-    CCAnimate   *deathAnimate;  // 죽는 애니메이션(몬스터만 존재)
-                                // 용사는 죽을 경우 묘비만 나둠
 }
 
 - (id) initMonster:(CGPoint)pos             monsterNum:(NSInteger)p_num 
@@ -39,9 +36,7 @@
 
 - (void) setMonsterNum:(NSInteger)pNum;
 - (void) setHouseNum:(NSInteger)pHouseNum;
-- (void) setDeathAnimate:(CCAnimate*)pAnimate;
 
 - (NSInteger) getMonsterNum;
 - (NSInteger) getHouseNum;
-- (CCAnimate*) getDeathAnimate;
 @end

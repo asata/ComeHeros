@@ -52,17 +52,10 @@
 - (void) setHouseNum:(NSInteger)pHouseNum {
     houseNum = pHouseNum;
 }
-- (void) setDeathAnimate:(CCAnimate *)pAnimate {
-    deathAnimate = pAnimate;
-}
-
 - (NSInteger) getMonsterNum {
     return monsterNum;
 }
 - (NSInteger) getHouseNum {
     return houseNum;
-}
-- (CCAnimate*) getDeathAnimate {
-    return deathAnimate;
 }
 @end

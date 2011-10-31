@@ -68,7 +68,7 @@ static commonValue      * _globalTest = nil;
     
     stageTime = 0;
     stagePoint = 0;
-    stageMoney = 0;
+    stageMoney = 500;
     stageLife = 0;
 }
 
@@ -83,6 +83,9 @@ static commonValue      * _globalTest = nil;
 }
 - (NSInteger) getStageTime {
     return stageTime;
+}
+- (NSString*) getStageTimeString {
+    return [NSString stringWithFormat:@"%d/%d", stageTime / 60, stageTime % 60];
 }
 
 - (void) setStagePoint:(NSInteger)pPoint {
@@ -102,10 +105,13 @@ static commonValue      * _globalTest = nil;
     stageMoney += pMoney;
 }
 - (void) minusStageMoney:(NSInteger)pMoney {
-    stagePoint -= pMoney;    
+    stageMoney -= pMoney;    
 }
 - (NSInteger) getStageMoney {
     return stageMoney;
+}
+- (NSString*) getStageMoneyString {
+    return [NSString stringWithFormat:@"%d", stageMoney];
 }
 
 - (void) setStageLife:(NSInteger)pLife {

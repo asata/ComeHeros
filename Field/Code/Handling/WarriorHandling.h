@@ -20,6 +20,10 @@
 - (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName;
 - (CCAnimation*) loadWarriorWalk:(NSString*)spriteName;
 - (CCAnimation*) loadWarriorAttack:(NSString*)spriteName;
+- (CCSpriteFrame*) loadWarriorTombstone;
+- (CCAnimation*) loadWarriorTombstoneAnimation;
+
+- (void) tombstoneCompleteHandler:(id)sender;
 
 - (void) moveWarrior;                                       // 일정 시간 간격으로 용사 이동
 - (void) attackCompleteHandler;

@@ -83,6 +83,7 @@
     
     [self initMap]; 
     [self initMenu];
+    [self initLabel];
     [self initTileSetupMenu];
     
     // 일정한 간격으로 호출~
@@ -92,16 +93,48 @@
 }
 
 - (void) dealloc {
+    [file release];
+    [function release];
+    
+    [warriorHandling release];
+    [monsterHandling release];
+    [trapHandling release];
+    [houseHandling release];
+    
+    [labelTime release];
+    [labelMoney release];
+    
     [super dealloc];
 }
+- (void) initLabel {
+    labelTime = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageTimeString]
+                                  charMapFile:FILE_NUMBER_IMG 
+                                    itemWidth:16
+                                   itemHeight:20
+                                 startCharMap:'.'];
+    labelTime.position = TIME_LABEL_POSITION;
+    [self addChild:labelTime z:kMainMenuLayer];
+    
+    labelMoney= [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageTimeString]
+                                  charMapFile:FILE_NUMBER_IMG 
+                                    itemWidth:16
+                                   itemHeight:20
+                                 startCharMap:'.'];
+    labelMoney.position = MONEY_LABEL_POSITION;
+    [self addChild:labelMoney z:kMainMenuLayer];
+}
+- (void) updateLabel {
+    [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
+    [labelMoney setString:[[commonValue sharedSingleton] getStageMoneyString]];
+}
 - (void) initMenu {
-    CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-floor-0.png" 
-                                               selectedImage:@"Tile/tile-floor-0.png" 
+    CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:FILE_PAUSE_IMG 
+                                               selectedImage:FILE_PAUSE_IMG 
                                                       target:self 
                                                     selector:@selector(gamePause:)];
     
-    CCMenuItem *resume = [CCMenuItemImage itemFromNormalImage:@"Tile/tile-object-3.png" 
-                                                selectedImage:@"Tile/tile-object-3.png" 
+    CCMenuItem *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG 
+                                                selectedImage:FILE_RESUME_IMG 
                                                        target:self 
                                                      selector:@selector(gamePause:)];
 
@@ -219,10 +252,13 @@
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
-        [self addChild:tSprite z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount])];
+        [self addChild:tSprite 
+                     z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount]) 
+                   tag:[[commonValue sharedSingleton] getWarriorNum]];
     }
     
     [[commonValue sharedSingleton] plusStageTime];
+    [self updateLabel];
 }
 - (void) createWarrior {
     NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
@@ -234,12 +270,16 @@
     // 잠시 애니메이션 효과 중단
     [self pauseSchedulerAndActions];
     
+    // 묘비를 가장 아래로 내림
+    for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
+        if([tWarrior getDeath] == DEATH && [tWarrior getDeathReOrder]) {
+            [self reorderChild:[tWarrior getSprite] z:kTombstoneLayer];
+            [tWarrior changeDeathOrder];
+        }
+    }
+    
     [warriorHandling moveWarrior];
     [monsterHandling moveMonster];
-
-    // 몬스터 생성은 일정 간격으로 처리
-    // 추가적인 값을 두어 천천히 생산되게 수정
-    //[self createMonster];
     
     // 애니메이션 효과 재개
     [self resumeSchedulerAndActions];
@@ -319,14 +359,12 @@
                                                              selector:@selector(tileSetupMonsterHouse1:)];
     
     menu1 = [CCMenu menuWithItems:tileItem1, tileItem2, nil];
-    [menu1 alignItemsVerticallyWithPadding:5];
-    [menu1 setVisible:NO];
     menu2 = [CCMenu menuWithItems:nil];
-    [menu2 alignItemsVerticallyWithPadding:5];
-    [menu2 setVisible:NO];
     menu3 = [CCMenu menuWithItems:tileItem3, tileItem4, nil];
+    [menu1 alignItemsVerticallyWithPadding:5];
+    [menu2 alignItemsVerticallyWithPadding:5];
     [menu3 alignItemsVerticallyWithPadding:5];
-    [menu3 setVisible:NO];
+    [self installTrapMenuVisible:NO];    
     
     [self addChild:menu1 z:kTileMenuLayer];
     [self addChild:menu2 z:kTileMenuLayer];
@@ -377,8 +415,7 @@
     // 이동 경로 재계산
     [warriorHandling createMoveTable];
     
-    [menu1 setVisible:NO];
-    [menu2 setVisible:NO];
+    [self installTrapMenuVisible:NO];
 }
 - (void) tileSetupTreasure:(id)sender {
     // 설치가능한 경로인지 검사
@@ -391,8 +428,7 @@
     // 이동 경로 재계산
     [warriorHandling createMoveTable];
     
-    [menu1 setVisible:NO];
-    [menu2 setVisible:NO];
+    [self installTrapMenuVisible:NO];
 }
 - (void) tileSetupTrap:(id)sender {
     // 설치가능한 경로인지 검사
@@ -402,8 +438,7 @@
     [[commonValue sharedSingleton] minusStageMoney:MONEY_TRAP];
     [trapHandling addTrap:tileSetupPoint type:TILE_TRAP_CLOSE];
     
-    [menu1 setVisible:NO];
-    [menu2 setVisible:NO];
+    [self installTrapMenuVisible:NO];
 }
 - (void) tileSetupMonsterHouse1:(id)sender {
     // 설치가능한 경로인지 검사
@@ -411,14 +446,18 @@
     if(![self installMoneyCheck:MONEY_HOUSE]) return;
     
     [[commonValue sharedSingleton] minusStageMoney:MONEY_HOUSE];
-    // monsterHandling에 addHouse 등록하여 처리가 필요
+    // monsterHandling에 addHouse 등록하여 처리가 필요a
+    [houseHandling addHouse:tileSetupPoint type:TILE_MONSTER_HOUSE1];
     [trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
-    
-    [menu1 setVisible:NO];
-    [menu2 setVisible:NO];
+    [self installTrapMenuVisible:NO];
+}
+- (void) installTrapMenuVisible:(BOOL)flag {
+    [menu1 setVisible:flag];
+    [menu2 setVisible:flag];
+    [menu3 setVisible:flag];
 }
 - (BOOL) installMoneyCheck:(NSInteger)money {
-    if ([[commonValue sharedSingleton] getStageMoney] > money) return NO;
+    if ([[commonValue sharedSingleton] getStageMoney] < money) return NO;
     
     return YES;
 }
@@ -433,9 +472,7 @@
 //////////////////////////////////////////////////////////////////////////
 // 사용자가 터치를 할 경우 
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [menu1 setVisible:NO];
-    [menu2 setVisible:NO];
-    [menu3 setVisible:NO];
+    [self installTrapMenuVisible:NO];
     
     if([[event allTouches] count] == 1) {
         // 멀티 터치가 아닌 경우 
@@ -570,9 +607,7 @@
             [menu2 setPosition:ccp(point.x, point.y)];
             [menu3 setPosition:ccp(point.x + TILE_SIZE, point.y)];
             
-            [menu1 setVisible:YES];        
-            [menu2 setVisible:YES];       
-            [menu3 setVisible:YES];         
+            [self installTrapMenuVisible:YES];     
         }
         
         NSLog(@"Touch Position : %d %d", (int) thisArea.x, (int) thisArea.y);

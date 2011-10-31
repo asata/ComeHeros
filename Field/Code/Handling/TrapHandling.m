@@ -184,7 +184,7 @@
         CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[tWarrior getPosition]];
         
         if([self adjacentTrap:[pTrap getPosition] point:wPoint range:RANGE_EXPLOSIVE]) {
-            [tWarrior setStrength:[tWarrior getStrength] - [pTrap getDemage]];   
+            [tWarrior setStrength:[tWarrior getStrength] - DEMAGE_BOMB];   
         }
     }
     
