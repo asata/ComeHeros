@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="8" tileheight="8">
- <tileset firstgid="1" name="texture-tile" tilewidth="8" tileheight="8" spacing="1" margin="1">
-  <image source="texture-tile.png"/>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="tile-wall" tilewidth="8" tileheight="8">
+  <image source="tile-wall.png"/>
  </tileset>
- <layer name="Layer 1" width="50" height="50">
+ <layer name="Layer 1" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3DwQkAAAwDoftl/407R0HBVVNVVVVVVVVVVdXnD8Mt44YQJwAA
+   H4sIAAAAAAAAA+3DAQkAAAwEoQvw/fMOlkPBVVNVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf8B/1j5p0CcAAA=
   </data>
  </layer>
- <layer name="New Layer" width="50" height="50">
+ <layer name="New Layer" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VsQqAMAyE4aNTK77/8zoVYnBouzSx/8EHDiJ3ZLBIKgM0+F507IiFHbFk2dH0zgk7fHZ3t6rpdX10zbJj9R4tQPfZHT32XjVA9xlyzz3R7rG6QxPfiOCPOzLLvMPG/1N2d1vd4bO72+k77sQ7AAAAAAAAAADAmAcrq0LOECcAAA==
+   H4sIAAAAAAAAA+3XsQ5FQBBA0YlPQPcq/v8jNYS8YFV2cCY53RaTvVmJJiKaguHCGe4TCXZAj5q6WKfUY5kuwd5vpUcu7XzHfZRnOdMm2PutvI9c9HiOvUbogR4Z6ZGLHvVt5/+fpPZuX3Q2tXf7Ij1yGWP9Tv30AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgwARxCDGEQJwAAA==
   </data>
  </layer>
 </map>

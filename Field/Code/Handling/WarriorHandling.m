@@ -1,20 +1,11 @@
 #import "WarriorHandling.h"
 
 @implementation WarriorHandling
-@synthesize texture;
 
 - (id) init {
-    if ((self = [super init])) {
-        
-        trapHandling = [[TrapHandling alloc] init];
-    }
-    
-    return self;
-}
-- (id) init:(TrapHandling*)p_trapHandling {
-    if ((self = [super init])) {
-        trapHandling = p_trapHandling;
-    }
+    self = [super init];
+    //if ((self = [super init])) {
+    //}
     
     return self;
 }
@@ -178,6 +169,7 @@
             
             // 공격 대상 탐색
             // 트랩 탐지 및 처리
+            TrapHandling *trapHandling = [[TrapHandling alloc] init];
             BOOL survivalFlag = [trapHandling handlingTrap:tWarrior];
             if(!survivalFlag) {
                 [deleteList addObject:tWarrior];
@@ -277,6 +269,9 @@
             
             NSInteger demage = [pWarrior getPower] - [tMonster getDefense];
             if(demage > 0) {
+                CCSprite *tSprite = [tMonster getSprite];
+                [tSprite runAction:[CCFadeIn actionWithDuration:BEAT_ENEMY_TIME]];
+                
                 [tMonster setStrength:[tMonster getStrength] - demage];
             }
             

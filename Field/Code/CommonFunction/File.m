@@ -39,13 +39,6 @@
     //load from savedStock example int value
     //int StageLevel = [[savedStock objectForKey:@"StageLevel"] intValue];
     
-    CGPoint sPoint = CGPointMake([[stageInfo objectForKey:@"StartPointX"] intValue], 
-                                 [[stageInfo objectForKey:@"StartPointY"] intValue]);
-    CGPoint dPoint = CGPointMake([[stageInfo objectForKey:@"EndPointX"] intValue], 
-                                 [[stageInfo objectForKey:@"EndPointY"] intValue]);
-    [[commonValue sharedSingleton] setStartPoint:sPoint];
-    [[commonValue sharedSingleton] setEndPoint:dPoint];
-    
     // map.tmx의 경우 문자열을 조합하여 불러들임 - 요걸로 하니 에러가 발생 ㅠㅠ 
     //[savedStock objectForKey:@"MapName"];
     NSDictionary *tList = [stageInfo objectForKey:@"WarriorList"];

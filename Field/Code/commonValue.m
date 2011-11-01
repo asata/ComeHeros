@@ -20,6 +20,8 @@ static NSInteger        monsterNum;         // 게임 시작 후 나타난 몬�
 static NSMutableArray   *houseList;         // 용사 집 List
 static NSInteger        houseNum;           // 게임 시작 후 나타난 잡의 수
 
+static NSMutableArray   *flameList;          // 폭발물 폭발 후 나타날 불꽃
+
 // 게임 진행에 관련된 변수
 static NSInteger       stagePoint;         // 게임 점수
 static NSInteger       stageMoney;         // 게임에 필요한 돈
@@ -60,6 +62,7 @@ static commonValue      * _globalTest = nil;
     warriorList = [[NSMutableArray alloc] init];
     monsterList = [[NSMutableArray alloc] init];
     houseList   = [[NSMutableArray alloc] init];   
+    flameList   = [[NSMutableArray alloc] init];
     
     trapNum     = 0;
     warriorNum  = 0;
@@ -96,6 +99,9 @@ static commonValue      * _globalTest = nil;
 }
 - (NSInteger) getStagePoint {
     return stagePoint;
+}
+- (NSString*) getStagePointString {
+    return [NSString stringWithFormat:@"%d", stagePoint];
 }
 
 - (void) setStageMoney:(NSInteger)pMoney {
@@ -191,6 +197,27 @@ static commonValue      * _globalTest = nil;
 }
 - (void) removeTrap:(Trap*)pTrap {
     [trapList removeObject:pTrap];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+- (void) pushFlame:(CCSprite*)pFlame {
+    [flameList addObject:pFlame];
+}
+- (CCSprite*) popFlame {
+    if ([flameList count] <= 0) return nil;
+    
+    CCSprite *tSprite = [flameList objectAtIndex:0];
+    [flameList removeObjectAtIndex:0];
+    
+    return tSprite;
+}
+- (NSMutableArray*) getFlameList {
+    return flameList;
+}
+- (NSInteger) flameListCount {
+    return [flameList count];
 }
 
 ////////////////////////////////////////////////////////////////////////////////

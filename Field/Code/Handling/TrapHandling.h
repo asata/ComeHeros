@@ -6,7 +6,7 @@
 #import "Coordinate.h"
 
 @interface TrapHandling : CCLayer {
-    NSMutableArray *fineTrapList;
+    NSMutableArray *chainTrapList;
 }
 
 - (BOOL) checkMoveTile:(NSInteger)tileType;

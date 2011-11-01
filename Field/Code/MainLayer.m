@@ -41,7 +41,7 @@
 @class Warrior;
 @implementation playMap
 @synthesize sprite;
-@synthesize function, trapHandling, warriorHandling;
+@synthesize function;//, trapHandling, warriorHandling;
 @synthesize layer;
 
 //////////////////////////////////////////////////////////////////////////
@@ -68,11 +68,12 @@
 
 - (void) onEnterTransitionDidFinish {    
     // 필요한 항목 초기화
+    chainFlameList = [[NSMutableArray alloc] init];
     file = [[File alloc] init];
     function = [[Function alloc] init];
     trapHandling = [[TrapHandling alloc] init];
     monsterHandling = [[MonsterHandling alloc] init];
-    warriorHandling = [[WarriorHandling alloc] init:trapHandling];
+    warriorHandling = [[WarriorHandling alloc] init];
     houseHandling  = [[HouseHandling alloc] init];
     
     [[commonValue sharedSingleton] initCommonValue];
@@ -103,6 +104,7 @@
     
     [labelTime release];
     [labelMoney release];
+    [labelPoint release];
     
     [super dealloc];
 }
@@ -115,17 +117,26 @@
     labelTime.position = TIME_LABEL_POSITION;
     [self addChild:labelTime z:kMainMenuLayer];
     
-    labelMoney= [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageTimeString]
+    labelMoney= [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageMoneyString]
                                   charMapFile:FILE_NUMBER_IMG 
                                     itemWidth:16
                                    itemHeight:20
                                  startCharMap:'.'];
     labelMoney.position = MONEY_LABEL_POSITION;
     [self addChild:labelMoney z:kMainMenuLayer];
+    
+    labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
+                                  charMapFile:FILE_NUMBER_IMG 
+                                    itemWidth:16
+                                   itemHeight:20
+                                 startCharMap:'.'];
+    labelPoint.position = POINT_LABEL_POSITION;
+    [self addChild:labelPoint z:kMainMenuLayer];
 }
 - (void) updateLabel {
     [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
     [labelMoney setString:[[commonValue sharedSingleton] getStageMoneyString]];
+    [labelPoint setString:[[commonValue sharedSingleton] getStagePointString]];
 }
 - (void) initMenu {
     CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:FILE_PAUSE_IMG 
@@ -227,14 +238,18 @@
             else
                 [[commonValue sharedSingleton] setMoveTable:i y:j direction:MoveNone];
             
-            // 타일에 설치된 트랩이 있는지 확인
             if([trapHandling checkObstacleTile:tileType])
+                // 타일에 설치된 트랩이 있는지 확인
                 [trapHandling addTrap:ccp(i, j) type:tileType];
-                                                     
-            
-            if ([trapHandling checkHouseTile:tileType]) 
+            else if ([trapHandling checkHouseTile:tileType]) 
                 // 몬스터 집이 있는 경우
                 [self addHouse:ccp(i, j) tType:tileType];
+            else if (tileType == TILE_START) 
+                // 시작 지점인 경우
+                [[commonValue sharedSingleton] setStartPoint:ccp(i, j)];
+            else if (tileType == TILE_END)
+                // 도착 지점인 경우
+                [[commonValue sharedSingleton] setEndPoint:ccp(i, j)];
         }
     }
 }
@@ -248,7 +263,10 @@
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
 - (void) createWarriorAtTime:(id) sender {
-    if([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
+    [[commonValue sharedSingleton] plusStageTime];
+    
+    if ([[commonValue sharedSingleton] getStageTime] / 5 != [[commonValue sharedSingleton] getWarriorNum]) return;
+    if ([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
@@ -256,9 +274,6 @@
                      z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount]) 
                    tag:[[commonValue sharedSingleton] getWarriorNum]];
     }
-    
-    [[commonValue sharedSingleton] plusStageTime];
-    [self updateLabel];
 }
 - (void) createWarrior {
     NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
@@ -267,8 +282,21 @@
 }
 
 - (void) moveAction:(id) sender {
+    [self updateLabel];
+    
     // 잠시 애니메이션 효과 중단
     [self pauseSchedulerAndActions];
+    
+    // 폭발시 생성된 불꽃 제거
+        while ([chainFlameList count] > 0) {
+            CCSprite *dFlame = [chainFlameList objectAtIndex:0];
+            [dFlame setVisible:NO];
+            [chainFlameList removeObject:dFlame];
+    }
+    
+    
+    [warriorHandling moveWarrior];
+    [monsterHandling moveMonster];
     
     // 묘비를 가장 아래로 내림
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
@@ -278,8 +306,13 @@
         }
     }
     
-    [warriorHandling moveWarrior];
-    [monsterHandling moveMonster];
+    // 폭발물 폭발시 불꽃을 삽입
+    CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
+    while (tFlame != nil) {
+        [self addChild:tFlame z:10000];
+        [chainFlameList addObject:tFlame];
+        tFlame = [[commonValue sharedSingleton] popFlame];
+    }
     
     // 애니메이션 효과 재개
     [self resumeSchedulerAndActions];
@@ -380,7 +413,7 @@
         CGPoint wPoint = [tWarrior getPosition];
         
         if (tPoint.x - TILE_SIZE < wPoint.x && tPoint.x + TILE_SIZE > wPoint.x && 
-            tPoint.y - TILE_SIZE < wPoint.y && tPoint.y + TILE_SIZE > wPoint.y) return NO;
+            tPoint.y - TILE_SIZE < wPoint.y && tPoint.y + TILE_SIZE > wPoint.y) return NO;    
     }
     
     for (Monster *tMonster in [[commonValue sharedSingleton] getMonsterList]) {
@@ -398,7 +431,7 @@
     }
         
     if(![warriorHandling checkConnectRoad]) {
-        [[commonValue sharedSingleton] setMoveTable:tileSetupPoint.x y:tileSetupPoint.y direction:moveDirection];
+        [[commonValue sharedSingleton] setMoveTable:tileSetupPoint.x y:tileSetupPoint.y direction:moveDirection]; 
         return NO;
     }
     
@@ -607,7 +640,7 @@
             [menu2 setPosition:ccp(point.x, point.y)];
             [menu3 setPosition:ccp(point.x + TILE_SIZE, point.y)];
             
-            [self installTrapMenuVisible:YES];     
+            [self installTrapMenuVisible:YES]; 
         }
         
         NSLog(@"Touch Position : %d %d", (int) thisArea.x, (int) thisArea.y);

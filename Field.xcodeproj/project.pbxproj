@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB1D968C144D1F87003D03AC /* coordinates-character4.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1D968B144D1F87003D03AC /* coordinates-character4.plist */; };
+		CB22955F14601BF400BA7EF5 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = CB22955E14601BF400BA7EF5 /* fire.png */; };
+		CB2295671460A7EC00BA7EF5 /* tile-wall.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2295651460A7EC00BA7EF5 /* tile-wall.plist */; };
+		CB2295681460A7EC00BA7EF5 /* tile-wall.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2295661460A7EC00BA7EF5 /* tile-wall.png */; };
 		CB29B95E1451A49E005D7C1E /* TrapHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B95D1451A49E005D7C1E /* TrapHandling.m */; };
 		CB29B9631451AE5C005D7C1E /* WarriorHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9621451AE5C005D7C1E /* WarriorHandling.m */; };
 		CB29B9661451BAE9005D7C1E /* MonsterHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9651451BAE9005D7C1E /* MonsterHandling.m */; };
 		CB29B9701451BB93005D7C1E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B96F1451BB93005D7C1E /* File.m */; };
 		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
-		CB3B022D1447A670004A1258 /* texture-character.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3B022B1447A670004A1258 /* texture-character.png */; };
 		CB3F480B145E848500637665 /* monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3F4809145E848500637665 /* monster.plist */; };
 		CB3F480C145E848500637665 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3F480A145E848500637665 /* monster.png */; };
 		CB40EEEE145D6E1600E48B34 /* Info in Resources */ = {isa = PBXBuildFile; fileRef = CB40EEED145D6E1600E48B34 /* Info */; };
@@ -147,13 +148,14 @@
 		CB96AD75145812C400CAA1C5 /* Tile in Resources */ = {isa = PBXBuildFile; fileRef = CB96AD74145812C400CAA1C5 /* Tile */; };
 		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
-		CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF3D14443D790079525D /* coordinates-tile.plist */; };
-		CBBBEF4414443D790079525D /* texture-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF4014443D790079525D /* texture-tile.png */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CB1D968B144D1F87003D03AC /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/TileMap/coordinates-character4.plist"; sourceTree = "<group>"; };
+		CB22955E14601BF400BA7EF5 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = Resources/fire.png; sourceTree = "<group>"; };
+		CB2295651460A7EC00BA7EF5 /* tile-wall.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "tile-wall.plist"; path = "Resources/TileMap/tile-wall.plist"; sourceTree = "<group>"; };
+		CB2295661460A7EC00BA7EF5 /* tile-wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tile-wall.png"; path = "Resources/TileMap/tile-wall.png"; sourceTree = "<group>"; };
 		CB29B95C1451A49E005D7C1E /* TrapHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrapHandling.h; path = Code/Handling/TrapHandling.h; sourceTree = "<group>"; };
 		CB29B95D1451A49E005D7C1E /* TrapHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrapHandling.m; path = Code/Handling/TrapHandling.m; sourceTree = "<group>"; };
 		CB29B9611451AE5C005D7C1E /* WarriorHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarriorHandling.h; path = Code/Handling/WarriorHandling.h; sourceTree = "<group>"; };
@@ -425,8 +427,6 @@
 		CB96AD771458452100CAA1C5 /* HouseHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HouseHandling.m; path = Code/Handling/HouseHandling.m; sourceTree = "<group>"; };
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
-		CBBBEF3D14443D790079525D /* coordinates-tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-tile.plist"; path = "Resources/TileMap/coordinates-tile.plist"; sourceTree = "<group>"; };
-		CBBBEF4014443D790079525D /* texture-tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-tile.png"; path = "Resources/TileMap/texture-tile.png"; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
 		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -585,6 +585,7 @@
 		CB7B7F5B13ED7B2200FADB50 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CB22955E14601BF400BA7EF5 /* fire.png */,
 				CB8A1859145EDA3600B6AA4A /* Warrior */,
 				CB6B28351456AE3600DB68B9 /* Monster */,
 				CB29B9751451C0E0005D7C1E /* Icon */,
@@ -929,10 +930,10 @@
 		CB7B80C313ED7D0F00FADB50 /* TileMap */ = {
 			isa = PBXGroup;
 			children = (
+				CB2295651460A7EC00BA7EF5 /* tile-wall.plist */,
+				CB2295661460A7EC00BA7EF5 /* tile-wall.png */,
 				CB96AD74145812C400CAA1C5 /* Tile */,
-				CBBBEF3D14443D790079525D /* coordinates-tile.plist */,
 				CBBBEF46144443910079525D /* sample.tmx */,
-				CBBBEF4014443D790079525D /* texture-tile.png */,
 			);
 			name = TileMap;
 			sourceTree = "<group>";
@@ -1016,11 +1017,7 @@
 				CB7B7F6913ED7B2200FADB50 /* Icon.png in Resources */,
 				CB7B7F6B13ED7B2200FADB50 /* Icon@2x.png in Resources */,
 				CB7B7F6E13ED7B2200FADB50 /* iTunesArtwork in Resources */,
-				CBBBEF4114443D790079525D /* coordinates-tile.plist in Resources */,
-				CBBBEF4414443D790079525D /* texture-tile.png in Resources */,
 				CBBBEF47144443910079525D /* sample.tmx in Resources */,
-				CB3B022D1447A670004A1258 /* texture-character.png in Resources */,
-				CB1D968C144D1F87003D03AC /* coordinates-character4.plist in Resources */,
 				CB6B28381456AE6500DB68B9 /* coordinates-monster.plist in Resources */,
 				CB6B28391456AE6500DB68B9 /* texture-monster.png in Resources */,
 				CB96AD75145812C400CAA1C5 /* Tile in Resources */,
@@ -1031,6 +1028,9 @@
 				CB8A185E145EDA4200B6AA4A /* texture-character.png in Resources */,
 				CB8A1861145EDBDF00B6AA4A /* dead.plist in Resources */,
 				CB8A1862145EDBDF00B6AA4A /* dead.png in Resources */,
+				CB22955F14601BF400BA7EF5 /* fire.png in Resources */,
+				CB2295671460A7EC00BA7EF5 /* tile-wall.plist in Resources */,
+				CB2295681460A7EC00BA7EF5 /* tile-wall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -83,7 +83,7 @@
 - (NSInteger) getMoveSpeed;
 - (NSInteger) getMoveDriection;
 - (NSInteger) getAttackRange;
-- (CCAnimate *) getAttackAnimate;
+- (CCAnimate*) getAttackAnimate;
 - (CCAnimate*) getDeathAnimate;
 - (BOOL) getDeath;
 - (BOOL) getDeathReOrder;

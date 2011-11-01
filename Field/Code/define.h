@@ -7,21 +7,54 @@
 // 타일 관련 정의
 #define HALF_TILE_SIZE      16
 #define TILE_SIZE           32
-#define TILE_NUM            50
+#define TILE_NUM            100
 
 #define TILE_NONE           0
+
 #define TILE_WALL01         1
 #define TILE_WALL10         2
 #define TILE_WALL11         3
 #define TILE_WALL12         4
 #define TILE_WALL13         5
-#define TILE_GROUND1        6
-#define TILE_GROUND2        7
-#define TILE_TREASURE       8
-#define TILE_EXPLOSIVE      9
-#define TILE_TRAP_CLOSE     10
-#define TILE_TRAP_OPEN      11
-#define TILE_MONSTER_HOUSE1 12
+#define TILE_BLANK01        6
+#define TILE_BLANK02        7
+#define TILE_BLANK03        8
+#define TILE_BLANK04        9
+#define TILE_BLANK05        10
+
+#define TILE_GROUND1        11
+#define TILE_GROUND2        12
+#define TILE_BLANK06        13
+#define TILE_BLANK07        14
+#define TILE_BLANK08        15
+#define TILE_BLANK09        16
+#define TILE_BLANK10        17
+
+#define TILE_TREASURE       18
+#define TILE_EXPLOSIVE      19
+#define TILE_TRAP_OPEN      21
+#define TILE_TRAP_CLOSE     20
+#define TILE_BLANK11        22
+#define TILE_BLANK12        23
+#define TILE_BLANK13        24
+#define TILE_BLANK14        25
+#define TILE_BLANK15        26
+
+#define TILE_MONSTER_HOUSE1 27
+#define TILE_BLANK16        28
+#define TILE_BLANK17        29
+#define TILE_BLANK18        30
+#define TILE_BLANK19        31
+#define TILE_BLANK20        32
+
+
+#define TILE_START          33
+#define TILE_END            34
+#define TILE_BLANK21        35
+#define TILE_BLANK22        36
+#define TILE_BLANK23        37
+#define TILE_BLANK24        38
+#define TILE_BLANK25        39
 
 // 트랩의 공격 범위
 #define RANGE_TREASURE      1
@@ -49,13 +82,13 @@
 #define FILE_MONSTER_PLIST          @"coordinates-monster.plist"
 #define FILE_DEATH_MONSTER_PLIST    @"monster.plist"
 #define FILE_TOMBSTONE_PLIST        @"dead.plist"
-#define FILE_TILE_PLIST             @"coordinates-tile.plist"
+#define FILE_TILE_PLIST             @"tile-wall.plist"
 
 #define FILE_CHARATER_IMG           @"texture-character.png"
 #define FILE_MONSTER_IMG            @"texture-monster.png"
 #define FILE_DEATH_MONSTER_IMG      @"monster.png"
 #define FILE_TOMBSTONE_IMG          @"dead.png"
-#define FILE_TILE_IMG               @"texture-tile.png"
+#define FILE_TILE_IMG               @"tile-wall.png"
 
 #define FILE_NUMBER_IMG             @"fps_images.png"
 #define FILE_PAUSE_IMG              @"Tile/tile-floor-0.png"
@@ -78,11 +111,13 @@
 #define WARRIOR_SIZE            32      // 용사 이미지 크기
 
 #define REFRESH_DISPLAY_TIME    0.20f   // 화면 갱신 속도
-#define WARRIOR_MOVE_ACTION     0.10f   // Sprite 이미지 전환 속도
+#define WARRIOR_MOVE_ACTION     0.15f   // Sprite 이미지 전환 속도
 #define CREATE_WARRIOR_TIME     1.00f   // 캐릭터 생성 속도
 #define CREATE_MONSTER_TIME     3.00f   // 몬스터 생성 속도
 #define DEATH_MONSTER_TIME      0.30f   // 몬스터의 죽는 애니메이션 재생 속도
-#define INSTALL_TOMBSTONE_TIME  0.20f
+#define INSTALL_TOMBSTONE_TIME  0.20f   // 묘비 설치시 애니메이션 재생 속도
+#define BEAT_ENEMY_TIME         0.10f   // 공격 당할 경우
+#define BOMB_FLAME_TIME         0.10f
 
 #define WARRIOR_MOVE_LEFT       YES     // 왼쪽
 #define WARRIOR_MOVE_RIGHT      NO      // 오른쪽
@@ -97,6 +132,7 @@
 #define PAUSE_MENU_POSITION     ccp(460, 300)   // 일시정지/재개
 #define TIME_LABEL_POSITION     ccp(240, 300)   // 게임 진행 시간 표시
 #define MONEY_LABEL_POSITION    ccp(0, 300)     // 현재 소지금 표시
+#define POINT_LABEL_POSITION    ccp(0, 280)     // 게임 점수 표시
 
 #define MULTI_SCALE             0.05f           // 확대/축소 비율
 ////////////////////////////////////////////////////////////

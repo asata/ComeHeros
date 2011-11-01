@@ -239,6 +239,9 @@
             
             NSInteger demage = [pMonster getPower] - [tWarrior getDefense];
             if(demage > 0) {
+                CCSprite *tSprite = [tWarrior getSprite];
+                [tSprite runAction:[CCFadeIn actionWithDuration:BEAT_ENEMY_TIME]];
+                
                 [tWarrior setStrength:[tWarrior getStrength] - demage];
             }
             

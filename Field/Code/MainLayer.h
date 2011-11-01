@@ -37,8 +37,10 @@
     
     CCLabelAtlas    *labelTime;
     CCLabelAtlas    *labelMoney;
+    CCLabelAtlas    *labelPoint;
     
     CGPoint         tileSetupPoint;     // 타일 설치 위치
+    NSMutableArray  *chainFlameList;
     
     /////////////////////////////////////////////////////////
     // 게임 관련 변수 Start                                   //
@@ -63,8 +65,8 @@
 
 //@property (nonatomic, retain) CCTMXTiledMap *map;
 @property (nonatomic, retain) Function          *function;
-@property (nonatomic, retain) TrapHandling      *trapHandling;
-@property (nonatomic, retain) WarriorHandling   *warriorHandling;
+//@property (nonatomic, retain) TrapHandling      *trapHandling;
+//@property (nonatomic, retain) WarriorHandling   *warriorHandling;
 @property (nonatomic, retain) CCSprite          *sprite;
 @property (nonatomic, retain) CCTMXLayer        *layer;
 

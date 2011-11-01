@@ -7,12 +7,10 @@
 @interface WarriorHandling : CCLayer {
     unsigned int    tMoveValue[TILE_NUM][TILE_NUM]; // 이동 경로 계산을 위한 임시 테이블
     
-    TrapHandling    *trapHandling;
+    //TrapHandling    *trapHandling;
 }
 
-@property (nonatomic, retain) CCTexture2D   *texture;
-
-- (id) init:(TrapHandling*)p_trapHandling;
+//- (id) init:(TrapHandling*)p_trapHandling;
 
 // 용사 관련 함수
 - (CCSprite*) createWarrior:(NSDictionary*)wInfo;           // 용사 생성
