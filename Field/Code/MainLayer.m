@@ -309,6 +309,7 @@
     // 폭발물 폭발시 불꽃을 삽입
     CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
     while (tFlame != nil) {
+        [tFlame setScale:[[commonValue sharedSingleton] getViewScale]];
         [self addChild:tFlame z:10000];
         [chainFlameList addObject:tFlame];
         tFlame = [[commonValue sharedSingleton] popFlame];
