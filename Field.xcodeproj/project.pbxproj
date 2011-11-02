@@ -154,9 +154,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDefine.h; sourceTree = "<group>"; };
+		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; name = MapDefine.h; path = Code/Define/MapDefine.h; sourceTree = "<group>"; };
 		CB084FCF146169F9003A875A /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		CB084FD0146169FA003A875A /* PauseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseLayer.m; sourceTree = "<group>"; };
+		CB084FD314618681003A875A /* PauseDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseDefine.h; path = Code/Define/PauseDefine.h; sourceTree = "<group>"; };
 		CB1D968B144D1F87003D03AC /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/TileMap/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB22955E14601BF400BA7EF5 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = Resources/fire.png; sourceTree = "<group>"; };
 		CB2295651460A7EC00BA7EF5 /* tile-wall.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "tile-wall.plist"; path = "Resources/TileMap/tile-wall.plist"; sourceTree = "<group>"; };
@@ -180,8 +181,8 @@
 		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
 		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Trap.m; sourceTree = "<group>"; };
 		CB64DA24145156D900C3D1C0 /* commonValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonValue.h; path = Code/commonValue.h; sourceTree = "<group>"; };
-		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Function.h; path = Code/Function.h; sourceTree = "<group>"; };
-		CB64DA2814515A4B00C3D1C0 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Function.m; path = Code/Function.m; sourceTree = "<group>"; };
+		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Function.h; path = Code/CommonFunction/Function.h; sourceTree = "<group>"; };
+		CB64DA2814515A4B00C3D1C0 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Function.m; path = Code/CommonFunction/Function.m; sourceTree = "<group>"; };
 		CB64DA2A1451623200C3D1C0 /* commonValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = commonValue.m; path = Code/commonValue.m; sourceTree = "<group>"; };
 		CB6B28361456AE6500DB68B9 /* coordinates-monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-monster.plist"; path = "Resources/Monster/coordinates-monster.plist"; sourceTree = "<group>"; };
 		CB6B28371456AE6500DB68B9 /* texture-monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-monster.png"; path = "Resources/Monster/texture-monster.png"; sourceTree = "<group>"; };
@@ -420,7 +421,7 @@
 		CB7B80B513ED7B2C00FADB50 /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		CB7B80C013ED7B9B00FADB50 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainLayer.h; path = Code/MainLayer.h; sourceTree = "<group>"; };
 		CB7B80C113ED7B9B00FADB50 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainLayer.m; path = Code/MainLayer.m; sourceTree = "<group>"; };
-		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/define.h; sourceTree = "<group>"; };
+		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; name = define.h; path = Code/Define/define.h; sourceTree = "<group>"; };
 		CB8A185B145EDA4200B6AA4A /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/Warrior/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB8A185C145EDA4200B6AA4A /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/Warrior/texture-character.png"; sourceTree = "<group>"; };
 		CB8A185F145EDBDF00B6AA4A /* dead.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = dead.plist; path = Resources/Warrior/dead.plist; sourceTree = "<group>"; };
@@ -456,6 +457,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB084FD214618383003A875A /* Define */ = {
+			isa = PBXGroup;
+			children = (
+				CB7B80E213EEDCF400FADB50 /* define.h */,
+				CB084FCB146142A0003A875A /* MapDefine.h */,
+				CB084FD314618681003A875A /* PauseDefine.h */,
+			);
+			name = Define;
+			sourceTree = "<group>";
+		};
 		CB29B9601451A4A5005D7C1E /* Handling */ = {
 			isa = PBXGroup;
 			children = (
@@ -921,12 +932,11 @@
 		CB7B80BF13ED7B7C00FADB50 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				CB084FD214618383003A875A /* Define */,
 				CB40EEE9145D642900E48B34 /* Document */,
 				CB29B9671451BAF1005D7C1E /* Common Function */,
 				CB29B96A1451BB1C005D7C1E /* Data */,
 				CB29B9601451A4A5005D7C1E /* Handling */,
-				CB7B80E213EEDCF400FADB50 /* define.h */,
-				CB084FCB146142A0003A875A /* MapDefine.h */,
 				CB64DA24145156D900C3D1C0 /* commonValue.h */,
 				CB64DA2A1451623200C3D1C0 /* commonValue.m */,
 				CB084FCF146169F9003A875A /* PauseLayer.h */,

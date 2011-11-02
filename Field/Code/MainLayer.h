@@ -53,7 +53,6 @@
     CGPoint         prevPoint;          // 이전 터치 위치
     CGFloat         prevMultiLength;    // 이전 멀티 터치
     BOOL            touchType;          // 터치 상태(YES : 터치, NO : 이동)
-    BOOL            gameFlag;           // 게임 진행 상황 (YES : 진행중, NO : 대기)
     
     /////////////////////////////////////////////////////////
     // 게임 관련 변수 End                                     //

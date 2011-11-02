@@ -23,12 +23,15 @@ static NSInteger        houseNum;           // 게임 시작 후 나타난 잡�
 static NSMutableArray   *flameList;         // 폭발물 폭발 후 나타날 불꽃
 
 // 게임 진행에 관련된 변수
-static NSInteger       stagePoint;          // 게임 점수
-static NSInteger       stageMoney;          // 게임에 필요한 돈
-static NSInteger       stageTime;           // 게임 시간
-static NSInteger       stageLife;           // 생명
-static NSInteger       stageLevel;          // 
-static NSInteger       killWarriorNum;      // 죽인 용사 수
+static NSInteger        stagePoint;          // 게임 점수
+static NSInteger        stageMoney;          // 게임에 필요한 돈
+static NSInteger        stageTime;           // 게임 시간
+static NSInteger        stageLife;           // 생명
+static NSInteger        stageLevel;          // 
+static NSInteger        killWarriorNum;      // 죽인 용사 수
+
+static BOOL             gamePause;
+static BOOL             gamePlaying;
 
 static commonValue      * _globalTest = nil;
 
@@ -76,6 +79,9 @@ static commonValue      * _globalTest = nil;
     stageMoney = 100;
     stageLife = 1;
     killWarriorNum = 0;
+    
+    gamePause = NO;
+    gamePlaying = YES;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -344,6 +350,19 @@ static commonValue      * _globalTest = nil;
 }
 - (NSInteger) getStageWarriorCount {
     return stageWarriorCount;
+}
+
+- (void) setGamePause:(BOOL)flag {
+    gamePause = flag;
+}
+- (BOOL) getGamePause {
+    return gamePause;
+}
+- (void) setGamePlaying:(BOOL)flag {
+    gamePlaying = flag;
+}
+- (BOOL) getGamePlaying {
+    return gamePlaying;
 }
 
 

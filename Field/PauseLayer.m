@@ -7,7 +7,6 @@
 //
 
 #import "PauseLayer.h"
-#import "define.h"
 
 @implementation PauseLayer
 
@@ -25,7 +24,7 @@
     CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE_IMG];
     temp.position = ccp(240, 180);
     temp.scale = 10;
-    [self addChild:temp z:kMonsterLayer];
+    [self addChild:temp z:pBackgroundLayer];
     
     CCMenuItemImage *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
                                                      selectedImage:FILE_RESUME_IMG 
@@ -41,10 +40,8 @@
                                                           selector:@selector(onQuit:)];
     CCMenu *menu = [CCMenu menuWithItems:resume, restart, quit, nil];
     menu.position = ccp(240, 50);
-    [menu alignItemsVerticallyWithPadding:20.0f];
-    [self addChild:menu z:kMainMenuLayer];
-    
-    NSLog(@"Pause Init");
+    [menu alignItemsVerticallyWithPadding:5.0f];
+    [self addChild:menu z:pMainMenuLayer];
 }
 
 - (void) onRestart:(id)sender {

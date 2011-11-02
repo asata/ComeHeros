@@ -42,13 +42,14 @@
     
     return NO;
 }
+// 해당 타일이 길인지 검사
 - (BOOL) checkRoadTile:(NSInteger)tileType {
     if(tileType == TILE_GROUND1 || tileType == TILE_GROUND2)
         return YES;
     
     return NO;
 }
-// 인접한 트랩이 있는지 검사
+// tPoint의 지정된 범위에 point가 존재하는지 검사
 - (BOOL) adjacentTrap:(CGPoint)tPoint point:(CGPoint)point range:(NSInteger)range {
     if (tPoint.x + range >= point.x && point.x >= tPoint.x - range &&
         point.y <= tPoint.y + range && point.y >= tPoint.y - range) {
@@ -81,6 +82,7 @@
     
     [[commonValue sharedSingleton] setMapInfo:tPoint.x y:tPoint.y tileType:tType];
 }
+// 지정된 타일을 제거
 - (void) removeTrap:(Trap*)pTrap {
     if([pTrap getTrapType] == TILE_TREASURE || [pTrap getTrapType] == TILE_EXPLOSIVE) {
         [self tileChange:[pTrap getPosition] type:TILE_GROUND2];
@@ -96,7 +98,6 @@
 // 탐지한 트랩에 따라 처리
 - (BOOL) handlingTrap:(Warrior*)pWarrior {
     // 캐릭터의 현재 위치
-    //Function *function = [[Function alloc] init];
     Coordinate *coordinate = [[Coordinate alloc] init];
     CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[pWarrior getPosition]];   
     CGPoint wPoint1 = [pWarrior getPosition];
@@ -106,7 +107,6 @@
         CGPoint tPoint = [tTrap getPosition];
         CGPoint tPoint1 = [tTrap getABSPosition];
         NSInteger trapType = [tTrap getTrapType];
-        //CGFloat distance = [function lineLength:wPoint1 point2:tPoint1];
         
         if(trapType == TILE_TRAP_CLOSE) {
             // 닫힌 함정일 경우

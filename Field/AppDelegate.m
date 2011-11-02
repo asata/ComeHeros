@@ -1,7 +1,6 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "GameConfig.h"
-#import "MainLayer.h"
 #import "RootViewController.h"
 
 @implementation AppDelegate
@@ -52,7 +51,7 @@
 #endif
 	
 	[director setAnimationInterval:1.0/60];
-	[director setDisplayFPS:YES];
+	[director setDisplayFPS:NO];
 	
 	[viewController setView:glView];
 	[window addSubview: viewController.view];
@@ -63,8 +62,9 @@
 	[self removeStartupFlicker];
 	
     CCScene *scene = [CCScene node];
-    CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers:[MainLayer node],
-                               [playMap node], nil];
+    
+    playGame = [playMap node];
+    CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers:[MainLayer node], playGame, nil];
     [scene addChild:layer z:0];
     
     [[CCDirector sharedDirector] runWithScene:scene];
@@ -72,13 +72,21 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-	[[CCDirector sharedDirector] pause];
+    if(![[commonValue sharedSingleton] getGamePause]) {
+        [[CCDirector sharedDirector] pause];
+        
+        if([[commonValue sharedSingleton] getGamePlaying]) {
+            [playGame onPause];
+        }
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     /* 홈버튼을 선택하여 나갈 경우 애니메이션이 중단된 후 다시 실행시 재개됨
      // 자동 재개가 아닌 재개여부를 선택하는 버튼을 두어 실행하도록 함 */
-	[[CCDirector sharedDirector] resume];
+    if(![[commonValue sharedSingleton] getGamePause]) {
+        [[CCDirector sharedDirector] resume];
+    }
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

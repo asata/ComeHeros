@@ -247,7 +247,6 @@
         }
         
         [[commonValue sharedSingleton] plusKillWarriorNum];
-        NSLog(@"Total Warrior Num : %d, Kill Warrior Num : %d", [[commonValue sharedSingleton] getStageWarriorCount], [[commonValue sharedSingleton] getKillWarriorNum]);
         [[commonValue sharedSingleton] plusStagePoint:POINT_WARRIOR_KILL];
         [[commonValue sharedSingleton] plusStageMoney:MONEY_WARRIOR_KILL];
     }

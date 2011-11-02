@@ -40,7 +40,7 @@
 @class Warrior;
 @implementation playMap
 @synthesize sprite;
-@synthesize function;//, trapHandling, warriorHandling;
+@synthesize function;
 @synthesize layer;
 
 //////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@
 }
 - (void) initGame {
     self.isTouchEnabled = YES;
-
+    
     chainFlameList = [[NSMutableArray alloc] init];
     file = [[File alloc] init];
     function = [[Function alloc] init];
@@ -103,10 +103,10 @@
     warriorHandling = [[WarriorHandling alloc] init];
     houseHandling  = [[HouseHandling alloc] init];
     
+    [[commonValue sharedSingleton] setGamePlaying:YES];
     [[commonValue sharedSingleton] initCommonValue];
     [[commonValue sharedSingleton] setViewScale:1];
     
-    gameFlag = YES;
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadStageData:path];
     
@@ -152,6 +152,9 @@
     [self addChild:menuPause z:kMainMenuLayer];
 }
 - (void) destoryGame {
+    [[commonValue sharedSingleton] setGamePause:NO];
+    [[commonValue sharedSingleton] setGamePlaying:NO];
+    
     [self removeChild:menu1 cleanup:YES];
     [self removeChild:menu2 cleanup:YES];
     [self removeChild:menu3 cleanup:YES];
@@ -172,6 +175,9 @@
     for (CCSprite *tSprite in [[commonValue sharedSingleton] getFlameList]) {
         [self removeChild:tSprite cleanup:YES];
     }
+    
+    [self removeChild:pauseLayer cleanup:YES];
+    [self unscheduleAllSelectors];
 }
 - (void) updateLabel {
     [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
@@ -183,6 +189,7 @@
     [self onPause];   
 }
 - (void) onPause {
+    [[commonValue sharedSingleton] setGamePause:YES];
     [[CCDirector sharedDirector] pause];
     [self addChild:pauseLayer z:kPauseLayer];
     self.isTouchEnabled = NO;
@@ -190,6 +197,7 @@
     // 버튼 비활성화
 }
 - (void) resume {
+    [[commonValue sharedSingleton] setGamePause:NO];
     [self removeChild:pauseLayer cleanup:YES];
     self.isTouchEnabled = YES;
     
@@ -199,17 +207,13 @@
 }
 - (void) Restart {
     [self destoryGame];
-    [self removeChild:pauseLayer cleanup:YES];
     [[CCDirector sharedDirector] resume];
-    [self unscheduleAllSelectors];
     
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
 - (void) Quit {
     [self destoryGame];
-    [self removeChild:pauseLayer cleanup:YES];
     [[CCDirector sharedDirector] resume];
-    [self unscheduleAllSelectors];
     
     [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
 }
@@ -369,7 +373,7 @@
         }
         
         // 애니메이션 효과 재개
-        if(gameFlag) [self resumeSchedulerAndActions];
+        [self resumeSchedulerAndActions];
     }
 }
 //////////////////////////////////////////////////////////////////////////
@@ -598,7 +602,7 @@
         [self moveTouchMonster];
         
         // 일시 정지 해제
-        if(gameFlag) [self resumeSchedulerAndActions];
+        [self resumeSchedulerAndActions];
     } else if([[event allTouches] count] == 2) {
         // 멀티 터치
         // 확대/축소시 map.position의 위치를 지정부분 수정 필요
@@ -658,7 +662,7 @@
         prevMultiLength = length;
         
         // 일시 정지 해제
-        if (gameFlag) [self resumeSchedulerAndActions];
+        [self resumeSchedulerAndActions];
     }
 }
 
