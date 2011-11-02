@@ -49,10 +49,10 @@
         
         pauseLayer = [[PauseLayer alloc] init];
         resultLayer = [[ResultLayer alloc] init];
-        tutorialLayer = [[TutorialLayer alloc] init];
         
         [pauseLayer createPause:self];
         [resultLayer createResult:self];
+        [tutorialLayer createTutorial:self];
     }
     
     return self;
@@ -63,6 +63,7 @@
     [self initGame];
     
     // 튜토리얼이 필요한지 검사하여 필요할 경우 호출
+    // tutorialLayer = [[TutorialLayer alloc] init];
     // [call TutorialLayer]
     
     // 일정한 간격으로 호출~
@@ -169,10 +170,12 @@
     }
     
     for (CCSprite *tSprite in [[commonValue sharedSingleton] getFlameList]) {
+        [tSprite setVisible:NO];
         [self removeChild:tSprite cleanup:YES];
     }
     
     [self removeChild:pauseLayer cleanup:YES];
+    [self removeChild:resultLayer cleanup:YES];
     [self unscheduleAllSelectors];
 }
 - (void) updateLabel {

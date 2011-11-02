@@ -19,7 +19,7 @@
 }
 
 - (void) createPause:(id)pLayer {
-    if(PlayLayer_ID == nil) PlayLayer_ID = pLayer;
+    if(GameLayer_ID == nil) GameLayer_ID = pLayer;
     
     CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE_IMG];
     temp.position = ccp(240, 180);
@@ -45,13 +45,13 @@
 }
 
 - (void) onRestart:(id)sender {
-    [PlayLayer_ID Restart];
+    [GameLayer_ID Restart];
 }
 - (void) onResume:(id)sender {
-    [PlayLayer_ID resume];
+    [GameLayer_ID resume];
 }
 - (void) onQuit:(id)sender {
-    [PlayLayer_ID Quit];
+    [GameLayer_ID Quit];
 }
 
 @end

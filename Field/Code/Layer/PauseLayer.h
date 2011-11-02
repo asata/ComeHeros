@@ -10,7 +10,7 @@
 #import "PauseDefine.h"
 
 @interface PauseLayer : CCLayer {
-    id PlayLayer_ID;
+    id GameLayer_ID;
 }
 
 - (void) createPause:(id)pLayer;

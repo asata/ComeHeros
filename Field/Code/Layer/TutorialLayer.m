@@ -14,4 +14,33 @@
     return self;
 }
 
+// 결과화면 준비
+- (void) createTutorial:(id)pLayer {
+    if(GameLayer_ID == nil) GameLayer_ID = pLayer;
+    
+    /*CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE_IMG];
+    temp.position = ccp(240, 180);
+    temp.scale = 10;
+    [self addChild:temp z:pBackgroundLayer];
+    
+    *//*CCMenuItemImage *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+     selectedImage:FILE_RESUME_IMG 
+     target:self 
+     selector:@selector(onResume:)];
+     CCMenuItemImage *restart = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+     selectedImage:FILE_RESUME_IMG 
+     target:self 
+     selector:@selector(onRestart:)];
+     CCMenuItemImage *quit = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+     selectedImage:FILE_RESUME_IMG 
+     target:self 
+     selector:@selector(onQuit:)];
+     CCMenu *menu = [CCMenu menuWithItems:resume, restart, quit, nil];
+     menu.position = ccp(240, 50);
+     [menu alignItemsVerticallyWithPadding:5.0f];
+     [self addChild:menu z:pMainMenuLayer];*/
+}
+
+
+
 @end

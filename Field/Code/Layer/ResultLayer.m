@@ -13,7 +13,7 @@
 
 // 결과화면 준비
 - (void) createResult:(id)pLayer {
-    if(ResultLayer_ID == nil) ResultLayer_ID = pLayer;
+    if(GameLayer_ID == nil) GameLayer_ID = pLayer;
     
     CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE_IMG];
     temp.position = ccp(240, 180);
@@ -28,14 +28,17 @@
                                                       selectedImage:FILE_RESUME_IMG 
                                                              target:self 
                                                            selector:@selector(onRestart:)];
-    CCMenuItemImage *quit = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+    */CCMenuItemImage *quit = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
                                                    selectedImage:FILE_RESUME_IMG 
                                                           target:self 
                                                         selector:@selector(onQuit:)];
-    CCMenu *menu = [CCMenu menuWithItems:resume, restart, quit, nil];
+    CCMenu *menu = [CCMenu menuWithItems: quit, nil];
     menu.position = ccp(240, 50);
     [menu alignItemsVerticallyWithPadding:5.0f];
-    [self addChild:menu z:pMainMenuLayer];*/
+    [self addChild:menu z:pMainMenuLayer];
+}
+- (void) onQuit:(id)sender {
+    [GameLayer_ID Quit];
 }
 
 @end

@@ -2,7 +2,7 @@
 #import "PauseDefine.h"
 
 @interface ResultLayer : CCLayer {
-    id ResultLayer_ID;
+    id GameLayer_ID;
 }
 
 - (void) createResult:(id)pLayer;
