@@ -114,9 +114,11 @@ enum LayerIndex {
 
     kMonsterLayer       = 100,
     kWarriorLayer       = 200,
+    kFlameLayer         = 300,
     
     kTileMenuLayer      = 999,
     kMainMenuLayer,
+    kMainLabelLayer,
     kPauseLayer,
     kResultLayer
 };

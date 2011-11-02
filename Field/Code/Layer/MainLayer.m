@@ -39,9 +39,6 @@
 // 게임 화면
 @class Warrior;
 @implementation playMap
-@synthesize sprite;
-@synthesize function;
-@synthesize layer;
 
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 Start                                                      //
@@ -51,15 +48,11 @@
         self.isTouchEnabled = YES;
         
         pauseLayer = [[PauseLayer alloc] init];
+        resultLayer = [[ResultLayer alloc] init];
+        tutorialLayer = [[TutorialLayer alloc] init];
+        
         [pauseLayer createPause:self];
-    }
-    
-    return self;
-}
-
-- (id)init:(NSInteger)p_level degree:(NSInteger)p_degree {
-    if ((self = [super init])) {
-        self.isTouchEnabled = YES;
+        [resultLayer createResult:self];
     }
     
     return self;
@@ -68,6 +61,9 @@
 - (void) onEnterTransitionDidFinish {    
     // 필요한 항목 초기화
     [self initGame];
+    
+    // 튜토리얼이 필요한지 검사하여 필요할 경우 호출
+    // [call TutorialLayer]
     
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
@@ -122,7 +118,7 @@
                                    itemHeight:20
                                  startCharMap:'.'];
     labelTime.position = TIME_LABEL_POSITION;
-    [self addChild:labelTime z:kMainMenuLayer];
+    [self addChild:labelTime z:kMainLabelLayer];
     
     labelMoney= [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageMoneyString]
                                   charMapFile:FILE_NUMBER_IMG 
@@ -130,7 +126,7 @@
                                    itemHeight:20
                                  startCharMap:'.'];
     labelMoney.position = MONEY_LABEL_POSITION;
-    [self addChild:labelMoney z:kMainMenuLayer];
+    [self addChild:labelMoney z:kMainLabelLayer];
     
     labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
                                   charMapFile:FILE_NUMBER_IMG 
@@ -138,7 +134,7 @@
                                    itemHeight:20
                                  startCharMap:'.'];
     labelPoint.position = POINT_LABEL_POSITION;
-    [self addChild:labelPoint z:kMainMenuLayer];
+    [self addChild:labelPoint z:kMainLabelLayer];
 }
 - (void) initMenu {
     CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:FILE_PAUSE_IMG 
@@ -228,6 +224,9 @@
     } else {
         NSLog(@"Lose");
     }
+    
+    [self addChild:resultLayer z:kPauseLayer];
+    self.isTouchEnabled = NO;
 }
 
 
@@ -367,7 +366,7 @@
         CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
         while (tFlame != nil) {
             [tFlame setScale:[[commonValue sharedSingleton] getViewScale]];
-            [self addChild:tFlame z:10000];
+            [self addChild:tFlame z:kFlameLayer];
             [chainFlameList addObject:tFlame];
             tFlame = [[commonValue sharedSingleton] popFlame];
         }

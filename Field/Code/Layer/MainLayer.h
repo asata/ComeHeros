@@ -11,6 +11,8 @@
 #import "HouseHandling.h"
 
 #import "PauseLayer.h"
+#import "ResultLayer.h"
+#import "TutorialLayer.h"
 
 // 메인 화면
 @interface MainLayer : CCLayer {
@@ -31,6 +33,8 @@
     HouseHandling   *houseHandling;
     
     PauseLayer      *pauseLayer;
+    ResultLayer     *resultLayer;
+    TutorialLayer   *tutorialLayer;
     
     CCMenu          *menu1;
     CCMenu          *menu2;
@@ -58,16 +62,6 @@
     // 게임 관련 변수 End                                     //
     /////////////////////////////////////////////////////////
 }
-
-//@property (nonatomic, retain) CCTMXTiledMap *map;
-@property (nonatomic, retain) Function          *function;
-//@property (nonatomic, retain) TrapHandling      *trapHandling;
-//@property (nonatomic, retain) WarriorHandling   *warriorHandling;
-@property (nonatomic, retain) CCSprite          *sprite;
-@property (nonatomic, retain) CCTMXLayer        *layer;
-
-// 게임 초기화
-- (id)init:(NSInteger)p_level degree:(NSInteger)p_degree;
 
 - (void) initGame;
 - (void) destoryGame;

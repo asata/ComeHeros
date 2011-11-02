@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CB084FD1146169FB003A875A /* PauseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FD0146169FA003A875A /* PauseLayer.m */; };
+		CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FE11461F4E3003A875A /* ResultLayer.m */; };
+		CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0E305B1461F93700D1DE6D /* TutorialLayer.m */; };
 		CB22955F14601BF400BA7EF5 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = CB22955E14601BF400BA7EF5 /* fire.png */; };
 		CB2295671460A7EC00BA7EF5 /* tile-wall.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2295651460A7EC00BA7EF5 /* tile-wall.plist */; };
 		CB2295681460A7EC00BA7EF5 /* tile-wall.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2295661460A7EC00BA7EF5 /* tile-wall.png */; };
@@ -154,10 +156,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; name = MapDefine.h; path = Code/Define/MapDefine.h; sourceTree = "<group>"; };
-		CB084FCF146169F9003A875A /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
-		CB084FD0146169FA003A875A /* PauseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseLayer.m; sourceTree = "<group>"; };
+		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDefine.h; path = Code/Define/MapDefine.h; sourceTree = "<group>"; };
+		CB084FCF146169F9003A875A /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseLayer.h; path = Code/Layer/PauseLayer.h; sourceTree = "<group>"; };
+		CB084FD0146169FA003A875A /* PauseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PauseLayer.m; path = Code/Layer/PauseLayer.m; sourceTree = "<group>"; };
 		CB084FD314618681003A875A /* PauseDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseDefine.h; path = Code/Define/PauseDefine.h; sourceTree = "<group>"; };
+		CB084FE01461F4E2003A875A /* ResultLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResultLayer.h; path = Code/Layer/ResultLayer.h; sourceTree = "<group>"; };
+		CB084FE11461F4E3003A875A /* ResultLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResultLayer.m; path = Code/Layer/ResultLayer.m; sourceTree = "<group>"; };
+		CB0E305A1461F93700D1DE6D /* TutorialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TutorialLayer.h; path = Code/Layer/TutorialLayer.h; sourceTree = "<group>"; };
+		CB0E305B1461F93700D1DE6D /* TutorialLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TutorialLayer.m; path = Code/Layer/TutorialLayer.m; sourceTree = "<group>"; };
 		CB1D968B144D1F87003D03AC /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/TileMap/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB22955E14601BF400BA7EF5 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = Resources/fire.png; sourceTree = "<group>"; };
 		CB2295651460A7EC00BA7EF5 /* tile-wall.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "tile-wall.plist"; path = "Resources/TileMap/tile-wall.plist"; sourceTree = "<group>"; };
@@ -176,12 +182,12 @@
 		CB3F4809145E848500637665 /* monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = monster.plist; path = Resources/Monster/monster.plist; sourceTree = "<group>"; };
 		CB3F480A145E848500637665 /* monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster.png; path = Resources/Monster/monster.png; sourceTree = "<group>"; };
 		CB40EEED145D6E1600E48B34 /* Info */ = {isa = PBXFileReference; lastKnownFileType = file; name = Info; path = Document/Info; sourceTree = "<group>"; };
-		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Monster.h; sourceTree = "<group>"; };
-		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Monster.m; sourceTree = "<group>"; };
-		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Trap.h; sourceTree = "<group>"; };
-		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Trap.m; sourceTree = "<group>"; };
+		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Data/Monster.h; sourceTree = "<group>"; };
+		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Data/Monster.m; sourceTree = "<group>"; };
+		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Data/Trap.h; sourceTree = "<group>"; };
+		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Data/Trap.m; sourceTree = "<group>"; };
 		CB64DA24145156D900C3D1C0 /* commonValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonValue.h; path = Code/commonValue.h; sourceTree = "<group>"; };
-		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; name = Function.h; path = Code/CommonFunction/Function.h; sourceTree = "<group>"; };
+		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Function.h; path = Code/CommonFunction/Function.h; sourceTree = "<group>"; };
 		CB64DA2814515A4B00C3D1C0 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Function.m; path = Code/CommonFunction/Function.m; sourceTree = "<group>"; };
 		CB64DA2A1451623200C3D1C0 /* commonValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = commonValue.m; path = Code/commonValue.m; sourceTree = "<group>"; };
 		CB6B28361456AE6500DB68B9 /* coordinates-monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-monster.plist"; path = "Resources/Monster/coordinates-monster.plist"; sourceTree = "<group>"; };
@@ -419,20 +425,20 @@
 		CB7B80AF13ED7B2C00FADB50 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		CB7B80B013ED7B2C00FADB50 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		CB7B80B513ED7B2C00FADB50 /* GameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
-		CB7B80C013ED7B9B00FADB50 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainLayer.h; path = Code/MainLayer.h; sourceTree = "<group>"; };
-		CB7B80C113ED7B9B00FADB50 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainLayer.m; path = Code/MainLayer.m; sourceTree = "<group>"; };
-		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; name = define.h; path = Code/Define/define.h; sourceTree = "<group>"; };
+		CB7B80C013ED7B9B00FADB50 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainLayer.h; path = Code/Layer/MainLayer.h; sourceTree = "<group>"; };
+		CB7B80C113ED7B9B00FADB50 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainLayer.m; path = Code/Layer/MainLayer.m; sourceTree = "<group>"; };
+		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/Define/define.h; sourceTree = "<group>"; };
 		CB8A185B145EDA4200B6AA4A /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/Warrior/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB8A185C145EDA4200B6AA4A /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/Warrior/texture-character.png"; sourceTree = "<group>"; };
 		CB8A185F145EDBDF00B6AA4A /* dead.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = dead.plist; path = Resources/Warrior/dead.plist; sourceTree = "<group>"; };
 		CB8A1860145EDBDF00B6AA4A /* dead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dead.png; path = Resources/Warrior/dead.png; sourceTree = "<group>"; };
-		CB96AD6E1457D7E900CAA1C5 /* House.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = House.h; path = Code/House.h; sourceTree = "<group>"; };
-		CB96AD6F1457D7EA00CAA1C5 /* House.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = House.m; path = Code/House.m; sourceTree = "<group>"; };
+		CB96AD6E1457D7E900CAA1C5 /* House.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = House.h; path = Code/Data/House.h; sourceTree = "<group>"; };
+		CB96AD6F1457D7EA00CAA1C5 /* House.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = House.m; path = Code/Data/House.m; sourceTree = "<group>"; };
 		CB96AD74145812C400CAA1C5 /* Tile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Tile; path = Resources/TileMap/Tile; sourceTree = "<group>"; };
 		CB96AD761458452000CAA1C5 /* HouseHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HouseHandling.h; path = Code/Handling/HouseHandling.h; sourceTree = "<group>"; };
 		CB96AD771458452100CAA1C5 /* HouseHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HouseHandling.m; path = Code/Handling/HouseHandling.m; sourceTree = "<group>"; };
-		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
-		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
+		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Data/Warrior.h; sourceTree = "<group>"; };
+		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Data/Warrior.m; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
 		CBE6509C1460F6C1004C9E1E /* ModifyList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ModifyList; path = Document/ModifyList; sourceTree = "<group>"; };
 		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
@@ -465,6 +471,21 @@
 				CB084FD314618681003A875A /* PauseDefine.h */,
 			);
 			name = Define;
+			sourceTree = "<group>";
+		};
+		CB084FDE1461F433003A875A /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				CB084FCF146169F9003A875A /* PauseLayer.h */,
+				CB084FD0146169FA003A875A /* PauseLayer.m */,
+				CB7B80C013ED7B9B00FADB50 /* MainLayer.h */,
+				CB7B80C113ED7B9B00FADB50 /* MainLayer.m */,
+				CB084FE01461F4E2003A875A /* ResultLayer.h */,
+				CB084FE11461F4E3003A875A /* ResultLayer.m */,
+				CB0E305A1461F93700D1DE6D /* TutorialLayer.h */,
+				CB0E305B1461F93700D1DE6D /* TutorialLayer.m */,
+			);
+			name = Layer;
 			sourceTree = "<group>";
 		};
 		CB29B9601451A4A5005D7C1E /* Handling */ = {
@@ -932,6 +953,7 @@
 		CB7B80BF13ED7B7C00FADB50 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				CB084FDE1461F433003A875A /* Layer */,
 				CB084FD214618383003A875A /* Define */,
 				CB40EEE9145D642900E48B34 /* Document */,
 				CB29B9671451BAF1005D7C1E /* Common Function */,
@@ -939,10 +961,6 @@
 				CB29B9601451A4A5005D7C1E /* Handling */,
 				CB64DA24145156D900C3D1C0 /* commonValue.h */,
 				CB64DA2A1451623200C3D1C0 /* commonValue.m */,
-				CB084FCF146169F9003A875A /* PauseLayer.h */,
-				CB084FD0146169FA003A875A /* PauseLayer.m */,
-				CB7B80C013ED7B9B00FADB50 /* MainLayer.h */,
-				CB7B80C113ED7B9B00FADB50 /* MainLayer.m */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -1173,6 +1191,8 @@
 				CB96AD701457D7EB00CAA1C5 /* House.m in Sources */,
 				CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */,
 				CB084FD1146169FB003A875A /* PauseLayer.m in Sources */,
+				CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */,
+				CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
