@@ -1,60 +1,4 @@
-// 맵 관련 정의
-#define MAP_SCALE           4
-
-#define MAP_LAYER1          @"Layer 1"
-#define MAP_LAYER2          @"New Layer"
-
-// 타일 관련 정의
-#define HALF_TILE_SIZE      16
-#define TILE_SIZE           32
-#define TILE_NUM            100
-
-#define TILE_NONE           0
-
-#define TILE_WALL01         1
-#define TILE_WALL10         2
-#define TILE_WALL11         3
-#define TILE_WALL12         4
-#define TILE_WALL13         5
-#define TILE_BLANK01        6
-#define TILE_BLANK02        7
-#define TILE_BLANK03        8
-#define TILE_BLANK04        9
-#define TILE_BLANK05        10
-
-#define TILE_GROUND1        11
-#define TILE_GROUND2        12
-#define TILE_BLANK06        13
-#define TILE_BLANK07        14
-#define TILE_BLANK08        15
-#define TILE_BLANK09        16
-#define TILE_BLANK10        17
-
-#define TILE_TREASURE       18
-#define TILE_EXPLOSIVE      19
-#define TILE_TRAP_OPEN      21
-#define TILE_TRAP_CLOSE     20
-#define TILE_BLANK11        22
-#define TILE_BLANK12        23
-#define TILE_BLANK13        24
-#define TILE_BLANK14        25
-#define TILE_BLANK15        26
-
-#define TILE_MONSTER_HOUSE1 27
-#define TILE_BLANK16        28
-#define TILE_BLANK17        29
-#define TILE_BLANK18        30
-#define TILE_BLANK19        31
-#define TILE_BLANK20        32
-
-
-#define TILE_START          33
-#define TILE_END            34
-#define TILE_BLANK21        35
-#define TILE_BLANK22        36
-#define TILE_BLANK23        37
-#define TILE_BLANK24        38
-#define TILE_BLANK25        39
+#import "MapDefine.h"
 
 // 트랩의 공격 범위
 #define RANGE_TREASURE      1
@@ -70,6 +14,14 @@
 #define MONEY_TREASURE      50
 #define MONEY_EXPLOSIVE     50
 #define MONEY_HOUSE         100
+
+#define POINT_DESTORY_WALL  5
+#define POINT_TRAP          50
+#define POINT_TREASURE      50
+#define POINT_EXPLOSIVE     50
+#define POINT_HOUSE         100
+#define POINT_MONSTER       100
+#define POINT_WARRIOR_KILL  100
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -167,4 +119,12 @@ enum MoveDirection {
     MoveUp,
     MoveRight,
     MoveDown
+};
+
+enum Direction {
+    None = 0,
+    Left,
+    Up,
+    Right,
+    Down
 };

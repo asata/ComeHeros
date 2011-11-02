@@ -133,7 +133,7 @@
         CCSprite *tSprite = [tWarrior getSprite];
         CGPoint movePosition = [tWarrior getPosition];
         
-        if([tWarrior getStrength] <= 0) {
+        if([tWarrior getStrength] <= 0 && [tWarrior getDeath] == SURVIVAL) {
             [deleteList addObject:tWarrior];
             continue;
         }
@@ -209,8 +209,6 @@
                 [deleteList addObject:tWarrior];
                 continue;
             }
-            
-            //[[commonValue sharedSingleton] replaceWarrior:i pWarrior:tWarrior];
         }
     }
     
@@ -231,7 +229,7 @@
 - (void) removeWarriorList:(NSMutableArray *)deleteList {
     for (Warrior *tWarrior in deleteList) {
         CCSprite *tSprite = [tWarrior getSprite]; 
-
+        
         if ([tSprite scale] != 1) {
             [[commonValue sharedSingleton] removeWarrior:tWarrior];
             [tSprite setVisible:NO];
@@ -243,7 +241,6 @@
                                 [CCCallFunc actionWithTarget:self selector:@selector(tombstoneCompleteHandler:)], 
                                 nil]];
             [tWarrior setDeath:DEATH];     
-            [deleteList removeObject:tWarrior];
         }
     }
 }

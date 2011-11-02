@@ -42,6 +42,12 @@
     
     return NO;
 }
+- (BOOL) checkRoadTile:(NSInteger)tileType {
+    if(tileType == TILE_GROUND1 || tileType == TILE_GROUND2)
+        return YES;
+    
+    return NO;
+}
 // 인접한 트랩이 있는지 검사
 - (BOOL) adjacentTrap:(CGPoint)tPoint point:(CGPoint)point range:(NSInteger)range {
     if (tPoint.x + range >= point.x && point.x >= tPoint.x - range &&
@@ -117,24 +123,30 @@
             if(tPoint1.x == wPoint1.x && tPoint1.y == wPoint1.y && [pWarrior getIntellect] < PASS_TRAP_INTELLECT) {
                 // 트랩 데미지를 입힘
                 if (![self trapDemage:pWarrior]) {
-                    // 트랩에 다른 적이 있는지 확인~~~
+                    // 트랩에 다른 적이 있는지 확인하여 있을 경우 트랩 동작을 계속 진행하도록 함
                     NSInteger tOnWarrior = [self trapCheckWarrior:pWarrior];
                     if(tOnWarrior == 0) {
                         [self trapClose:pWarrior tTrap:tTrap];
                         [self removeTrap:tTrap];
                     }
                 }
-                
-                // 죽을 경우 트랩 닫기
-                /*if([pWarrior getStrength] == 0) {
-                    
-                }*/
             }
         } else if(trapType == TILE_TREASURE) {
             // 보물상자일 경우
-            //if(distance < powf((2 * TILE_SIZE), 2)) {
-            if ([self adjacentTrap:tPoint point:wPoint range:RANGE_TREASURE] && [pWarrior getStrength] > 0) {
-                [self bombTreasure:tTrap];
+            if ([pWarrior getStrength] > 0) {
+                if (tPoint1.x == (wPoint1.x - TILE_SIZE) && tPoint1.y == wPoint1.y) {
+                    // Warrior Position : Right  
+                    [self bombTreasure:tTrap direction:Right];
+                } else if (tPoint1.x == (wPoint1.x + TILE_SIZE) && tPoint1.y == wPoint1.y) { 
+                    // Warrior Position : Left
+                    [self bombTreasure:tTrap direction:Left];   
+                } else if (tPoint1.x == wPoint1.x && tPoint1.y == (wPoint1.y - TILE_SIZE)) {
+                    // Warrior Position : Up
+                    [self bombTreasure:tTrap direction:Up];
+                } else if (tPoint1.x == wPoint1.x && tPoint1.y == (wPoint1.y + TILE_SIZE)) {
+                    // Warrior Position : Down
+                    [self bombTreasure:tTrap direction:Down];
+                }
             }
             
             if([pWarrior getStrength] < 0) return DEATH;
@@ -148,7 +160,6 @@
                 for (Trap *fTrap in chainTrapList) {
                     [self bombExplosive:fTrap];
                 }
-                
             }
             
             if([pWarrior getStrength] < 0) return DEATH;
@@ -157,6 +168,111 @@
     
     return SURVIVAL;
 }
+
+
+/********************************************************/
+/* 보물상자 처리 부분 시작                                    */
+/********************************************************/
+- (void) bombTreasure:(Trap*)pTrap direction:(NSInteger)direction {
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    CGPoint trapPoint = [pTrap getPosition];
+    
+    CGPoint minPoint;
+    CGPoint maxPoint;
+    
+    // 영향을 미치는 범위를 구함 
+    // left, right : y 값 동일
+    // up, down : x 값 동일
+    if (direction == Left) {
+        minPoint = ccp([self findRangeTreasure:trapPoint direction:direction], trapPoint.y);
+        maxPoint = ccp(trapPoint.x, trapPoint.y);
+    } else if (direction == Right) {
+        minPoint = ccp(trapPoint.x, trapPoint.y);
+        maxPoint = ccp([self findRangeTreasure:trapPoint direction:direction], trapPoint.y);
+    } else if (direction == Up) {
+        minPoint = ccp(trapPoint.x, [self findRangeTreasure:trapPoint direction:direction]);
+        maxPoint = ccp(trapPoint.x, trapPoint.y);
+    } else if (direction == Down) {
+        minPoint = ccp(trapPoint.x, trapPoint.y);
+        maxPoint = ccp(trapPoint.x, [self findRangeTreasure:trapPoint direction:direction]);
+    }
+    
+    // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
+    for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
+        if ([tWarrior getDeath] == DEATH) continue;
+        CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[tWarrior getPosition]];
+        
+        if([self warriorInTreasureBombRange:wPoint minPoint:minPoint maxPoint:maxPoint]) {
+            [tWarrior setStrength:[tWarrior getStrength] - [pTrap getDemage]];
+        }
+    }
+    
+    [self rangeBombTreasure:minPoint maxPoint:maxPoint];
+    
+    [[commonValue sharedSingleton] setMoveTable:[pTrap getPosition].x y:[pTrap getPosition].y direction:MoveNone];
+    [self removeTrap:pTrap];
+}
+// 보물상자의 폭발 범위를 확인
+- (NSInteger) findRangeTreasure:(CGPoint)trapPotint direction:(NSInteger)direction {
+    NSInteger x = trapPotint.x;
+    NSInteger y = trapPotint.y;
+    
+    if (direction == Left) {
+        do {
+            x--;
+        } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
+        x++;
+        
+        return x;
+    } else if (direction == Right) {
+        do {
+            x++;
+        } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
+        x--;
+        
+        return x;
+    } else if (direction == Up) {
+        do {
+            y--;
+        } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
+        y++;
+        
+        return y;
+    } else if (direction == Down) {
+        do {
+            y++;
+        } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
+        y--;
+        
+        return y;
+    }  
+
+    return -1;
+}
+
+- (BOOL) warriorInTreasureBombRange:(CGPoint)warriorPoint minPoint:(CGPoint)minPoint maxPoint:(CGPoint)maxPoint {
+    if(minPoint.x <= warriorPoint.x && maxPoint.x >= warriorPoint.x &&
+       minPoint.y <= warriorPoint.y && maxPoint.y >= warriorPoint.y) return YES;
+    
+    return NO;
+}
+- (void) rangeBombTreasure:(CGPoint)minPoint maxPoint:(CGPoint)maxPoint {
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    
+    for (NSInteger i = minPoint.x; i <= maxPoint.x; i++) {
+        for (NSInteger j = minPoint.y; j <= maxPoint.y; j++) {
+            CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0,0,32,32)];
+            [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
+            [tFlame setVisible:YES];
+            [tFlame setScale:1.0f];
+            [[commonValue sharedSingleton] pushFlame:tFlame]; 
+        }
+    }
+}
+/********************************************************/
+/* 보물상자 처리 부분 끝                                     */
+/********************************************************/
+
 
 
 /********************************************************/
@@ -199,9 +315,9 @@
     [[commonValue sharedSingleton] setMoveTable:[pTrap getPosition].x y:[pTrap getPosition].y direction:MoveNone];
     [self removeTrap:pTrap];    
     
-    [self rangeBomb:[pTrap getPosition]];
+    [self rangeBombExplosive:[pTrap getPosition]];
 }
-- (void) rangeBomb:(CGPoint)bombPoint {
+- (void) rangeBombExplosive:(CGPoint)bombPoint {
     Coordinate *coordinate = [[Coordinate alloc] init];
     
     for (NSInteger i = bombPoint.x - RANGE_EXPLOSIVE; i < bombPoint.x + RANGE_EXPLOSIVE + 1; i++) {
@@ -271,36 +387,6 @@
 }
 /********************************************************/
 /* 함정 처리 부분 끝                                        */
-/********************************************************/
-
-
-/********************************************************/
-/* 보물상자 처리 부분 시작                                    */
-/********************************************************/
-- (void) bombTreasure:(Trap*)pTrap {
-    Coordinate *coordinate = [[Coordinate alloc] init];
-    
-    // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
-    for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
-        CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[tWarrior getPosition]];
-        
-        if([self adjacentTrap:[pTrap getPosition] point:wPoint range:RANGE_TREASURE]) {
-            [tWarrior setStrength:[tWarrior getStrength] - [pTrap getDemage]];
-        }
-    }
-    
-    // 일정 범위에 대한 파티클 효과 적용
-    /*id particleSystem = [[CCParticleFire alloc] init];
-     [particleSystem setStartSize:0];
-     [particleSystem setEndSize:40];
-     
-     [self addChild:particleSystem];*/
-    
-    [[commonValue sharedSingleton] setMoveTable:[pTrap getPosition].x y:[pTrap getPosition].y direction:MoveNone];
-    [self removeTrap:pTrap];
-}
-/********************************************************/
-/* 보물상자 처리 부분 끝                                     */
 /********************************************************/
 
 

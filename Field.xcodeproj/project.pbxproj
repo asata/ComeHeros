@@ -153,6 +153,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDefine.h; sourceTree = "<group>"; };
 		CB1D968B144D1F87003D03AC /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/TileMap/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB22955E14601BF400BA7EF5 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = Resources/fire.png; sourceTree = "<group>"; };
 		CB2295651460A7EC00BA7EF5 /* tile-wall.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "tile-wall.plist"; path = "Resources/TileMap/tile-wall.plist"; sourceTree = "<group>"; };
@@ -922,6 +923,7 @@
 				CB29B96A1451BB1C005D7C1E /* Data */,
 				CB29B9601451A4A5005D7C1E /* Handling */,
 				CB7B80E213EEDCF400FADB50 /* define.h */,
+				CB084FCB146142A0003A875A /* MapDefine.h */,
 				CB64DA24145156D900C3D1C0 /* commonValue.h */,
 				CB64DA2A1451623200C3D1C0 /* commonValue.m */,
 				CB7B80C013ED7B9B00FADB50 /* MainLayer.h */,
