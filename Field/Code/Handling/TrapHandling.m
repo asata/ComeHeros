@@ -116,10 +116,7 @@
             // 캐릭터의 지능에 따라 통과 여부 결정
             if(tPoint1.x == wPoint1.x && tPoint1.y == wPoint1.y && [pWarrior getIntellect] < PASS_TRAP_INTELLECT) {
                 // 트랩 데미지를 입힘
-                [self trapDemage:pWarrior];
-                
-                // 죽을 경우 트랩 닫기
-                if([pWarrior getStrength] == 0) {
+                if (![self trapDemage:pWarrior]) {
                     // 트랩에 다른 적이 있는지 확인~~~
                     NSInteger tOnWarrior = [self trapCheckWarrior:pWarrior];
                     if(tOnWarrior == 0) {
@@ -127,6 +124,11 @@
                         [self removeTrap:tTrap];
                     }
                 }
+                
+                // 죽을 경우 트랩 닫기
+                /*if([pWarrior getStrength] == 0) {
+                    
+                }*/
             }
         } else if(trapType == TILE_TREASURE) {
             // 보물상자일 경우
@@ -194,14 +196,26 @@
         }
     }
     
-    CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0,0,32,32)];
-    [tFlame setPosition:[coordinate convertTileToCocoa:[pTrap getPosition]]];
-    [tFlame setVisible:YES];
-    [tFlame setScale:1.0f];
-    [[commonValue sharedSingleton] pushFlame:tFlame]; 
-    
     [[commonValue sharedSingleton] setMoveTable:[pTrap getPosition].x y:[pTrap getPosition].y direction:MoveNone];
     [self removeTrap:pTrap];    
+    
+    [self rangeBomb:[pTrap getPosition]];
+}
+- (void) rangeBomb:(CGPoint)bombPoint {
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    
+    for (NSInteger i = bombPoint.x - RANGE_EXPLOSIVE; i < bombPoint.x + RANGE_EXPLOSIVE + 1; i++) {
+        for (NSInteger j = bombPoint.y - RANGE_EXPLOSIVE; j < bombPoint.y + RANGE_EXPLOSIVE + 1; j++) {
+            NSInteger tileType = [[commonValue sharedSingleton] getMapInfo:i y:j] ;
+            if (![self checkMoveTile:tileType]) continue;
+            
+            CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0,0,32,32)];
+            [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
+            [tFlame setVisible:YES];
+            [tFlame setScale:1.0f];
+            [[commonValue sharedSingleton] pushFlame:tFlame]; 
+        }
+    }
 }
 /********************************************************/
 /* 폭발물 처리 부분 끝                                      */
@@ -213,14 +227,24 @@
 /* 함정 처리 부분 시작                                      */
 /********************************************************/
 // 함정에 대한 데미지 처리
-- (void) trapDemage:(Warrior*)pWarrior{
+- (BOOL) trapDemage:(Warrior*)pWarrior{
     CCSprite *tSprite = [pWarrior getSprite];
     
-    tSprite.flipX = !tSprite.flipX;
-    tSprite.scale = tSprite.scale * 0.9;
-    [pWarrior setMoveSpeed:0];
-    [pWarrior setPower:0];
-    [pWarrior setStrength:[pWarrior getStrength] - DEMAGE_TRAP];
+    if ([tSprite scale] >= 0.50f) {
+        tSprite.flipX = !tSprite.flipX;
+        tSprite.scale = tSprite.scale * 0.9;
+        [pWarrior setMoveSpeed:0];
+        [pWarrior setPower:0];
+        [pWarrior setStrength:[pWarrior getStrength] - DEMAGE_TRAP];
+        
+        return YES;
+    } else {
+        [pWarrior setDeath:DEATH];
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 // 닫힌 함정을 오픈
@@ -241,7 +265,7 @@
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
     
     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
-    [layer2 setTileGID:TILE_TRAP_CLOSE at:tPoint];
+    [layer2 setTileGID:TILE_TRAP_OPEN at:tPoint];
     [[commonValue sharedSingleton] setMapInfo:(NSInteger) tPoint.x y:(NSInteger) tPoint.y tileType:TILE_TRAP_CLOSE];
     [tTrap setTrapType:TILE_TRAP_CLOSE];
 }

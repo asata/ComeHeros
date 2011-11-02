@@ -79,6 +79,7 @@
     [[commonValue sharedSingleton] initCommonValue];
     [[commonValue sharedSingleton] setViewScale:1];
     
+    gameFlag = YES;
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadStageData:path];
     
@@ -288,13 +289,12 @@
     [self pauseSchedulerAndActions];
     
     // 폭발시 생성된 불꽃 제거
-        while ([chainFlameList count] > 0) {
+    while ([chainFlameList count] > 0) {
             CCSprite *dFlame = [chainFlameList objectAtIndex:0];
             [dFlame setVisible:NO];
             [chainFlameList removeObject:dFlame];
     }
-    
-    
+     
     [warriorHandling moveWarrior];
     [monsterHandling moveMonster];
     
@@ -316,7 +316,7 @@
     }
     
     // 애니메이션 효과 재개
-    [self resumeSchedulerAndActions];
+    if(gameFlag) [self resumeSchedulerAndActions];
 }
 //////////////////////////////////////////////////////////////////////////
 // 용사 End                                                              //
@@ -332,11 +332,9 @@
         if([houseHandling checkCreateMonter:tHouse]) {
             // 집에서 최대치로 생산됐는지 검사
             CCSprite *tSprite = [monsterHandling createMonster:0 position:[tHouse getPosition] houseNum:[tHouse getHouseNum]];
+            
             [self addChild:tSprite z:(kMonsterLayer - [[commonValue sharedSingleton] monsterListCount])];
             [tHouse pluseMadeNum];
-        } else {
-            if([tHouse getTotalMonsterNum] >= [tHouse getMaxiumTotalNum])
-                [self unschedule:@selector(createMonsterAtTime:)];
         }
     }
 }
@@ -540,7 +538,7 @@
         [self moveTouchMonster];
         
         // 일시 정지 해제
-        [self resumeSchedulerAndActions];
+        if(gameFlag) [self resumeSchedulerAndActions];
     } else if([[event allTouches] count] == 2) {
         // 멀티 터치
         // 확대/축소시 map.position의 위치를 지정부분 수정 필요
@@ -600,7 +598,7 @@
         prevMultiLength = length;
         
         // 일시 정지 해제
-        [self resumeSchedulerAndActions];
+        if (gameFlag) [self resumeSchedulerAndActions];
     }
 }
 

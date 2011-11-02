@@ -23,10 +23,11 @@
 - (void) tileChange:(CGPoint)tPoint type:(NSInteger)tType;
 - (void) trapOpen:(Warrior*)pWarrior tTrap:(Trap*)tTrap; 
 - (void) trapClose:(Warrior*)pWarrior tTrap:(Trap*)tTrap; 
-- (void) trapDemage:(Warrior*)pWarrior;
+- (BOOL) trapDemage:(Warrior*)pWarrior;
 
 - (void) bombTreasure:(Trap*)pTrap;
 - (void) findExplosive:(Trap*)pTrap;
 - (BOOL) existExplosiveList:(Trap*)pTrap;
 - (void) bombExplosive:(Trap*)pTrap;
+- (void) rangeBomb:(CGPoint)bombPoint;
 @end

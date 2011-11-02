@@ -149,6 +149,7 @@
 		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
+		CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */ = {isa = PBXBuildFile; fileRef = CBE6509C1460F6C1004C9E1E /* ModifyList */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -428,6 +429,7 @@
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Warrior.m; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
+		CBE6509C1460F6C1004C9E1E /* ModifyList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ModifyList; path = Document/ModifyList; sourceTree = "<group>"; };
 		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -519,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				CB40EEED145D6E1600E48B34 /* Info */,
+				CBE6509C1460F6C1004C9E1E /* ModifyList */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -1031,6 +1034,7 @@
 				CB22955F14601BF400BA7EF5 /* fire.png in Resources */,
 				CB2295671460A7EC00BA7EF5 /* tile-wall.plist in Resources */,
 				CB2295681460A7EC00BA7EF5 /* tile-wall.png in Resources */,
+				CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
