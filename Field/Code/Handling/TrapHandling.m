@@ -356,6 +356,9 @@
         return YES;
     } else {
         [pWarrior setDeath:DEATH];
+        [[commonValue sharedSingleton] plusKillWarriorNum];
+        [[commonValue sharedSingleton] plusStagePoint:POINT_WARRIOR_KILL];
+        [[commonValue sharedSingleton] plusStageMoney:MONEY_WARRIOR_KILL];
         
         return NO;
     }

@@ -64,8 +64,7 @@
 	
     CCScene *scene = [CCScene node];
     CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers:[MainLayer node],
-                               [playMap node],
-                               nil];
+                               [playMap node], nil];
     [scene addChild:layer z:0];
     
     [[CCDirector sharedDirector] runWithScene:scene];

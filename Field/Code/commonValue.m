@@ -20,13 +20,15 @@ static NSInteger        monsterNum;         // 게임 시작 후 나타난 몬�
 static NSMutableArray   *houseList;         // 용사 집 List
 static NSInteger        houseNum;           // 게임 시작 후 나타난 잡의 수
 
-static NSMutableArray   *flameList;          // 폭발물 폭발 후 나타날 불꽃
+static NSMutableArray   *flameList;         // 폭발물 폭발 후 나타날 불꽃
 
 // 게임 진행에 관련된 변수
-static NSInteger       stagePoint;         // 게임 점수
-static NSInteger       stageMoney;         // 게임에 필요한 돈
-static NSInteger       stageTime;          // 게임 시간
-static NSInteger       stageLife;          // 생명
+static NSInteger       stagePoint;          // 게임 점수
+static NSInteger       stageMoney;          // 게임에 필요한 돈
+static NSInteger       stageTime;           // 게임 시간
+static NSInteger       stageLife;           // 생명
+static NSInteger       stageLevel;          // 
+static NSInteger       killWarriorNum;      // 죽인 용사 수
 
 static commonValue      * _globalTest = nil;
 
@@ -71,13 +73,15 @@ static commonValue      * _globalTest = nil;
     
     stageTime = 0;
     stagePoint = 0;
-    stageMoney = 500;
-    stageLife = 0;
+    stageMoney = 100;
+    stageLife = 1;
+    killWarriorNum = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+// 게임 설정과 관련된 부분
 - (void) setStageTime:(NSInteger)pTime {
     stageTime = pTime;
 }
@@ -125,6 +129,23 @@ static commonValue      * _globalTest = nil;
 }
 - (NSInteger) getStageLife {
     return stageLife;
+}
+
+- (void) setStageLevel:(NSInteger)pLevel {
+    stageLevel = pLevel;
+}
+- (NSInteger) getStageLevel {
+    return stageLevel;
+}
+
+- (void) setKillWarriorNum:(NSInteger)pNum {
+    killWarriorNum = pNum;
+}
+- (NSInteger) getKillWarriorNum {
+    return killWarriorNum;
+}
+- (void) plusKillWarriorNum {
+    killWarriorNum++;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

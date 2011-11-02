@@ -1,0 +1,60 @@
+//
+//  PauseLayer.m
+//  Field
+//
+//  Created by 강 정훈 on 11. 11. 2..
+//  Copyright 2011년 __MyCompanyName__. All rights reserved.
+//
+
+#import "PauseLayer.h"
+#import "define.h"
+
+@implementation PauseLayer
+
+- (id)init {
+    if (self = [super init]) {
+        self.isTouchEnabled = YES;
+    }
+    
+    return self;
+}
+
+- (void) createPause:(id)pLayer {
+    if(PlayLayer_ID == nil) PlayLayer_ID = pLayer;
+    
+    CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE_IMG];
+    temp.position = ccp(240, 180);
+    temp.scale = 10;
+    [self addChild:temp z:kMonsterLayer];
+    
+    CCMenuItemImage *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+                                                     selectedImage:FILE_RESUME_IMG 
+                                                            target:self 
+                                                          selector:@selector(onResume:)];
+    CCMenuItemImage *restart = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+                                                     selectedImage:FILE_RESUME_IMG 
+                                                            target:self 
+                                                          selector:@selector(onRestart:)];
+    CCMenuItemImage *quit = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
+                                                     selectedImage:FILE_RESUME_IMG 
+                                                            target:self 
+                                                          selector:@selector(onQuit:)];
+    CCMenu *menu = [CCMenu menuWithItems:resume, restart, quit, nil];
+    menu.position = ccp(240, 50);
+    [menu alignItemsVerticallyWithPadding:20.0f];
+    [self addChild:menu z:kMainMenuLayer];
+    
+    NSLog(@"Pause Init");
+}
+
+- (void) onRestart:(id)sender {
+    [PlayLayer_ID Restart];
+}
+- (void) onResume:(id)sender {
+    [PlayLayer_ID resume];
+}
+- (void) onQuit:(id)sender {
+    [PlayLayer_ID Quit];
+}
+
+@end

@@ -122,7 +122,7 @@
 
 // 일정 간격으로 호출됨
 // 용사 이동 및 기타 처리를 하도록 함
-- (void) moveWarrior {
+- (BOOL) moveWarrior {
     NSMutableArray *deleteList = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
@@ -160,8 +160,9 @@
             [tWarrior setDefense:9999];
             [tWarrior setStrength:9999];
             
-            //[deleteList addObject:tWarrior];            
-            continue;
+            //[deleteList addObject:tWarrior];  
+            
+            return NO;
         } else {
             // 일정 지능 이상일 경우 최단 경로
             //         이하일 경우 랜덤한 경로
@@ -214,6 +215,8 @@
     
     // 용사 삭제
     [self removeWarriorList:deleteList];
+    
+    return YES;
 }
 
 - (void) attackCompleteHandler {
@@ -242,6 +245,11 @@
                                 nil]];
             [tWarrior setDeath:DEATH];     
         }
+        
+        [[commonValue sharedSingleton] plusKillWarriorNum];
+        NSLog(@"Total Warrior Num : %d, Kill Warrior Num : %d", [[commonValue sharedSingleton] getStageWarriorCount], [[commonValue sharedSingleton] getKillWarriorNum]);
+        [[commonValue sharedSingleton] plusStagePoint:POINT_WARRIOR_KILL];
+        [[commonValue sharedSingleton] plusStageMoney:MONEY_WARRIOR_KILL];
     }
 }
 - (void) tombstoneCompleteHandler:(id)sender {

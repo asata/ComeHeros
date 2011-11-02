@@ -10,18 +10,20 @@
 
 // 타일 설치 및 파괴시 필요한 금액
 #define MONEY_DESTORY_WALL  5
+#define MONEY_WARRIOR_KILL  50
 #define MONEY_TRAP          50
 #define MONEY_TREASURE      50
 #define MONEY_EXPLOSIVE     50
 #define MONEY_HOUSE         100
 
+//#define POINT_TRAP          5
+//#define POINT_TREASURE      5
+//#define POINT_EXPLOSIVE     5
+//#define POINT_HOUSE         1
+#define POINT_MONSTER       1
+#define POINT_WARRIOR_KILL  5
+#define POINT_MADE_OBSTACLE 1
 #define POINT_DESTORY_WALL  5
-#define POINT_TRAP          50
-#define POINT_TREASURE      50
-#define POINT_EXPLOSIVE     50
-#define POINT_HOUSE         100
-#define POINT_MONSTER       100
-#define POINT_WARRIOR_KILL  100
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -60,6 +62,9 @@
 #define SURVIVAL                YES
 #define DEATH                   NO  
 
+#define GAME_VICTORY            YES
+#define GAME_LOSE               NO
+
 #define WARRIOR_SIZE            32      // 용사 이미지 크기
 
 #define REFRESH_DISPLAY_TIME    0.20f   // 화면 갱신 속도
@@ -79,7 +84,9 @@
 ////////////////////////////////////////////////////////////
 // 게임 화면 관련
 #define MAIN_LAYER              0       
-#define GAME_LAYER              1
+#define GAME_LAYER              1    
+#define SCORE_LAYER             2
+#define PAUSE_LAYER             3
 
 #define PAUSE_MENU_POSITION     ccp(460, 300)   // 일시정지/재개
 #define TIME_LABEL_POSITION     ccp(240, 300)   // 게임 진행 시간 표시
@@ -109,7 +116,9 @@ enum LayerIndex {
     kWarriorLayer       = 200,
     
     kTileMenuLayer      = 999,
-    kMainMenuLayer
+    kMainMenuLayer,
+    kPauseLayer,
+    kResultLayer
 };
 
 // 이동 방향 

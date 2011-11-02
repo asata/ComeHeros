@@ -10,6 +10,8 @@
 #import "MonsterHandling.h"
 #import "HouseHandling.h"
 
+#import "PauseLayer.h"
+
 // 메인 화면
 @interface MainLayer : CCLayer {
     
@@ -17,7 +19,6 @@
 
 - (void) menuCallBack:(id) sender;
 @end
-
 
 
 // 게임 화면
@@ -29,11 +30,12 @@
     MonsterHandling *monsterHandling;
     HouseHandling   *houseHandling;
     
+    PauseLayer      *pauseLayer;
+    
     CCMenu          *menu1;
     CCMenu          *menu2;
     CCMenu          *menu3;    
     CCMenu          *menuPause;
-    CCMenu          *menuResume;
     
     CCLabelAtlas    *labelTime;
     CCLabelAtlas    *labelMoney;
@@ -53,11 +55,6 @@
     BOOL            touchType;          // 터치 상태(YES : 터치, NO : 이동)
     BOOL            gameFlag;           // 게임 진행 상황 (YES : 진행중, NO : 대기)
     
-    
-    // 게임 설정 - 사용자 선택 부분
-    NSInteger       stageLevel;         // 게임 레벨
-    NSInteger       stageDegree;        // 게임 난이도
-    
     /////////////////////////////////////////////////////////
     // 게임 관련 변수 End                                     //
     /////////////////////////////////////////////////////////
@@ -73,10 +70,17 @@
 // 게임 초기화
 - (id)init:(NSInteger)p_level degree:(NSInteger)p_degree;
 
+- (void) initGame;
+- (void) destoryGame;
 - (void) initLabel;
 - (void) updateLabel;
 - (void) initMenu;
 - (void) gamePause:(id)sender;
+- (void) onPause;
+- (void) resume;
+- (void) Restart;
+- (void) Quit;
+- (void) gameEnd:(BOOL)victory;
 
 // 맵 초기화
 - (void) initMap;

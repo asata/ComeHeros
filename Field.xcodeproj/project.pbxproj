@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB084FD1146169FB003A875A /* PauseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FD0146169FA003A875A /* PauseLayer.m */; };
 		CB22955F14601BF400BA7EF5 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = CB22955E14601BF400BA7EF5 /* fire.png */; };
 		CB2295671460A7EC00BA7EF5 /* tile-wall.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2295651460A7EC00BA7EF5 /* tile-wall.plist */; };
 		CB2295681460A7EC00BA7EF5 /* tile-wall.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2295661460A7EC00BA7EF5 /* tile-wall.png */; };
@@ -154,6 +155,8 @@
 
 /* Begin PBXFileReference section */
 		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDefine.h; sourceTree = "<group>"; };
+		CB084FCF146169F9003A875A /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
+		CB084FD0146169FA003A875A /* PauseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseLayer.m; sourceTree = "<group>"; };
 		CB1D968B144D1F87003D03AC /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/TileMap/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB22955E14601BF400BA7EF5 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire.png; path = Resources/fire.png; sourceTree = "<group>"; };
 		CB2295651460A7EC00BA7EF5 /* tile-wall.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "tile-wall.plist"; path = "Resources/TileMap/tile-wall.plist"; sourceTree = "<group>"; };
@@ -926,6 +929,8 @@
 				CB084FCB146142A0003A875A /* MapDefine.h */,
 				CB64DA24145156D900C3D1C0 /* commonValue.h */,
 				CB64DA2A1451623200C3D1C0 /* commonValue.m */,
+				CB084FCF146169F9003A875A /* PauseLayer.h */,
+				CB084FD0146169FA003A875A /* PauseLayer.m */,
 				CB7B80C013ED7B9B00FADB50 /* MainLayer.h */,
 				CB7B80C113ED7B9B00FADB50 /* MainLayer.m */,
 			);
@@ -1157,6 +1162,7 @@
 				CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */,
 				CB96AD701457D7EB00CAA1C5 /* House.m in Sources */,
 				CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */,
+				CB084FD1146169FB003A875A /* PauseLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

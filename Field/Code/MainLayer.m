@@ -26,12 +26,11 @@
 }
 
 - (void) menuCallBack:(id) sender {
+    [[commonValue sharedSingleton] setStageLevel:1];
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
 
 @end
-
-
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -50,6 +49,9 @@
 - (id)init {
     if ((self = [super init])) {
         self.isTouchEnabled = YES;
+        
+        pauseLayer = [[PauseLayer alloc] init];
+        [pauseLayer createPause:self];
     }
     
     return self;
@@ -58,9 +60,6 @@
 - (id)init:(NSInteger)p_level degree:(NSInteger)p_degree {
     if ((self = [super init])) {
         self.isTouchEnabled = YES;
-        
-        stageLevel = p_level;
-        stageDegree = p_degree;
     }
     
     return self;
@@ -68,6 +67,34 @@
 
 - (void) onEnterTransitionDidFinish {    
     // 필요한 항목 초기화
+    [self initGame];
+    
+    // 일정한 간격으로 호출~
+    [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
+    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
+}
+
+- (void) dealloc {
+    [self destoryGame];
+    
+    [file release];
+    [function release];
+    
+    [warriorHandling release];
+    [monsterHandling release];
+    [trapHandling release];
+    [houseHandling release];
+    
+    [labelTime release];
+    [labelMoney release];
+    [labelPoint release];
+    
+    [super dealloc];
+}
+- (void) initGame {
+    self.isTouchEnabled = YES;
+
     chainFlameList = [[NSMutableArray alloc] init];
     file = [[File alloc] init];
     function = [[Function alloc] init];
@@ -87,27 +114,6 @@
     [self initMenu];
     [self initLabel];
     [self initTileSetupMenu];
-    
-    // 일정한 간격으로 호출~
-    [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
-    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
-    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
-}
-
-- (void) dealloc {
-    [file release];
-    [function release];
-    
-    [warriorHandling release];
-    [monsterHandling release];
-    [trapHandling release];
-    [houseHandling release];
-    
-    [labelTime release];
-    [labelMoney release];
-    [labelPoint release];
-    
-    [super dealloc];
 }
 - (void) initLabel {
     labelTime = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageTimeString]
@@ -134,51 +140,91 @@
     labelPoint.position = POINT_LABEL_POSITION;
     [self addChild:labelPoint z:kMainMenuLayer];
 }
-- (void) updateLabel {
-    [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
-    [labelMoney setString:[[commonValue sharedSingleton] getStageMoneyString]];
-    [labelPoint setString:[[commonValue sharedSingleton] getStagePointString]];
-}
 - (void) initMenu {
     CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:FILE_PAUSE_IMG 
                                                selectedImage:FILE_PAUSE_IMG 
                                                       target:self 
                                                     selector:@selector(gamePause:)];
-    
-    CCMenuItem *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG 
-                                                selectedImage:FILE_RESUME_IMG 
-                                                       target:self 
-                                                     selector:@selector(gamePause:)];
-
     menuPause = [CCMenu menuWithItems:pause, nil];
     menuPause.position = PAUSE_MENU_POSITION;
     menuPause.visible = YES;
     
-    menuResume = [CCMenu menuWithItems:resume, nil];
-    menuResume.position = PAUSE_MENU_POSITION;
-    menuResume.visible = NO;
-    
     [self addChild:menuPause z:kMainMenuLayer];
-    [self addChild:menuResume z:kMainMenuLayer];
+}
+- (void) destoryGame {
+    [self removeChild:menu1 cleanup:YES];
+    [self removeChild:menu2 cleanup:YES];
+    [self removeChild:menu3 cleanup:YES];
+    [self removeChild:menuPause cleanup:YES];
+    
+    [self removeChild:labelMoney cleanup:YES];
+    [self removeChild:labelTime cleanup:YES];
+    [self removeChild:labelPoint cleanup:YES];
+    
+    for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
+        [self removeChild:[tWarrior getSprite] cleanup:YES];
+    }
+    
+    for (Monster *tMonster in [[commonValue sharedSingleton] getMonsterList]) {
+        [self removeChild:[tMonster getSprite] cleanup:YES];
+    }
+    
+    for (CCSprite *tSprite in [[commonValue sharedSingleton] getFlameList]) {
+        [self removeChild:tSprite cleanup:YES];
+    }
+}
+- (void) updateLabel {
+    [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
+    [labelMoney setString:[[commonValue sharedSingleton] getStageMoneyString]];
+    [labelPoint setString:[[commonValue sharedSingleton] getStagePointString]];
 }
 - (void) gamePause:(id)sender {
     // 게임 일시 정지
-    if(gameFlag) {
-        [self pauseSchedulerAndActions];   
-        menuResume.visible = YES;
-        menuPause.visible = NO;
-    }else {
-        [self resumeSchedulerAndActions];   
-        menuResume.visible = NO;
-        menuPause.visible = YES;
-    }
+    [self onPause];   
+}
+- (void) onPause {
+    [[CCDirector sharedDirector] pause];
+    [self addChild:pauseLayer z:kPauseLayer];
+    self.isTouchEnabled = NO;
     
-    gameFlag = !gameFlag;
+    // 버튼 비활성화
+}
+- (void) resume {
+    [self removeChild:pauseLayer cleanup:YES];
+    self.isTouchEnabled = YES;
+    
+    // 버튼 활성화
+    
+    [[CCDirector sharedDirector] resume];
+}
+- (void) Restart {
+    [self destoryGame];
+    [self removeChild:pauseLayer cleanup:YES];
+    [[CCDirector sharedDirector] resume];
+    [self unscheduleAllSelectors];
+    
+    [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+}
+- (void) Quit {
+    [self destoryGame];
+    [self removeChild:pauseLayer cleanup:YES];
+    [[CCDirector sharedDirector] resume];
+    [self unscheduleAllSelectors];
+    
+    [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
 }
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 End                                                        //
 //////////////////////////////////////////////////////////////////////////
-
+- (void) gameEnd:(BOOL)victory {
+    [self unscheduleAllSelectors];
+    
+    if (victory) {
+        NSLog(@"Win");
+    } else {
+        NSLog(@"Lose");
+    }
+}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -285,38 +331,46 @@
 - (void) moveAction:(id) sender {
     [self updateLabel];
     
-    // 잠시 애니메이션 효과 중단
-    [self pauseSchedulerAndActions];
-    
-    // 폭발시 생성된 불꽃 제거
-    while ([chainFlameList count] > 0) {
+    // 용사가 모두 죽었는지 검사
+    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount]) {
+        [self gameEnd:GAME_VICTORY];
+    } else {
+        // 잠시 애니메이션 효과 중단
+        [self pauseSchedulerAndActions];
+        
+        // 폭발시 생성된 불꽃 제거
+        while ([chainFlameList count] > 0) {
             CCSprite *dFlame = [chainFlameList objectAtIndex:0];
             [dFlame setVisible:NO];
             [chainFlameList removeObject:dFlame];
-    }
-     
-    [warriorHandling moveWarrior];
-    [monsterHandling moveMonster];
-    
-    // 묘비를 가장 아래로 내림
-    for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
-        if([tWarrior getDeath] == DEATH && [tWarrior getDeathReOrder]) {
-            [self reorderChild:[tWarrior getSprite] z:kTombstoneLayer];
-            [tWarrior changeDeathOrder];
         }
+        
+        if (![warriorHandling moveWarrior]) {
+            [self gameEnd:GAME_LOSE];
+        }
+        
+        [monsterHandling moveMonster];
+        
+        // 묘비를 가장 아래로 내림
+        for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
+            if([tWarrior getDeath] == DEATH && [tWarrior getDeathReOrder]) {
+                [self reorderChild:[tWarrior getSprite] z:kTombstoneLayer];
+                [tWarrior changeDeathOrder];
+            }
+        }
+        
+        // 폭발물 폭발시 불꽃을 삽입
+        CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
+        while (tFlame != nil) {
+            [tFlame setScale:[[commonValue sharedSingleton] getViewScale]];
+            [self addChild:tFlame z:10000];
+            [chainFlameList addObject:tFlame];
+            tFlame = [[commonValue sharedSingleton] popFlame];
+        }
+        
+        // 애니메이션 효과 재개
+        if(gameFlag) [self resumeSchedulerAndActions];
     }
-    
-    // 폭발물 폭발시 불꽃을 삽입
-    CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
-    while (tFlame != nil) {
-        [tFlame setScale:[[commonValue sharedSingleton] getViewScale]];
-        [self addChild:tFlame z:10000];
-        [chainFlameList addObject:tFlame];
-        tFlame = [[commonValue sharedSingleton] popFlame];
-    }
-    
-    // 애니메이션 효과 재개
-    if(gameFlag) [self resumeSchedulerAndActions];
 }
 //////////////////////////////////////////////////////////////////////////
 // 용사 End                                                              //
@@ -442,6 +496,7 @@
     if(![self installMoneyCheck:MONEY_EXPLOSIVE]) return;
     
     [[commonValue sharedSingleton] minusStageMoney:MONEY_EXPLOSIVE];
+    [[commonValue sharedSingleton] plusStagePoint:POINT_MADE_OBSTACLE];
     [trapHandling addTrap:tileSetupPoint type:TILE_EXPLOSIVE];
     
     // 이동 경로 재계산
@@ -455,6 +510,7 @@
     if(![self installMoneyCheck:MONEY_TREASURE]) return;
     
     [[commonValue sharedSingleton] minusStageMoney:MONEY_TREASURE];
+    [[commonValue sharedSingleton] plusStagePoint:POINT_MADE_OBSTACLE];
     [trapHandling addTrap:tileSetupPoint type:TILE_TREASURE];
     
     // 이동 경로 재계산
@@ -468,6 +524,7 @@
     if(![self installMoneyCheck:MONEY_TRAP]) return;
     
     [[commonValue sharedSingleton] minusStageMoney:MONEY_TRAP];
+    [[commonValue sharedSingleton] plusStagePoint:POINT_MADE_OBSTACLE];
     [trapHandling addTrap:tileSetupPoint type:TILE_TRAP_CLOSE];
     
     [self installTrapMenuVisible:NO];
@@ -478,7 +535,10 @@
     if(![self installMoneyCheck:MONEY_HOUSE]) return;
     
     [[commonValue sharedSingleton] minusStageMoney:MONEY_HOUSE];
-    // monsterHandling에 addHouse 등록하여 처리가 필요a
+    [[commonValue sharedSingleton] plusStagePoint:POINT_MADE_OBSTACLE];
+
+    
+    // monsterHandling에 addHouse 등록하여 처리가 필요
     [houseHandling addHouse:tileSetupPoint type:TILE_MONSTER_HOUSE1];
     [trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
     [self installTrapMenuVisible:NO];
@@ -626,6 +686,7 @@
         } else if(tType == TILE_WALL01) {
             [trapHandling addTrap:thisArea type:TILE_GROUND2];
             [[commonValue sharedSingleton] plusStageMoney:MONEY_DESTORY_WALL];
+            [[commonValue sharedSingleton] plusStagePoint:POINT_DESTORY_WALL];
             
             // 이동 경로 재계산
             [[commonValue sharedSingleton] setMoveTable:(int)thisArea.x y:(int)thisArea.y direction:MoveNone];

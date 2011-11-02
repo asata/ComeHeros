@@ -23,7 +23,7 @@
 
 - (void) tombstoneCompleteHandler:(id)sender;
 
-- (void) moveWarrior;                                       // 일정 시간 간격으로 용사 이동
+- (BOOL) moveWarrior;                                       // 일정 시간 간격으로 용사 이동
 - (void) attackCompleteHandler;
 - (void) removeWarrior:(NSInteger)index;                    // 용사 제거
 - (void) removeWarriorList:(NSMutableArray *)deleteList;    // 용사 제거
