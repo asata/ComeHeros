@@ -39,6 +39,7 @@
 // 게임 화면
 @class Warrior;
 @implementation playMap
+@synthesize player = _player;
 
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 Start                                                      //
@@ -62,14 +63,22 @@
     // 필요한 항목 초기화
     [self initGame];
     
+    Coordinate *coordinate = [[Coordinate alloc] init];
+    CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
+    CGPoint temp = [coordinate convertTileToCocoa:ccp(sPoint.x, sPoint.y + 5)];
+    _position = temp;
+
+    isZoomedOut = NO;
+    [self setViewpointCenter:temp];
+    
     // 튜토리얼이 필요한지 검사하여 필요할 경우 호출
     // tutorialLayer = [[TutorialLayer alloc] init];
     // [call TutorialLayer]
     
     // 일정한 간격으로 호출~
-    [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
-    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
-    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
+    //[self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
+    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    //[self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
 }
 
 - (void) dealloc {
@@ -161,17 +170,17 @@
     [self removeChild:labelTime cleanup:YES];
     [self removeChild:labelPoint cleanup:YES];
     
+    
+    for (CCSprite *tSprite in chainFlameList) {
+        [tSprite setVisible:NO];
+        [self removeChild:tSprite cleanup:YES];
+    }
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
         [self removeChild:[tWarrior getSprite] cleanup:YES];
     }
     
     for (Monster *tMonster in [[commonValue sharedSingleton] getMonsterList]) {
         [self removeChild:[tMonster getSprite] cleanup:YES];
-    }
-    
-    for (CCSprite *tSprite in [[commonValue sharedSingleton] getFlameList]) {
-        [tSprite setVisible:NO];
-        [self removeChild:tSprite cleanup:YES];
     }
     
     [self removeChild:pauseLayer cleanup:YES];
@@ -319,7 +328,7 @@
     [[commonValue sharedSingleton] plusStageTime];
     
     if ([[commonValue sharedSingleton] getStageTime] / 5 != [[commonValue sharedSingleton] getWarriorNum]) return;
-    if ([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
+    if ([[commonValue sharedSingleton] getStageWarriorCount] / 5 > [[commonValue sharedSingleton] getWarriorNum]) {
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
@@ -338,7 +347,7 @@
     [self updateLabel];
     
     // 용사가 모두 죽었는지 검사
-    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount]) {
+    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount] / 5) {
         [self gameEnd:GAME_VICTORY];
     } else {
         // 잠시 애니메이션 효과 중단
@@ -568,6 +577,68 @@
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 Start                                                      //
 //////////////////////////////////////////////////////////////////////////
+- (void) setViewpointCenter:(CGPoint)point {
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
+    int x = MAX(point.x, winSize.width / 2);
+    int y = MAX(point.y, winSize.height / 2);
+    x = MIN(x, ([[commonValue sharedSingleton] getMapSize].width * TILE_SIZE) - winSize.width / 2);
+    y = MIN(y, ([[commonValue sharedSingleton] getMapSize].height * TILE_SIZE) - winSize.height / 2);
+    
+    CGPoint actualPosition = ccp(x, y);
+    CGPoint centerOfView = ccp(winSize.width / 2, winSize.height / 2);
+    CGPoint viewPoint = ccpSub(centerOfView, actualPosition);
+    
+    self.position = viewPoint;
+}
+- (void) registerWithTouchDispatcher {
+    [[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+}
+
+// 사용자가 터치를 할 경우 
+- (BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+    NSLog(@"Touch!!!");
+    
+    return YES;
+}
+
+- (void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
+    //UITouch *touch = [touches anyObject];
+    CGPoint touchLocation = [touch locationInView:[touch view]];
+    touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+    touchLocation = [self convertToNodeSpace:touchLocation];
+    
+    CGPoint playerPos = _position;
+    CGPoint diff = ccpSub(touchLocation, playerPos);
+    if (abs(diff.x) > abs(diff.y)) {
+        if (diff.x > 0) {
+            playerPos.x += TILE_SIZE;
+        } else {
+            playerPos.x -= TILE_SIZE;
+        }
+    } else {
+        if (diff.y > 0) {
+            playerPos.y += TILE_SIZE;
+        } else {
+            playerPos.y -= TILE_SIZE;
+        }
+    }
+    NSLog(@"%f %f", _position.x, _position.y);
+    NSLog(@"%f %f", touchLocation.x, touchLocation.y);
+        NSLog(@"%f %f", diff.x, diff.y);
+    NSLog(@"%f %f", playerPos.x, playerPos.y);
+    
+    if (playerPos.x <= ([[commonValue sharedSingleton] getMapSize].width * TILE_SIZE) &&
+        playerPos.y <= ([[commonValue sharedSingleton] getMapSize].height * TILE_SIZE) &&
+        playerPos.y >= 0 && playerPos.x >= 0) {
+        [self setPlayerPosition:playerPos];
+        NSLog(@"Change");
+    }
+    NSLog(@"%f %f", _position.x, _position.y);
+    
+    [self setViewpointCenter:_position];
+}
+/*
 // 사용자가 터치를 할 경우 
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self installTrapMenuVisible:NO];
@@ -797,5 +868,5 @@
 }
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 End                                                        //
-//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////*/
 @end

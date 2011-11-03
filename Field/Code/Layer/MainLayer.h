@@ -45,6 +45,9 @@
     CCLabelAtlas    *labelMoney;
     CCLabelAtlas    *labelPoint;
     
+    CGPoint         _position;
+    BOOL            isZoomedOut;
+    
     CGPoint         tileSetupPoint;     // 타일 설치 위치
     NSMutableArray  *chainFlameList;
     
@@ -63,6 +66,8 @@
     /////////////////////////////////////////////////////////
 }
 
+@property (nonatomic, retain) CCSprite *player;
+
 - (void) initGame;
 - (void) destoryGame;
 - (void) initLabel;
@@ -80,7 +85,10 @@
 - (void) loadTileMap;
 
 
-// 화면을 터치하여 이동시 처리하는 함수
+//터치 관련 함수
+- (void) setViewpointCenter:(CGPoint)position;
+- (void) setPlayerPosition:(CGPoint)position;
+
 - (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
 - (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
 - (void) moveTouchMonster;

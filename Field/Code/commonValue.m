@@ -280,6 +280,9 @@ static commonValue      * _globalTest = nil;
 - (CGPoint) getMapPosition {
     return map.position;
 }
+- (CGSize) getMapSize {
+    return map.mapSize;
+}
 - (void) initMapInfo:(unsigned int **)p_info {
     int i, j;
     
