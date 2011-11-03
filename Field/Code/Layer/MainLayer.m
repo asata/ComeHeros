@@ -39,7 +39,6 @@
 // 게임 화면
 @class Warrior;
 @implementation playMap
-@synthesize player = _player;
 
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 Start                                                      //
@@ -56,6 +55,11 @@
         [tutorialLayer createTutorial:self];
     }
     
+    PinchZoomLayer *pZoom = [PinchZoomLayer initPinchZoom:self];
+    
+    // zoom out all the way
+    [pZoom scaleToFit];
+    
     return self;
 }
 
@@ -65,11 +69,10 @@
     
     Coordinate *coordinate = [[Coordinate alloc] init];
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
-    CGPoint temp = [coordinate convertTileToCocoa:ccp(sPoint.x, sPoint.y + 5)];
+    CGPoint temp = [coordinate convertTileToCocoa:ccp(sPoint.x, sPoint.y + 4)];
     _position = temp;
 
-    isZoomedOut = NO;
-    [self setViewpointCenter:temp];
+    //[self setViewpointCenter:temp];
     
     // 튜토리얼이 필요한지 검사하여 필요할 경우 호출
     // tutorialLayer = [[TutorialLayer alloc] init];
@@ -251,7 +254,9 @@
     CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:FILE_TILE_MAP];
     map.scale = MAP_SCALE * [[commonValue sharedSingleton] getViewScale];
     // 왼쪽 상단에 맵 왼쪽 상단이 위치하도록 설정(하지 않을 경우 왼쪽 하단에 맵 왼쪽 하단이 위치) 
-    map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
+    map.anchorPoint = CGPointZero;
+    //map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
+    //map.anchorPoint = ccp(0, -1);
     [[commonValue sharedSingleton] setTileMap:map];
     mapSize = [map contentSize];
     mapSize = CGSizeMake([map contentSize].width * MAP_SCALE, [map contentSize].height * MAP_SCALE);
@@ -577,7 +582,7 @@
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 Start                                                      //
 //////////////////////////////////////////////////////////////////////////
-- (void) setViewpointCenter:(CGPoint)point {
+/*- (void) setViewpointCenter:(CGPoint)point {
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     
     int x = MAX(point.x, winSize.width / 2);
@@ -591,54 +596,10 @@
     
     self.position = viewPoint;
 }
-- (void) registerWithTouchDispatcher {
-    [[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+-(void)setPlayerPosition:(CGPoint)position {
+	_position = position;
 }
 
-// 사용자가 터치를 할 경우 
-- (BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    NSLog(@"Touch!!!");
-    
-    return YES;
-}
-
-- (void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    //UITouch *touch = [touches anyObject];
-    CGPoint touchLocation = [touch locationInView:[touch view]];
-    touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
-    touchLocation = [self convertToNodeSpace:touchLocation];
-    
-    CGPoint playerPos = _position;
-    CGPoint diff = ccpSub(touchLocation, playerPos);
-    if (abs(diff.x) > abs(diff.y)) {
-        if (diff.x > 0) {
-            playerPos.x += TILE_SIZE;
-        } else {
-            playerPos.x -= TILE_SIZE;
-        }
-    } else {
-        if (diff.y > 0) {
-            playerPos.y += TILE_SIZE;
-        } else {
-            playerPos.y -= TILE_SIZE;
-        }
-    }
-    NSLog(@"%f %f", _position.x, _position.y);
-    NSLog(@"%f %f", touchLocation.x, touchLocation.y);
-        NSLog(@"%f %f", diff.x, diff.y);
-    NSLog(@"%f %f", playerPos.x, playerPos.y);
-    
-    if (playerPos.x <= ([[commonValue sharedSingleton] getMapSize].width * TILE_SIZE) &&
-        playerPos.y <= ([[commonValue sharedSingleton] getMapSize].height * TILE_SIZE) &&
-        playerPos.y >= 0 && playerPos.x >= 0) {
-        [self setPlayerPosition:playerPos];
-        NSLog(@"Change");
-    }
-    NSLog(@"%f %f", _position.x, _position.y);
-    
-    [self setViewpointCenter:_position];
-}
-/*
 // 사용자가 터치를 할 경우 
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self installTrapMenuVisible:NO];
@@ -656,83 +617,43 @@
         prevMultiLength = [function calcuationMultiTouchLength:touchArray];        
     }
 }
-
-// 사용자가 터치로 이동할 경우
 - (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {  
     if([[event allTouches] count] == 1) {
         // 멀티 터치가 아닌 경우   
         touchType = TOUCH_MOVE;
         
+        // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
+        [self pauseSchedulerAndActions];
+        
         UITouch *touch = [touches anyObject];
-        CGPoint location = [touch locationInView: [touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        CGPoint touchLocation = [touch locationInView: [touch view]];		
+        touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+        touchLocation = [self convertToNodeSpace:touchLocation];
         
-        // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
-        [self pauseSchedulerAndActions];
-        
-        [self moveTouchMap:convertedLocation];
-        [self moveTouchWarrior];
-        [self moveTouchMonster];
-        
-        // 일시 정지 해제
-        [self resumeSchedulerAndActions];
-    } else if([[event allTouches] count] == 2) {
-        // 멀티 터치
-        // 확대/축소시 map.position의 위치를 지정부분 수정 필요
-        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-        CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
-        CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
-        
-        NSArray *touchArray = [[event allTouches] allObjects];
-        CGFloat length = [function calcuationMultiTouchLength:touchArray];
-        CGFloat changeScale;
-        
-        // prevMultiLength 와 length 비교 - 늘어나면 확대, 줄어들면 축소
-        // 확대/축소 비율에 따라 조정 - 0.8 ~ 1.2내외로 설정  
-        
-        // 확대/축소 범위가 작을 경우 무시?
-        if(ABS(prevMultiLength - length) < 0.5) return;
-        
-        if(prevMultiLength > length) {
-            if(viewScale <= 0.8f) return;
-            
-            changeScale = -MULTI_SCALE;
+        CGPoint playerPos = _position;
+        CGPoint diff = ccpSub(touchLocation, playerPos);
+        if (abs(diff.x) > abs(diff.y)) {
+            if (diff.x > 0) {
+                playerPos.x += TILE_SIZE;
+            } else {
+                playerPos.x -= TILE_SIZE; 
+            }    
         } else {
-            if(viewScale >= 1.2f) return;
-            
-            changeScale = MULTI_SCALE;
+            if (diff.y > 0) {
+                playerPos.y += TILE_SIZE;
+            } else {
+                playerPos.y -= TILE_SIZE;
+            }
         }
         
-        
-        // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
-        [self pauseSchedulerAndActions];
-        
-        // 맵 비율 조정 및 위치 조정
-        viewScale = viewScale + changeScale;
-        map.scale = MAP_SCALE * viewScale;
-        map.position = [self checkMovePosition:ccp(map.position.x - (deviceSize.width * changeScale), 
-                                                   map.position.y + (deviceSize.height * changeScale))];
-        
-        // 용사 비율 조정
-        for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
-            Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
-            CCSprite *tSprite = [tWarrior getSprite];
-            tSprite.scale = viewScale;
-            tSprite.position = ccp(map.position.x + ([tWarrior getPosition].x * viewScale), 
-                                   map.position.y + ([tWarrior getPosition].y * viewScale));
-        }
-        // 몬스터 비율 조정
-        for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
-            Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i]; 
-            CCSprite *tSprite = [tMonster getSprite];
-            tSprite.scale = viewScale;
-            tSprite.position = ccp(map.position.x + ([tMonster getPosition].x * viewScale), 
-                                   map.position.y + ([tMonster getPosition].y * viewScale));
+        if (playerPos.x <= ([[commonValue sharedSingleton] getMapSize].width * TILE_SIZE) &&
+            playerPos.y <= ([[commonValue sharedSingleton] getMapSize].height * TILE_SIZE) &&
+            playerPos.y >= 0 &&
+            playerPos.x >= 0 ) {
+            [self setPlayerPosition:playerPos];
         }
         
-        [[commonValue sharedSingleton] setViewScale:viewScale];
-        [[commonValue sharedSingleton] setTileMap:map];
-        prevMultiLength = length;
+        [self setViewpointCenter:_position];
         
         // 일시 정지 해제
         [self resumeSchedulerAndActions];
@@ -745,9 +666,6 @@
     if(touchType && [[event allTouches] count] == 1) {
         // 터치된 항목이 뭐인지에 따라서 처리가 필요
         // 빈 타일일 경우 트랩 설치 화면
-        // 트랩 설치화면이 떠 있는 상태
-        // 설치화면 터치시 트랩 설치
-        // 다른곳 터치시 트랩 설치화면 닫음
         UITouch *touch = [touches anyObject];
         CGPoint location = [touch locationInView: [touch view]];
         //CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
@@ -784,89 +702,8 @@
     }
     
     // 멀티 터치는 처리하지 않음
-}
-
-
-// 화면 터치로 이동시 맵타일 이동
-- (void) moveTouchMap:(CGPoint)currentPoint {
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    CGPoint movePoint = CGPointMake(currentPoint.x - prevPoint.x, currentPoint.y - prevPoint.y);
-    CGPoint mapMove = [self checkMovePosition:CGPointMake(mapPosition.x + movePoint.x, mapPosition.y + movePoint.y)];
-    
-    prevPoint = currentPoint;
-    [[commonValue sharedSingleton] setMapPosition:CGPointMake(mapMove.x, mapMove.y)];
-}
-
-// 화면 터치로 이동시 용사 이동~
-- (void) moveTouchWarrior {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
-        // 현재 위치 및 정보를 가져옴
-        Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
-        CCSprite *tSprite = [tWarrior getSprite];
-        CGPoint position = [tWarrior getPosition];
-        
-        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
-                               mapPosition.y + (position.y * viewScale));
-    }
-}
-- (void) moveTouchMonster {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    for (int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
-        // 현재 위치 및 정보를 가져옴
-        Warrior *tWarrior = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
-        CCSprite *tSprite = [tWarrior getSprite];
-        CGPoint position = [tWarrior getPosition];
-        
-        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
-                               mapPosition.y + (position.y * viewScale));
-    }
-}
-
-// 터치로 화면 이동시 맵 밖으로 이동 못하게 차단
-- (CGPoint) checkMovePosition:(CGPoint)position {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    if (position.x > 0 && 
-        position.y < -(mapSize.height * viewScale - deviceSize.height)) {
-        // 좌상단
-        position = ccp(0, -(mapSize.height * viewScale - deviceSize.height)); 
-    } else if (mapPosition.y < -(mapSize.height * viewScale - deviceSize.height)) {
-        // 상단        
-        position = ccp(position.x, -(mapSize.height * viewScale - deviceSize.height));
-    } else if (position.x < -(mapSize.width * viewScale - deviceSize.width) && 
-               position.y < -(mapSize.height * viewScale - deviceSize.height)) {
-        // 우상단
-        position = ccp(-(mapSize.width * viewScale - deviceSize.width), 
-                       -(mapSize.height * viewScale - deviceSize.height));
-    } else if (mapPosition.x < -(mapSize.width * viewScale - deviceSize.width)) {
-        // 오른쪽
-        position = ccp(-(mapSize.width * viewScale - deviceSize.width), position.y);
-    } else if(mapPosition.x < -(mapSize.width * viewScale - deviceSize.width) && 
-              position.y > 0) {
-        // 우하단
-        position = ccp(-(mapSize.width * viewScale - deviceSize.width), 0);
-    } else if (position.x > 0) {
-        // 왼쪽
-        position = ccp(0, position.y);
-    } else if (position.y > 0) {
-        // 아래
-        position = ccp(position.x, 0);
-    } else if (position.x > 0 && position.y > 0) {
-        // 좌하단
-        position = ccp(0, 0);
-    }
-    
-    return position;
-}
+}*/
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 End                                                        //
-//////////////////////////////////////////////////////////////////////////*/
+//////////////////////////////////////////////////////////////////////////
 @end

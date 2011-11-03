@@ -152,6 +152,10 @@
 		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
+		CBC6285D1462C1180031FA44 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC6285C1462C1180031FA44 /* GameLayer.m */; };
+		CBC628631462C2760031FA44 /* temp in Resources */ = {isa = PBXBuildFile; fileRef = CBC628621462C2760031FA44 /* temp */; };
+		CBC628701462D25D0031FA44 /* PinchZoomLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC6286F1462D25D0031FA44 /* PinchZoomLayer.m */; };
+		CBC628731462D28C0031FA44 /* ScaleRestricted.m in Sources */ = {isa = PBXBuildFile; fileRef = CBC628721462D28C0031FA44 /* ScaleRestricted.m */; };
 		CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */ = {isa = PBXBuildFile; fileRef = CBE6509C1460F6C1004C9E1E /* ModifyList */; };
 /* End PBXBuildFile section */
 
@@ -440,6 +444,13 @@
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Data/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Data/Warrior.m; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
+		CBC6285B1462C1180031FA44 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = Code/Layer/GameLayer.h; sourceTree = "<group>"; };
+		CBC6285C1462C1180031FA44 /* GameLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameLayer.m; path = Code/Layer/GameLayer.m; sourceTree = "<group>"; };
+		CBC628621462C2760031FA44 /* temp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = temp; sourceTree = "<group>"; };
+		CBC6286E1462D25D0031FA44 /* PinchZoomLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchZoomLayer.h; path = Code/Touch/PinchZoomLayer.h; sourceTree = "<group>"; };
+		CBC6286F1462D25D0031FA44 /* PinchZoomLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchZoomLayer.m; path = Code/Touch/PinchZoomLayer.m; sourceTree = "<group>"; };
+		CBC628711462D28C0031FA44 /* ScaleRestricted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScaleRestricted.h; path = Code/Touch/ScaleRestricted.h; sourceTree = "<group>"; };
+		CBC628721462D28C0031FA44 /* ScaleRestricted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScaleRestricted.m; path = Code/Touch/ScaleRestricted.m; sourceTree = "<group>"; };
 		CBE6509C1460F6C1004C9E1E /* ModifyList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ModifyList; path = Document/ModifyList; sourceTree = "<group>"; };
 		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -484,6 +495,8 @@
 				CB084FE11461F4E3003A875A /* ResultLayer.m */,
 				CB0E305A1461F93700D1DE6D /* TutorialLayer.h */,
 				CB0E305B1461F93700D1DE6D /* TutorialLayer.m */,
+				CBC6285B1462C1180031FA44 /* GameLayer.h */,
+				CBC6285C1462C1180031FA44 /* GameLayer.m */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -953,6 +966,8 @@
 		CB7B80BF13ED7B7C00FADB50 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				CBC6286C1462D2380031FA44 /* Touch */,
+				CBC6285F1462C1720031FA44 /* Temp */,
 				CB084FDE1461F433003A875A /* Layer */,
 				CB084FD214618383003A875A /* Define */,
 				CB40EEE9145D642900E48B34 /* Document */,
@@ -985,6 +1000,25 @@
 				CB8A185C145EDA4200B6AA4A /* texture-character.png */,
 			);
 			name = Warrior;
+			sourceTree = "<group>";
+		};
+		CBC6285F1462C1720031FA44 /* Temp */ = {
+			isa = PBXGroup;
+			children = (
+				CBC628621462C2760031FA44 /* temp */,
+			);
+			name = Temp;
+			sourceTree = "<group>";
+		};
+		CBC6286C1462D2380031FA44 /* Touch */ = {
+			isa = PBXGroup;
+			children = (
+				CBC6286E1462D25D0031FA44 /* PinchZoomLayer.h */,
+				CBC6286F1462D25D0031FA44 /* PinchZoomLayer.m */,
+				CBC628711462D28C0031FA44 /* ScaleRestricted.h */,
+				CBC628721462D28C0031FA44 /* ScaleRestricted.m */,
+			);
+			name = Touch;
 			sourceTree = "<group>";
 		};
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
@@ -1070,6 +1104,7 @@
 				CB2295671460A7EC00BA7EF5 /* tile-wall.plist in Resources */,
 				CB2295681460A7EC00BA7EF5 /* tile-wall.png in Resources */,
 				CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */,
+				CBC628631462C2760031FA44 /* temp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1193,6 +1228,9 @@
 				CB084FD1146169FB003A875A /* PauseLayer.m in Sources */,
 				CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */,
 				CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */,
+				CBC6285D1462C1180031FA44 /* GameLayer.m in Sources */,
+				CBC628701462D25D0031FA44 /* PinchZoomLayer.m in Sources */,
+				CBC628731462D28C0031FA44 /* ScaleRestricted.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

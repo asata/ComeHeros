@@ -13,6 +13,7 @@
 #import "PauseLayer.h"
 #import "ResultLayer.h"
 #import "TutorialLayer.h"
+#import "PinchZoomLayer.h"
 
 // 메인 화면
 @interface MainLayer : CCLayer {
@@ -46,7 +47,6 @@
     CCLabelAtlas    *labelPoint;
     
     CGPoint         _position;
-    BOOL            isZoomedOut;
     
     CGPoint         tileSetupPoint;     // 타일 설치 위치
     NSMutableArray  *chainFlameList;
@@ -65,8 +65,6 @@
     // 게임 관련 변수 End                                     //
     /////////////////////////////////////////////////////////
 }
-
-@property (nonatomic, retain) CCSprite *player;
 
 - (void) initGame;
 - (void) destoryGame;
@@ -89,10 +87,10 @@
 - (void) setViewpointCenter:(CGPoint)position;
 - (void) setPlayerPosition:(CGPoint)position;
 
-- (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
-- (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
-- (void) moveTouchMonster;
-- (CGPoint) checkMovePosition:(CGPoint)position;
+//- (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
+//- (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
+//- (void) moveTouchMonster;
+//- (CGPoint) checkMovePosition:(CGPoint)position;
 
 // 용사 관련 함수
 - (void) createWarrior;
