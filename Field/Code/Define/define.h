@@ -1,8 +1,9 @@
 #import "MapDefine.h"
 
 // 트랩의 공격 범위
-#define RANGE_TREASURE      1
+#define RANGE_TREASURE      3
 #define RANGE_EXPLOSIVE     2
+#define DETECT_EXPLOSIVE    1
 
 // 트랩 데미지
 #define DEMAGE_TRAP         10

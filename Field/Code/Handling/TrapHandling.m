@@ -152,7 +152,7 @@
             if([pWarrior getStrength] < 0) return DEATH;
         } else if(trapType == TILE_EXPLOSIVE) {
             // 폭발물일 경우
-            if ([self adjacentTrap:tPoint point:wPoint range:RANGE_EXPLOSIVE] && [pWarrior getStrength] > 0) {
+            if ([self adjacentTrap:tPoint point:wPoint range:DETECT_EXPLOSIVE] && [pWarrior getStrength] > 0) {
                 chainTrapList = [[NSMutableArray alloc] init];
                 
                 // 연쇄 폭발할 폭발물 검색(검색시 보물상자는 제외시킴)
@@ -207,6 +207,7 @@
         }
     }
     
+    NSLog(@"%f %f %f %f", minPoint.x, minPoint.y, maxPoint.x, maxPoint.y);
     [self rangeBombTreasure:minPoint maxPoint:maxPoint];
     
     [[commonValue sharedSingleton] setMoveTable:[pTrap getPosition].x y:[pTrap getPosition].y direction:MoveNone];
@@ -216,31 +217,40 @@
 - (NSInteger) findRangeTreasure:(CGPoint)trapPotint direction:(NSInteger)direction {
     NSInteger x = trapPotint.x;
     NSInteger y = trapPotint.y;
+    NSInteger num = 0;
     
     if (direction == Left) {
         do {
+            if (num == RANGE_TREASURE)  break;
             x--;
+            num++;
         } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
         x++;
         
         return x;
     } else if (direction == Right) {
         do {
+            if (num == RANGE_TREASURE)  break;
             x++;
+            num++;
         } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
         x--;
         
         return x;
     } else if (direction == Up) {
         do {
+            if (num == RANGE_TREASURE)  break;
             y--;
+            num++;
         } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
         y++;
         
         return y;
     } else if (direction == Down) {
         do {
+            if (num == RANGE_TREASURE)  break;
             y++;
+            num++;
         } while ([self checkRoadTile:[[commonValue sharedSingleton] getMapInfo:x y:y]]);
         y--;
         
