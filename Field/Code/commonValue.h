@@ -61,7 +61,6 @@
 - (CCTMXTiledMap*) getTileMap;
 - (void) setMapPosition:(CGPoint)p_point;
 - (CGPoint) getMapPosition;
-- (CGSize) getMapSize;
 
 - (void) initMapInfo:(unsigned int **)p_info;
 - (void) setMapInfo:(NSInteger)x y:(NSInteger)y tileType:(NSInteger)tileType;

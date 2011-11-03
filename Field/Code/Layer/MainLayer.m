@@ -55,11 +55,6 @@
         [tutorialLayer createTutorial:self];
     }
     
-    PinchZoomLayer *pZoom = [PinchZoomLayer initPinchZoom:self];
-    
-    // zoom out all the way
-    [pZoom scaleToFit];
-    
     return self;
 }
 
@@ -67,21 +62,14 @@
     // 필요한 항목 초기화
     [self initGame];
     
-    Coordinate *coordinate = [[Coordinate alloc] init];
-    CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
-    CGPoint temp = [coordinate convertTileToCocoa:ccp(sPoint.x, sPoint.y + 4)];
-    _position = temp;
-
-    //[self setViewpointCenter:temp];
-    
     // 튜토리얼이 필요한지 검사하여 필요할 경우 호출
     // tutorialLayer = [[TutorialLayer alloc] init];
     // [call TutorialLayer]
     
     // 일정한 간격으로 호출~
-    //[self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
-    //[self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
-    //[self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
+    [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
+    [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
+    [self schedule:@selector(createMonsterAtTime:) interval:CREATE_MONSTER_TIME];
 }
 
 - (void) dealloc {
@@ -127,26 +115,34 @@
 - (void) initLabel {
     labelTime = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageTimeString]
                                   charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:16
-                                   itemHeight:20
-                                 startCharMap:'.'];
+                                    itemWidth:8
+                                   itemHeight:8
+                                 startCharMap:'0'];
     labelTime.position = TIME_LABEL_POSITION;
+    labelTime.scale = 2;
     [self addChild:labelTime z:kMainLabelLayer];
     
     labelMoney= [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageMoneyString]
                                   charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:16
-                                   itemHeight:20
-                                 startCharMap:'.'];
+                                    itemWidth:8
+                                   itemHeight:8
+                                 startCharMap:'0'];
     labelMoney.position = MONEY_LABEL_POSITION;
+    labelMoney.scale = 2;
     [self addChild:labelMoney z:kMainLabelLayer];
+    
+    CCSprite *coinSprite = [CCSprite spriteWithFile:FILE_COIN_IIMG];
+    coinSprite.position = COIN_IMG_POSITION;
+    coinSprite.scale = 0.5;
+    [self addChild:coinSprite z:kMainLabelLayer];
     
     labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
                                   charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:16
-                                   itemHeight:20
-                                 startCharMap:'.'];
+                                    itemWidth:8
+                                   itemHeight:8
+                                 startCharMap:'0'];
     labelPoint.position = POINT_LABEL_POSITION;
+    labelPoint.scale = 2;
     [self addChild:labelPoint z:kMainLabelLayer];
 }
 - (void) initMenu {
@@ -173,17 +169,17 @@
     [self removeChild:labelTime cleanup:YES];
     [self removeChild:labelPoint cleanup:YES];
     
-    
-    for (CCSprite *tSprite in chainFlameList) {
-        [tSprite setVisible:NO];
-        [self removeChild:tSprite cleanup:YES];
-    }
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
         [self removeChild:[tWarrior getSprite] cleanup:YES];
     }
     
     for (Monster *tMonster in [[commonValue sharedSingleton] getMonsterList]) {
         [self removeChild:[tMonster getSprite] cleanup:YES];
+    }
+    
+    for (CCSprite *tSprite in chainFlameList) {
+        [tSprite setVisible:NO];
+        [self removeChild:tSprite cleanup:YES];
     }
     
     [self removeChild:pauseLayer cleanup:YES];
@@ -197,13 +193,14 @@
 }
 - (void) gamePause:(id)sender {
     // 게임 일시 정지
+    menuPause.visible = NO;
     [self onPause];   
 }
 - (void) onPause {
+    self.isTouchEnabled = NO;
     [[commonValue sharedSingleton] setGamePause:YES];
     [[CCDirector sharedDirector] pause];
     [self addChild:pauseLayer z:kPauseLayer];
-    self.isTouchEnabled = NO;
     
     // 버튼 비활성화
 }
@@ -213,6 +210,7 @@
     self.isTouchEnabled = YES;
     
     // 버튼 활성화
+    menuPause.visible = YES;
     
     [[CCDirector sharedDirector] resume];
 }
@@ -240,8 +238,10 @@
         NSLog(@"Lose");
     }
     
-    [self addChild:resultLayer z:kPauseLayer];
+    [[commonValue sharedSingleton] setGamePause:YES];
+    [[CCDirector sharedDirector] pause];
     self.isTouchEnabled = NO;
+    [self addChild:resultLayer z:kPauseLayer];
 }
 
 
@@ -254,9 +254,7 @@
     CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:FILE_TILE_MAP];
     map.scale = MAP_SCALE * [[commonValue sharedSingleton] getViewScale];
     // 왼쪽 상단에 맵 왼쪽 상단이 위치하도록 설정(하지 않을 경우 왼쪽 하단에 맵 왼쪽 하단이 위치) 
-    map.anchorPoint = CGPointZero;
-    //map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
-    //map.anchorPoint = ccp(0, -1);
+    map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
     [[commonValue sharedSingleton] setTileMap:map];
     mapSize = [map contentSize];
     mapSize = CGSizeMake([map contentSize].width * MAP_SCALE, [map contentSize].height * MAP_SCALE);
@@ -333,7 +331,7 @@
     [[commonValue sharedSingleton] plusStageTime];
     
     if ([[commonValue sharedSingleton] getStageTime] / 5 != [[commonValue sharedSingleton] getWarriorNum]) return;
-    if ([[commonValue sharedSingleton] getStageWarriorCount] / 5 > [[commonValue sharedSingleton] getWarriorNum]) {
+    if ([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
@@ -352,7 +350,7 @@
     [self updateLabel];
     
     // 용사가 모두 죽었는지 검사
-    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount] / 5) {
+    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount]) {
         [self gameEnd:GAME_VICTORY];
     } else {
         // 잠시 애니메이션 효과 중단
@@ -582,24 +580,6 @@
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 Start                                                      //
 //////////////////////////////////////////////////////////////////////////
-/*- (void) setViewpointCenter:(CGPoint)point {
-    CGSize winSize = [[CCDirector sharedDirector] winSize];
-    
-    int x = MAX(point.x, winSize.width / 2);
-    int y = MAX(point.y, winSize.height / 2);
-    x = MIN(x, ([[commonValue sharedSingleton] getMapSize].width * TILE_SIZE) - winSize.width / 2);
-    y = MIN(y, ([[commonValue sharedSingleton] getMapSize].height * TILE_SIZE) - winSize.height / 2);
-    
-    CGPoint actualPosition = ccp(x, y);
-    CGPoint centerOfView = ccp(winSize.width / 2, winSize.height / 2);
-    CGPoint viewPoint = ccpSub(centerOfView, actualPosition);
-    
-    self.position = viewPoint;
-}
--(void)setPlayerPosition:(CGPoint)position {
-	_position = position;
-}
-
 // 사용자가 터치를 할 경우 
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self installTrapMenuVisible:NO];
@@ -617,43 +597,83 @@
         prevMultiLength = [function calcuationMultiTouchLength:touchArray];        
     }
 }
+
+// 사용자가 터치로 이동할 경우
 - (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {  
     if([[event allTouches] count] == 1) {
         // 멀티 터치가 아닌 경우   
         touchType = TOUCH_MOVE;
         
+        UITouch *touch = [touches anyObject];
+        CGPoint location = [touch locationInView: [touch view]];
+        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        
         // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
         [self pauseSchedulerAndActions];
         
-        UITouch *touch = [touches anyObject];
-        CGPoint touchLocation = [touch locationInView: [touch view]];		
-        touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-        touchLocation = [self convertToNodeSpace:touchLocation];
+        [self moveTouchMap:convertedLocation];
+        [self moveTouchWarrior];
+        [self moveTouchMonster];
         
-        CGPoint playerPos = _position;
-        CGPoint diff = ccpSub(touchLocation, playerPos);
-        if (abs(diff.x) > abs(diff.y)) {
-            if (diff.x > 0) {
-                playerPos.x += TILE_SIZE;
-            } else {
-                playerPos.x -= TILE_SIZE; 
-            }    
+        // 일시 정지 해제
+        [self resumeSchedulerAndActions];
+    } else if([[event allTouches] count] == 2) {
+        // 멀티 터치
+        // 확대/축소시 map.position의 위치를 지정부분 수정 필요
+        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+        CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
+        CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
+        
+        NSArray *touchArray = [[event allTouches] allObjects];
+        CGFloat length = [function calcuationMultiTouchLength:touchArray];
+        CGFloat changeScale;
+        
+        // prevMultiLength 와 length 비교 - 늘어나면 확대, 줄어들면 축소
+        // 확대/축소 비율에 따라 조정 - 0.8 ~ 1.2내외로 설정  
+        
+        // 확대/축소 범위가 작을 경우 무시?
+        if(ABS(prevMultiLength - length) < 0.5) return;
+        
+        if(prevMultiLength > length) {
+            if(viewScale <= 0.8f) return;
+            
+            changeScale = -MULTI_SCALE;
         } else {
-            if (diff.y > 0) {
-                playerPos.y += TILE_SIZE;
-            } else {
-                playerPos.y -= TILE_SIZE;
-            }
+            if(viewScale >= 1.2f) return;
+            
+            changeScale = MULTI_SCALE;
         }
         
-        if (playerPos.x <= ([[commonValue sharedSingleton] getMapSize].width * TILE_SIZE) &&
-            playerPos.y <= ([[commonValue sharedSingleton] getMapSize].height * TILE_SIZE) &&
-            playerPos.y >= 0 &&
-            playerPos.x >= 0 ) {
-            [self setPlayerPosition:playerPos];
+        
+        // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
+        [self pauseSchedulerAndActions];
+        
+        // 맵 비율 조정 및 위치 조정
+        viewScale = viewScale + changeScale;
+        map.scale = MAP_SCALE * viewScale;
+        map.position = [self checkMovePosition:ccp(map.position.x - (deviceSize.width * changeScale), 
+                                                   map.position.y + (deviceSize.height * changeScale))];
+        
+        // 용사 비율 조정
+        for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
+            Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
+            CCSprite *tSprite = [tWarrior getSprite];
+            tSprite.scale = viewScale;
+            tSprite.position = ccp(map.position.x + ([tWarrior getPosition].x * viewScale), 
+                                   map.position.y + ([tWarrior getPosition].y * viewScale));
+        }
+        // 몬스터 비율 조정
+        for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
+            Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i]; 
+            CCSprite *tSprite = [tMonster getSprite];
+            tSprite.scale = viewScale;
+            tSprite.position = ccp(map.position.x + ([tMonster getPosition].x * viewScale), 
+                                   map.position.y + ([tMonster getPosition].y * viewScale));
         }
         
-        [self setViewpointCenter:_position];
+        [[commonValue sharedSingleton] setViewScale:viewScale];
+        [[commonValue sharedSingleton] setTileMap:map];
+        prevMultiLength = length;
         
         // 일시 정지 해제
         [self resumeSchedulerAndActions];
@@ -666,6 +686,9 @@
     if(touchType && [[event allTouches] count] == 1) {
         // 터치된 항목이 뭐인지에 따라서 처리가 필요
         // 빈 타일일 경우 트랩 설치 화면
+        // 트랩 설치화면이 떠 있는 상태
+        // 설치화면 터치시 트랩 설치
+        // 다른곳 터치시 트랩 설치화면 닫음
         UITouch *touch = [touches anyObject];
         CGPoint location = [touch locationInView: [touch view]];
         //CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
@@ -702,7 +725,88 @@
     }
     
     // 멀티 터치는 처리하지 않음
-}*/
+}
+
+
+// 화면 터치로 이동시 맵타일 이동
+- (void) moveTouchMap:(CGPoint)currentPoint {
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
+    CGPoint movePoint = CGPointMake(currentPoint.x - prevPoint.x, currentPoint.y - prevPoint.y);
+    CGPoint mapMove = [self checkMovePosition:CGPointMake(mapPosition.x + movePoint.x, mapPosition.y + movePoint.y)];
+    
+    prevPoint = currentPoint;
+    [[commonValue sharedSingleton] setMapPosition:CGPointMake(mapMove.x, mapMove.y)];
+}
+
+// 화면 터치로 이동시 용사 이동~
+- (void) moveTouchWarrior {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
+    for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
+        // 현재 위치 및 정보를 가져옴
+        Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
+        CCSprite *tSprite = [tWarrior getSprite];
+        CGPoint position = [tWarrior getPosition];
+        
+        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
+                               mapPosition.y + (position.y * viewScale));
+    }
+}
+- (void) moveTouchMonster {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
+    for (int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
+        // 현재 위치 및 정보를 가져옴
+        Warrior *tWarrior = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
+        CCSprite *tSprite = [tWarrior getSprite];
+        CGPoint position = [tWarrior getPosition];
+        
+        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
+                               mapPosition.y + (position.y * viewScale));
+    }
+}
+
+// 터치로 화면 이동시 맵 밖으로 이동 못하게 차단
+- (CGPoint) checkMovePosition:(CGPoint)position {
+    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
+    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    
+    if (position.x > 0 && 
+        position.y < -(mapSize.height * viewScale - deviceSize.height)) {
+        // 좌상단
+        position = ccp(0, -(mapSize.height * viewScale - deviceSize.height)); 
+    } else if (mapPosition.y < -(mapSize.height * viewScale - deviceSize.height)) {
+        // 상단        
+        position = ccp(position.x, -(mapSize.height * viewScale - deviceSize.height));
+    } else if (position.x < -(mapSize.width * viewScale - deviceSize.width) && 
+               position.y < -(mapSize.height * viewScale - deviceSize.height)) {
+        // 우상단
+        position = ccp(-(mapSize.width * viewScale - deviceSize.width), 
+                       -(mapSize.height * viewScale - deviceSize.height));
+    } else if (mapPosition.x < -(mapSize.width * viewScale - deviceSize.width)) {
+        // 오른쪽
+        position = ccp(-(mapSize.width * viewScale - deviceSize.width), position.y);
+    } else if(mapPosition.x < -(mapSize.width * viewScale - deviceSize.width) && 
+              position.y > 0) {
+        // 우하단
+        position = ccp(-(mapSize.width * viewScale - deviceSize.width), 0);
+    } else if (position.x > 0) {
+        // 왼쪽
+        position = ccp(0, position.y);
+    } else if (position.y > 0) {
+        // 아래
+        position = ccp(position.x, 0);
+    } else if (position.x > 0 && position.y > 0) {
+        // 좌하단
+        position = ccp(0, 0);
+    }
+    
+    return position;
+}
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 End                                                        //
 //////////////////////////////////////////////////////////////////////////

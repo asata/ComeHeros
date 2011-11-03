@@ -21,21 +21,21 @@
 - (void) createPause:(id)pLayer {
     if(GameLayer_ID == nil) GameLayer_ID = pLayer;
     
-    CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE_IMG];
+    CCSprite *temp = [CCSprite spriteWithFile:FILE_PAUSE1_IMG];
     temp.position = ccp(240, 180);
     temp.scale = 10;
     [self addChild:temp z:pBackgroundLayer];
     
-    CCMenuItemImage *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
-                                                     selectedImage:FILE_RESUME_IMG 
+    CCMenuItemImage *resume = [CCMenuItemImage itemFromNormalImage:FILE_RESUME1_IMG
+                                                     selectedImage:FILE_RESUME1_IMG 
                                                             target:self 
                                                           selector:@selector(onResume:)];
-    CCMenuItemImage *restart = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
-                                                     selectedImage:FILE_RESUME_IMG 
+    CCMenuItemImage *restart = [CCMenuItemImage itemFromNormalImage:FILE_RESUME1_IMG
+                                                     selectedImage:FILE_RESUME1_IMG 
                                                             target:self 
                                                           selector:@selector(onRestart:)];
-    CCMenuItemImage *quit = [CCMenuItemImage itemFromNormalImage:FILE_RESUME_IMG
-                                                     selectedImage:FILE_RESUME_IMG 
+    CCMenuItemImage *quit = [CCMenuItemImage itemFromNormalImage:FILE_RESUME1_IMG
+                                                     selectedImage:FILE_RESUME1_IMG 
                                                             target:self 
                                                           selector:@selector(onQuit:)];
     CCMenu *menu = [CCMenu menuWithItems:resume, restart, quit, nil];

@@ -98,7 +98,7 @@ static commonValue      * _globalTest = nil;
     return stageTime;
 }
 - (NSString*) getStageTimeString {
-    return [NSString stringWithFormat:@"%d/%d", stageTime / 60, stageTime % 60];
+    return [NSString stringWithFormat:@"%d:%d", stageTime / 60, stageTime % 60];
 }
 
 - (void) setStagePoint:(NSInteger)pPoint {
@@ -279,9 +279,6 @@ static commonValue      * _globalTest = nil;
 }
 - (CGPoint) getMapPosition {
     return map.position;
-}
-- (CGSize) getMapSize {
-    return map.mapSize;
 }
 - (void) initMapInfo:(unsigned int **)p_info {
     int i, j;

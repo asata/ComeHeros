@@ -13,7 +13,6 @@
 #import "PauseLayer.h"
 #import "ResultLayer.h"
 #import "TutorialLayer.h"
-#import "PinchZoomLayer.h"
 
 // 메인 화면
 @interface MainLayer : CCLayer {
@@ -45,8 +44,6 @@
     CCLabelAtlas    *labelTime;
     CCLabelAtlas    *labelMoney;
     CCLabelAtlas    *labelPoint;
-    
-    CGPoint         _position;
     
     CGPoint         tileSetupPoint;     // 타일 설치 위치
     NSMutableArray  *chainFlameList;
@@ -83,14 +80,11 @@
 - (void) loadTileMap;
 
 
-//터치 관련 함수
-- (void) setViewpointCenter:(CGPoint)position;
-- (void) setPlayerPosition:(CGPoint)position;
-
-//- (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
-//- (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
-//- (void) moveTouchMonster;
-//- (CGPoint) checkMovePosition:(CGPoint)position;
+// 화면을 터치하여 이동시 처리하는 함수
+- (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
+- (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
+- (void) moveTouchMonster;
+- (CGPoint) checkMovePosition:(CGPoint)position;
 
 // 용사 관련 함수
 - (void) createWarrior;

@@ -44,9 +44,10 @@
 #define FILE_TOMBSTONE_IMG          @"dead.png"
 #define FILE_TILE_IMG               @"tile-wall.png"
 
-#define FILE_NUMBER_IMG             @"fps_images.png"
-#define FILE_PAUSE_IMG              @"Tile/tile-floor-0.png"
+#define FILE_NUMBER_IMG             @"number_sprite.png"
+#define FILE_PAUSE_IMG              @"interface_object0001.png"
 #define FILE_RESUME_IMG             @"Tile/tile-object-3.png"
+#define FILE_COIN_IIMG              @"interface_object0002.png"
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -89,9 +90,10 @@
 #define PAUSE_LAYER             3
 
 #define PAUSE_MENU_POSITION     ccp(460, 300)   // 일시정지/재개
-#define TIME_LABEL_POSITION     ccp(240, 300)   // 게임 진행 시간 표시
-#define MONEY_LABEL_POSITION    ccp(0, 300)     // 현재 소지금 표시
-#define POINT_LABEL_POSITION    ccp(0, 280)     // 게임 점수 표시
+#define TIME_LABEL_POSITION     ccp(220, 300)   // 게임 진행 시간 표시
+#define MONEY_LABEL_POSITION    ccp(20, 300)     // 현재 소지금 표시
+#define COIN_IMG_POSITION       ccp(10, 307)
+#define POINT_LABEL_POSITION    ccp(20, 280)     // 게임 점수 표시
 
 #define MULTI_SCALE             0.05f           // 확대/축소 비율
 ////////////////////////////////////////////////////////////

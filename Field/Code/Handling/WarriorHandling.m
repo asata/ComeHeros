@@ -269,7 +269,7 @@
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
             // 뒤에 있는 적은 공격을 못함
-            if (![function positionSprite:[pWarrior getMoveDriection] point1:wPoint point2:mPoint]) continue;
+            if ([function positionSprite:[pWarrior getMoveDriection] point1:wPoint point2:mPoint]) continue;
             
             NSInteger demage = [pWarrior getPower] - [tMonster getDefense];
             if(demage > 0) {
