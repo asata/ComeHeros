@@ -10,6 +10,7 @@
 #import "MonsterHandling.h"
 #import "HouseHandling.h"
 
+#import "MainLayer.h"
 #import "PauseLayer.h"
 #import "ResultLayer.h"
 #import "TutorialLayer.h"
@@ -45,8 +46,6 @@
     CGSize          mapSize;            // 타일 맵 사이즈
     
     // 터치 관련 변수
-    CGPoint         prevPoint;          // 이전 터치 위치
-    CGFloat         prevMultiLength;    // 이전 멀티 터치
     BOOL            touchType;          // 터치 상태(YES : 터치, NO : 이동)
     BOOL            gameEnd;
     

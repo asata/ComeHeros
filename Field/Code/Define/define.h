@@ -123,7 +123,8 @@ enum LayerIndex {
     kMainMenuLayer,
     kMainLabelLayer,
     kPauseLayer,
-    kResultLayer
+    kResultLayer,
+    kMainLayer
 };
 
 // 이동 방향 

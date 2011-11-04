@@ -143,7 +143,7 @@
         [tSprite setVisible:NO];
         [self removeChild:tSprite cleanup:YES];
     }
-    
+     
     [[commonValue sharedSingleton] setGamePause:NO];
     [[commonValue sharedSingleton] setGamePlaying:NO];
     
@@ -197,6 +197,7 @@
     [self removeChild:pauseLayer cleanup:YES];
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
+    NSLog(@"pause out");
     
     [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
 }
@@ -204,6 +205,7 @@
     [self removeChild:resultLayer cleanup:YES];
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
+    NSLog(@"result out");
     
     [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
 }
@@ -211,7 +213,7 @@
 // 게임 초기화 End                                                        //
 //////////////////////////////////////////////////////////////////////////
 - (void) gameEnd:(BOOL)victory {
-    [self unscheduleAllSelectors];
+    [self stopAllActions];
     
     if (victory) {
         NSLog(@"Win");
@@ -219,7 +221,7 @@
         NSLog(@"Lose");
     }
     
-    //[[commonValue sharedSingleton] setGamePause:YES];
+    [[commonValue sharedSingleton] setGamePause:YES];
     [[CCDirector sharedDirector] pause];
     self.isTouchEnabled = NO;
     [self addChild:resultLayer z:kPauseLayer];
@@ -569,13 +571,13 @@
         // 멀티 터치가 아닌 경우 
         touchType = TOUCH;
         
-        UITouch *touch = [touches anyObject];
-        CGPoint location = [touch locationInView: [touch view]];
-        prevPoint = [[CCDirector sharedDirector] convertToGL:location];
+        //UITouch *touch = [touches anyObject];
+        //CGPoint location = [touch locationInView: [touch view]];
+        //prevPoint = [[CCDirector sharedDirector] convertToGL:location];
     } else if([[event allTouches] count] == 2) {
         // 멀티 터치
-        NSArray *touchArray = [[event allTouches] allObjects];
-        prevMultiLength = [function calcuationMultiTouchLength:touchArray];        
+        //NSArray *touchArray = [[event allTouches] allObjects];
+        //prevMultiLength = [function calcuationMultiTouchLength:touchArray];        
     }
 }
 
@@ -586,13 +588,17 @@
         touchType = TOUCH_MOVE;
         
         UITouch *touch = [touches anyObject];
-        CGPoint location = [touch locationInView: [touch view]];
-        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        CGPoint touchLocation = [touch locationInView: [touch view]];
+        CGPoint prevLocation = [touch previousLocationInView: [touch view]];
+        touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+        prevLocation = [[CCDirector sharedDirector] convertToGL:prevLocation];
+        CGPoint movePoint = ccpSub(touchLocation, prevLocation);
         
+
         // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
         [self pauseSchedulerAndActions];
         
-        [self moveTouchMap:convertedLocation];
+        [self moveTouchMap:movePoint];
         [self moveTouchWarrior];
         [self moveTouchMonster];
         
@@ -605,17 +611,27 @@
         CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
         CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
         
-        NSArray *touchArray = [[event allTouches] allObjects];
-        CGFloat length = [function calcuationMultiTouchLength:touchArray];
+        UITouch *touch1 = [[[event allTouches] allObjects] objectAtIndex:0];
+        UITouch *touch2 = [[[event allTouches] allObjects] objectAtIndex:1];
+        double prevDistance = ccpDistance([touch1 previousLocationInView:[touch1 view]], [touch2 previousLocationInView:[touch2 view]]);
+        double newDistance = ccpDistance([touch1 locationInView:[touch1 view]], [touch2 locationInView:[touch2 view]]);
+        /*CGFloat relation = newDistance / prevDistance;
+        CGFloat newScale = viewScale * relation;
+        
+        CGPoint touch1Location = [self convertTouchToNodeSpace:touch1];
+        CGPoint touch2Location = [self convertTouchToNodeSpace:touch2];
+        CGPoint centerPoint = ccpMidpoint(touch1Location, touch2Location);
+    
+        CGFloat length = [function calcuationMultiTouchLength:touchArray];*/
         CGFloat changeScale;
         
         // prevMultiLength 와 length 비교 - 늘어나면 확대, 줄어들면 축소
         // 확대/축소 비율에 따라 조정 - 0.8 ~ 1.2내외로 설정  
         
         // 확대/축소 범위가 작을 경우 무시?
-        if(ABS(prevMultiLength - length) < 0.5) return;
+        if(ABS(prevDistance - newDistance) < 0.5) return;
         
-        if(prevMultiLength > length) {
+        if(prevDistance > newDistance) {
             if(viewScale <= 0.8f) return;
             
             changeScale = -MULTI_SCALE;
@@ -653,7 +669,7 @@
         
         [[commonValue sharedSingleton] setViewScale:viewScale];
         [[commonValue sharedSingleton] setTileMap:map];
-        prevMultiLength = length;
+        //prevMultiLength = length;
         
         // 일시 정지 해제
         [self resumeSchedulerAndActions];
@@ -709,13 +725,10 @@
 
 
 // 화면 터치로 이동시 맵타일 이동
-- (void) moveTouchMap:(CGPoint)currentPoint {
+- (void) moveTouchMap:(CGPoint)movePoint {
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    CGPoint movePoint = CGPointMake(currentPoint.x - prevPoint.x, currentPoint.y - prevPoint.y);
     CGPoint mapMove = [self checkMovePosition:CGPointMake(mapPosition.x + movePoint.x, mapPosition.y + movePoint.y)];
     
-    prevPoint = currentPoint;
     [[commonValue sharedSingleton] setMapPosition:CGPointMake(mapMove.x, mapMove.y)];
 }
 
