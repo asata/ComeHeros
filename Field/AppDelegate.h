@@ -1,11 +1,12 @@
 #import <UIKit/UIKit.h>
 #import "MainLayer.h"
+#import "GameLayer.h"
 
 @class RootViewController;
 
 @interface AppDelegate : NSObject <UIApplicationDelegate> {
 	UIWindow			*window;
-    playMap             *playGame;
+    GameLayer           *playGame;
 	RootViewController	*viewController;
 }
 

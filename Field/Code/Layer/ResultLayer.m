@@ -38,7 +38,7 @@
     [self addChild:menu z:pMainMenuLayer];
 }
 - (void) onQuit:(id)sender {
-    [GameLayer_ID Quit];
+    [GameLayer_ID endQuit];
 }
 
 @end

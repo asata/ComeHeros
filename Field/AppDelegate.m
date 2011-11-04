@@ -63,7 +63,7 @@
 	
     CCScene *scene = [CCScene node];
     
-    playGame = [playMap node];
+    playGame = [GameLayer node];
     CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers:[MainLayer node], playGame, nil];
     [scene addChild:layer z:0];
     

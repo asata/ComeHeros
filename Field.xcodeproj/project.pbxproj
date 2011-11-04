@@ -155,6 +155,7 @@
 		CB96AD75145812C400CAA1C5 /* Tile in Resources */ = {isa = PBXBuildFile; fileRef = CB96AD74145812C400CAA1C5 /* Tile */; };
 		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
+		CBBB630B1463992F005F3179 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CBBB630A1463992F005F3179 /* GameLayer.m */; };
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
 		CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */ = {isa = PBXBuildFile; fileRef = CBE6509C1460F6C1004C9E1E /* ModifyList */; };
 /* End PBXBuildFile section */
@@ -447,6 +448,8 @@
 		CB96AD771458452100CAA1C5 /* HouseHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HouseHandling.m; path = Code/Handling/HouseHandling.m; sourceTree = "<group>"; };
 		CBAD463113EF72E80008F5FA /* Warrior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Warrior.h; path = Code/Data/Warrior.h; sourceTree = "<group>"; };
 		CBAD463213EF72E90008F5FA /* Warrior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Warrior.m; path = Code/Data/Warrior.m; sourceTree = "<group>"; };
+		CBBB63091463992F005F3179 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = Code/Layer/GameLayer.h; sourceTree = "<group>"; };
+		CBBB630A1463992F005F3179 /* GameLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameLayer.m; path = Code/Layer/GameLayer.m; sourceTree = "<group>"; };
 		CBBBEF46144443910079525D /* sample.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample.tmx; path = Resources/TileMap/sample.tmx; sourceTree = "<group>"; };
 		CBE6509C1460F6C1004C9E1E /* ModifyList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ModifyList; path = Document/ModifyList; sourceTree = "<group>"; };
 		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
@@ -492,6 +495,8 @@
 				CB084FE11461F4E3003A875A /* ResultLayer.m */,
 				CB0E305A1461F93700D1DE6D /* TutorialLayer.h */,
 				CB0E305B1461F93700D1DE6D /* TutorialLayer.m */,
+				CBBB63091463992F005F3179 /* GameLayer.h */,
+				CBBB630A1463992F005F3179 /* GameLayer.m */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -1218,6 +1223,7 @@
 				CB084FD1146169FB003A875A /* PauseLayer.m in Sources */,
 				CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */,
 				CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */,
+				CBBB630B1463992F005F3179 /* GameLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
