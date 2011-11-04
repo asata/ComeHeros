@@ -46,11 +46,14 @@
 }
 
 - (void) dealloc {
+    NSLog(@"dealloc start");
     [self destoryGame];
+    NSLog(@"dealloc destory");
     
     [file release];
     [function release];
     
+    NSLog(@"dealloc release start");
     [warriorHandling release];
     [monsterHandling release];
     [trapHandling release];
@@ -59,8 +62,10 @@
     [labelTime release];
     [labelMoney release];
     [labelPoint release];
+    NSLog(@"dealloc release end");
     
     [super dealloc];
+    NSLog(@"dealloc end");
 }
 - (void) initGame {
     self.isTouchEnabled = YES;
@@ -144,6 +149,7 @@
         [self removeChild:tSprite cleanup:YES];
     }
      
+    //[[commonValue sharedSingleton] setTileMap:nil];
     [[commonValue sharedSingleton] setGamePause:NO];
     [[commonValue sharedSingleton] setGamePlaying:NO];
     
@@ -156,7 +162,7 @@
     [self removeChild:labelTime cleanup:YES];
     [self removeChild:labelPoint cleanup:YES];
     
-    [self unscheduleAllSelectors];
+    //[self unscheduleAllSelectors];
 }
 - (void) updateLabel {
     [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
@@ -206,8 +212,14 @@
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
     NSLog(@"result out");
+    [self unscheduleAllSelectors];
+    NSLog(@"unschedule");
     
+    //MainLayer *mainLayer = [MainLayer node];
+    //[self addChild:mainLayer z:kMainLayer];
+    NSLog(@"remove layer");
     [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
+    NSLog(@"removed layer");
 }
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 End                                                        //
@@ -314,7 +326,7 @@
     [[commonValue sharedSingleton] plusStageTime];
     
     if ([[commonValue sharedSingleton] getStageTime] / 5 != [[commonValue sharedSingleton] getWarriorNum]) return;
-    if ([[commonValue sharedSingleton] getStageWarriorCount] / 5 > [[commonValue sharedSingleton] getWarriorNum]) {
+    if ([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
         
         CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
@@ -333,7 +345,7 @@
     [self updateLabel];
     
     // 용사가 모두 죽었는지 검사
-    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount] / 5) {
+    if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount]) {
         [self gameEnd:GAME_VICTORY];
     } else {
         // 잠시 애니메이션 효과 중단

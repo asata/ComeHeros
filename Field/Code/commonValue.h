@@ -59,6 +59,8 @@
 // 타일맵과 관련된 정보
 - (void) setTileMap:(CCTMXTiledMap*)p_map;
 - (CCTMXTiledMap*) getTileMap;
+- (void) releaseTileMap;
+
 - (void) setMapPosition:(CGPoint)p_point;
 - (CGPoint) getMapPosition;
 

@@ -146,6 +146,7 @@
 		CB7B80AE13ED7B2C00FADB50 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80AD13ED7B2C00FADB50 /* AppDelegate.m */; };
 		CB7B80B113ED7B2C00FADB50 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80B013ED7B2C00FADB50 /* RootViewController.m */; };
 		CB7B80C213ED7B9B00FADB50 /* MainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7B80C113ED7B9B00FADB50 /* MainLayer.m */; };
+		CB81F9A61463EA1B00538E22 /* effect.png in Resources */ = {isa = PBXBuildFile; fileRef = CB81F9A51463EA1B00538E22 /* effect.png */; };
 		CB8A185D145EDA4200B6AA4A /* coordinates-character4.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8A185B145EDA4200B6AA4A /* coordinates-character4.plist */; };
 		CB8A185E145EDA4200B6AA4A /* texture-character.png in Resources */ = {isa = PBXBuildFile; fileRef = CB8A185C145EDA4200B6AA4A /* texture-character.png */; };
 		CB8A1861145EDBDF00B6AA4A /* dead.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8A185F145EDBDF00B6AA4A /* dead.plist */; };
@@ -437,6 +438,7 @@
 		CB7B80C013ED7B9B00FADB50 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainLayer.h; path = Code/Layer/MainLayer.h; sourceTree = "<group>"; };
 		CB7B80C113ED7B9B00FADB50 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainLayer.m; path = Code/Layer/MainLayer.m; sourceTree = "<group>"; };
 		CB7B80E213EEDCF400FADB50 /* define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = define.h; path = Code/Define/define.h; sourceTree = "<group>"; };
+		CB81F9A51463EA1B00538E22 /* effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = effect.png; sourceTree = "<group>"; };
 		CB8A185B145EDA4200B6AA4A /* coordinates-character4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "coordinates-character4.plist"; path = "Resources/Warrior/coordinates-character4.plist"; sourceTree = "<group>"; };
 		CB8A185C145EDA4200B6AA4A /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/Warrior/texture-character.png"; sourceTree = "<group>"; };
 		CB8A185F145EDBDF00B6AA4A /* dead.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = dead.plist; path = Resources/Warrior/dead.plist; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 		CB1E729A1462DDA100CAE737 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				CB81F9A51463EA1B00538E22 /* effect.png */,
 				CB1E729B1462DDA100CAE737 /* interface_object0000.png */,
 				CB1E729C1462DDA100CAE737 /* interface_object0001.png */,
 				CB1E729D1462DDA100CAE737 /* interface_object0002.png */,
@@ -1100,6 +1103,7 @@
 				CB1E72A01462DDA100CAE737 /* interface_object0001.png in Resources */,
 				CB1E72A11462DDA100CAE737 /* interface_object0002.png in Resources */,
 				CB1E72A21462DDA100CAE737 /* number_sprite.png in Resources */,
+				CB81F9A61463EA1B00538E22 /* effect.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -273,6 +273,9 @@ static commonValue      * _globalTest = nil;
 - (CCTMXTiledMap*) getTileMap {
     return map;
 }
+- (void) releaseTileMap {
+    [map release];
+}
 // 타일맵 좌표 관련
 - (void) setMapPosition:(CGPoint)p_point {
     map.position = p_point;

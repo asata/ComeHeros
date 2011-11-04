@@ -22,6 +22,7 @@
 // tPoint의 지정된 범위에 point가 존재하는지 검사
 - (BOOL) adjacentTrap:(CGPoint)pPoint point:(CGPoint)point range:(NSInteger)range;
 
+
 // 트랩 목록에 트랩 추가
 - (void) addTrap:(CGPoint)tPoint type:(NSInteger)tType;   
 // 지정된 위치의 타일 변경

@@ -90,8 +90,6 @@
         
     [[commonValue sharedSingleton] removeTrap:pTrap];
 }
-
-
 //////////////////////////////////////////////////////////////////////////
 // 트랩 처리 Start                                                        //
 //////////////////////////////////////////////////////////////////////////
@@ -329,17 +327,15 @@
 }
 - (void) rangeBombExplosive:(CGPoint)bombPoint {
     Coordinate *coordinate = [[Coordinate alloc] init];
-    
     for (NSInteger i = bombPoint.x - RANGE_EXPLOSIVE; i < bombPoint.x + RANGE_EXPLOSIVE + 1; i++) {
         for (NSInteger j = bombPoint.y - RANGE_EXPLOSIVE; j < bombPoint.y + RANGE_EXPLOSIVE + 1; j++) {
             NSInteger tileType = [[commonValue sharedSingleton] getMapInfo:i y:j] ;
             if (![self checkMoveTile:tileType]) continue;
             
-            CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0,0,32,32)];
+            CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
             [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
             [tFlame setVisible:YES];
-            [tFlame setScale:1.0f];
-            [[commonValue sharedSingleton] pushFlame:tFlame]; 
+            [[commonValue sharedSingleton] pushFlame:tFlame];
         }
     }
 }

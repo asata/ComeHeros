@@ -86,7 +86,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif// CC_FONT_LABEL_SUPPORT
 
 
-// For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
+// For Labels use 16-bit textures on iPhone 3GS / iPads since A8 textures are very slow
 #if (defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR) && CC_USE_LA88_LABELS_ON_NEON_ARCH
 #define USE_TEXT_WITH_A8_TEXTURES 0
 
@@ -112,6 +112,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
+		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 		glGenTextures(1, &name_);
 		glBindTexture(GL_TEXTURE_2D, name_);
 
@@ -133,7 +134,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 			case kCCTexture2DPixelFormat_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
-			case kCCTexture2DPixelFormat_LA88:
+			case kCCTexture2DPixelFormat_AI88:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			case kCCTexture2DPixelFormat_A8:
@@ -240,9 +241,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		
 	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		CCLOG(@"cocos2d: WARNING: Image (%d x %d) is bigger than the supported %d x %d",
-			  (unsigned int)POTWide, (unsigned int)POTHigh,
-			  (unsigned int)maxTextureSize, (unsigned int)maxTextureSize);
+		CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+			  (long)POTWide, (long)POTHigh,
+			  (long)maxTextureSize, (long)maxTextureSize);
 		[self release];
 		return nil;
 	}
@@ -368,7 +369,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment font:(id)uifont
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(id)uifont
 {
 	NSAssert( uifont, @"Invalid font");
 	
@@ -403,11 +404,11 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
 	
 #if CC_FONT_LABEL_SUPPORT
 	else // ZFont class 
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
+		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:lineBreakMode alignment:alignment];
 #endif
 	
 	UIGraphicsPopContext();
@@ -418,10 +419,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 #else // ! USE_TEXT_WITH_A8_TEXTURES
 	NSUInteger textureSize = POTWide*POTHigh;
 	unsigned short *la88_data = (unsigned short*)data;
-	for(int i = textureSize-1; i>=0; i--) //Convert A8 to LA88
+	for(int i = textureSize-1; i>=0; i--) //Convert A8 to AI88
 		la88_data[i] = (data[i] << 8) | 0xff;
 	
-	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_LA88 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_AI88 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 #endif // ! USE_TEXT_WITH_A8_TEXTURES
 
 	CGContextRelease(context);
@@ -429,6 +430,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 			
 	return self;
 }
+
+
 				 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
@@ -510,22 +513,21 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 	
-	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter font:font];
+	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter lineBreakMode:UILineBreakModeWordWrap font:font];
 	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	{
 
-		NSAttributedString *stringWithAttributes =
-		[[[NSAttributedString alloc] initWithString:string
-										 attributes:[NSDictionary dictionaryWithObject:[[NSFontManager sharedFontManager]
-																						fontWithFamily:name
-																						traits:NSUnboldFontMask | NSUnitalicFontMask
-																						weight:0
-																						size:size]
-																				forKey:NSFontAttributeName]
-		  ]
-		 autorelease];
-	
+		NSFont *font = [[NSFontManager sharedFontManager]
+									  fontWithFamily:name
+									  traits:NSUnboldFontMask | NSUnitalicFontMask
+									  weight:0
+									  size:size];
+
+		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];	
+
+		NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:dict] autorelease];
+
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
 				
 		return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter attributedString:stringWithAttributes];
@@ -536,11 +538,16 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
+	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
+}
+
+- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+{
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	id						uifont = nil;
-
+	
 	uifont = [UIFont fontWithName:name size:size];
-
+	
 #if CC_FONT_LABEL_SUPPORT
 	if( ! uifont )
 		uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
@@ -551,10 +558,12 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 	
-	return [self initWithString:string dimensions:dimensions alignment:alignment font:uifont];
+	return [self initWithString:string dimensions:dimensions alignment:alignment lineBreakMode:lineBreakMode font:uifont];
 	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	
+	NSAssert( lineBreakMode == CCLineBreakModeWordWrap, @"CCTexture2D: unsupported line break mode for Mac OS X");
+
 	//String with attributes
 	NSAttributedString *stringWithAttributes =
 	[[[NSAttributedString alloc] initWithString:string
@@ -568,7 +577,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	 autorelease];
 	
 	return [self initWithString:string dimensions:dimensions alignment:alignment attributedString:stringWithAttributes];
-		
+	
 #endif // Mac
 }
 @end
@@ -582,7 +591,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
--(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length
+-(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat
 {
 	//	GLint					saveName;
 	
@@ -616,6 +625,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		maxS_ = 1.0f;
 		maxT_ = 1.0f;
 		hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+		format_ = pixelFormat;
 	}					
 	return self;
 }
@@ -635,6 +645,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			height_ = pvr.height;
 			size_ = CGSizeMake(width_, height_);
 			hasPremultipliedAlpha_ = PVRHaveAlphaPremultiplied_;
+			format_ = pvr.format;
 			
 			[pvr release];
 			
@@ -757,6 +768,47 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 +(CCTexture2DPixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixelFormat_;
+}
+
+-(NSUInteger) bitsPerPixelForFormat
+{
+	NSUInteger ret=0;
+
+	switch (format_) {
+		case kCCTexture2DPixelFormat_RGBA8888:
+			ret = 32;
+			break;
+		case kCCTexture2DPixelFormat_RGB565:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_A8:
+			ret = 8;
+			break;
+		case kCCTexture2DPixelFormat_RGBA4444:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_RGB5A1:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_PVRTC4:
+			ret = 4;
+			break;
+		case kCCTexture2DPixelFormat_PVRTC2:
+			ret = 2;
+			break;
+		case kCCTexture2DPixelFormat_I8:
+			ret = 8;
+			break;
+		case kCCTexture2DPixelFormat_AI88:
+			ret = 16;
+			break;
+		default:
+			ret = -1;
+			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format_);
+			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format_);
+			break;
+	}
+	return ret;
 }
 @end
 
