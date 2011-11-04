@@ -6,4 +6,6 @@
     
 }
 - (void) menuCallBack:(id) sender;
+- (void) stageSelectCallBack:(id)sender;
+
 @end

@@ -27,7 +27,9 @@ static NSInteger        stagePoint;          // 게임 점수
 static NSInteger        stageMoney;          // 게임에 필요한 돈
 static NSInteger        stageTime;           // 게임 시간
 static NSInteger        stageLife;           // 생명
-static NSInteger        stageLevel;          // 
+static NSInteger        stageLevel;          // 게임 레벨
+static NSString         *mapName;
+static NSDictionary     *gameData;
 static NSInteger        killWarriorNum;      // 죽인 용사 수
 
 static BOOL             gamePause;
@@ -152,6 +154,19 @@ static commonValue      * _globalTest = nil;
 }
 - (void) plusKillWarriorNum {
     killWarriorNum++;
+}
+
+- (void) setMapName:(NSString*)pName {
+    mapName = pName;
+}
+- (NSString*) getMapName {
+    return mapName;
+}
+- (void) setGameData:(NSDictionary*)pData {
+    gameData = pData;
+}
+- (NSDictionary*) getGameData {
+    return gameData;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

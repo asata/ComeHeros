@@ -33,14 +33,17 @@
 }
 
 // 스테이지 정보를 읽어 전역 변수에 저장
+- (void) loadGameData:(NSString *)path {
+    [[commonValue sharedSingleton] setGameData:[[NSMutableDictionary alloc] initWithContentsOfFile: path]];
+}
 - (void) loadStageData:(NSString *)path {
-    stageInfo = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    NSDictionary *fList = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
     
-    //load from savedStock example int value
-    //int StageLevel = [[savedStock objectForKey:@"StageLevel"] intValue];
+    stageInfo = [fList objectForKey:[NSString stringWithFormat:@"%d", [[commonValue sharedSingleton] getStageLevel]]];
+    [[commonValue sharedSingleton] setMapName:[stageInfo objectForKey:@"MapName"]];
+    [[commonValue sharedSingleton] setStageLife:[[stageInfo objectForKey:@"Life"] intValue]];
+    [[commonValue sharedSingleton] setStageMoney:[[stageInfo objectForKey:@"Money"] intValue]];
     
-    // map.tmx의 경우 문자열을 조합하여 불러들임 - 요걸로 하니 에러가 발생 ㅠㅠ 
-    //[savedStock objectForKey:@"MapName"];
     NSDictionary *tList = [stageInfo objectForKey:@"WarriorList"];
     [[commonValue sharedSingleton] setStageWarriorCount:[tList count]];
 }

@@ -64,7 +64,10 @@
     CCScene *scene = [CCScene node];
     
     playGame = [GameLayer node];
-    CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers:[MainLayer node], playGame, nil];
+    CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers:[MainLayer node], 
+                               [StageSelectLayer node],
+                               playGame, 
+                               nil];
     [scene addChild:layer z:0];
     
     [[CCDirector sharedDirector] runWithScene:scene];

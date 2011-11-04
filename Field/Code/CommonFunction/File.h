@@ -8,6 +8,7 @@
 
 // 파일 처리 함수
 - (NSString *) loadFilePath:(NSString *)fileName;
+- (void) loadGameData:(NSString *)path;
 - (void) loadStageData:(NSString *)path;
 - (NSDictionary *) loadWarriorInfo:(NSInteger)index;
 

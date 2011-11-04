@@ -41,6 +41,11 @@
 - (NSInteger) getKillWarriorNum;
 - (void) plusKillWarriorNum;
 
+- (void) setMapName:(NSString*)pName;
+- (NSString*) getMapName;
+- (void) setGameData:(NSDictionary*)pData;
+- (NSDictionary*) getGameData;
+
 - (void) setGamePause:(BOOL)flag;
 - (BOOL) getGamePause;
 - (void) setGamePlaying:(BOOL)flag;

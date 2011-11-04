@@ -30,9 +30,9 @@
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 // File Name
-#define FILE_TILE_MAP               @"sample.tmx"
+//#define FILE_TILE_MAP               @"sample.tmx"
 
-#define FILE_STAGE_PLIST            @"Stage161.plist"
+#define FILE_STAGE_PLIST            @"Stage_test13.plist"
 #define FILE_CHARATER_PLIST         @"coordinates-character4.plist"
 #define FILE_MONSTER_PLIST          @"coordinates-monster.plist"
 #define FILE_DEATH_MONSTER_PLIST    @"monster.plist"
@@ -85,10 +85,11 @@
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 // 게임 화면 관련
-#define MAIN_LAYER              0       
-#define GAME_LAYER              1    
-#define SCORE_LAYER             2
-#define PAUSE_LAYER             3
+#define MAIN_LAYER              0    
+#define STAGE_LAYER             1
+#define GAME_LAYER              2    
+#define SCORE_LAYER             3
+#define PAUSE_LAYER             4
 
 #define PAUSE_MENU_POSITION     ccp(460, 300)   // 일시정지/재개
 #define TIME_LABEL_POSITION     ccp(220, 300)   // 게임 진행 시간 표시

@@ -25,8 +25,10 @@
 		CB3F480B145E848500637665 /* monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3F4809145E848500637665 /* monster.plist */; };
 		CB3F480C145E848500637665 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3F480A145E848500637665 /* monster.png */; };
 		CB40EEEE145D6E1600E48B34 /* Info in Resources */ = {isa = PBXBuildFile; fileRef = CB40EEED145D6E1600E48B34 /* Info */; };
+		CB4A737E146412EE000B1BDD /* StageSelectLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4A737D146412EE000B1BDD /* StageSelectLayer.m */; };
 		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
 		CB4EF9431415D45600868903 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF9411415D45600868903 /* Trap.m */; };
+		CB50551314640CF60023893F /* Stage_test13.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB50551214640CF60023893F /* Stage_test13.plist */; };
 		CB64DA2914515A4B00C3D1C0 /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2814515A4B00C3D1C0 /* Function.m */; };
 		CB64DA2B1451623200C3D1C0 /* commonValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2A1451623200C3D1C0 /* commonValue.m */; };
 		CB6B28381456AE6500DB68B9 /* coordinates-monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB6B28361456AE6500DB68B9 /* coordinates-monster.plist */; };
@@ -192,10 +194,13 @@
 		CB3F4809145E848500637665 /* monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = monster.plist; path = Resources/Monster/monster.plist; sourceTree = "<group>"; };
 		CB3F480A145E848500637665 /* monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster.png; path = Resources/Monster/monster.png; sourceTree = "<group>"; };
 		CB40EEED145D6E1600E48B34 /* Info */ = {isa = PBXFileReference; lastKnownFileType = file; name = Info; path = Document/Info; sourceTree = "<group>"; };
+		CB4A737C146412EE000B1BDD /* StageSelectLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StageSelectLayer.h; path = Code/Layer/StageSelectLayer.h; sourceTree = "<group>"; };
+		CB4A737D146412EE000B1BDD /* StageSelectLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StageSelectLayer.m; path = Code/Layer/StageSelectLayer.m; sourceTree = "<group>"; };
 		CB4EF93E1415D45600868903 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = Code/Data/Monster.h; sourceTree = "<group>"; };
 		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Data/Monster.m; sourceTree = "<group>"; };
 		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Data/Trap.h; sourceTree = "<group>"; };
 		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Data/Trap.m; sourceTree = "<group>"; };
+		CB50551214640CF60023893F /* Stage_test13.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test13.plist; path = Resources/StageInfo/Stage_test13.plist; sourceTree = "<group>"; };
 		CB64DA24145156D900C3D1C0 /* commonValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonValue.h; path = Code/commonValue.h; sourceTree = "<group>"; };
 		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Function.h; path = Code/CommonFunction/Function.h; sourceTree = "<group>"; };
 		CB64DA2814515A4B00C3D1C0 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Function.m; path = Code/CommonFunction/Function.m; sourceTree = "<group>"; };
@@ -499,6 +504,8 @@
 				CB0E305B1461F93700D1DE6D /* TutorialLayer.m */,
 				CBBB63091463992F005F3179 /* GameLayer.h */,
 				CBBB630A1463992F005F3179 /* GameLayer.m */,
+				CB4A737C146412EE000B1BDD /* StageSelectLayer.h */,
+				CB4A737D146412EE000B1BDD /* StageSelectLayer.m */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -1019,6 +1026,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
+				CB50551214640CF60023893F /* Stage_test13.plist */,
 				CBF4D3F7141B5C39001528FA /* Stage161.plist */,
 			);
 			name = StageInfo;
@@ -1104,6 +1112,7 @@
 				CB1E72A11462DDA100CAE737 /* interface_object0002.png in Resources */,
 				CB1E72A21462DDA100CAE737 /* number_sprite.png in Resources */,
 				CB81F9A61463EA1B00538E22 /* effect.png in Resources */,
+				CB50551314640CF60023893F /* Stage_test13.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1228,6 +1237,7 @@
 				CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */,
 				CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */,
 				CBBB630B1463992F005F3179 /* GameLayer.m in Sources */,
+				CB4A737E146412EE000B1BDD /* StageSelectLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,11 @@
                                             itemWithTarget:self
                                             selector:@selector(menuCallBack:)
                                             items:[CCMenuItemFont itemFromString:@"잉여잉여"], nil];
-        CCMenu *techniqueTrainingMenu = [CCMenu menuWithItems:techniqueItem1, nil];
+        CCMenuItemToggle *techniqueItem2 = [CCMenuItemToggle 
+                                            itemWithTarget:self
+                                            selector:@selector(stageSelectCallBack:)
+                                            items:[CCMenuItemFont itemFromString:@"StageSelect"], nil];
+        CCMenu *techniqueTrainingMenu = [CCMenu menuWithItems:techniqueItem1, techniqueItem2, nil];
         techniqueTrainingMenu.position = ccp(deviceSize.width / 2, deviceSize.height / 2);
         [techniqueTrainingMenu alignItemsVerticallyWithPadding:15];
         [self addChild:techniqueTrainingMenu];
@@ -28,6 +32,10 @@
 - (void) menuCallBack:(id) sender {
     [[commonValue sharedSingleton] setStageLevel:1];
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+}
+
+- (void) stageSelectCallBack:(id)sender {
+    [(CCLayerMultiplex*)parent_ switchTo:STAGE_LAYER];
 }
 
 @end

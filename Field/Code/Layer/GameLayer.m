@@ -37,8 +37,6 @@
     // tutorialLayer = [[TutorialLayer alloc] init];
     // [call TutorialLayer]
     
-    gameEnd = NO;
-    
     // 일정한 간격으로 호출~
     [self schedule:@selector(moveAction:) interval:REFRESH_DISPLAY_TIME];
     [self schedule:@selector(createWarriorAtTime:) interval:CREATE_WARRIOR_TIME];
@@ -46,14 +44,11 @@
 }
 
 - (void) dealloc {
-    NSLog(@"dealloc start");
     [self destoryGame];
-    NSLog(@"dealloc destory");
     
     [file release];
     [function release];
     
-    NSLog(@"dealloc release start");
     [warriorHandling release];
     [monsterHandling release];
     [trapHandling release];
@@ -62,10 +57,8 @@
     [labelTime release];
     [labelMoney release];
     [labelPoint release];
-    NSLog(@"dealloc release end");
     
     [super dealloc];
-    NSLog(@"dealloc end");
 }
 - (void) initGame {
     self.isTouchEnabled = YES;
@@ -85,6 +78,11 @@
     
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadStageData:path];
+    
+    NSLog(@"Stage Info Init");
+    NSLog(@"MapName : %@", [[commonValue sharedSingleton] getMapName]);
+    NSLog(@"Life : %d", [[commonValue sharedSingleton] getStageLife]);
+    NSLog(@"Money : %d", [[commonValue sharedSingleton] getStageMoney]);
     
     [self initMap]; 
     [self initMenu];
@@ -203,7 +201,6 @@
     [self removeChild:pauseLayer cleanup:YES];
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
-    NSLog(@"pause out");
     
     [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
 }
@@ -211,15 +208,9 @@
     [self removeChild:resultLayer cleanup:YES];
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
-    NSLog(@"result out");
-    [self unscheduleAllSelectors];
-    NSLog(@"unschedule");
+    [self unscheduleAllSelectors];    
     
-    //MainLayer *mainLayer = [MainLayer node];
-    //[self addChild:mainLayer z:kMainLayer];
-    NSLog(@"remove layer");
     [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
-    NSLog(@"removed layer");
 }
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 End                                                        //
@@ -246,7 +237,7 @@
 // 타일맵 등록
 - (void) initMap {
     // 타일 맵 등록
-    CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:FILE_TILE_MAP];
+    CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:[[commonValue sharedSingleton] getMapName]];
     map.scale = MAP_SCALE * [[commonValue sharedSingleton] getViewScale];
     // 왼쪽 상단에 맵 왼쪽 상단이 위치하도록 설정(하지 않을 경우 왼쪽 하단에 맵 왼쪽 하단이 위치) 
     map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
