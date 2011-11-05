@@ -19,14 +19,23 @@
 		<integer>2</integer>
 		<key>Money</key>
 		<integer>100</integer>
+		<key>isCleared</key>
+		<false/>
 		<key>WarriorList</key>
 		<dict>
-			<key>1</key>
+			<key>0</key>
 			<dict>
 				<key>Type</key>
 				<integer>0</integer>
 				<key>Time</key>
 				<integer>0</integer>
+			</dict>
+			<key>1</key>
+			<dict>
+				<key>Type</key>
+				<integer>0</integer>
+				<key>Time</key>
+				<integer>5</integer>
 			</dict>
 		</dict>
 		<key>TileList</key>
@@ -44,14 +53,23 @@
 		<integer>2</integer>
 		<key>Money</key>
 		<integer>100</integer>
+		<key>isCleared</key>
+		<false/>
 		<key>WarriorList</key>
 		<dict>
-			<key>1</key>
+			<key>0</key>
 			<dict>
 				<key>Type</key>
 				<integer>0</integer>
 				<key>Time</key>
-				<integer>0</integer>
+				<integer>3</integer>
+			</dict>
+			<key>1</key>
+			<dict>
+				<key>Type</key>
+				<integer>1</integer>
+				<key>Time</key>
+				<integer>5</integer>
 			</dict>
 		</dict>
 		<key>TileList</key>
@@ -68,15 +86,45 @@
 		<key>Life</key>
 		<integer>2</integer>
 		<key>Money</key>
-		<integer>100</integer>
+		<integer>50</integer>
+		<key>isCleared</key>
+		<false/>
 		<key>WarriorList</key>
 		<dict>
+			<key>0</key>
+			<dict>
+				<key>Type</key>
+				<integer>1</integer>
+				<key>Time</key>
+				<integer>0</integer>
+			</dict>
 			<key>1</key>
 			<dict>
 				<key>Type</key>
 				<integer>0</integer>
 				<key>Time</key>
+				<integer>5</integer>
+			</dict>
+			<key>2</key>
+			<dict>
+				<key>Type</key>
+				<integer>2</integer>
+				<key>Time</key>
+				<integer>8</integer>
+			</dict>
+			<key>3</key>
+			<dict>
+				<key>Type</key>
+				<integer>1</integer>
+				<key>Time</key>
+				<integer>12</integer>
+			</dict>
+			<key>4</key>
+			<dict>
+				<key>Type</key>
 				<integer>0</integer>
+				<key>Time</key>
+				<integer>15</integer>
 			</dict>
 		</dict>
 		<key>TileList</key>
