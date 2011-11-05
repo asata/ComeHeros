@@ -206,7 +206,6 @@
         }
     }
     
-    NSLog(@"%f %f %f %f", minPoint.x, minPoint.y, maxPoint.x, maxPoint.y);
     [self rangeBombTreasure:minPoint maxPoint:maxPoint];
     
     [[commonValue sharedSingleton] setMoveTable:[pTrap getPosition].x y:[pTrap getPosition].y direction:MoveNone];
@@ -358,7 +357,7 @@
         tSprite.scale = tSprite.scale * 0.9;
         [pWarrior setMoveSpeed:0];
         [pWarrior setPower:0];
-        [pWarrior setStrength:[pWarrior getStrength] - DEMAGE_TRAP];
+        [pWarrior setDefense:999];
         
         return YES;
     } else {

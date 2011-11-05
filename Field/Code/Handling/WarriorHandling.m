@@ -77,24 +77,30 @@
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
     Coordinate *coordinate = [[Coordinate alloc] init];
+    File *file = [[File alloc] init];
     
-    NSInteger warriorType = [[wInfo objectForKey:@"name"] intValue];
+    
+    NSInteger warriorType = [[wInfo objectForKey:@"Type"] intValue];
+    NSArray *warriorName = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
+    
+    NSString *path = [file loadFilePath:@"ChareaterInfo.plist"];
+    NSDictionary *chareterList = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    NSDictionary *warriorList = [chareterList objectForKey:@"Warrior"];
+    NSDictionary *data = [warriorList objectForKey:[warriorName objectAtIndex:warriorType]];
     
     // 용사 생성
     Warrior *tWarrior = [[Warrior alloc] initWarrior:[coordinate convertTileToMap:sPoint]
                                           warriorNum:[[commonValue sharedSingleton] getWarriorNum]
-                                            strength:100 
-                                               power:20 
-                                           intellect:30
-                                             defense:10 
-                                               speed:4   //[[wInfo objectForKey:@"speed"] intValue] 
+                                            strength:[[data objectForKey:@"strength"] intValue]
+                                               power:[[data objectForKey:@"power"] intValue]
+                                           intellect:[[data objectForKey:@"intellect"] intValue]
+                                             defense:[[data objectForKey:@"defense"] intValue] 
+                                               speed:[[data objectForKey:@"speed"] intValue] 
                                            direction:MoveUp
-                                         attackRange:1]; 
+                                         attackRange:[[data objectForKey:@"range"] intValue]]; 
     
     // 나타난 용사 수 증가
     [[commonValue sharedSingleton] plusWarriorNum];
-    
-    NSArray *warriorName = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
     CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadWarriorSprite:[warriorName objectAtIndex:warriorType]]];
     tSprite.position = ccp((sPoint.x * viewScale) + mapPosition.x, (sPoint.y * viewScale) + mapPosition.y); 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
@@ -113,7 +119,7 @@
     [tWarrior setDeathAnimate:tombstoneAnimate];
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
-    NSLog(@"Create Warrior");
+    NSLog(@"Create Warrior Type : %d", warriorType);
     
     [[commonValue sharedSingleton] addWarrior:tWarrior];
     

@@ -23,13 +23,14 @@
 		CB29B9701451BB93005D7C1E /* File.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B96F1451BB93005D7C1E /* File.m */; };
 		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
 		CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2D825314652DAD00B1BEE6 /* bg_result.png */; };
+		CB2D826614653CE300B1BEE6 /* Stage_test18.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test18.plist */; };
+		CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */; };
 		CB3F480B145E848500637665 /* monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3F4809145E848500637665 /* monster.plist */; };
 		CB3F480C145E848500637665 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3F480A145E848500637665 /* monster.png */; };
 		CB40EEEE145D6E1600E48B34 /* Info in Resources */ = {isa = PBXBuildFile; fileRef = CB40EEED145D6E1600E48B34 /* Info */; };
 		CB4A737E146412EE000B1BDD /* StageSelectLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4A737D146412EE000B1BDD /* StageSelectLayer.m */; };
 		CB4EF9421415D45600868903 /* Monster.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF93F1415D45600868903 /* Monster.m */; };
 		CB4EF9431415D45600868903 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4EF9411415D45600868903 /* Trap.m */; };
-		CB50551314640CF60023893F /* Stage_test13.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB50551214640CF60023893F /* Stage_test13.plist */; };
 		CB64DA2914515A4B00C3D1C0 /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2814515A4B00C3D1C0 /* Function.m */; };
 		CB64DA2B1451623200C3D1C0 /* commonValue.m in Sources */ = {isa = PBXBuildFile; fileRef = CB64DA2A1451623200C3D1C0 /* commonValue.m */; };
 		CB6B28381456AE6500DB68B9 /* coordinates-monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB6B28361456AE6500DB68B9 /* coordinates-monster.plist */; };
@@ -155,7 +156,6 @@
 		CB8A1861145EDBDF00B6AA4A /* dead.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8A185F145EDBDF00B6AA4A /* dead.plist */; };
 		CB8A1862145EDBDF00B6AA4A /* dead.png in Resources */ = {isa = PBXBuildFile; fileRef = CB8A1860145EDBDF00B6AA4A /* dead.png */; };
 		CB96AD701457D7EB00CAA1C5 /* House.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD6F1457D7EA00CAA1C5 /* House.m */; };
-		CB96AD73145805C500CAA1C5 /* Stage161.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBF4D3F7141B5C39001528FA /* Stage161.plist */; };
 		CB96AD75145812C400CAA1C5 /* Tile in Resources */ = {isa = PBXBuildFile; fileRef = CB96AD74145812C400CAA1C5 /* Tile */; };
 		CB96AD781458452200CAA1C5 /* HouseHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = CB96AD771458452100CAA1C5 /* HouseHandling.m */; };
 		CBAD463313EF72E90008F5FA /* Warrior.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAD463213EF72E90008F5FA /* Warrior.m */; };
@@ -165,6 +165,18 @@
 		CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */ = {isa = PBXBuildFile; fileRef = CBC72D051464E85A00FB5ECA /* num_and_alpa.png */; };
 		CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */ = {isa = PBXBuildFile; fileRef = CBE6509C1460F6C1004C9E1E /* ModifyList */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB2D825E14653A4900B1BEE6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDefine.h; path = Code/Define/MapDefine.h; sourceTree = "<group>"; };
@@ -194,6 +206,8 @@
 		CB29B9711451BF2F005D7C1E /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Coordinate.h; path = Code/CommonFunction/Coordinate.h; sourceTree = "<group>"; };
 		CB29B9721451BF2F005D7C1E /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Coordinate.m; path = Code/CommonFunction/Coordinate.m; sourceTree = "<group>"; };
 		CB2D825314652DAD00B1BEE6 /* bg_result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_result.png; sourceTree = "<group>"; };
+		CB2D826514653CE300B1BEE6 /* Stage_test18.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test18.plist; path = Resources/StageInfo/Stage_test18.plist; sourceTree = "<group>"; };
+		CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ChareaterInfo.plist; path = Resources/ChareaterInfo.plist; sourceTree = "<group>"; };
 		CB3B022B1447A670004A1258 /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/TileMap/texture-character.png"; sourceTree = "<group>"; };
 		CB3F4809145E848500637665 /* monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = monster.plist; path = Resources/Monster/monster.plist; sourceTree = "<group>"; };
 		CB3F480A145E848500637665 /* monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster.png; path = Resources/Monster/monster.png; sourceTree = "<group>"; };
@@ -204,7 +218,6 @@
 		CB4EF93F1415D45600868903 /* Monster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Monster.m; path = Code/Data/Monster.m; sourceTree = "<group>"; };
 		CB4EF9401415D45600868903 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = Code/Data/Trap.h; sourceTree = "<group>"; };
 		CB4EF9411415D45600868903 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = Code/Data/Trap.m; sourceTree = "<group>"; };
-		CB50551214640CF60023893F /* Stage_test13.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test13.plist; path = Resources/StageInfo/Stage_test13.plist; sourceTree = "<group>"; };
 		CB64DA24145156D900C3D1C0 /* commonValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commonValue.h; path = Code/commonValue.h; sourceTree = "<group>"; };
 		CB64DA2714515A4B00C3D1C0 /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Function.h; path = Code/CommonFunction/Function.h; sourceTree = "<group>"; };
 		CB64DA2814515A4B00C3D1C0 /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Function.m; path = Code/CommonFunction/Function.m; sourceTree = "<group>"; };
@@ -467,7 +480,6 @@
 		CBC72D051464E85A00FB5ECA /* num_and_alpa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = num_and_alpa.png; sourceTree = "<group>"; };
 		CBC72D091464EEC800FB5ECA /* ResultDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResultDefine.h; path = Code/Define/ResultDefine.h; sourceTree = "<group>"; };
 		CBE6509C1460F6C1004C9E1E /* ModifyList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ModifyList; path = Document/ModifyList; sourceTree = "<group>"; };
-		CBF4D3F7141B5C39001528FA /* Stage161.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage161.plist; path = Resources/StageInfo/Stage161.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -683,6 +695,7 @@
 				CB7B7F6C13ED7B2200FADB50 /* Info.plist */,
 				CBC72D031464E68D00FB5ECA /* Localizable.strings */,
 				CB7B7F6D13ED7B2200FADB50 /* iTunesArtwork */,
+				CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1038,8 +1051,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CB50551214640CF60023893F /* Stage_test13.plist */,
-				CBF4D3F7141B5C39001528FA /* Stage161.plist */,
+				CB2D826514653CE300B1BEE6 /* Stage_test18.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -1054,6 +1066,7 @@
 				CB7B7F4213ED7B2100FADB50 /* Sources */,
 				CB7B7F4313ED7B2100FADB50 /* Frameworks */,
 				CB7B7F4413ED7B2100FADB50 /* Resources */,
+				CB2D825E14653A4900B1BEE6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1095,7 +1108,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB96AD73145805C500CAA1C5 /* Stage161.plist in Resources */,
 				CB7B7F5D13ED7B2200FADB50 /* Default.png in Resources */,
 				CB7B7F5F13ED7B2200FADB50 /* fps_images.png in Resources */,
 				CB7B7F6113ED7B2200FADB50 /* Icon-72.png in Resources */,
@@ -1125,10 +1137,11 @@
 				CB1E72A11462DDA100CAE737 /* interface_object0002.png in Resources */,
 				CB1E72A21462DDA100CAE737 /* number_sprite.png in Resources */,
 				CB81F9A61463EA1B00538E22 /* effect.png in Resources */,
-				CB50551314640CF60023893F /* Stage_test13.plist in Resources */,
 				CBC72D011464E68D00FB5ECA /* Localizable.strings in Resources */,
 				CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */,
 				CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */,
+				CB2D826614653CE300B1BEE6 /* Stage_test18.plist in Resources */,
+				CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

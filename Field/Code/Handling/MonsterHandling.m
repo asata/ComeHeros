@@ -72,20 +72,27 @@
     CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
     CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     Coordinate *coordinate = [[Coordinate alloc] init];
+    File *file = [[File alloc] init];
+    
+    NSArray *monsterName = [NSArray arrayWithObjects: @"vampire", @"skeleton", @"spirite", nil]; 
+    
+    NSString *path = [file loadFilePath:@"ChareaterInfo.plist"];
+    NSDictionary *chareterList = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    NSDictionary *warriorList = [chareterList objectForKey:@"Monster"];
+    NSDictionary *data = [warriorList objectForKey:[monsterName objectAtIndex:monsterType]];
     
     // 몬스터 생성
     Monster *tMonster = [[Monster alloc] initMonster:[coordinate convertTileToMap:position]
                                           monsterNum:[[commonValue sharedSingleton] getMonsterNum]
-                                            strength:100 
-                                               power:14 
-                                           intellect:40
-                                             defense:10 
-                                               speed:8   //[[wInfo objectForKey:@"speed"] intValue] 
+                                            strength:[[data objectForKey:@"strength"] intValue] 
+                                               power:[[data objectForKey:@"power"] intValue] 
+                                           intellect:[[data objectForKey:@"intellect"] intValue]
+                                             defense:[[data objectForKey:@"defense"] intValue] 
+                                               speed:[[data objectForKey:@"speed"] intValue]
                                            direction:MoveUp
-                                         attackRange:2 
+                                         attackRange:[[data objectForKey:@"range"] intValue] 
                                             houseNum:pHouse]; 
     
-    NSArray *monsterName = [NSArray arrayWithObjects: @"vampire", @"skeleton", @"spirite", nil]; 
     CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadMonsterSprite:[monsterName objectAtIndex:monsterType]]];
     tSprite.position = ccp((position.x * viewScale) + mapPosition.x, (position.y * viewScale) + mapPosition.y); 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT]; 

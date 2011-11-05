@@ -94,7 +94,6 @@
     NSInteger pointHero = [[commonValue sharedSingleton] getKillWarriorNum];
     NSInteger totalHero = [[commonValue sharedSingleton] getStageWarriorCount];
     NSInteger pointTime = [[commonValue sharedSingleton] getStageTime];
-    NSLog(@"%d %d", [[commonValue sharedSingleton] getTrapNum], [[commonValue sharedSingleton] getHouseNum]);
     labelPointTrap = [CCLabelAtlas labelWithString:[NSString stringWithFormat:@"%d/%d", pointTrap, totalTrap]
                                                      charMapFile:FILE_NUMBER_IMG 
                                                        itemWidth:32

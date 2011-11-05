@@ -84,6 +84,7 @@
     NSLog(@"MapName : %@", [[commonValue sharedSingleton] getMapName]);
     NSLog(@"Life : %d", [[commonValue sharedSingleton] getStageLife]);
     NSLog(@"Money : %d", [[commonValue sharedSingleton] getStageMoney]);
+    NSLog(@"Warrior Num : %d", [[commonValue sharedSingleton] getStageWarriorCount]);
     
     [self initMap]; 
     [self initMenu];
@@ -317,7 +318,8 @@
 - (void) createWarriorAtTime:(id) sender {
     for (NSInteger i = [[commonValue sharedSingleton] getWarriorNum]; 
          i < [[commonValue sharedSingleton] getStageWarriorCount]; i++) {
-        NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
+        NSDictionary *wInfo = [file loadWarriorInfo:i];
+        
         if([[wInfo objectForKey:@"Time"] intValue] == [[commonValue sharedSingleton] getStageTime]) {
             CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
             [self addChild:tSprite 
