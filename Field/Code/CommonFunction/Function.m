@@ -77,17 +77,30 @@
     return YES;
 }
 
+// 공격을 할 수 있는 대상인지 검사
+// direction    : 공격자의 이동 방향
+// point1       : 공격 대상의 위치
+// point2       : 공격자 위치
 - (BOOL) positionSprite:(NSInteger)direction point1:(CGPoint)point1 point2:(CGPoint)point2 {
     if (direction == MoveUp || direction == MoveDown) return YES;
     else if (direction == MoveLeft) {
-        if (point1.x > point2.x) return YES;
+        if (point1.x < point2.x) return YES;
         else return NO;
     } else if (direction == MoveRight) {
-        if (point1.x < point2.x) return YES;
+        if (point1.x > point2.x) return YES;
         else return NO;
     }
 
     return NO;
+}
+
+// point1       : 공격 대상의 위치
+// point2       : 공격자 위치
+- (BOOL) attackDirection:(CGPoint)point1 point2:(CGPoint)point2 {
+    if(point1.x < point2.x) return WARRIOR_MOVE_LEFT;
+    else return WARRIOR_MOVE_RIGHT;
+    
+    return WARRIOR_MOVE_RIGHT;
 }
 //////////////////////////////////////////////////////////////////////////
 // 기타 함수 End                                                          //

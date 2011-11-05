@@ -6,6 +6,13 @@
     id GameLayer_ID;
     
     CCLabelAtlas *labelTitle;
+    CCLabelAtlas *labelResult;
+    CCLabelAtlas *labelScore;
+    
+    CCLabelAtlas *labelTrap;
+    CCLabelAtlas *labelMonster;
+    CCLabelAtlas *labelHero;
+    CCLabelAtlas *labelTime;
     
     CCLabelAtlas *labelPointTrap;
     CCLabelAtlas *labelPointMonster;

@@ -109,11 +109,11 @@
                                                   restoreOriginalFrame:NO];
     [tSprite runAction:[CCRepeatForever actionWithAction:walkAnimate]];
     
-    //[tWarrior setWalkAnimate:walkAnimate];
     [tWarrior setAttackAnimate:attackAnimate];
     [tWarrior setDeathAnimate:tombstoneAnimate];
     [tWarrior setMoveLength:TILE_SIZE];
     [tWarrior setSprite:tSprite];
+    NSLog(@"Create Warrior");
     
     [[commonValue sharedSingleton] addWarrior:tWarrior];
     
@@ -246,13 +246,12 @@
             [tWarrior setDeath:DEATH];     
         }
         
-        [[commonValue sharedSingleton] plusKillWarriorNum];
         [[commonValue sharedSingleton] plusStagePoint:POINT_WARRIOR_KILL];
         [[commonValue sharedSingleton] plusStageMoney:MONEY_WARRIOR_KILL];
     }
 }
 - (void) tombstoneCompleteHandler:(id)sender {
-    
+    [[commonValue sharedSingleton] plusKillWarriorNum];
 }
 // 일정거리 안에 적이 있는지 탐지
 // 현재 트랩으로 지정됨 - 적으로 변경 필요
@@ -268,11 +267,14 @@
         CGFloat distance = [function lineLength:mPoint point2:wPoint];
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
+            if (![function positionSprite:[pWarrior getMoveDriection] point1:mPoint point2:wPoint]) continue;
+            [[pWarrior getSprite] setFlipX:[function attackDirection:mPoint point2:wPoint]];
+            
             NSInteger demage = [pWarrior getPower] - [tMonster getDefense];
             if(demage > 0) {
                 CCSprite *tSprite = [tMonster getSprite];
-                [tSprite runAction:[CCFadeIn actionWithDuration:BEAT_ENEMY_TIME]];
                 
+                [tSprite runAction:[CCFadeIn actionWithDuration:BEAT_ENEMY_TIME]];
                 [tMonster setStrength:[tMonster getStrength] - demage];
             }
             

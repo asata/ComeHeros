@@ -33,9 +33,8 @@
     NSString* conName = [locale displayNameForKey:NSLocaleCountryCode value:conCode];
     NSLog(@"Country Code : %@, %@, %@", conName, NSLocalizedString(@"Greeting", @"H1"), NSLocalizedString(@"GameName", @"H1"));
     /*if([preferredLang isEqualToString:@"ko"]) {
-        
     } else if([preferredLang isEqualToString:@"en"]) {
-     }*/
+    }*/
         
     NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
     NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];

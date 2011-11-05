@@ -25,19 +25,18 @@
     [self addChild:background z:rBackgroundLayer];
     
     
-    
     NSString *resultTitle = [NSString stringWithFormat:@"STAGE%d RESULT", [[commonValue sharedSingleton] getStageLevel]];
     labelTitle = [CCLabelAtlas labelWithString:resultTitle
                                                  charMapFile:FILE_NUMBER_IMG 
                                                    itemWidth:32
                                                   itemHeight:32
                                                 startCharMap:'.'];
-    CCLabelAtlas *labelResult = [CCLabelAtlas labelWithString:@"RESULT"
+    labelResult = [CCLabelAtlas labelWithString:@"RESULT"
                                                   charMapFile:FILE_NUMBER_IMG 
                                                     itemWidth:32
                                                    itemHeight:32
                                                  startCharMap:'.'];
-    CCLabelAtlas *labelScore = [CCLabelAtlas labelWithString:@"SCORE"
+    labelScore = [CCLabelAtlas labelWithString:@"SCORE"
                                                  charMapFile:FILE_NUMBER_IMG 
                                                    itemWidth:32
                                                   itemHeight:32
@@ -53,23 +52,22 @@
     [self addChild:labelScore z:rMainLabelLayer];
     
     
-    
-    CCLabelAtlas *labelTrap = [CCLabelAtlas labelWithString:@"TRAP"
+    labelTrap = [CCLabelAtlas labelWithString:@"TRAP"
                                                 charMapFile:FILE_NUMBER_IMG 
                                                   itemWidth:32
                                                  itemHeight:32
                                                startCharMap:'.'];
-    CCLabelAtlas *labelMonster = [CCLabelAtlas labelWithString:@"MONSTER"
+    labelMonster = [CCLabelAtlas labelWithString:@"MONSTER"
                                                    charMapFile:FILE_NUMBER_IMG 
                                                      itemWidth:32
                                                     itemHeight:32
                                                   startCharMap:'.'];
-    CCLabelAtlas *labelHero = [CCLabelAtlas labelWithString:@"HERO"
+    labelHero = [CCLabelAtlas labelWithString:@"HERO"
                                                 charMapFile:FILE_NUMBER_IMG 
                                                   itemWidth:32
                                                  itemHeight:32
                                                startCharMap:'.'];
-    CCLabelAtlas *labelTime = [CCLabelAtlas labelWithString:@"TIME"
+    labelTime = [CCLabelAtlas labelWithString:@"TIME"
                                                 charMapFile:FILE_NUMBER_IMG 
                                                   itemWidth:32
                                                  itemHeight:32
@@ -95,7 +93,8 @@
     NSInteger totalMonster = [[commonValue sharedSingleton] getMonsterNum];
     NSInteger pointHero = [[commonValue sharedSingleton] getKillWarriorNum];
     NSInteger totalHero = [[commonValue sharedSingleton] getStageWarriorCount];
-    NSInteger pointTime = [[commonValue sharedSingleton] getStageTime];// 140;
+    NSInteger pointTime = [[commonValue sharedSingleton] getStageTime];
+    NSLog(@"%d %d", [[commonValue sharedSingleton] getTrapNum], [[commonValue sharedSingleton] getHouseNum]);
     labelPointTrap = [CCLabelAtlas labelWithString:[NSString stringWithFormat:@"%d/%d", pointTrap, totalTrap]
                                                      charMapFile:FILE_NUMBER_IMG 
                                                        itemWidth:32
@@ -206,6 +205,13 @@
 
 - (void) onQuit:(id)sender {
     [self removeChild:labelTitle cleanup:YES];
+    [self removeChild:labelResult cleanup:YES];
+    [self removeChild:labelScore cleanup:YES];
+    
+    [self removeChild:labelTrap cleanup:YES];
+    [self removeChild:labelMonster cleanup:YES];
+    [self removeChild:labelHero cleanup:YES];
+    [self removeChild:labelTime cleanup:YES];
     
     [self removeChild:labelPointTrap cleanup:YES];
     [self removeChild:labelPointMonster cleanup:YES];

@@ -114,14 +114,14 @@
     coinSprite.scale = 0.5;
     [self addChild:coinSprite z:kMainLabelLayer];
     
-    labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
+    /*labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
                                    charMapFile:FILE_NUMBER_IMG 
                                      itemWidth:32
                                     itemHeight:32
                                   startCharMap:'.'];
     labelPoint.position = POINT_LABEL_POSITION;
     labelPoint.scale = 0.5;
-    [self addChild:labelPoint z:kMainLabelLayer];
+    [self addChild:labelPoint z:kMainLabelLayer];*/
 }
 - (void) initMenu {
     CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:FILE_PAUSE_IMG 
@@ -166,7 +166,7 @@
 - (void) updateLabel {
     [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
     [labelMoney setString:[[commonValue sharedSingleton] getStageMoneyString]];
-    [labelPoint setString:[[commonValue sharedSingleton] getStagePointString]];
+    //[labelPoint setString:[[commonValue sharedSingleton] getStagePointString]];
 }
 - (void) gamePause:(id)sender {
     // 게임 일시 정지
@@ -342,7 +342,7 @@
         [self gameEnd:GAME_VICTORY];
     } else {
         // 잠시 애니메이션 효과 중단
-        [self pauseSchedulerAndActions];
+        //[self pauseSchedulerAndActions];
         
         // 폭발시 생성된 불꽃 제거
         while ([chainFlameList count] > 0) {
@@ -375,7 +375,7 @@
         }
         
         // 애니메이션 효과 재개
-        [self resumeSchedulerAndActions];
+        //[self resumeSchedulerAndActions];
     }
 }
 //////////////////////////////////////////////////////////////////////////
@@ -392,6 +392,7 @@
         if([houseHandling checkCreateMonter:tHouse]) {
             // 집에서 최대치로 생산됐는지 검사
             CCSprite *tSprite = [monsterHandling createMonster:0 position:[tHouse getPosition] houseNum:[tHouse getHouseNum]];
+            [tSprite setVisible:YES];
             
             [self addChild:tSprite z:(kMonsterLayer - [[commonValue sharedSingleton] monsterListCount])];
             [tHouse pluseMadeNum];
@@ -546,7 +547,8 @@
     
     // monsterHandling에 addHouse 등록하여 처리가 필요
     [houseHandling addHouse:tileSetupPoint type:TILE_MONSTER_HOUSE1];
-    [trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
+    [trapHandling tileChange:tileSetupPoint type:TILE_MONSTER_HOUSE1];
+    //[trapHandling addTrap:tileSetupPoint type:TILE_MONSTER_HOUSE1];
     [self installTrapMenuVisible:NO];
 }
 - (void) installTrapMenuVisible:(BOOL)flag {

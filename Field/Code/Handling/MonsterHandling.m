@@ -77,16 +77,13 @@
     Monster *tMonster = [[Monster alloc] initMonster:[coordinate convertTileToMap:position]
                                           monsterNum:[[commonValue sharedSingleton] getMonsterNum]
                                             strength:100 
-                                               power:10 
+                                               power:14 
                                            intellect:40
                                              defense:10 
                                                speed:8   //[[wInfo objectForKey:@"speed"] intValue] 
                                            direction:MoveUp
                                          attackRange:2 
                                             houseNum:pHouse]; 
-    
-    // 나타난 몬스터 수 증가
-    [[commonValue sharedSingleton] plusMonsterNum];
     
     NSArray *monsterName = [NSArray arrayWithObjects: @"vampire", @"skeleton", @"spirite", nil]; 
     CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadMonsterSprite:[monsterName objectAtIndex:monsterType]]];
@@ -100,7 +97,10 @@
     [tMonster setDeathAnimate:[[CCAnimate alloc] initWithAnimation:[self loadMonsterDeath:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:YES]];
     [tMonster setMoveLength:TILE_SIZE];
     [tMonster setSprite:tSprite];
+    NSLog(@"Create Monster");
     
+    // 나타난 몬스터 수 증가
+    [[commonValue sharedSingleton] plusMonsterNum];
     [[commonValue sharedSingleton] addMonster:tMonster];
     
     return tSprite;
@@ -140,7 +140,8 @@
                 movePosition = ccp(movePosition.x + [tMonster getMoveSpeed], movePosition.y);
             } else if(direction == MoveDown) {
                 movePosition = ccp(movePosition.x, movePosition.y - [tMonster getMoveSpeed]);
-            }   
+            } 
+            
             tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
             [tMonster setSprite:tSprite];
             
@@ -166,17 +167,30 @@
     int x = ((int) point.x - HALF_TILE_SIZE) / TILE_SIZE;
     int y = TILE_NUM - ((int) point.y - HALF_TILE_SIZE) / TILE_SIZE - 1;
     
-    // 집에 도착시
+    // 이동 방향 결정
     NSInteger direction = [pMonster getMoveDriection];
     if([pMonster getMoveDriection] == MoveUp) {
-        if(![function checkMoveTile:x y:(y - 1)]) direction = MoveDown;
+        if(![function checkMoveTile:x y:(y - 1)] && ![function checkMoveTile:x y:(y + 1)]) direction = MoveNone;
+        else if(![function checkMoveTile:x y:(y - 1)]) direction = MoveDown;
+        else direction = MoveUp;
     } else if([pMonster getMoveDriection] == MoveDown) {
-        if(![function checkMoveTile:x y:(y + 1)]) direction = MoveUp;
-    }  else if([pMonster getMoveDriection] == MoveLeft) {
-        if(![function checkMoveTile:(x - 1) y:y]) direction = MoveRight;
-    }  else if([pMonster getMoveDriection] == MoveRight) {
-        if(![function checkMoveTile:(x + 1) y:y]) direction = MoveLeft;
-    } 
+        if(![function checkMoveTile:x y:(y - 1)] && ![function checkMoveTile:x y:(y + 1)]) direction = MoveNone;
+        else if(![function checkMoveTile:x y:(y + 1)]) direction = MoveUp;
+        else direction = MoveDown;
+    } else if([pMonster getMoveDriection] == MoveLeft) {
+        if(![function checkMoveTile:(x - 1) y:y] && ![function checkMoveTile:(x + 1) y:y]) direction = MoveNone;
+        else if(![function checkMoveTile:(x - 1) y:y]) direction = MoveRight;
+        else direction = MoveLeft;
+    } else if([pMonster getMoveDriection] == MoveRight) {
+        if(![function checkMoveTile:(x - 1) y:y] && ![function checkMoveTile:(x + 1) y:y]) direction = MoveNone;
+        else if(![function checkMoveTile:(x + 1) y:y]) direction = MoveLeft;
+        else direction = MoveRight;
+    } else {
+        if([function checkMoveTile:x y:(y - 1)]) direction = MoveUp;
+        else if([function checkMoveTile:x y:(y + 1)]) direction = MoveDown;
+        else if([function checkMoveTile:(x + 1) y:y]) direction = MoveRight;
+        else if([function checkMoveTile:(x - 1) y:y]) direction = MoveLeft;
+    }
     
     [pMonster setMoveDriection:direction];
     if(direction == MoveRight || direction == MoveDown) {
@@ -202,13 +216,13 @@
     [[commonValue sharedSingleton] removeMonster:rMonster];
     rSprite.visible = NO;
     [rSprite release];
-    [[commonValue sharedSingleton] plusDieMonsterNum];
     [removeSpriteList removeObjectAtIndex:0];
 }
 - (void) removeMonster:(NSMutableArray*)dMonstList {
     for (Monster *tMonster in dMonstList) {        
         CCSprite *tSprite = [tMonster getSprite];
         
+        [[commonValue sharedSingleton] plusDieMonsterNum];
         [tSprite runAction:[CCSequence actions:[tMonster getDeathAnimate], 
                             [CCCallFunc actionWithTarget:self selector:@selector(deathCompleteHandler:)], 
                             nil]];
@@ -236,7 +250,8 @@
         
         if(distance <= powf(wAttack * TILE_SIZE, 2)) {
             // 뒤에 있는 적은 공격을 못함
-            //if (![function positionSprite:[pMonster getMoveDriection] point1:mPoint point2:wPoint]) continue;
+            if (![function positionSprite:[pMonster getMoveDriection] point1:wPoint point2:mPoint]) continue;
+            [[pMonster getSprite] setFlipX:[function attackDirection:wPoint point2:mPoint]];
             
             NSInteger demage = [pMonster getPower] - [tWarrior getDefense];
             if(demage > 0) {

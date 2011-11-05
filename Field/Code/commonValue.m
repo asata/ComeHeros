@@ -230,6 +230,7 @@ static commonValue      * _globalTest = nil;
     trapList = pList;
 }
 - (void) addTrap:(Trap*)pTrap {
+    //trapNum++;
     [trapList addObject:pTrap];
 }
 - (NSMutableArray*) getTrapList {
@@ -276,6 +277,7 @@ static commonValue      * _globalTest = nil;
     return houseList;
 }
 - (void) addHouseList:(House*)pHouse {
+    //houseNum++;
     [houseList addObject:pHouse];
 }
 - (NSInteger) houseListCount {
