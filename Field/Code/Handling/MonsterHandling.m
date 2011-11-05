@@ -202,6 +202,7 @@
     [[commonValue sharedSingleton] removeMonster:rMonster];
     rSprite.visible = NO;
     [rSprite release];
+    [[commonValue sharedSingleton] plusDieMonsterNum];
     [removeSpriteList removeObjectAtIndex:0];
 }
 - (void) removeMonster:(NSMutableArray*)dMonstList {

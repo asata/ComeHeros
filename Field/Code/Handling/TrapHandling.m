@@ -88,6 +88,7 @@
         [self tileChange:[pTrap getPosition] type:TILE_GROUND2];
     }
         
+    [[commonValue sharedSingleton] plusUseObstacleNum];
     [[commonValue sharedSingleton] removeTrap:pTrap];
 }
 //////////////////////////////////////////////////////////////////////////

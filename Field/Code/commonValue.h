@@ -100,10 +100,15 @@
 - (void) plusWarriorNum;
 - (void) plusMonsterNum;
 - (void) plusHouseNum;
+- (void) plusUseObstacleNum;
+- (void) plusDieMonsterNum;
 - (NSInteger) getTrapNum;
 - (NSInteger) getWarriorNum;
 - (NSInteger) getMonsterNum;
 - (NSInteger) getHouseNum;
+- (NSInteger) getObstacleNum;
+- (NSInteger) getUseObstacleNum;
+- (NSInteger) getDieMonsterNum;
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

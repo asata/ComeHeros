@@ -80,6 +80,7 @@
     [file loadStageData:path];
     
     NSLog(@"Stage Info Init");
+    NSLog(@"StageLevel : %d", [[commonValue sharedSingleton] getStageLevel]);
     NSLog(@"MapName : %@", [[commonValue sharedSingleton] getMapName]);
     NSLog(@"Life : %d", [[commonValue sharedSingleton] getStageLife]);
     NSLog(@"Money : %d", [[commonValue sharedSingleton] getStageMoney]);
@@ -92,20 +93,20 @@
 - (void) initLabel {
     labelTime = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageTimeString]
                                   charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:8
-                                   itemHeight:8
-                                 startCharMap:'0'];
+                                    itemWidth:32
+                                   itemHeight:32
+                                 startCharMap:'.'];
     labelTime.position = TIME_LABEL_POSITION;
-    labelTime.scale = 2;
+    labelTime.scale = 0.5;
     [self addChild:labelTime z:kMainLabelLayer];
     
     labelMoney= [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStageMoneyString]
                                   charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:8
-                                   itemHeight:8
-                                 startCharMap:'0'];
+                                    itemWidth:32
+                                   itemHeight:32
+                                 startCharMap:'.'];
     labelMoney.position = MONEY_LABEL_POSITION;
-    labelMoney.scale = 2;
+    labelMoney.scale = 0.5;
     [self addChild:labelMoney z:kMainLabelLayer];
     
     CCSprite *coinSprite = [CCSprite spriteWithFile:FILE_COIN_IIMG];
@@ -115,11 +116,11 @@
     
     labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
                                    charMapFile:FILE_NUMBER_IMG 
-                                     itemWidth:8
-                                    itemHeight:8
-                                  startCharMap:'0'];
+                                     itemWidth:32
+                                    itemHeight:32
+                                  startCharMap:'.'];
     labelPoint.position = POINT_LABEL_POSITION;
-    labelPoint.scale = 2;
+    labelPoint.scale = 0.5;
     [self addChild:labelPoint z:kMainLabelLayer];
 }
 - (void) initMenu {
@@ -160,7 +161,7 @@
     [self removeChild:labelTime cleanup:YES];
     [self removeChild:labelPoint cleanup:YES];
     
-    //[self unscheduleAllSelectors];
+    [self unscheduleAllSelectors];
 }
 - (void) updateLabel {
     [labelTime setString:[[commonValue sharedSingleton] getStageTimeString]];
@@ -314,17 +315,18 @@
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
 - (void) createWarriorAtTime:(id) sender {
-    [[commonValue sharedSingleton] plusStageTime];
-    
-    if ([[commonValue sharedSingleton] getStageTime] / 5 != [[commonValue sharedSingleton] getWarriorNum]) return;
-    if ([[commonValue sharedSingleton] getStageWarriorCount] > [[commonValue sharedSingleton] getWarriorNum]) {
+    for (NSInteger i = [[commonValue sharedSingleton] getWarriorNum]; 
+         i < [[commonValue sharedSingleton] getStageWarriorCount]; i++) {
         NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
-        
-        CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
-        [self addChild:tSprite 
-                     z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount]) 
-                   tag:[[commonValue sharedSingleton] getWarriorNum]];
+        if([[wInfo objectForKey:@"Time"] intValue] == [[commonValue sharedSingleton] getStageTime]) {
+            CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
+            [self addChild:tSprite 
+                         z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount]) 
+                       tag:[[commonValue sharedSingleton] getWarriorNum]];
+        }
     }
+    
+    [[commonValue sharedSingleton] plusStageTime];
 }
 - (void) createWarrior {
     NSDictionary *wInfo = [file loadWarriorInfo:[[commonValue sharedSingleton] getWarriorNum]];
@@ -334,7 +336,7 @@
 
 - (void) moveAction:(id) sender {
     [self updateLabel];
-    
+
     // 용사가 모두 죽었는지 검사
     if ([[commonValue sharedSingleton] getKillWarriorNum] == [[commonValue sharedSingleton] getStageWarriorCount]) {
         [self gameEnd:GAME_VICTORY];

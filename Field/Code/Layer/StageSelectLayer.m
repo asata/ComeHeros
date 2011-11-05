@@ -24,6 +24,19 @@
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadGameData:path];
     
+    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    NSArray* languages = [defs objectForKey:@"AppleLanguages"];
+    NSString* preferredLang = [languages objectAtIndex:0];
+    NSLog(@"Language : %@", preferredLang);
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString* conCode = [locale objectForKey:NSLocaleCountryCode];
+    NSString* conName = [locale displayNameForKey:NSLocaleCountryCode value:conCode];
+    NSLog(@"Country Code : %@, %@, %@", conName, NSLocalizedString(@"Greeting", @"H1"), NSLocalizedString(@"GameName", @"H1"));
+    /*if([preferredLang isEqualToString:@"ko"]) {
+        
+    } else if([preferredLang isEqualToString:@"en"]) {
+     }*/
+        
     NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
     NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
     NSLog(@"Stage total number : %d", stageNum);
@@ -66,6 +79,7 @@
 }
 
 - (void) stageSelect:(NSInteger)stageNum {
+    NSLog(@"Stage Num : %d", stageNum);
     [[commonValue sharedSingleton] setStageLevel:stageNum];
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }

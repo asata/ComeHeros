@@ -45,7 +45,7 @@
 #define FILE_TOMBSTONE_IMG          @"dead.png"
 #define FILE_TILE_IMG               @"tile-wall.png"
 
-#define FILE_NUMBER_IMG             @"number_sprite.png"
+#define FILE_NUMBER_IMG             @"num_and_alpa.png"
 #define FILE_PAUSE_IMG              @"interface_object0001.png"
 #define FILE_RESUME_IMG             @"Tile/tile-object-3.png"
 #define FILE_COIN_IIMG              @"interface_object0002.png"

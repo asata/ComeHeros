@@ -31,6 +31,8 @@ static NSInteger        stageLevel;          // 게임 레벨
 static NSString         *mapName;
 static NSDictionary     *gameData;
 static NSInteger        killWarriorNum;      // 죽인 용사 수
+static NSInteger        killMonsterNum;
+static NSInteger        useObstacle;
 
 static BOOL             gamePause;
 static BOOL             gamePlaying;
@@ -81,6 +83,8 @@ static commonValue      * _globalTest = nil;
     stageMoney = 100;
     stageLife = 1;
     killWarriorNum = 0;
+    killMonsterNum = 0;
+    useObstacle = 0;
     
     gamePause = NO;
     gamePlaying = YES;
@@ -385,16 +389,16 @@ static commonValue      * _globalTest = nil;
 
 
 - (void) plusTrapNum {
-    trapNum += 1;
+    trapNum++;
 }
 - (void) plusWarriorNum {
-    warriorNum += 1;
+    warriorNum++;
 }
 - (void) plusMonsterNum {
-    monsterNum += 1;
+    monsterNum++;
 }
 - (void) plusHouseNum {
-    houseNum += 1;
+    houseNum++;
 }
 - (NSInteger) getTrapNum {
     return trapNum;
@@ -407,6 +411,21 @@ static commonValue      * _globalTest = nil;
 }
 - (NSInteger) getHouseNum {
     return houseNum;
+}
+- (NSInteger) getObstacleNum {
+    return (trapNum + houseNum);
+}
+- (void) plusUseObstacleNum {
+    useObstacle++;
+}
+- (void) plusDieMonsterNum {
+    killMonsterNum++;
+}
+- (NSInteger) getUseObstacleNum {
+    return useObstacle;
+}
+- (NSInteger) getDieMonsterNum {
+    return killMonsterNum;
 }
 
 @end
