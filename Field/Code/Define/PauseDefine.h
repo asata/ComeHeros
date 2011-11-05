@@ -1,6 +1,6 @@
 
-#define FILE_PAUSE1_IMG              @"Tile/tile-floor-0.png"
-#define FILE_RESUME1_IMG             @"Tile/tile-object-3.png"
+#define FILE_BACKGROUND_IMG             @"bg_result.png"
+#define FILE_NUMBER_IMG                 @"num_and_alpa.png"
 
 // 화면 표시 순서
 enum PauseLayerIndex {

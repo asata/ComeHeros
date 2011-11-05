@@ -58,7 +58,7 @@
 #define FIGHTER                 1
 #define MAGE                    2
 
-#define PASS_TRAP_INTELLECT     50      // 트랩 통과 최소 지능 
+#define PASS_TRAP_INTELLECT     60      // 트랩 통과 최소 지능 
 #define MOVE_INTELLECT          80      // 최단 이동 경로를 선정하는데 필요한 최소 지능
 
 #define SURVIVAL                YES

@@ -5,28 +5,37 @@
 @interface ResultLayer : CCLayer {
     id GameLayer_ID;
     
-    CCLabelAtlas *labelTitle;
-    CCLabelAtlas *labelResult;
-    CCLabelAtlas *labelScore;
+    BOOL            victory;
     
-    CCLabelAtlas *labelTrap;
-    CCLabelAtlas *labelMonster;
-    CCLabelAtlas *labelHero;
-    CCLabelAtlas *labelTime;
+    CCSprite        *background;
+        
+    CCLabelAtlas    *labelTitle;
+    CCLabelAtlas    *labelResult;
+    CCLabelAtlas    *labelScore;
     
-    CCLabelAtlas *labelPointTrap;
-    CCLabelAtlas *labelPointMonster;
-    CCLabelAtlas *labelPointHero;
-    CCLabelAtlas *labelPointTime;
+    CCLabelAtlas    *labelTrap;
+    CCLabelAtlas    *labelMonster;
+    CCLabelAtlas    *labelHero;
+    CCLabelAtlas    *labelTime;
     
-    CCLabelAtlas *labelScoreTrap;
-    CCLabelAtlas *labelScoreMonster;
-    CCLabelAtlas *labelScoreHero;
-    CCLabelAtlas *labelScoreTime;
+    CCLabelAtlas    *labelPointTrap;
+    CCLabelAtlas    *labelPointMonster;
+    CCLabelAtlas    *labelPointHero;
+    CCLabelAtlas    *labelPointTime;
     
-    CCLabelAtlas *labelScoreTotal;
+    CCLabelAtlas    *labelScoreTrap;
+    CCLabelAtlas    *labelScoreMonster;
+    CCLabelAtlas    *labelScoreHero;
+    CCLabelAtlas    *labelScoreTime;
+    
+    CCLabelAtlas    *labelTotal;
+    CCLabelAtlas    *labelScoreTotal;
+    
+    CCMenu          *menu;
 }
 
+- (void) clearDisplay;
+- (void) setVictory:(BOOL)flag;
 - (void) createResult:(id)pLayer;
 
 @end

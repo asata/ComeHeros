@@ -10,7 +10,7 @@
 - (id)init {
     if ((self = [super init])) {
         CGSize deviceSize = [[CCDirector sharedDirector] winSize];
-        [[commonValue sharedSingleton]setDeviceSize:deviceSize];
+        [[commonValue sharedSingleton] setDeviceSize:deviceSize];
         
         CCMenuItemToggle *techniqueItem1 = [CCMenuItemToggle 
                                             itemWithTarget:self

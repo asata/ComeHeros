@@ -199,6 +199,22 @@
     
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
+- (void) endRestart {
+    [self destoryGame];
+    [self removeChild:resultLayer cleanup:YES];
+    [[CCDirector sharedDirector] resume];
+    
+    [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+}
+- (void) NextStage {
+    [self destoryGame];
+    [self removeChild:resultLayer cleanup:YES];
+    [[CCDirector sharedDirector] resume];
+    
+    // 다음 스테이지가 있는지 검사
+    [[commonValue sharedSingleton] setStageLevel:2];
+    [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+}
 - (void) Quit {
     [self removeChild:pauseLayer cleanup:YES];
     [self destoryGame];
@@ -229,6 +245,7 @@
     [[commonValue sharedSingleton] setGamePause:YES];
     [[CCDirector sharedDirector] pause];
     self.isTouchEnabled = NO;
+    [resultLayer setVictory:victory];
     [self addChild:resultLayer z:kPauseLayer];
 }
 

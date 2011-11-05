@@ -8,6 +8,7 @@
 
 #import "cocos2d.h"
 #import "PauseDefine.h"
+#import "commonValue.h"
 
 @interface PauseLayer : CCLayer {
     id GameLayer_ID;

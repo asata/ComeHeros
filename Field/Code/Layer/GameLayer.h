@@ -62,6 +62,7 @@
 - (void) onPause;
 - (void) resume;
 - (void) Restart;
+- (void) endRestart;
 - (void) Quit;
 - (void) endQuit;
 - (void) gameEnd:(BOOL)victory;
