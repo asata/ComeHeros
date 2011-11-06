@@ -144,3 +144,12 @@ enum Direction {
     Right,
     Down
 };
+
+enum TrapMenuDirection {
+    MenuNone = 0,
+    MenuDefault,
+    MenuLeft,
+    MenuRigtht,
+    MenuUp,
+    MenuDown
+} TrapMenuDirection;

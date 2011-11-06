@@ -70,6 +70,7 @@
     monsterHandling = [[MonsterHandling alloc] init];
     warriorHandling = [[WarriorHandling alloc] init];
     houseHandling  = [[HouseHandling alloc] init];
+    trapMenuList = [[NSMutableArray alloc] init];
     
     [[commonValue sharedSingleton] setGamePlaying:YES];
     [[commonValue sharedSingleton] setGamePause:NO];
@@ -163,6 +164,7 @@
     [self removeChild:menu1 cleanup:YES];
     [self removeChild:menu2 cleanup:YES];
     [self removeChild:menu3 cleanup:YES];
+    [self removeChild:menu4 cleanup:YES];
     [self removeChild:menuPause cleanup:YES];
     
     [self removeChild:labelMoney cleanup:YES];
@@ -482,18 +484,27 @@
                                                         selectedImage:@"Tile/tile-floor-0.png" 
                                                                target:self 
                                                              selector:@selector(tileSetupMonsterHouse1:)];
+    [trapMenuList addObject:tileItem1];
+    [trapMenuList addObject:tileItem2];
+    [trapMenuList addObject:tileItem3];
+    [trapMenuList addObject:tileItem4];
     
-    menu1 = [CCMenu menuWithItems:tileItem1, tileItem2, nil];
+    menu1 = [CCMenu menuWithItems:nil];
     menu2 = [CCMenu menuWithItems:nil];
-    menu3 = [CCMenu menuWithItems:tileItem3, tileItem4, nil];
-    [menu1 alignItemsVerticallyWithPadding:5];
+    menu3 = [CCMenu menuWithItems:nil];
+    menu4 = [CCMenu menuWithItems:nil];
+    
+    menuPrint = MenuNone;
+    [menu1 alignItemsHorizontallyWithPadding:5];
     [menu2 alignItemsVerticallyWithPadding:5];
     [menu3 alignItemsVerticallyWithPadding:5];
+    [menu4 alignItemsHorizontallyWithPadding:5];
     [self installTrapMenuVisible:NO];    
     
     [self addChild:menu1 z:kTileMenuLayer];
     [self addChild:menu2 z:kTileMenuLayer];
     [self addChild:menu3 z:kTileMenuLayer];
+    [self addChild:menu4 z:kTileMenuLayer];
     
 }
 - (BOOL) installTileCheck:(NSInteger)tileType {
@@ -584,9 +595,59 @@
     [self installTrapMenuVisible:NO];
 }
 - (void) installTrapMenuVisible:(BOOL)flag {
+    if (!flag) {
+        NSInteger num = 0;
+        
+        if (menuPrint == MenuNone) return;
+        else if (menuPrint == MenuDefault) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu1 removeChild:item cleanup:YES];
+                else if(num == 1) [menu4 removeChild:item cleanup:YES];
+                else if(num == 2 || num == 4) [menu2 removeChild:item cleanup:YES];
+                else if(num == 3 || num == 5) [menu3 removeChild:item cleanup:YES];      
+                
+                num++;
+            }
+        } else if (menuPrint == MenuRigtht) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu1 removeChild:item cleanup:YES];
+                else if(num == 1) [menu4 removeChild:item cleanup:YES];
+                else if(num == 2 || num == 3 || num == 4 || num == 5) [menu2 removeChild:item cleanup:YES];                    
+                num++;
+            }
+        } else if (menuPrint == MenuLeft) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu1 removeChild:item cleanup:YES];
+                else if(num == 1) [menu4 removeChild:item cleanup:YES];
+                else if(num == 2 || num == 3 || num == 4 || num == 5) [menu3 removeChild:item cleanup:YES];                    
+                num++;
+            }
+        } else if (menuPrint == MenuUp) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu2 removeChild:item cleanup:YES];
+                else if(num == 1) [menu3 removeChild:item cleanup:YES];
+                else if(num == 2 || num == 3 || num == 4 || num == 5) [menu4 removeChild:item cleanup:YES];                    
+                num++;
+            }
+        } else if (menuPrint == MenuDown) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu2 removeChild:item cleanup:YES];
+                else if(num == 1) [menu3 removeChild:item cleanup:YES];
+                else if(num == 2 || num == 3 || num == 4 || num == 5) [menu1 removeChild:item cleanup:YES];                    
+                num++;
+            }
+        }
+    } else {
+        [menu1 alignItemsHorizontallyWithPadding:5];
+        [menu2 alignItemsVerticallyWithPadding:5];
+        [menu3 alignItemsVerticallyWithPadding:5];
+        [menu4 alignItemsHorizontallyWithPadding:5];
+    }
+    
     [menu1 setVisible:flag];
     [menu2 setVisible:flag];
     [menu3 setVisible:flag];
+    [menu4 setVisible:flag];
 }
 - (BOOL) installMoneyCheck:(NSInteger)money {
     if ([[commonValue sharedSingleton] getStageMoney] < money) return NO;
@@ -726,7 +787,7 @@
         // 다른곳 터치시 트랩 설치화면 닫음
         UITouch *touch = [touches anyObject];
         CGPoint location = [touch locationInView: [touch view]];
-        //CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+        CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
         
         // 클릭한 위치 확인
         Coordinate *coordinate = [[Coordinate alloc] init];
@@ -749,14 +810,71 @@
             tileSetupPoint = thisArea;
             
             CGPoint point = [coordinate convertTileToCocoa:thisArea];
-            [menu1 setPosition:ccp(point.x - TILE_SIZE, point.y)];
-            [menu2 setPosition:ccp(point.x, point.y)];
+            
+            NSInteger num = 0;
+            if (convertedLocation.x - TILE_SIZE < 0) {
+                NSLog(@"Left");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu1 addChild:item];
+                    else if(num == 1) [menu4 addChild:item];
+                    else if(num == 2 || num == 3 || num == 4 || num == 5) [menu3 addChild:item];      
+                    
+                    num++;
+                }
+                menuPrint = MenuLeft;
+            } else if (convertedLocation.x + TILE_SIZE > 460) {
+                NSLog(@"Right");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu1 addChild:item];
+                    else if(num == 1) [menu4 addChild:item];
+                    else if(num == 2 || num == 3 || num == 4 || num == 5) [menu2 addChild:item];
+                    
+                    num++;
+                }
+                menuPrint = MenuRigtht;
+            } else if (convertedLocation.y - TILE_SIZE < 0) { 
+                NSLog(@"Bottom");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu2 addChild:item];
+                    else if(num == 1) [menu3 addChild:item];
+                    else if(num == 2 || num == 3 || num == 4 || num == 5) [menu1 addChild:item];
+                    
+                    num++;
+                }
+                menuPrint = MenuDown;
+            } else if (convertedLocation.y + TILE_SIZE > 320) {
+                NSLog(@"Top");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu2 addChild:item];
+                    else if(num == 1) [menu3 addChild:item];
+                    else if(num == 2 || num == 3 || num == 4 || num == 5) [menu4 addChild:item];
+                    
+                    num++;
+                }
+                menuPrint = MenuUp;
+            } else {
+                NSLog(@"Default");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu1 addChild:item];
+                    else if(num == 1) [menu4 addChild:item];
+                    else if(num == 2 || num == 4) [menu2 addChild:item];
+                    else if(num == 3 || num == 5) [menu3 addChild:item];      
+                    
+                    num++;
+                }
+                menuPrint = MenuDefault;
+            }
+            
+            [menu1 setPosition:ccp(point.x, point.y + TILE_SIZE)];
+            [menu2 setPosition:ccp(point.x - TILE_SIZE, point.y)];
             [menu3 setPosition:ccp(point.x + TILE_SIZE, point.y)];
+            [menu4 setPosition:ccp(point.x, point.y - TILE_SIZE)];
             
             [self installTrapMenuVisible:YES]; 
         }
         
         NSLog(@"Touch Position : %d %d", (int) thisArea.x, (int) thisArea.y);
+        NSLog(@"Touch Position : %d %d", (int) convertedLocation.x, (int) convertedLocation.y);
     }
     
     // 멀티 터치는 처리하지 않음

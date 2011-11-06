@@ -30,8 +30,12 @@
     
     CCMenu          *menu1;
     CCMenu          *menu2;
-    CCMenu          *menu3;    
+    CCMenu          *menu3;  
+    CCMenu          *menu4;    
+    NSInteger       menuPrint;
     CCMenu          *menuPause;
+    
+    NSMutableArray  *trapMenuList;
     
     CCLabelAtlas    *labelTime;
     CCLabelAtlas    *labelMoney;
