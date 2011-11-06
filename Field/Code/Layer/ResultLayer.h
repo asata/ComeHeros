@@ -1,6 +1,8 @@
 #import "cocos2d.h"
+#import "define.h"
 #import "ResultDefine.h"
 #import "commonValue.h"
+#import "File.h"
 
 @interface ResultLayer : CCLayer {
     id GameLayer_ID;

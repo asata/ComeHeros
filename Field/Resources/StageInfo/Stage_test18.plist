@@ -16,7 +16,7 @@
 		<key>Point</key>
 		<integer>0</integer>
 		<key>Life</key>
-		<integer>2</integer>
+		<integer>3</integer>
 		<key>Money</key>
 		<integer>100</integer>
 		<key>isCleared</key>

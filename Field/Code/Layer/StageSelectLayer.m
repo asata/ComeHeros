@@ -20,10 +20,6 @@
 }
 
 - (void) onEnterTransitionDidFinish {
-    File *file = [[File alloc] init];
-    NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
-    [file loadGameData:path];
-    
     NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSArray* languages = [defs objectForKey:@"AppleLanguages"];
     NSString* preferredLang = [languages objectAtIndex:0];

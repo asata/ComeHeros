@@ -26,6 +26,11 @@
                                 [[commonValue sharedSingleton] getDeviceSize].height / 2)];
     [self addChild:background z:rBackgroundLayer];
     
+    NSString *stageNum = [NSString stringWithFormat:@"%d", [[commonValue sharedSingleton] getStageLevel]];
+    NSMutableDictionary *stageData = [[[commonValue sharedSingleton] getGameData] objectForKey:stageNum];
+    NSInteger   clearPoint  = [[stageData objectForKey:@"Point"] intValue];
+    BOOL        isClear     = [[stageData objectForKey:@"isCleared"] boolValue];
+    
     NSString *victoryTitle = @"WIN";
     if(!victory) victoryTitle = @"LOSE";
     
@@ -211,7 +216,10 @@
     NSString *victoryString = @"";
     if(victory) {
         // 다음 스테이지가 있는지 검사
-        victoryString = @"NEXT";
+        NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
+        NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
+        
+        if ([[commonValue sharedSingleton] getStageLevel] + 1 <= stageNum) victoryString = @"NEXT";
     }
     CCLabelAtlas *label_next = [CCLabelAtlas labelWithString:victoryString
                                                  charMapFile:FILE_NUMBER_IMG 
@@ -237,8 +245,28 @@
     menu.anchorPoint = ccp(0.5, 0.5);
     [menu alignItemsHorizontallyWithPadding:5.0f];
     [self addChild:menu z:rMainMenuLayer];
+    
+    // 승리시 게임 결과를 기록
+    if (victory) {
+        clearPoint = scoreTotal;
+        isClear = YES;
+        
+        [stageData setObject:[NSNumber numberWithInt:clearPoint] forKey:@"Point"];
+        [stageData setObject:[NSNumber numberWithBool:isClear] forKey:@"isCleared"];
+        
+        // 변경 사항을 저장
+        File *file = [[File alloc] init];
+        NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
+        NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+        [data setObject:stageData forKey:[NSString stringWithFormat:@"%d", stageNum]];
+        [data writeToFile:path atomically:YES];
+        [data release];
+        
+        NSLog(@"Stage Result Save");
+        NSLog(@" - Point : %d", clearPoint);
+        NSLog(@" - Clear : %@", (isClear ? @"YES" : @"NO"));
+    }
 }
-
 - (void) onRetry:(id)sender {
     [self clearDisplay];
     

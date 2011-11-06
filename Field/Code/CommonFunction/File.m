@@ -32,6 +32,10 @@
     return path;
 }
 
+- (void) saveStageInfo:(NSDictionary*)stageInfo {
+    
+}
+
 // 스테이지 정보를 읽어 전역 변수에 저장
 - (void) loadGameData:(NSString *)path {
     [[commonValue sharedSingleton] setGameData:[[NSMutableDictionary alloc] initWithContentsOfFile: path]];

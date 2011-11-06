@@ -8,6 +8,10 @@
 @implementation MainLayer
 
 - (id)init {
+    File *file = [[File alloc] init];
+    NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
+    [file loadGameData:path];
+    
     if ((self = [super init])) {
         CGSize deviceSize = [[CCDirector sharedDirector] winSize];
         [[commonValue sharedSingleton] setDeviceSize:deviceSize];

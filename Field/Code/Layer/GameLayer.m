@@ -80,11 +80,18 @@
     [file loadStageData:path];
     
     NSLog(@"Stage Info Init");
-    NSLog(@"StageLevel : %d", [[commonValue sharedSingleton] getStageLevel]);
-    NSLog(@"MapName : %@", [[commonValue sharedSingleton] getMapName]);
-    NSLog(@"Life : %d", [[commonValue sharedSingleton] getStageLife]);
-    NSLog(@"Money : %d", [[commonValue sharedSingleton] getStageMoney]);
-    NSLog(@"Warrior Num : %d", [[commonValue sharedSingleton] getStageWarriorCount]);
+    NSLog(@" StageLevel : %d", [[commonValue sharedSingleton] getStageLevel]);
+    NSLog(@" MapName : %@", [[commonValue sharedSingleton] getMapName]);
+    NSLog(@" Life : %d", [[commonValue sharedSingleton] getStageLife]);
+    NSLog(@" Money : %d", [[commonValue sharedSingleton] getStageMoney]);
+    NSString *stageNum = [NSString stringWithFormat:@"%d", [[commonValue sharedSingleton] getStageLevel]];
+    NSMutableDictionary *stageData = [[[commonValue sharedSingleton] getGameData] objectForKey:stageNum];
+    NSInteger   clearPoint  = [[stageData objectForKey:@"Point"] intValue];
+    BOOL        isClear     = [[stageData objectForKey:@"isCleared"] boolValue];
+    NSLog(@" Point : %d", clearPoint);
+    NSLog(@" Clear : %@", (isClear ? @"YES" : @"NO"));
+    NSLog(@" Money : %d", [[commonValue sharedSingleton] getStageMoney]);
+    NSLog(@" Warrior Num : %d", [[commonValue sharedSingleton] getStageWarriorCount]);
     
     [self initMap]; 
     [self initMenu];
@@ -212,8 +219,14 @@
     [[CCDirector sharedDirector] resume];
     
     // 다음 스테이지가 있는지 검사
-    [[commonValue sharedSingleton] setStageLevel:2];
-    [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+    NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
+    NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
+    NSInteger nextStageNum = [[commonValue sharedSingleton] getStageLevel] + 1;
+    
+    if (nextStageNum <= stageNum) {
+        [[commonValue sharedSingleton] setStageLevel:nextStageNum];
+        [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+    }
 }
 - (void) Quit {
     [self removeChild:pauseLayer cleanup:YES];
