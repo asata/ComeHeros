@@ -13,6 +13,24 @@
 //////////////////////////////////////////////////////////////////////////
 // 좌표 처리 Start                                                        //
 //////////////////////////////////////////////////////////////////////////
+// 타일맵 좌표를 맵 좌표로 변환
+- (CGPoint) convertTileToMap:(CGPoint)tile {
+    CGFloat x = (TILE_SIZE * tile.x) + HALF_TILE_SIZE;
+    CGFloat y = (TILE_SIZE * TILE_NUM) - (TILE_SIZE * tile.y) - HALF_TILE_SIZE;
+    
+    return CGPointMake(floorf(x), floorf(y));
+}
+// 절대 좌표 값을 타일맵 좌표로 변환
+- (CGPoint) convertAbsCoordinateToTile:(CGPoint)abs {
+    CGFloat x = floorf(abs.x / TILE_SIZE);
+    CGFloat y = floorf(TILE_NUM - abs.y / TILE_SIZE);
+    
+    return CGPointMake(x, y);
+}
+
+
+
+
 // 터치된 좌표 값을 타일맵 좌표로 변환
 // [self convertCocos2dToTile:cocos2d]
 // cocos2d : cocos2d 좌표값
@@ -42,14 +60,6 @@
     return result;
 }
 
-// 타일맵 좌표를 맵 좌표로 변환
-- (CGPoint) convertTileToMap:(CGPoint)tile {
-    CGFloat x = (TILE_SIZE * tile.x) + 16;
-    CGFloat y = (TILE_SIZE * (TILE_NUM - tile.y - 1)) + 16;
-    
-    return CGPointMake(floorf(x), floorf(y));
-}
-
 // 타일맵 좌표값을 코코아 좌표로 변환
 // [self convertTileToCocoa:tile];
 // tile : 타일맵 좌표값
@@ -76,13 +86,6 @@
     return CGPointMake(x, y);
 }
 
-// 절대 좌표 값을 타일맵 좌표로 변환
-- (CGPoint) convertTileToAbsCoordinate:(CGPoint)abs {
-    CGFloat x = floorf(abs.x / TILE_SIZE);
-    CGFloat y = floorf(TILE_NUM - abs.y / TILE_SIZE);
-    
-    return CGPointMake(x, y);
-}
 //////////////////////////////////////////////////////////////////////////
 // 좌표 처리 End                                                          //
 //////////////////////////////////////////////////////////////////////////

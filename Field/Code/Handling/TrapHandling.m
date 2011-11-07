@@ -98,7 +98,7 @@
 - (BOOL) handlingTrap:(Warrior*)pWarrior {
     // 캐릭터의 현재 위치
     Coordinate *coordinate = [[Coordinate alloc] init];
-    CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[pWarrior getPosition]];   
+    CGPoint wPoint = [coordinate convertAbsCoordinateToTile:[pWarrior getPosition]];   
     CGPoint wPoint1 = [pWarrior getPosition];
     
     for(int i = 0; i < [[commonValue sharedSingleton] trapListCount]; i++) {
@@ -199,7 +199,7 @@
     // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
         if ([tWarrior getDeath] == DEATH) continue;
-        CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[tWarrior getPosition]];
+        CGPoint wPoint = [coordinate convertAbsCoordinateToTile:[tWarrior getPosition]];
         
         if([self warriorInTreasureBombRange:wPoint minPoint:minPoint maxPoint:maxPoint]) {
             [tWarrior setStrength:[tWarrior getStrength] - [pTrap getDemage]];
@@ -270,7 +270,7 @@
     for (NSInteger i = minPoint.x; i <= maxPoint.x; i++) {
         for (NSInteger j = minPoint.y; j <= maxPoint.y; j++) {
             CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0,0,32,32)];
-            [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
+            [tFlame setPosition:[coordinate convertTileToMap:ccp(i, j)]];
             [tFlame setVisible:YES];
             [tFlame setScale:1.0f];
             [[commonValue sharedSingleton] pushFlame:tFlame]; 
@@ -313,7 +313,7 @@
     
     // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
-        CGPoint wPoint = [coordinate convertTileToAbsCoordinate:[tWarrior getPosition]];
+        CGPoint wPoint = [coordinate convertAbsCoordinateToTile:[tWarrior getPosition]];
         
         if([self adjacentTrap:[pTrap getPosition] point:wPoint range:RANGE_EXPLOSIVE]) {
             [tWarrior setStrength:[tWarrior getStrength] - DEMAGE_BOMB];   
@@ -352,7 +352,7 @@
 - (BOOL) trapDemage:(Warrior*)pWarrior{
     CCSprite *tSprite = [pWarrior getSprite];
     
-    if ([tSprite scale] >= 0.50f) {
+    if ([tSprite scale] >= DEATH_TRAP_SCALE) {
         tSprite.flipX = !tSprite.flipX;
         tSprite.scale = tSprite.scale * 0.9;
         [pWarrior setMoveSpeed:0];
@@ -410,15 +410,11 @@
                                 trapType:tType 
                                   demage:100];
     
-    [[commonValue sharedSingleton] plusTrapNum];
+    if (tType == TILE_TREASURE || tType == TILE_TRAP_CLOSE || tType == TILE_TRAP_OPEN || tType == TILE_EXPLOSIVE) {
+        [[commonValue sharedSingleton] plusTrapNum];
+    }
     [[commonValue sharedSingleton] addTrap:tTrap];
 }
-
-/*- (void) addHouse:(CGPoint)tPoint abs:(CGPoint)abs type:(NSInteger)tType {
-    [[commonValue sharedSingleton] plusTrapNum];
-    
-    //[[commonValue sharedSingleton] addHouse:tTrap];
-}*/
 //////////////////////////////////////////////////////////////////////////
 // 트랩 처리 End                                                          //
 //////////////////////////////////////////////////////////////////////////

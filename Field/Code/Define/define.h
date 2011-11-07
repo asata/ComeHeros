@@ -9,6 +9,11 @@
 #define DEMAGE_TRAP         10
 #define DEMAGE_BOMB         999
 
+#define CHAR_SCALE          0.25f
+#define DEATH_TRAP_SCALE    CHAR_SCALE * 0.50f
+
+#define TRAP_MENU_SIZE      16
+
 // 타일 설치 및 파괴시 필요한 금액
 #define MONEY_DESTORY_WALL  5
 #define MONEY_WARRIOR_KILL  50
@@ -25,6 +30,7 @@
 #define POINT_WARRIOR_KILL  5
 #define POINT_MADE_OBSTACLE 1
 #define POINT_DESTORY_WALL  5
+
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -98,6 +104,9 @@
 #define POINT_LABEL_POSITION    ccp(20, 280)     // 게임 점수 표시
 
 #define MULTI_SCALE             0.05f           // 확대/축소 비율
+
+#define DEVICE_WIDTH            480
+#define DEVICE_HEIGHT           320
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -150,6 +159,10 @@ enum TrapMenuDirection {
     MenuDefault,
     MenuLeft,
     MenuRigtht,
-    MenuUp,
-    MenuDown
+    MenuTop,
+    MenuBottom,
+    MenuLeftTop,
+    MenuLeftBottom,
+    MenuRightTop,
+    MenuRightBottom
 } TrapMenuDirection;

@@ -272,13 +272,18 @@
 - (void) initMap {
     // 타일 맵 등록
     CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:[[commonValue sharedSingleton] getMapName]];
-    map.scale = MAP_SCALE * [[commonValue sharedSingleton] getViewScale];
+    //map.scale = MAP_SCALE;// * [[commonValue sharedSingleton] getViewScale];
     // 왼쪽 상단에 맵 왼쪽 상단이 위치하도록 설정(하지 않을 경우 왼쪽 하단에 맵 왼쪽 하단이 위치) 
-    map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
+    //map.anchorPoint = ccp(0, 0);
+    //map.position = ccp(0, [[commonValue sharedSingleton]getDeviceSize].height - (TILE_NUM * TILE_SIZE));  
+    //[map setScale:4.0f];
     [[commonValue sharedSingleton] setTileMap:map];
     mapSize = [map contentSize];
-    mapSize = CGSizeMake([map contentSize].width * MAP_SCALE, [map contentSize].height * MAP_SCALE);
+    mapSize = CGSizeMake([map contentSize].width, [map contentSize].height);
     [self addChild:map z:kBackgroundLayer];
+    
+    pZoom = [PinchZoomLayer initPinchZoom:map];
+    [pZoom scaleToFit];
     
     // 타일 맵을 읽어 들임
     [self loadTileMap];
@@ -323,18 +328,19 @@
             else
                 [[commonValue sharedSingleton] setMoveTable:i y:j direction:MoveNone];
             
-            if([trapHandling checkObstacleTile:tileType])
+            if([trapHandling checkObstacleTile:tileType]) {
                 // 타일에 설치된 트랩이 있는지 확인
                 [trapHandling addTrap:ccp(i, j) type:tileType];
-            else if ([trapHandling checkHouseTile:tileType]) 
+            } else if ([trapHandling checkHouseTile:tileType]) {
                 // 몬스터 집이 있는 경우
                 [self addHouse:ccp(i, j) tType:tileType];
-            else if (tileType == TILE_START) 
+            } else if (tileType == TILE_START) {
                 // 시작 지점인 경우
                 [[commonValue sharedSingleton] setStartPoint:ccp(i, j)];
-            else if (tileType == TILE_END)
+            } else if (tileType == TILE_END) {
                 // 도착 지점인 경우
                 [[commonValue sharedSingleton] setEndPoint:ccp(i, j)];
+            }
         }
     }
 }
@@ -354,7 +360,7 @@
         
         if([[wInfo objectForKey:@"Time"] intValue] == [[commonValue sharedSingleton] getStageTime]) {
             CCSprite *tSprite = [warriorHandling createWarrior:wInfo];
-            [self addChild:tSprite 
+            [pZoom addChild:tSprite 
                          z:(kWarriorLayer - [[commonValue sharedSingleton] warriorListCount]) 
                        tag:[[commonValue sharedSingleton] getWarriorNum]];
         }
@@ -394,7 +400,7 @@
         // 묘비를 가장 아래로 내림
         for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
             if([tWarrior getDeath] == DEATH && [tWarrior getDeathReOrder]) {
-                [self reorderChild:[tWarrior getSprite] z:kTombstoneLayer];
+                [pZoom reorderChild:[tWarrior getSprite] z:kTombstoneLayer];
                 [tWarrior changeDeathOrder];
             }
         }
@@ -402,8 +408,8 @@
         // 폭발물 폭발시 불꽃을 삽입
         CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
         while (tFlame != nil) {
-            [tFlame setScale:[[commonValue sharedSingleton] getViewScale]];
-            [self addChild:tFlame z:kFlameLayer];
+            [tFlame setScale:CHAR_SCALE];
+            [pZoom addChild:tFlame z:kFlameLayer];
             [chainFlameList addObject:tFlame];
             tFlame = [[commonValue sharedSingleton] popFlame];
         }
@@ -428,7 +434,7 @@
             CCSprite *tSprite = [monsterHandling createMonster:0 position:[tHouse getPosition] houseNum:[tHouse getHouseNum]];
             [tSprite setVisible:YES];
             
-            [self addChild:tSprite z:(kMonsterLayer - [[commonValue sharedSingleton] monsterListCount])];
+            [pZoom addChild:tSprite z:(kMonsterLayer - [[commonValue sharedSingleton] monsterListCount])];
             [tHouse pluseMadeNum];
         }
     }
@@ -484,6 +490,10 @@
                                                         selectedImage:@"Tile/tile-floor-0.png" 
                                                                target:self 
                                                              selector:@selector(tileSetupMonsterHouse1:)];
+    [tileItem1 setScale:CHAR_SCALE];
+    [tileItem2 setScale:CHAR_SCALE];
+    [tileItem3 setScale:CHAR_SCALE];
+    [tileItem4 setScale:CHAR_SCALE];
     [trapMenuList addObject:tileItem1];
     [trapMenuList addObject:tileItem2];
     [trapMenuList addObject:tileItem3];
@@ -495,16 +505,16 @@
     menu4 = [CCMenu menuWithItems:nil];
     
     menuPrint = MenuNone;
-    [menu1 alignItemsHorizontallyWithPadding:5];
-    [menu2 alignItemsVerticallyWithPadding:5];
-    [menu3 alignItemsVerticallyWithPadding:5];
-    [menu4 alignItemsHorizontallyWithPadding:5];
+    [menu1 alignItemsHorizontallyWithPadding:2];
+    [menu2 alignItemsVerticallyWithPadding:2];
+    [menu3 alignItemsVerticallyWithPadding:2];
+    [menu4 alignItemsHorizontallyWithPadding:2];
     [self installTrapMenuVisible:NO];    
     
-    [self addChild:menu1 z:kTileMenuLayer];
-    [self addChild:menu2 z:kTileMenuLayer];
-    [self addChild:menu3 z:kTileMenuLayer];
-    [self addChild:menu4 z:kTileMenuLayer];
+    [pZoom addChild:menu1 z:kTileMenuLayer];
+    [pZoom addChild:menu2 z:kTileMenuLayer];
+    [pZoom addChild:menu3 z:kTileMenuLayer];
+    [pZoom addChild:menu4 z:kTileMenuLayer];
     
 }
 - (BOOL) installTileCheck:(NSInteger)tileType {
@@ -622,26 +632,52 @@
                 else if(num == 2 || num == 3 || num == 4 || num == 5) [menu3 removeChild:item cleanup:YES];                    
                 num++;
             }
-        } else if (menuPrint == MenuUp) {
+        } else if (menuPrint == MenuTop) {
             for (CCMenuItem *item in trapMenuList) {
                 if (num == 0) [menu2 removeChild:item cleanup:YES];
                 else if(num == 1) [menu3 removeChild:item cleanup:YES];
                 else if(num == 2 || num == 3 || num == 4 || num == 5) [menu4 removeChild:item cleanup:YES];                    
                 num++;
             }
-        } else if (menuPrint == MenuDown) {
+        } else if (menuPrint == MenuBottom) {
             for (CCMenuItem *item in trapMenuList) {
                 if (num == 0) [menu2 removeChild:item cleanup:YES];
                 else if(num == 1) [menu3 removeChild:item cleanup:YES];
                 else if(num == 2 || num == 3 || num == 4 || num == 5) [menu1 removeChild:item cleanup:YES];                    
                 num++;
             }
+        } else if (menuPrint == MenuLeftTop) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu4 removeChild:item cleanup:YES];
+                else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu3 removeChild:item cleanup:YES];                    
+                num++;
+            }
+        } else if (menuPrint == MenuLeftBottom) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu1 removeChild:item cleanup:YES];
+                else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu3 removeChild:item cleanup:YES];                   
+                num++;
+            }
+        } else if (menuPrint == MenuRightTop) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu4 removeChild:item cleanup:YES];
+                else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu2 removeChild:item cleanup:YES];                    
+                num++;
+            }
+        } else if (menuPrint == MenuRightBottom) {
+            for (CCMenuItem *item in trapMenuList) {
+                if (num == 0) [menu1 removeChild:item cleanup:YES];
+                else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu2 removeChild:item cleanup:YES];                   
+                num++;
+            }
         }
+        
+        menuPrint = MenuNone;
     } else {
-        [menu1 alignItemsHorizontallyWithPadding:5];
-        [menu2 alignItemsVerticallyWithPadding:5];
-        [menu3 alignItemsVerticallyWithPadding:5];
-        [menu4 alignItemsHorizontallyWithPadding:5];
+        [menu1 alignItemsHorizontallyWithPadding:2];
+        [menu2 alignItemsVerticallyWithPadding:2];
+        [menu3 alignItemsVerticallyWithPadding:2];
+        [menu4 alignItemsHorizontallyWithPadding:2];
     }
     
     [menu1 setVisible:flag];
@@ -667,118 +703,18 @@
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self installTrapMenuVisible:NO];
     
-    if([[event allTouches] count] == 1) {
-        // 멀티 터치가 아닌 경우 
-        touchType = TOUCH;
-        
-        //UITouch *touch = [touches anyObject];
-        //CGPoint location = [touch locationInView: [touch view]];
-        //prevPoint = [[CCDirector sharedDirector] convertToGL:location];
-    } else if([[event allTouches] count] == 2) {
-        // 멀티 터치
-        //NSArray *touchArray = [[event allTouches] allObjects];
-        //prevMultiLength = [function calcuationMultiTouchLength:touchArray];        
-    }
+    // 멀티 터치가 아닌 경우 
+    if([[event allTouches] count] == 1) touchType = TOUCH;
 }
 
-// 사용자가 터치로 이동할 경우
-- (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {  
-    if([[event allTouches] count] == 1) {
-        // 멀티 터치가 아닌 경우   
-        touchType = TOUCH_MOVE;
-        
-        UITouch *touch = [touches anyObject];
-        CGPoint touchLocation = [touch locationInView: [touch view]];
-        CGPoint prevLocation = [touch previousLocationInView: [touch view]];
-        touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
-        prevLocation = [[CCDirector sharedDirector] convertToGL:prevLocation];
-        CGPoint movePoint = ccpSub(touchLocation, prevLocation);
-        
+- (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    if ([[event allTouches] count] == 1) touchType = TOUCH_MOVE;
 
-        // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
-        [self pauseSchedulerAndActions];
-        
-        [self moveTouchMap:movePoint];
-        [self moveTouchWarrior];
-        [self moveTouchMonster];
-        
-        // 일시 정지 해제
-        [self resumeSchedulerAndActions];
-    } else if([[event allTouches] count] == 2) {
-        // 멀티 터치
-        // 확대/축소시 map.position의 위치를 지정부분 수정 필요
-        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-        CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
-        CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
-        
-        UITouch *touch1 = [[[event allTouches] allObjects] objectAtIndex:0];
-        UITouch *touch2 = [[[event allTouches] allObjects] objectAtIndex:1];
-        double prevDistance = ccpDistance([touch1 previousLocationInView:[touch1 view]], [touch2 previousLocationInView:[touch2 view]]);
-        double newDistance = ccpDistance([touch1 locationInView:[touch1 view]], [touch2 locationInView:[touch2 view]]);
-        /*CGFloat relation = newDistance / prevDistance;
-        CGFloat newScale = viewScale * relation;
-        
-        CGPoint touch1Location = [self convertTouchToNodeSpace:touch1];
-        CGPoint touch2Location = [self convertTouchToNodeSpace:touch2];
-        CGPoint centerPoint = ccpMidpoint(touch1Location, touch2Location);
-    
-        CGFloat length = [function calcuationMultiTouchLength:touchArray];*/
-        CGFloat changeScale;
-        
-        // prevMultiLength 와 length 비교 - 늘어나면 확대, 줄어들면 축소
-        // 확대/축소 비율에 따라 조정 - 0.8 ~ 1.2내외로 설정  
-        
-        // 확대/축소 범위가 작을 경우 무시?
-        if(ABS(prevDistance - newDistance) < 0.5) return;
-        
-        if(prevDistance > newDistance) {
-            if(viewScale <= 0.8f) return;
-            
-            changeScale = -MULTI_SCALE;
-        } else {
-            if(viewScale >= 1.2f) return;
-            
-            changeScale = MULTI_SCALE;
-        }
-        
-        // 맵과 기타 잡것들 옮기기 전에 일시 정지 시킴
-        [self pauseSchedulerAndActions];
-        
-        // 맵 비율 조정 및 위치 조정
-        viewScale = viewScale + changeScale;
-        map.scale = MAP_SCALE * viewScale;
-        map.position = [self checkMovePosition:ccp(map.position.x - (deviceSize.width * changeScale), 
-                                                   map.position.y + (deviceSize.height * changeScale))];
-        
-        // 용사 비율 조정
-        for(int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
-            Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
-            CCSprite *tSprite = [tWarrior getSprite];
-            tSprite.scale = viewScale;
-            tSprite.position = ccp(map.position.x + ([tWarrior getPosition].x * viewScale), 
-                                   map.position.y + ([tWarrior getPosition].y * viewScale));
-        }
-        // 몬스터 비율 조정
-        for(int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
-            Monster *tMonster = [[commonValue sharedSingleton] getMonsterListAtIndex:i]; 
-            CCSprite *tSprite = [tMonster getSprite];
-            tSprite.scale = viewScale;
-            tSprite.position = ccp(map.position.x + ([tMonster getPosition].x * viewScale), 
-                                   map.position.y + ([tMonster getPosition].y * viewScale));
-        }
-        
-        [[commonValue sharedSingleton] setViewScale:viewScale];
-        [[commonValue sharedSingleton] setTileMap:map];
-        //prevMultiLength = length;
-        
-        // 일시 정지 해제
-        [self resumeSchedulerAndActions];
-    }
+    [pZoom ccTouchesMoved:touches withEvent:event];
 }
 
 // 사용자가 터치를 끝낼 경우
-- (void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    // YES일 경우 : 터치, NO일 경우 : 터치하여 이동
+- (void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {// YES일 경우 : 터치, NO일 경우 : 터치하여 이동
     if(touchType && [[event allTouches] count] == 1) {
         // 터치된 항목이 뭐인지에 따라서 처리가 필요
         // 빈 타일일 경우 트랩 설치 화면
@@ -791,7 +727,7 @@
         
         // 클릭한 위치 확인
         Coordinate *coordinate = [[Coordinate alloc] init];
-        CGPoint thisArea = [coordinate convertCocos2dToTile:location];
+        CGPoint thisArea = [coordinate convertAbsCoordinateToTile:[pZoom convertTouchToNodeSpace:touch]];
         
         // 설치된 타일 확인
         unsigned int tType = [[commonValue sharedSingleton] getMapInfo:(int)thisArea.x y:(int)thisArea.y];
@@ -808,11 +744,46 @@
         } else if(tType == TILE_GROUND1 || tType == TILE_GROUND2) {
             // 트랩 설치 화면 출력
             tileSetupPoint = thisArea;
-            
-            CGPoint point = [coordinate convertTileToCocoa:thisArea];
-            
+                        
+            CGFloat tileSize = TILE_SIZE * [pZoom getScale];
             NSInteger num = 0;
-            if (convertedLocation.x - TILE_SIZE < 0) {
+            if (convertedLocation.x - tileSize <= 0 && convertedLocation.y + tileSize >= DEVICE_HEIGHT) {
+                NSLog(@"Left Top");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu4 addChild:item];
+                    else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu3 addChild:item];      
+                    
+                    num++;
+                }
+                menuPrint = MenuLeftTop;
+            } else if (convertedLocation.x - tileSize <= 0 && convertedLocation.y - tileSize <= 0) {
+                NSLog(@"Left Bottom");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu1 addChild:item];
+                    else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu3 addChild:item];      
+                    
+                    num++;
+                }
+                menuPrint = MenuLeftBottom;
+            } else if (convertedLocation.x + (2 * tileSize) >= DEVICE_WIDTH && convertedLocation.y + tileSize >= DEVICE_HEIGHT) {
+                NSLog(@"Right Top");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu4 addChild:item];
+                    else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu2 addChild:item];      
+                    
+                    num++;
+                }
+                menuPrint = MenuRightTop;
+            } else if (convertedLocation.x + tileSize >= DEVICE_WIDTH && convertedLocation.y - tileSize <= 0) {
+                NSLog(@"Right Bottom");
+                for (CCMenuItem *item in trapMenuList) {
+                    if (num == 0) [menu1 addChild:item];
+                    else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu2 addChild:item];      
+                    
+                    num++;
+                }
+                menuPrint = MenuRightBottom;
+            } else if (convertedLocation.x - tileSize <= 0) {
                 NSLog(@"Left");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
@@ -822,7 +793,7 @@
                     num++;
                 }
                 menuPrint = MenuLeft;
-            } else if (convertedLocation.x + TILE_SIZE > 460) {
+            } else if (convertedLocation.x + tileSize >= DEVICE_WIDTH) {
                 NSLog(@"Right");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
@@ -832,7 +803,7 @@
                     num++;
                 }
                 menuPrint = MenuRigtht;
-            } else if (convertedLocation.y - TILE_SIZE < 0) { 
+            } else if (convertedLocation.y - tileSize <= 0) { 
                 NSLog(@"Bottom");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu2 addChild:item];
@@ -841,8 +812,8 @@
                     
                     num++;
                 }
-                menuPrint = MenuDown;
-            } else if (convertedLocation.y + TILE_SIZE > 320) {
+                menuPrint = MenuBottom;
+            } else if (convertedLocation.y + tileSize >= DEVICE_HEIGHT) {
                 NSLog(@"Top");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu2 addChild:item];
@@ -851,7 +822,7 @@
                     
                     num++;
                 }
-                menuPrint = MenuUp;
+                menuPrint = MenuTop;
             } else {
                 NSLog(@"Default");
                 for (CCMenuItem *item in trapMenuList) {
@@ -865,97 +836,31 @@
                 menuPrint = MenuDefault;
             }
             
-            [menu1 setPosition:ccp(point.x, point.y + TILE_SIZE)];
-            [menu2 setPosition:ccp(point.x - TILE_SIZE, point.y)];
-            [menu3 setPosition:ccp(point.x + TILE_SIZE, point.y)];
-            [menu4 setPosition:ccp(point.x, point.y - TILE_SIZE)];
+            CGPoint trapSetupPosition = [coordinate convertTileToMap:thisArea];
+            [menu1 setPosition:ccp(trapSetupPosition.x, trapSetupPosition.y + TILE_SIZE)];
+            [menu2 setPosition:ccp(trapSetupPosition.x - TILE_SIZE, trapSetupPosition.y)];
+            [menu3 setPosition:ccp(trapSetupPosition.x + TILE_SIZE, trapSetupPosition.y)];
+            [menu4 setPosition:ccp(trapSetupPosition.x, trapSetupPosition.y - TILE_SIZE)];
+            
+            if (menuPrint == MenuRightTop || menuPrint == MenuLeftTop) {
+                if (menuPrint == MenuRightTop) {
+                    [menu4 setPosition:ccp(trapSetupPosition.x, trapSetupPosition.y - (2 *TILE_SIZE))];
+                }
+                [menu2 setPosition:ccp(trapSetupPosition.x - TILE_SIZE, trapSetupPosition.y - TILE_SIZE - 5)];
+                [menu3 setPosition:ccp(trapSetupPosition.x + TILE_SIZE, trapSetupPosition.y - TILE_SIZE - 5)];
+            } else if (menuPrint == MenuLeftBottom || menuPrint == MenuRightBottom) {
+                [menu2 setPosition:ccp(trapSetupPosition.x - TILE_SIZE, trapSetupPosition.y + TILE_SIZE + 5)];
+                [menu3 setPosition:ccp(trapSetupPosition.x + TILE_SIZE, trapSetupPosition.y + TILE_SIZE + 5)];
+            }
             
             [self installTrapMenuVisible:YES]; 
         }
         
         NSLog(@"Touch Position : %d %d", (int) thisArea.x, (int) thisArea.y);
-        NSLog(@"Touch Position : %d %d", (int) convertedLocation.x, (int) convertedLocation.y);
     }
     
     // 멀티 터치는 처리하지 않음
-}
-
-
-// 화면 터치로 이동시 맵타일 이동
-- (void) moveTouchMap:(CGPoint)movePoint {
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    CGPoint mapMove = [self checkMovePosition:CGPointMake(mapPosition.x + movePoint.x, mapPosition.y + movePoint.y)];
-    
-    [[commonValue sharedSingleton] setMapPosition:CGPointMake(mapMove.x, mapMove.y)];
-}
-
-// 화면 터치로 이동시 용사 이동~
-- (void) moveTouchWarrior {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    for (int i = 0; i < [[commonValue sharedSingleton] warriorListCount]; i++) {
-        // 현재 위치 및 정보를 가져옴
-        Warrior *tWarrior = [[commonValue sharedSingleton] getWarriorListAtIndex:i]; 
-        CCSprite *tSprite = [tWarrior getSprite];
-        CGPoint position = [tWarrior getPosition];
-        
-        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
-                               mapPosition.y + (position.y * viewScale));
-    }
-}
-- (void) moveTouchMonster {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    for (int i = 0; i < [[commonValue sharedSingleton] monsterListCount]; i++) {
-        // 현재 위치 및 정보를 가져옴
-        Warrior *tWarrior = [[commonValue sharedSingleton] getMonsterListAtIndex:i];
-        CCSprite *tSprite = [tWarrior getSprite];
-        CGPoint position = [tWarrior getPosition];
-        
-        tSprite.position = ccp(mapPosition.x + (position.x * viewScale), 
-                               mapPosition.y + (position.y * viewScale));
-    }
-}
-
-// 터치로 화면 이동시 맵 밖으로 이동 못하게 차단
-- (CGPoint) checkMovePosition:(CGPoint)position {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGSize deviceSize = [[commonValue sharedSingleton] getDeviceSize];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-    
-    if (position.x > 0 && 
-        position.y < -(mapSize.height * viewScale - deviceSize.height)) {
-        // 좌상단
-        position = ccp(0, -(mapSize.height * viewScale - deviceSize.height)); 
-    } else if (mapPosition.y < -(mapSize.height * viewScale - deviceSize.height)) {
-        // 상단        
-        position = ccp(position.x, -(mapSize.height * viewScale - deviceSize.height));
-    } else if (position.x < -(mapSize.width * viewScale - deviceSize.width) && 
-               position.y < -(mapSize.height * viewScale - deviceSize.height)) {
-        // 우상단
-        position = ccp(-(mapSize.width * viewScale - deviceSize.width), 
-                       -(mapSize.height * viewScale - deviceSize.height));
-    } else if (mapPosition.x < -(mapSize.width * viewScale - deviceSize.width)) {
-        // 오른쪽
-        position = ccp(-(mapSize.width * viewScale - deviceSize.width), position.y);
-    } else if(mapPosition.x < -(mapSize.width * viewScale - deviceSize.width) && 
-              position.y > 0) {
-        // 우하단
-        position = ccp(-(mapSize.width * viewScale - deviceSize.width), 0);
-    } else if (position.x > 0) {
-        // 왼쪽
-        position = ccp(0, position.y);
-    } else if (position.y > 0) {
-        // 아래
-        position = ccp(position.x, 0);
-    } else if (position.x > 0 && position.y > 0) {
-        // 좌하단
-        position = ccp(0, 0);
-    }
-    
-    return position;
+    [pZoom ccTouchesEnded:touches withEvent:event];
 }
 //////////////////////////////////////////////////////////////////////////
 // Touch 처리 End                                                        //

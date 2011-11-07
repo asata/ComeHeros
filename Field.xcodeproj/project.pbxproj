@@ -163,6 +163,8 @@
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
 		CBC72D011464E68D00FB5ECA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CBC72D031464E68D00FB5ECA /* Localizable.strings */; };
 		CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */ = {isa = PBXBuildFile; fileRef = CBC72D051464E85A00FB5ECA /* num_and_alpa.png */; };
+		CBDC21C31466B7820072F162 /* PinchZoomLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDC21C01466B7820072F162 /* PinchZoomLayer.m */; };
+		CBDC21C41466B7820072F162 /* ScaleRestricted.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDC21C21466B7820072F162 /* ScaleRestricted.m */; };
 		CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */ = {isa = PBXBuildFile; fileRef = CBE6509C1460F6C1004C9E1E /* ModifyList */; };
 /* End PBXBuildFile section */
 
@@ -479,6 +481,10 @@
 		CBC72D041464E69500FB5ECA /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CBC72D051464E85A00FB5ECA /* num_and_alpa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = num_and_alpa.png; sourceTree = "<group>"; };
 		CBC72D091464EEC800FB5ECA /* ResultDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResultDefine.h; path = Code/Define/ResultDefine.h; sourceTree = "<group>"; };
+		CBDC21BF1466B7810072F162 /* PinchZoomLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchZoomLayer.h; path = Code/PinchZoomLayer.h; sourceTree = "<group>"; };
+		CBDC21C01466B7820072F162 /* PinchZoomLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchZoomLayer.m; path = Code/PinchZoomLayer.m; sourceTree = "<group>"; };
+		CBDC21C11466B7820072F162 /* ScaleRestricted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScaleRestricted.h; path = Code/ScaleRestricted.h; sourceTree = "<group>"; };
+		CBDC21C21466B7820072F162 /* ScaleRestricted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScaleRestricted.m; path = Code/ScaleRestricted.m; sourceTree = "<group>"; };
 		CBE6509C1460F6C1004C9E1E /* ModifyList */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ModifyList; path = Document/ModifyList; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1014,6 +1020,10 @@
 		CB7B80BF13ED7B7C00FADB50 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				CBDC21BF1466B7810072F162 /* PinchZoomLayer.h */,
+				CBDC21C01466B7820072F162 /* PinchZoomLayer.m */,
+				CBDC21C11466B7820072F162 /* ScaleRestricted.h */,
+				CBDC21C21466B7820072F162 /* ScaleRestricted.m */,
 				CB084FDE1461F433003A875A /* Layer */,
 				CB084FD214618383003A875A /* Define */,
 				CB40EEE9145D642900E48B34 /* Document */,
@@ -1267,6 +1277,8 @@
 				CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */,
 				CBBB630B1463992F005F3179 /* GameLayer.m in Sources */,
 				CB4A737E146412EE000B1BDD /* StageSelectLayer.m in Sources */,
+				CBDC21C31466B7820072F162 /* PinchZoomLayer.m in Sources */,
+				CBDC21C41466B7820072F162 /* ScaleRestricted.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

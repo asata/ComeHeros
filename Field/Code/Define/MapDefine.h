@@ -1,15 +1,15 @@
 /*******************************************************/
 /* 타일 맵 관련 정의                                       */
 /*******************************************************/
-#define MAP_SCALE           4               // 타일 맵 확대 비율
+//#define MAP_SCALE           4               // 타일 맵 확대 비율
 
 #define MAP_LAYER1          @"Layer 1"
 #define MAP_LAYER2          @"New Layer"
 
 // 타일 관련 정의
-#define HALF_TILE_SIZE      16              // 타일 절반 크기
-#define TILE_SIZE           32              // 타일 크기
-#define TILE_NUM            100             // 맵 사이즈
+#define HALF_TILE_SIZE      4              // 타일 절반 크기
+#define TILE_SIZE           8              // 타일 크기
+#define TILE_NUM            30             // 맵 사이즈
 
 #define TILE_NONE           0
 

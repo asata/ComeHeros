@@ -69,8 +69,8 @@
     return animation;
 }
 - (CCSprite*) createMonster:(NSInteger)monsterType position:(CGPoint)position houseNum:(NSInteger)pHouse {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    //CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    //CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     Coordinate *coordinate = [[Coordinate alloc] init];
     File *file = [[File alloc] init];
     
@@ -81,8 +81,9 @@
     NSDictionary *warriorList = [chareterList objectForKey:@"Monster"];
     NSDictionary *data = [warriorList objectForKey:[monsterName objectAtIndex:monsterType]];
     
+    CGPoint startABSPoint = [coordinate convertTileToMap:position];
     // 몬스터 생성
-    Monster *tMonster = [[Monster alloc] initMonster:[coordinate convertTileToMap:position]
+    Monster *tMonster = [[Monster alloc] initMonster:startABSPoint
                                           monsterNum:[[commonValue sharedSingleton] getMonsterNum]
                                             strength:[[data objectForKey:@"strength"] intValue] 
                                                power:[[data objectForKey:@"power"] intValue] 
@@ -94,9 +95,9 @@
                                             houseNum:pHouse]; 
     
     CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadMonsterSprite:[monsterName objectAtIndex:monsterType]]];
-    tSprite.position = ccp((position.x * viewScale) + mapPosition.x, (position.y * viewScale) + mapPosition.y); 
+    tSprite.position = startABSPoint; 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT]; 
-    [tSprite setScale:viewScale];
+    [tSprite setScale:CHAR_SCALE];
     [tSprite setVisible:YES];
     [tSprite runAction:[CCRepeatForever actionWithAction:
                         [[CCAnimate alloc] initWithAnimation:[self loadMonsterWalk:[monsterName objectAtIndex:monsterType]] restoreOriginalFrame:NO]]];
@@ -124,9 +125,6 @@
         CCSprite *tSprite = [tMonster getSprite];
         CGPoint movePosition = [tMonster getPosition];
         
-        CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-        CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-        
         if ([tMonster getMoveLength] == TILE_SIZE) {
             [self selectDirection:tMonster];
         }
@@ -149,7 +147,7 @@
                 movePosition = ccp(movePosition.x, movePosition.y - [tMonster getMoveSpeed]);
             } 
             
-            tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
+            tSprite.position = movePosition;
             [tMonster setSprite:tSprite];
             
             [tMonster plusMoveLength];
@@ -240,7 +238,6 @@
         for (House *tHouse in [[commonValue sharedSingleton] getHouseList]) {
             if([tHouse getHouseNum] == [tMonster getHouseNum]) [tHouse minusMadeNum];
         }
-        
     }
 } 
 

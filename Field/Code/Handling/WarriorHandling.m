@@ -73,8 +73,8 @@
 }
 
 - (CCSprite*) createWarrior:(NSDictionary*)wInfo {
-    CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
+    //CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
+    //CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
     Coordinate *coordinate = [[Coordinate alloc] init];
     File *file = [[File alloc] init];
@@ -88,8 +88,9 @@
     NSDictionary *warriorList = [chareterList objectForKey:@"Warrior"];
     NSDictionary *data = [warriorList objectForKey:[warriorName objectAtIndex:warriorType]];
     
+    CGPoint startABSPoint = [coordinate convertTileToMap:sPoint];
     // 용사 생성
-    Warrior *tWarrior = [[Warrior alloc] initWarrior:[coordinate convertTileToMap:sPoint]
+    Warrior *tWarrior = [[Warrior alloc] initWarrior:startABSPoint
                                           warriorNum:[[commonValue sharedSingleton] getWarriorNum]
                                             strength:[[data objectForKey:@"strength"] intValue]
                                                power:[[data objectForKey:@"power"] intValue]
@@ -102,9 +103,9 @@
     // 나타난 용사 수 증가
     [[commonValue sharedSingleton] plusWarriorNum];
     CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadWarriorSprite:[warriorName objectAtIndex:warriorType]]];
-    tSprite.position = ccp((sPoint.x * viewScale) + mapPosition.x, (sPoint.y * viewScale) + mapPosition.y); 
+    tSprite.position = startABSPoint; 
     [tSprite setFlipX:WARRIOR_MOVE_RIGHT];
-    [tSprite setScale:viewScale];
+    [tSprite setScale:CHAR_SCALE];
     [tSprite setVisible:YES];
     
     CCAnimate *walkAnimate = [[CCAnimate alloc] initWithAnimation:[self loadWarriorWalk:[warriorName objectAtIndex:warriorType]]
@@ -191,9 +192,6 @@
                                     [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
                                     nil]];
             } else {
-                CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-                CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
-                
                 // 이동 및 기타 체크 처리
                 if(direction == MoveLeft) {
                     movePosition = ccp(movePosition.x - [tWarrior getMoveSpeed], movePosition.y);
@@ -204,7 +202,7 @@
                 } else if(direction == MoveDown) {
                     movePosition = ccp(movePosition.x, movePosition.y - [tWarrior getMoveSpeed]);
                 }   
-                tSprite.position = ccp(mapPosition.x + (movePosition.x * viewScale), mapPosition.y + (movePosition.y * viewScale));
+                tSprite.position = movePosition;
                 [tWarrior setSprite:tSprite];
                 
                 [tWarrior plusMoveLength];
@@ -239,7 +237,7 @@
     for (Warrior *tWarrior in deleteList) {
         CCSprite *tSprite = [tWarrior getSprite]; 
         
-        if ([tSprite scale] != 1) {
+        if ([tSprite scale] != CHAR_SCALE) {
             [[commonValue sharedSingleton] removeWarrior:tWarrior];
             [tSprite setVisible:NO];
             [tSprite release];
