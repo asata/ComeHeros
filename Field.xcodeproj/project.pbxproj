@@ -25,6 +25,10 @@
 		CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2D825314652DAD00B1BEE6 /* bg_result.png */; };
 		CB2D826614653CE300B1BEE6 /* Stage_test18.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test18.plist */; };
 		CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */; };
+		CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386442146BF30700C8C019 /* atteck_effect.wav */; };
+		CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386443146BF30700C8C019 /* bomb_trap.wav */; };
+		CB386448146BF30700C8C019 /* break_wall.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386444146BF30700C8C019 /* break_wall.wav */; };
+		CB386449146BF30700C8C019 /* trap_on.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386445146BF30700C8C019 /* trap_on.wav */; };
 		CB3F480B145E848500637665 /* monster.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB3F4809145E848500637665 /* monster.plist */; };
 		CB3F480C145E848500637665 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = CB3F480A145E848500637665 /* monster.png */; };
 		CB40EEEE145D6E1600E48B34 /* Info in Resources */ = {isa = PBXBuildFile; fileRef = CB40EEED145D6E1600E48B34 /* Info */; };
@@ -210,6 +214,10 @@
 		CB2D825314652DAD00B1BEE6 /* bg_result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_result.png; sourceTree = "<group>"; };
 		CB2D826514653CE300B1BEE6 /* Stage_test18.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test18.plist; path = Resources/StageInfo/Stage_test18.plist; sourceTree = "<group>"; };
 		CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ChareaterInfo.plist; path = Resources/ChareaterInfo.plist; sourceTree = "<group>"; };
+		CB386442146BF30700C8C019 /* atteck_effect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atteck_effect.wav; sourceTree = "<group>"; };
+		CB386443146BF30700C8C019 /* bomb_trap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb_trap.wav; sourceTree = "<group>"; };
+		CB386444146BF30700C8C019 /* break_wall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = break_wall.wav; sourceTree = "<group>"; };
+		CB386445146BF30700C8C019 /* trap_on.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = trap_on.wav; sourceTree = "<group>"; };
 		CB3B022B1447A670004A1258 /* texture-character.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "texture-character.png"; path = "Resources/TileMap/texture-character.png"; sourceTree = "<group>"; };
 		CB3F4809145E848500637665 /* monster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = monster.plist; path = Resources/Monster/monster.plist; sourceTree = "<group>"; };
 		CB3F480A145E848500637665 /* monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monster.png; path = Resources/Monster/monster.png; sourceTree = "<group>"; };
@@ -617,6 +625,26 @@
 			name = Icon;
 			sourceTree = "<group>";
 		};
+		CB386440146BF30700C8C019 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				CB386441146BF30700C8C019 /* Effect */,
+			);
+			name = Music;
+			path = Resources/Music;
+			sourceTree = "<group>";
+		};
+		CB386441146BF30700C8C019 /* Effect */ = {
+			isa = PBXGroup;
+			children = (
+				CB386442146BF30700C8C019 /* atteck_effect.wav */,
+				CB386443146BF30700C8C019 /* bomb_trap.wav */,
+				CB386444146BF30700C8C019 /* break_wall.wav */,
+				CB386445146BF30700C8C019 /* trap_on.wav */,
+			);
+			path = Effect;
+			sourceTree = "<group>";
+		};
 		CB40EEE9145D642900E48B34 /* Document */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,6 +716,7 @@
 		CB7B7F5B13ED7B2200FADB50 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CB386440146BF30700C8C019 /* Music */,
 				CB1E729A1462DDA100CAE737 /* Image */,
 				CB22955E14601BF400BA7EF5 /* fire.png */,
 				CB8A1859145EDA3600B6AA4A /* Warrior */,
@@ -1152,6 +1181,10 @@
 				CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */,
 				CB2D826614653CE300B1BEE6 /* Stage_test18.plist in Resources */,
 				CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */,
+				CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */,
+				CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */,
+				CB386448146BF30700C8C019 /* break_wall.wav in Resources */,
+				CB386449146BF30700C8C019 /* trap_on.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

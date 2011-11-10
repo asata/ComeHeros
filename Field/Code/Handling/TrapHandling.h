@@ -4,6 +4,7 @@
 #import "Trap.h"
 #import "Function.h"
 #import "Coordinate.h"
+#import "SimpleAudioEngine.h"
 
 @interface TrapHandling : CCLayer {
     NSMutableArray *chainTrapList;

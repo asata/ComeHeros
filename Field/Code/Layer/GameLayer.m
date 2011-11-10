@@ -732,8 +732,13 @@
         // 설치된 타일 확인
         unsigned int tType = [[commonValue sharedSingleton] getMapInfo:(int)thisArea.x y:(int)thisArea.y];
         if(tType == TILE_WALL10) {
+            // 효과음 재생
+            [[SimpleAudioEngine sharedEngine] playEffect:@"break_wall.wav"];
+            
             [trapHandling addTrap:thisArea type:TILE_WALL01];
         } else if(tType == TILE_WALL01) {
+            // 효과음 재생
+            [[SimpleAudioEngine sharedEngine] playEffect:@"break_wall.wav"];
             [trapHandling addTrap:thisArea type:TILE_GROUND2];
             [[commonValue sharedSingleton] plusStageMoney:MONEY_DESTORY_WALL];
             [[commonValue sharedSingleton] plusStagePoint:POINT_DESTORY_WALL];

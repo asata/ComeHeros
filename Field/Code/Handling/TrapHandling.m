@@ -196,6 +196,9 @@
         maxPoint = ccp(trapPoint.x, [self findRangeTreasure:trapPoint direction:direction]);
     }
     
+    // 효과음 재생
+    [[SimpleAudioEngine sharedEngine] playEffect:@"bomb_trap.wav"];
+    
     // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
         if ([tWarrior getDeath] == DEATH) continue;
@@ -311,6 +314,9 @@
 - (void) bombExplosive:(Trap*)pTrap {
     Coordinate *coordinate = [[Coordinate alloc] init];
     
+    // 효과음 재생
+    [[SimpleAudioEngine sharedEngine] playEffect:@"bomb_trap.wav"];
+    
     // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {
         CGPoint wPoint = [coordinate convertAbsCoordinateToTile:[tWarrior getPosition]];
@@ -376,6 +382,9 @@
 - (void) trapOpen:(Warrior*)pWarrior tTrap:(Trap*)tTrap {
     CGPoint tPoint = [tTrap getPosition];
     CCTMXTiledMap *map = [[commonValue sharedSingleton] getTileMap];
+    
+    // 효과음 재생
+    [[SimpleAudioEngine sharedEngine] playEffect:@"trap_on.wav"];
     
     // 닫힌 함정을 오픈                        
     CCTMXLayer *layer2 = [map layerNamed:MAP_LAYER2];
