@@ -3,6 +3,7 @@
 
 #import "File.h"
 #import "commonValue.h"
+#import "CCScrollLayer.h"
 
 @interface StageSelectLayer : CCLayer {
     NSMutableArray *menuList;

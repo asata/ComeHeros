@@ -20,19 +20,19 @@
 }
 
 - (void) onEnterTransitionDidFinish {
-    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
+    /*NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
     NSArray* languages = [defs objectForKey:@"AppleLanguages"];
     NSString* preferredLang = [languages objectAtIndex:0];
     NSLog(@"Language : %@", preferredLang);
     NSLocale *locale = [NSLocale currentLocale];
     NSString* conCode = [locale objectForKey:NSLocaleCountryCode];
     NSString* conName = [locale displayNameForKey:NSLocaleCountryCode value:conCode];
-    NSLog(@"Country Code : %@, %@, %@", conName, NSLocalizedString(@"Greeting", @"H1"), NSLocalizedString(@"GameName", @"H1"));
+    NSLog(@"Country Code : %@, %@, %@", conName, NSLocalizedString(@"Greeting", @"H1"), NSLocalizedString(@"GameName", @"H1"));*/
     /*if([preferredLang isEqualToString:@"ko"]) {
     } else if([preferredLang isEqualToString:@"en"]) {
     }*/
         
-    NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
+    /*NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
     NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
     NSLog(@"Stage total number : %d", stageNum);
     for (NSInteger i = 1; i <= stageNum; i++) {
@@ -49,7 +49,25 @@
 
         [menuList addObject:tMenu];
         [self addChild:tMenu];
-    }
+     }*/
+    CCLayer *pageOne = [[CCLayer alloc] init];
+    CCSprite *stage1 = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
+    stage1.position = ccp(100, 200);
+    [pageOne addChild:stage1];
+    
+    CCLayer *pageTwo = [[CCLayer alloc] init];
+    CCSprite *stage2 = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
+    stage2.position = ccp(120, 200);
+    [pageTwo addChild:stage2];
+    
+    CCLayer *pageThree = [[CCLayer alloc] init];
+    CCSprite *stage3 = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
+    stage3.position = ccp(120, 200);
+    [pageThree addChild:stage3];
+    
+    CCScrollLayer *scroller = [[CCScrollLayer alloc] initWithLayers:[NSMutableArray arrayWithObjects:pageOne, pageTwo, pageThree, nil]  widthOffset:1];
+    [scroller selectPage:1];
+    [self addChild:scroller];
 }
 
 - (void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
