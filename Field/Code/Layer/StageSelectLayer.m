@@ -1,21 +1,16 @@
 #import "StageSelectLayer.h"
 
 @implementation StageSelectLayer
-@synthesize menuList;
 
 - (id)init {
     if ((self = [super init])) {
         self.isTouchEnabled = YES;
-        
-        menuList = [[NSMutableArray alloc] init];
     }
     
     return self;
 }
 
 - (void) dealloc {
-    [menuList release];
-    
     [super dealloc];
 }
 
@@ -51,19 +46,49 @@
         [self addChild:tMenu];
      }*/
     CCLayer *pageOne = [[CCLayer alloc] init];
-    CCSprite *stage1 = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
-    stage1.position = ccp(100, 200);
-    [pageOne addChild:stage1];
+    CCMenuItemImage *stage1 = [CCMenuItemImage itemFromNormalImage:@"fire.png"
+                                            selectedImage:@"fire.png"
+                                                   target:self 
+                                                          selector:@selector(stageStart:)];
+    CCMenuItemImage *stage2 = [CCMenuItemImage itemFromNormalImage:@"fire.png"
+                                                     selectedImage:@"fire.png"
+                                                            target:self 
+                                                          selector:@selector(stageStart:)];
+    CCMenuItemImage *stage3 = [CCMenuItemImage itemFromNormalImage:@"fire.png"
+                                                     selectedImage:@"fire.png"
+                                                            target:self 
+                                                          selector:@selector(stageStart:)];
+    [stage1 setTag:1];
+    [stage2 setTag:2]; 
+    [stage3 setTag:3]; 
+    CCMenu *stageMenu1 = [CCMenu menuWithItems:stage1, stage2, stage3, nil];
+    [stageMenu1 setPosition:ccp(100, 200)];
+    [stageMenu1 alignItemsVerticallyWithPadding:10.0f];
+    [pageOne addChild:stageMenu1];
     
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
     CCLayer *pageTwo = [[CCLayer alloc] init];
-    CCSprite *stage2 = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
-    stage2.position = ccp(120, 200);
-    [pageTwo addChild:stage2];
+    CCMenuItemImage *stage12 = [CCMenuItemImage itemFromNormalImage:@"fire.png"
+                                            selectedImage:@"fire.png"
+                                                   target:self 
+                                                 selector:@selector(stageStart:)];
+    [stage12 setTag:2]; 
+    CCMenu *stageMenu2 = [CCMenu menuWithItems:stage12, nil];
+    [pageTwo addChild:stageMenu2];
     
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
     CCLayer *pageThree = [[CCLayer alloc] init];
-    CCSprite *stage3 = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
-    stage3.position = ccp(120, 200);
-    [pageThree addChild:stage3];
+    CCMenuItemImage *stage13 = [CCMenuItemImage itemFromNormalImage:@"fire.png"
+                                            selectedImage:@"fire.png"
+                                                   target:self 
+                                                 selector:@selector(stageStart:)];
+    [stage13 setTag:3];  
+    CCMenu *stageMenu3 = [CCMenu menuWithItems:stage13, nil];
+    [pageThree addChild:stageMenu3];
     
     CCScrollLayer *scroller = [[CCScrollLayer alloc] initWithLayers:[NSMutableArray arrayWithObjects:pageOne, pageTwo, pageThree, nil]  widthOffset:1];
     [scroller selectPage:1];
@@ -75,25 +100,10 @@
     CGPoint location = [touch locationInView: [touch view]];
     location = [[CCDirector sharedDirector] convertToGL:location];
     NSLog(@"%f %f", location.x, location.y);
-    
-    for (CCSprite *tMenu in menuList) {
-        float minX = [tMenu position].x - 16;
-        float maxX = [tMenu position].x + 16;
-        float minY = [tMenu position].y - 16;
-        float maxY = [tMenu position].y + 16;
-        
-        if (minX <= location.x && maxX >= location.x && 
-            minY <= location.y && maxY >= location.y) {
-            // Call Stage
-            [self stageSelect:[tMenu tag]];
-            break;
-        }
-    }
 }
 
-- (void) stageSelect:(NSInteger)stageNum {
-    NSLog(@"Stage Num : %d", stageNum);
-    [[commonValue sharedSingleton] setStageLevel:stageNum];
+- (void) stageStart:(id)sender {
+    [[commonValue sharedSingleton] setStageLevel:[sender tag]];
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
 @end

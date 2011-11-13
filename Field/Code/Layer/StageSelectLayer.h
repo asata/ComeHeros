@@ -6,11 +6,8 @@
 #import "CCScrollLayer.h"
 
 @interface StageSelectLayer : CCLayer {
-    NSMutableArray *menuList;
 }
 
-@property (retain, readwrite) NSMutableArray *menuList;
-
-- (void) stageSelect:(NSInteger)stageNum;
+- (void) stageStart:(id)sender;
 
 @end
