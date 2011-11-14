@@ -385,10 +385,18 @@
         //[self pauseSchedulerAndActions];
         
         // 폭발시 생성된 불꽃 제거
+        NSInteger index = 0;
         while ([chainFlameList count] > 0) {
-            CCSprite *dFlame = [chainFlameList objectAtIndex:0];
-            [dFlame setVisible:NO];
-            [chainFlameList removeObject:dFlame];
+            if(index >= [chainFlameList count]) break;
+            
+            CCSprite *dFlame = [chainFlameList objectAtIndex:index];
+            if ([dFlame tag] == 0) {
+                [dFlame setVisible:NO];
+                [chainFlameList removeObject:dFlame];
+            } else {
+                [dFlame setTag:[dFlame tag] - 1];
+                index++;
+            }
         }
         
         if (![warriorHandling moveWarrior]) {
@@ -409,6 +417,7 @@
         CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
         while (tFlame != nil) {
             [tFlame setScale:CHAR_SCALE];
+            [tFlame setTag:1];
             [pZoom addChild:tFlame z:kFlameLayer];
             [chainFlameList addObject:tFlame];
             tFlame = [[commonValue sharedSingleton] popFlame];
@@ -515,8 +524,8 @@
     [pZoom addChild:menu2 z:kTileMenuLayer];
     [pZoom addChild:menu3 z:kTileMenuLayer];
     [pZoom addChild:menu4 z:kTileMenuLayer];
-    
 }
+
 - (BOOL) installTileCheck:(NSInteger)tileType {
     Coordinate *coordinate = [[Coordinate alloc] init];
     CGPoint tPoint = [coordinate convertTileToMap:tileSetupPoint];
@@ -535,6 +544,12 @@
         if (tPoint.x - TILE_SIZE < mPoint.x && tPoint.x + TILE_SIZE > mPoint.x && 
             tPoint.y - TILE_SIZE < mPoint.y && tPoint.y + TILE_SIZE > mPoint.y) return NO;
     }
+    
+    // 이동 경로를 가로막는지 검사
+    /*
+     이동 가능한 길이 있는지 검사
+     이동 가능한 길이 있을 경우 그 길을 막는지 검사
+     */
     
     // 목적지까지 가능 경로가 없을 경우
     NSInteger moveDirection = [[commonValue sharedSingleton] getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
@@ -733,12 +748,12 @@
         unsigned int tType = [[commonValue sharedSingleton] getMapInfo:(int)thisArea.x y:(int)thisArea.y];
         if(tType == TILE_WALL10) {
             // 효과음 재생
-            [[SimpleAudioEngine sharedEngine] playEffect:@"break_wall.wav"];
+            [[SimpleAudioEngine sharedEngine] playEffect:WALL_SOUND];
             
             [trapHandling addTrap:thisArea type:TILE_WALL01];
         } else if(tType == TILE_WALL01) {
             // 효과음 재생
-            [[SimpleAudioEngine sharedEngine] playEffect:@"break_wall.wav"];
+            [[SimpleAudioEngine sharedEngine] playEffect:WALL_SOUND];
             [trapHandling addTrap:thisArea type:TILE_GROUND2];
             [[commonValue sharedSingleton] plusStageMoney:MONEY_DESTORY_WALL];
             [[commonValue sharedSingleton] plusStagePoint:POINT_DESTORY_WALL];

@@ -3,9 +3,11 @@
 
 #import "File.h"
 #import "commonValue.h"
-#import "CCScrollLayer.h"
+#import "PinchZoomLayer.h"
+//#import "CCScrollLayer.h"
 
 @interface StageSelectLayer : CCLayer {
+    PinchZoomLayer *pZoom;
 }
 
 - (void) stageStart:(id)sender;

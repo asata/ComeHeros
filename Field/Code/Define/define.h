@@ -1,4 +1,5 @@
 #import "MapDefine.h"
+#import "SoundDefine.h"
 
 // 트랩의 공격 범위
 #define RANGE_TREASURE      3

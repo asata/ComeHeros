@@ -112,7 +112,10 @@ static const unsigned int WINDOW_WIDTH = 480;
 - (void) scaleToFit {
 	CGFloat minScale = [self getMinScale];
 	contentNode.scale = minScale;
-    //contentNode.anchorPoint = ccp(0, 0.867f);
+}
+
+- (void) scaleToInit:(CGFloat)scale {
+    contentNode.scale = scale;
 }
 
 - (float)percent:(float)a of:(float)b {

@@ -34,6 +34,7 @@
 - (void) animatedZoomTo:(float)scale stillPoint:(CGPoint)stillPoint;
 - (void) applyFrameLimits;
 - (void) scaleToFit;
+- (void) scaleToInit:(CGFloat)scale;
 
 - (CGFloat) getScale;
 

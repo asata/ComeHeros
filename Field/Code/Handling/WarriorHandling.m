@@ -311,6 +311,16 @@
     
     NSInteger preDirection = [pWarrior getMoveDriection];
     
+    // 최단 경로로 가는 길이 있는지 검사
+    if ([[commonValue sharedSingleton] getMoveTable:x y:y] != MoveNone) {
+        if ([pWarrior getIntellect] >= MOVE_INTELLECT / 2) {
+            // 최단 경로를 선택할 확률 증가
+            [choseDirection addObject:[NSNumber numberWithInt:[[commonValue sharedSingleton] getMoveTable:x y:y]]];
+        }
+    
+        [choseDirection addObject:[NSNumber numberWithInt:[[commonValue sharedSingleton] getMoveTable:x y:y]]];
+    }
+    
     // 이동해온 방향을 제외하고 이동이 가능한 경로가 있는지 검사하여 있을 경우 배열에 저장    
     if([function checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
         [choseDirection addObject:[NSNumber numberWithInt:MoveUp]];
