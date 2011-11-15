@@ -25,15 +25,14 @@
        attackRange:(NSInteger)pAttackRange 
           houseNum:(NSInteger)pHouse {
     if ((self = [super init])) {
-        [super initWarrior:pos 
-                warriorNum:p_num 
-                  strength:pStrength 
-                     power:pPower 
-                 intellect:pIntellect 
-                   defense:pDefense
-                     speed:pSpeed 
-                 direction:pDirection 
-               attackRange:pAttackRange];
+        [super initCharacter:pos 
+                    strength:pStrength 
+                       power:pPower 
+                   intellect:pIntellect 
+                     defense:pDefense
+                       speed:pSpeed 
+                   direction:pDirection 
+                 attackRange:pAttackRange];
         
         monsterNum = p_num;
         houseNum = pHouse;
@@ -47,7 +46,6 @@
 
 - (void) setMonsterNum:(NSInteger)pNum {
     monsterNum = pNum;
-    [super setWarriorNum:pNum];
 }
 - (void) setHouseNum:(NSInteger)pHouseNum {
     houseNum = pHouseNum;

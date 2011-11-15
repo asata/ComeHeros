@@ -18,12 +18,17 @@
     
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                             spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-1.png", spriteName]];
-     
+    
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    
     return frame;
 }
 
 - (CCAnimation*) loadWarriorWalk:(NSString*)spriteName {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
     NSMutableArray* walkImgList = [NSMutableArray array];
+    
     for(NSInteger i = 1; i < 3; i++) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                                 spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-%d.png", spriteName, i]];
@@ -33,11 +38,16 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:walkImgList delay:WARRIOR_MOVE_ACTION];
     
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    
     return animation;
 }
 
 - (CCAnimation*) loadWarriorAttack:(NSString*)spriteName {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
     NSMutableArray* attackImgList = [NSMutableArray array];
+    
     for(NSInteger i = 1; i < 3; i++) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                                 spriteFrameByName:[NSString stringWithFormat:@"character-%@-attack-%d.png", spriteName, i]];
@@ -47,6 +57,9 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:attackImgList delay:WARRIOR_MOVE_ACTION];
     
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    
     return animation;
 }
 - (CCSpriteFrame*) loadWarriorTombstone {
@@ -54,6 +67,9 @@
     
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                             spriteFrameByName:[NSString stringWithFormat:@"dead0003.png"]];
+    
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
     
     return frame;
 }
@@ -68,6 +84,9 @@
     }
     
     CCAnimation *animation = [CCAnimation animationWithFrames:tombstoneImgList delay:INSTALL_TOMBSTONE_TIME];
+    
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
     
     return animation;
 }
@@ -282,7 +301,7 @@
                 [tMonster setStrength:[tMonster getStrength] - demage];
             }
             
-            return [tMonster getWarriorNum];
+            return [tMonster getMonsterNum];
         }
     }
     

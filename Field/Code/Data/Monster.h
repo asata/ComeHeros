@@ -20,9 +20,9 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "Warrior.h"
+#import "Character.h"
 
-@interface Monster : Warrior {
+@interface Monster : Character {
 @private
     NSInteger   monsterNum;
     NSInteger   houseNum;

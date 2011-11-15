@@ -45,12 +45,16 @@
 #define FILE_DEATH_MONSTER_PLIST    @"monster.plist"
 #define FILE_TOMBSTONE_PLIST        @"dead.plist"
 #define FILE_TILE_PLIST             @"tile-wall.plist"
+#define FILE_FLAME_PLIST            @"effect.plist"
 
 #define FILE_CHARATER_IMG           @"texture-character.png"
 #define FILE_MONSTER_IMG            @"texture-monster.png"
 #define FILE_DEATH_MONSTER_IMG      @"monster.png"
 #define FILE_TOMBSTONE_IMG          @"dead.png"
 #define FILE_TILE_IMG               @"tile-wall.png"
+#define FILE_FLAME_IMG              @"effect.png"
+
+#define FILE_STAGE_IMG              @"qbarra_hexmap.png"
 
 #define FILE_NUMBER_IMG             @"num_and_alpa.png"
 #define FILE_PAUSE_IMG              @"interface_object0001.png"

@@ -384,21 +384,6 @@
         // 잠시 애니메이션 효과 중단
         //[self pauseSchedulerAndActions];
         
-        // 폭발시 생성된 불꽃 제거
-        NSInteger index = 0;
-        while ([chainFlameList count] > 0) {
-            if(index >= [chainFlameList count]) break;
-            
-            CCSprite *dFlame = [chainFlameList objectAtIndex:index];
-            if ([dFlame tag] == 0) {
-                [dFlame setVisible:NO];
-                [chainFlameList removeObject:dFlame];
-            } else {
-                [dFlame setTag:[dFlame tag] - 1];
-                index++;
-            }
-        }
-        
         if (![warriorHandling moveWarrior]) {
             [self gameEnd:GAME_LOSE];
         }
@@ -416,8 +401,12 @@
         // 폭발물 폭발시 불꽃을 삽입
         CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
         while (tFlame != nil) {
-            [tFlame setScale:CHAR_SCALE];
-            [tFlame setTag:1];
+            
+            CCAnimate *flameAnimate = [[CCAnimate alloc] initWithAnimation:[self loadFlameAnimation]
+                                                     restoreOriginalFrame:YES];
+            
+            [tFlame runAction:[CCSequence actions:flameAnimate, 
+                                nil]];
             [pZoom addChild:tFlame z:kFlameLayer];
             [chainFlameList addObject:tFlame];
             tFlame = [[commonValue sharedSingleton] popFlame];
@@ -426,6 +415,24 @@
         // 애니메이션 효과 재개
         //[self resumeSchedulerAndActions];
     }
+}
+- (CCAnimation*) loadFlameAnimation {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_FLAME_PLIST textureFile:FILE_FLAME_IMG];
+    NSMutableArray* flamekImgList = [NSMutableArray array];
+    
+    for(NSInteger i = 1; i < 3; i++) {
+        CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                                spriteFrameByName:[NSString stringWithFormat:@"effect%04d.png", i]];
+    
+        [flamekImgList addObject:frame];
+    }
+    
+    CCAnimation *animation = [CCAnimation animationWithFrames:flamekImgList delay:BOMB_FLAME_TIME];
+    
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_FLAME_PLIST];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_FLAME_IMG];
+    
+    return animation;
 }
 //////////////////////////////////////////////////////////////////////////
 // 용사 End                                                              //

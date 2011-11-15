@@ -109,4 +109,6 @@
 - (void) tileSetupTreasure:(id)sender;
 - (void) tileSetupTrap:(id)sender;
 - (void) tileSetupMonsterHouse1:(id)sender;
+
+- (CCAnimation*) loadFlameAnimation;
 @end

@@ -47,7 +47,6 @@ static const unsigned int WINDOW_WIDTH = 480;
 		contentNode = node;
 		size = CGSizeMake(WINDOW_WIDTH,WINDOW_HEIGHT);
 		[contentNode addChild:self z:9999];
-		// [self loadLabel];
 		[self zoomToCenterFit];
 		
 	}
@@ -115,7 +114,10 @@ static const unsigned int WINDOW_WIDTH = 480;
 }
 
 - (void) scaleToInit:(CGFloat)scale {
-    contentNode.scale = scale;
+    self.allowTapzoom   = NO;
+    self.scalable       = NO;
+    contentNode.scale   = scale;
+    contentNode.anchorPoint = ccp(0, 0);
 }
 
 - (float)percent:(float)a of:(float)b {
@@ -237,7 +239,7 @@ static const unsigned int WINDOW_WIDTH = 480;
 -(void) applyFrameLimits {
 	
 
-    if (!scalable) { return; }
+    //if (!scalable) { return; }
 	
 	
 	// simsize
@@ -314,7 +316,6 @@ static const unsigned int WINDOW_WIDTH = 480;
 	//}
 }
 - (void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
     if ([[event allTouches] count] == 1 && [[touches anyObject] tapCount] >= 2) {
 		if(self.allowTapzoom){
 			[self handleZoomOnDoubleTap:[touches anyObject]];
@@ -338,7 +339,6 @@ static const unsigned int WINDOW_WIDTH = 480;
     }
     
     [self applyFrameLimits];
-    
 };
 
 - (CGFloat) getScale {

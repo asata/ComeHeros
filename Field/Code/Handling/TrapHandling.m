@@ -274,11 +274,11 @@
     
     for (NSInteger i = minPoint.x; i <= maxPoint.x; i++) {
         for (NSInteger j = minPoint.y; j <= maxPoint.y; j++) {
-            CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0,0,32,32)];
-            [tFlame setPosition:[coordinate convertTileToMap:ccp(i, j)]];
+            CCSprite *tFlame = [[CCSprite alloc] init];
+            [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
             [tFlame setVisible:YES];
-            [tFlame setScale:1.0f];
-            [[commonValue sharedSingleton] pushFlame:tFlame]; 
+            [tFlame setScale:CHAR_SCALE];
+            [[commonValue sharedSingleton] pushFlame:tFlame];
         }
     }
 }
@@ -340,9 +340,10 @@
             NSInteger tileType = [[commonValue sharedSingleton] getMapInfo:i y:j] ;
             if (![self checkMoveTile:tileType]) continue;
             
-            CCSprite *tFlame = [CCSprite spriteWithFile:@"fire.png" rect:CGRectMake(0, 0, 32, 32)];
+            CCSprite *tFlame = [[CCSprite alloc] init];
             [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
             [tFlame setVisible:YES];
+            [tFlame setScale:CHAR_SCALE];
             [[commonValue sharedSingleton] pushFlame:tFlame];
         }
     }
