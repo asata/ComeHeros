@@ -176,6 +176,10 @@
                  // 무작위 경로
                 endFlag = [self selectDirection:tWarrior];
             }
+            
+            int x = ((int) movePosition.x - HALF_TILE_SIZE) / TILE_SIZE;
+            int y = TILE_NUM - ((int) movePosition.y - HALF_TILE_SIZE) / TILE_SIZE - 1;
+            [tWarrior pushMoveList:ccp(x, y)];
         }
         
         if(endFlag) {
@@ -185,8 +189,6 @@
             [tWarrior setMoveSpeed:0];
             [tWarrior setDefense:9999];
             [tWarrior setStrength:9999];
-            
-            //[deleteList addObject:tWarrior];  
             
             return NO;
         } else {
@@ -307,8 +309,16 @@
     
     return NotFound;
 }
+//////////////////////////////////////////////////////////////////////////
+// 용사 End                                                              //
+//////////////////////////////////////////////////////////////////////////
 
-// 이동 방향 설정
+
+
+//////////////////////////////////////////////////////////////////////////
+//  용사 이동 방향 결정 Start                                               //
+//////////////////////////////////////////////////////////////////////////
+// 무작위 경로
 - (BOOL) selectDirection:(Warrior *)pWarrior {
     if([pWarrior getMoveLength] != TILE_SIZE) return NO;
     Function *function = [[Function alloc] init];
@@ -329,6 +339,7 @@
     CCSprite *tSprite = [pWarrior getSprite];
     
     NSInteger preDirection = [pWarrior getMoveDriection];
+    NSInteger direction = MoveNone;
     
     // 최단 경로로 가는 길이 있는지 검사
     if ([[commonValue sharedSingleton] getMoveTable:x y:y] != MoveNone) {
@@ -338,36 +349,70 @@
         }
     
         [choseDirection addObject:[NSNumber numberWithInt:[[commonValue sharedSingleton] getMoveTable:x y:y]]];
-    }
-    
-    // 이동해온 방향을 제외하고 이동이 가능한 경로가 있는지 검사하여 있을 경우 배열에 저장    
-    if([function checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
-        [choseDirection addObject:[NSNumber numberWithInt:MoveUp]];
-    }
-    if([function checkMoveTile:x y:(y + 1)] && preDirection != MoveUp) {
-        [choseDirection addObject:[NSNumber numberWithInt:MoveDown]];
-    }
-    if([function checkMoveTile:(x - 1) y:y] && preDirection != MoveRight) {
-        [choseDirection addObject:[NSNumber numberWithInt:MoveLeft]];
-    }
-    if([function checkMoveTile:(x + 1) y:y] && preDirection != MoveLeft) {
-        [choseDirection addObject:[NSNumber numberWithInt:MoveRight]];
-    }    
-    
-    // 이동 가능한 경로에서 랜덤하게 선택
-    NSInteger direction;
-    if([choseDirection count] != 0) {
-        NSInteger r = arc4random() % [choseDirection count];
-        direction = [[choseDirection objectAtIndex:r] intValue];
     } else {
-        if(preDirection == MoveUp)
-            direction = MoveDown;
-        else if(preDirection == MoveDown)
-            direction = MoveUp;
-        else if(preDirection == MoveLeft) 
-            direction = MoveRight;
-        else if(preDirection == MoveRight)
-            direction = MoveLeft;  
+        // 최단 경로가 가는 길이 없을 경우 가장 가중치가 높은 길을 선택
+        NSInteger minValue = 100;
+        NSInteger value = 0;
+        
+        if ([function checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
+            value = [pWarrior valueOfMoveRoad:ccp(x, y - 1)];
+            if (minValue > value) {
+                minValue = value;
+                direction = MoveUp;
+            }
+        }
+        if ([function checkMoveTile:x y:(y + 1)] && preDirection != MoveUp) {
+            value = [pWarrior valueOfMoveRoad:ccp(x, y + 1)];
+            if (minValue > value) {
+                minValue = value;
+                direction = MoveDown;
+            }
+        }
+        if ([function checkMoveTile:(x - 1) y:y] && preDirection != MoveRight) {
+            value = [pWarrior valueOfMoveRoad:ccp(x - 1, y)];
+            if (minValue > value) {
+                minValue = value;
+                direction = MoveLeft;
+            }
+        }
+        if ([function checkMoveTile:(x + 1) y:y] && preDirection != MoveLeft) {
+            value = [pWarrior valueOfMoveRoad:ccp(x + 1, y)];
+            if (minValue > value) {
+                minValue = value;
+                direction = MoveRight;
+            }
+        }
+    }
+    
+    if (direction == MoveNone) {
+        // 이동해온 방향을 제외하고 이동이 가능한 경로가 있는지 검사하여 있을 경우 배열에 저장    
+        if([function checkMoveTile:x y:(y - 1)] && preDirection != MoveDown) {
+            [choseDirection addObject:[NSNumber numberWithInt:MoveUp]];
+        }
+        if([function checkMoveTile:x y:(y + 1)] && preDirection != MoveUp) {
+            [choseDirection addObject:[NSNumber numberWithInt:MoveDown]];
+        }
+        if([function checkMoveTile:(x - 1) y:y] && preDirection != MoveRight) {
+            [choseDirection addObject:[NSNumber numberWithInt:MoveLeft]];
+        }
+        if([function checkMoveTile:(x + 1) y:y] && preDirection != MoveLeft) {
+            [choseDirection addObject:[NSNumber numberWithInt:MoveRight]];
+        }    
+        
+        // 이동 가능한 경로에서 랜덤하게 선택
+        if([choseDirection count] != 0) {
+            NSInteger r = arc4random() % [choseDirection count];
+            direction = [[choseDirection objectAtIndex:r] intValue];
+        } else {
+            if(preDirection == MoveUp)
+                direction = MoveDown;
+            else if(preDirection == MoveDown)
+                direction = MoveUp;
+            else if(preDirection == MoveLeft) 
+                direction = MoveRight;
+            else if(preDirection == MoveRight)
+                direction = MoveLeft;  
+        }
     }
     
     // 선택된 방향으로 이동
@@ -385,6 +430,7 @@
     
     return NO;
 }
+// 최단 경로
 - (BOOL) selectShortDirection:(Warrior *)pWarrior {
     if([pWarrior getMoveLength] != TILE_SIZE) return NO;
     
@@ -402,7 +448,7 @@
         return YES;
     }
     
-    // 이동 가능한 경로 확인
+    // 최단 경로가 있는지 검사
     NSInteger direction = [[commonValue sharedSingleton] getMoveTable:x y:y];
     [pWarrior setMoveDriection:direction];
     if(direction == MoveRight || direction == MoveDown) {
@@ -411,14 +457,14 @@
         tSprite.flipX = WARRIOR_MOVE_LEFT;
     }
     
-    
     [pWarrior resetMoveLength];
     
     return NO;
 }
 //////////////////////////////////////////////////////////////////////////
-// 용사 End                                                              //
+//  용사 이동 방향 결정 End                                                 //
 //////////////////////////////////////////////////////////////////////////
+
 
 
 //////////////////////////////////////////////////////////////////////////

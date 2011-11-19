@@ -25,9 +25,11 @@
 
 @interface Warrior : Character {
 @private
-    NSInteger   warriorNum;
+    NSInteger       warriorNum;
     
     // 이동한 경로를 기록할 큐를 만듬
+    NSMutableArray  *moveList;
+    
 }
 
 // 이동한 경로를 기록할 CGPoint NSMutableArray를 생성하고, 
@@ -42,4 +44,12 @@
 
 - (void) setWarriorNum:(NSInteger)p_num;
 - (NSInteger) getWarriorNum;
+
+- (void) pushMoveList:(CGPoint)point;
+- (CGPoint) popMoveList;
+- (CGPoint) getMoveList:(NSInteger)index;
+- (NSInteger) valueOfMoveRoad:(CGPoint)point;
+- (NSInteger) countMoveList;
+- (void) removeAllMoveList;
+
 @end
