@@ -5,7 +5,6 @@
 #import "define.h"
 
 @implementation Warrior
-@synthesize tombstone;
 
 //////////////////////////////////////////////////////////////////////////
 // 용사 초기화 Start                                                      //

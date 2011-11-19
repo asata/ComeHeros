@@ -26,9 +26,13 @@
 @interface Warrior : Character {
 @private
     NSInteger   warriorNum;
+    
+    // 이동한 경로를 기록할 큐를 만듬
 }
 
-@property (nonatomic, retain) CCSprite *tombstone;
+// 이동한 경로를 기록할 CGPoint NSMutableArray를 생성하고, 
+// 이를 이용할 함수 생성
+// 각 캐릭터마다 사용
 
 - (id) initWarrior:(CGPoint)pos warriorNum:(NSInteger)p_num 
           strength:(NSInteger)pStrength power:(NSInteger)pPower 

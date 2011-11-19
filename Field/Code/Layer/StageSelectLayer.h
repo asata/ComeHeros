@@ -7,7 +7,8 @@
 //#import "CCScrollLayer.h"
 
 @interface StageSelectLayer : CCLayer {
-    PinchZoomLayer *pZoom;
+    PinchZoomLayer  *pZoom;
+    NSMutableArray  *menuList;
 }
 
 - (void) stageStart:(id)sender;

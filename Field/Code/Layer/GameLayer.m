@@ -401,14 +401,13 @@
         // 폭발물 폭발시 불꽃을 삽입
         CCSprite *tFlame = [[commonValue sharedSingleton] popFlame];
         while (tFlame != nil) {
-            
             CCAnimate *flameAnimate = [[CCAnimate alloc] initWithAnimation:[self loadFlameAnimation]
-                                                     restoreOriginalFrame:YES];
+                                                      restoreOriginalFrame:YES];
             
-            [tFlame runAction:[CCSequence actions:flameAnimate, 
-                                nil]];
+            [tFlame runAction:[CCSequence actions:flameAnimate, nil]];
             [pZoom addChild:tFlame z:kFlameLayer];
             [chainFlameList addObject:tFlame];
+            [tFlame release];
             tFlame = [[commonValue sharedSingleton] popFlame];
         }
         

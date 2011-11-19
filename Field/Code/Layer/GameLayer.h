@@ -79,13 +79,6 @@
 - (void) initMap;
 - (void) loadTileMap;
 
-
-// 화면을 터치하여 이동시 처리하는 함수
-//- (void) moveTouchMap:(CGPoint)currentPoint;                // 터치로 화면 이동시 맵 이동
-//- (void) moveTouchWarrior;                                  // 터치로 화면 이동시 용사 이동
-//- (void) moveTouchMonster;
-//- (CGPoint) checkMovePosition:(CGPoint)position;
-
 // 용사 관련 함수
 - (void) createWarrior;
 - (void) createWarriorAtTime:(id) sender;

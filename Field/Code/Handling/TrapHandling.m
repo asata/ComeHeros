@@ -275,7 +275,7 @@
     for (NSInteger i = minPoint.x; i <= maxPoint.x; i++) {
         for (NSInteger j = minPoint.y; j <= maxPoint.y; j++) {
             CCSprite *tFlame = [[CCSprite alloc] init];
-            [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
+            [tFlame setPosition:[coordinate convertTileToMap:ccp(i, j)]];
             [tFlame setVisible:YES];
             [tFlame setScale:CHAR_SCALE];
             [[commonValue sharedSingleton] pushFlame:tFlame];
@@ -334,6 +334,7 @@
     [self rangeBombExplosive:[pTrap getPosition]];
 }
 - (void) rangeBombExplosive:(CGPoint)bombPoint {
+    NSLog(@"%f %f", bombPoint.x, bombPoint.y);
     Coordinate *coordinate = [[Coordinate alloc] init];
     for (NSInteger i = bombPoint.x - RANGE_EXPLOSIVE; i < bombPoint.x + RANGE_EXPLOSIVE + 1; i++) {
         for (NSInteger j = bombPoint.y - RANGE_EXPLOSIVE; j < bombPoint.y + RANGE_EXPLOSIVE + 1; j++) {
@@ -341,7 +342,7 @@
             if (![self checkMoveTile:tileType]) continue;
             
             CCSprite *tFlame = [[CCSprite alloc] init];
-            [tFlame setPosition:[coordinate convertTileToCocoa:ccp(i, j)]];
+            [tFlame setPosition:[coordinate convertTileToMap:ccp(i, j)]];
             [tFlame setVisible:YES];
             [tFlame setScale:CHAR_SCALE];
             [[commonValue sharedSingleton] pushFlame:tFlame];

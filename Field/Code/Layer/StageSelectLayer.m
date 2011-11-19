@@ -5,6 +5,8 @@
 - (id)init {
     if ((self = [super init])) {
         self.isTouchEnabled = YES;
+        
+        menuList = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -20,6 +22,25 @@
     
     pZoom = [PinchZoomLayer initPinchZoom:background];
     [pZoom scaleToInit:1];
+    
+    CCSprite *stage1 = [CCSprite spriteWithFile:@"fire.png"];
+    [stage1 setPosition:ccp(200, 200)];
+    [stage1 setTag:1];
+    [menuList addObject:stage1];
+    [pZoom addChild:stage1];
+    
+    CCSprite *stage2 = [CCSprite spriteWithFile:@"fire.png"];
+    [stage2 setPosition:ccp(400, 200)];
+    [stage2 setTag:2];
+    [menuList addObject:stage2];
+    [pZoom addChild:stage2];
+    
+    CCSprite *stage3 = [CCSprite spriteWithFile:@"fire.png"];
+    [stage3 setPosition:ccp(600, 200)];
+    [stage3 setTag:3];
+    [menuList addObject:stage3];
+    [pZoom addChild:stage3];
+    
 }
 
 - (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -28,13 +49,17 @@
 
 - (void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView: [touch view]];
-    location = [[CCDirector sharedDirector] convertToGL:location];
-    //NSLog(@"%f %f", location.x, location.y);
+    CGPoint location = [pZoom convertTouchToNodeSpace:touch];
+    
+    for (CCSprite *tSprite in menuList) {
+        if (tSprite.position.x - 16 <= location.x && tSprite.position.x + 16 >= location.x &&
+            tSprite.position.y - 16 <= location.y && tSprite.position.y + 16 >= location.y) {
+            [[commonValue sharedSingleton] setStageLevel:[tSprite tag]];
+            [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
+        }
+    }
 }
 
 - (void) stageStart:(id)sender {
-    [[commonValue sharedSingleton] setStageLevel:[sender tag]];
-    [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
 @end
