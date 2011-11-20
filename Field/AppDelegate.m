@@ -61,25 +61,25 @@
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	[self removeStartupFlicker];
     
-	//로고 페이드 인   
-    UIImage* backImage=[UIImage imageNamed:@"Default.png"];   //로고  
-    UIView* backView=[[UIImageView alloc] initWithImage:backImage]; 
-    fadetime = [NSTimer scheduledTimerWithTimeInterval:1.0 
-                                                target:self 
-                                              selector:@selector(TimeCount) 
-                                              userInfo:nil 
-                                               repeats:YES];
-    [backView setFrame:CGRectMake(0, 0, 320, 480)];            //로고 위치 
-    [window addSubview:backView]; //로고를 뷰에 띄운다. 
-    [UIView beginAnimations:@"CWFadeIn" context:(void*)backView]; //로고 페이드인 애니메이션 
-    [UIView setAnimationDelegate:self]; 
-    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]; 
-    [UIView setAnimationDuration:3.0f]; //로고 페이드인 애니메이션 시간 설정 
-    backView.alpha = 0; //로고를 투명으로 
-    [UIView commitAnimations];     
-    // Override point for customization after application launch
-    [window makeKeyAndVisible]; 
-    ftime = 0; //페이드타임 초기화 
+//	//로고 페이드 인   
+//    UIImage* backImage=[UIImage imageNamed:@"Default.png"];   //로고  
+//    UIView* backView=[[UIImageView alloc] initWithImage:backImage]; 
+//    fadetime = [NSTimer scheduledTimerWithTimeInterval:1.0 
+//                                                target:self 
+//                                              selector:@selector(TimeCount) 
+//                                              userInfo:nil 
+//                                               repeats:YES];
+//    [backView setFrame:CGRectMake(0, 0, 320, 480)];            //로고 위치 
+//    [window addSubview:backView]; //로고를 뷰에 띄운다. 
+//    [UIView beginAnimations:@"CWFadeIn" context:(void*)backView]; //로고 페이드인 애니메이션 
+//    [UIView setAnimationDelegate:self]; 
+//    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]; 
+//    [UIView setAnimationDuration:3.0f]; //로고 페이드인 애니메이션 시간 설정 
+//    backView.alpha = 0; //로고를 투명으로 
+//    [UIView commitAnimations];     
+//    // Override point for customization after application launch
+//    [window makeKeyAndVisible]; 
+//    ftime = 0; //페이드타임 초기화 
     
     CCScene *scene = [CCScene node];
     
