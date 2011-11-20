@@ -5,3 +5,5 @@
 
 #define ATTACK_SWORD_SOUND  @"attack_sword.wav"
 #define ATTACK_ARROW_SOUND  @"attack_arrow.wav"
+
+#define MENU_SOUND      @"menu_select.WAV"

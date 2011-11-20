@@ -4,28 +4,31 @@
 
 - (id) init {
     if ((self = [super init])) {
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_TOMBSTONE_PLIST textureFile:FILE_TOMBSTONE_IMG];
     }
     
     return self;
 }
 
+- (void) dealloc {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
+    
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
+}
 //////////////////////////////////////////////////////////////////////////
 // 용사 Start                                                            //
 //////////////////////////////////////////////////////////////////////////
 - (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName {
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
-    
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                             spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-1.png", spriteName]];
-    
-    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
-    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
     
     return frame;
 }
 
 - (CCAnimation*) loadWarriorWalk:(NSString*)spriteName {
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
     NSMutableArray* walkImgList = [NSMutableArray array];
     
     for(NSInteger i = 1; i < 3; i++) {
@@ -37,14 +40,10 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:walkImgList delay:WARRIOR_MOVE_ACTION];
     
-    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
-    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
-    
     return animation;
 }
 
 - (CCAnimation*) loadWarriorAttack:(NSString*)spriteName {
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
     NSMutableArray* attackImgList = [NSMutableArray array];
     
     for(NSInteger i = 1; i < 3; i++) {
@@ -56,24 +55,15 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:attackImgList delay:WARRIOR_MOVE_ACTION];
     
-    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
-    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
-    
     return animation;
 }
 - (CCSpriteFrame*) loadWarriorTombstone {
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_TOMBSTONE_PLIST textureFile:FILE_TOMBSTONE_IMG];
-    
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                             spriteFrameByName:[NSString stringWithFormat:@"dead0003.png"]];
-    
-    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
-    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
     
     return frame;
 }
 - (CCAnimation*) loadWarriorTombstoneAnimation {
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_TOMBSTONE_PLIST textureFile:FILE_TOMBSTONE_IMG];
     NSMutableArray* tombstoneImgList = [NSMutableArray array];
     for(NSInteger i = 0; i < 4; i++) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
@@ -83,9 +73,6 @@
     }
     
     CCAnimation *animation = [CCAnimation animationWithFrames:tombstoneImgList delay:INSTALL_TOMBSTONE_TIME];
-    
-    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
-    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
     
     return animation;
 }

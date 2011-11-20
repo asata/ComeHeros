@@ -185,6 +185,9 @@
 }
 - (void) onPause {
     self.isTouchEnabled = NO;
+    
+    [[SimpleAudioEngine sharedEngine] playEffect:MENU_SOUND];
+    
     [[commonValue sharedSingleton] setGamePause:YES];
     [[CCDirector sharedDirector] pause];
     [self addChild:pauseLayer z:kPauseLayer];
@@ -196,6 +199,8 @@
     [self removeChild:pauseLayer cleanup:YES];
     self.isTouchEnabled = YES;
     
+    [[SimpleAudioEngine sharedEngine] playEffect:MENU_SOUND];
+    
     // 버튼 활성화
     menuPause.visible = YES;
     
@@ -205,6 +210,8 @@
     [self destoryGame];
     [self removeChild:pauseLayer cleanup:YES];
     [[CCDirector sharedDirector] resume];
+    
+    [[SimpleAudioEngine sharedEngine] playEffect:MENU_SOUND];
     
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
@@ -220,6 +227,8 @@
     [self removeChild:resultLayer cleanup:YES];
     [[CCDirector sharedDirector] resume];
     
+    [[SimpleAudioEngine sharedEngine] playEffect:MENU_SOUND];
+    
     // 다음 스테이지가 있는지 검사
     NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
     NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
@@ -234,6 +243,8 @@
     [self removeChild:pauseLayer cleanup:YES];
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
+    
+    [[SimpleAudioEngine sharedEngine] playEffect:MENU_SOUND];
     
     //[(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
     [(CCLayerMultiplex*)parent_ switchTo:STAGE_LAYER];
