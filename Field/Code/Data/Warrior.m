@@ -16,6 +16,7 @@
     return self;
 }
 - (id) initWarrior:(CGPoint)pos 
+              type:(NSInteger)pType
         warriorNum:(NSInteger)p_num 
           strength:(NSInteger)pStrength 
              power:(NSInteger)pPower 
@@ -26,6 +27,7 @@
        attackRange:(NSInteger)pAttackRange {
     if ((self = [super init])) {
         [super initCharacter:pos 
+                        type:pType
                     strength:pStrength 
                        power:pPower 
                    intellect:pIntellect 

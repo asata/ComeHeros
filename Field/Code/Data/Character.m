@@ -20,6 +20,7 @@
     return self;
 }
 - (id) initCharacter:(CGPoint)pos 
+                type:(NSInteger)pType
             strength:(NSInteger)pStrength 
                power:(NSInteger)pPower 
            intellect:(NSInteger)pIntellect 
@@ -29,6 +30,7 @@
          attackRange:(NSInteger)pAttackRange {
     if ((self = [super init])) {
         position = pos;
+        type = pType;
         strength = pStrength;
         power = pPower;
         intellect = pIntellect;
@@ -100,6 +102,13 @@
 }
 - (BOOL) getDeath {
     return death;
+}
+
+- (void) setType:(NSInteger)pType {
+    type = pType;
+}
+- (NSInteger) getType {
+    return type;
 }
 //////////////////////////////////////////////////////////////////////////
 // 용사 기초 정보 End                                                      //

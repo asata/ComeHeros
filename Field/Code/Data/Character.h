@@ -14,6 +14,8 @@
     CCAnimate   *deathAnimate;      // 죽는 애니메이션
     CGPoint     position;           // 현재 위치
     
+    NSInteger   type;
+    
     BOOL        death;
     BOOL        deathReOrder;
     
@@ -31,10 +33,11 @@
 @property (nonatomic, retain) CCAnimate *attackAnimate;
 @property (nonatomic, retain) CCAnimate *deathAnimate;
 
-- (id) initCharacter:(CGPoint)pos strength:(NSInteger)pStrength 
-               power:(NSInteger)pPower intellect:(NSInteger)pIntellect 
-             defense:(NSInteger)pDefense speed:(NSInteger)pSpeed 
-           direction:(NSInteger)pDirection attackRange:(NSInteger)pAttackRange;
+- (id) initCharacter:(CGPoint)pos           type:(NSInteger)pType
+            strength:(NSInteger)pStrength   power:(NSInteger)pPower 
+           intellect:(NSInteger)pIntellect  defense:(NSInteger)pDefense 
+               speed:(NSInteger)pSpeed      direction:(NSInteger)pDirection 
+         attackRange:(NSInteger)pAttackRange;
 
 - (void) setSprite:(CCSprite *)p_spriteh;
 - (void) setPosition:(CGPoint)p_position;
@@ -49,6 +52,7 @@
 - (void) setAttackAnimate:(CCAnimate *)p_attackAnimate;
 - (void) setDeathAnimate:(CCAnimate*)pAnimate;
 - (void) setDeath:(BOOL)pDeath;
+- (void) setType:(NSInteger)pType;
 
 - (CCSprite *) getSprite;
 - (CGPoint) getPosition;
@@ -64,6 +68,7 @@
 - (CCAnimate*) getDeathAnimate;
 - (BOOL) getDeath;
 - (BOOL) getDeathReOrder;
+- (NSInteger) getType;
 
 - (void) plusMoveLength;
 - (void) resetMoveLength;

@@ -28,11 +28,12 @@
     NSInteger   houseNum;
 }
 
-- (id) initMonster:(CGPoint)pos             monsterNum:(NSInteger)p_num 
-          strength:(NSInteger)pStrength     power:(NSInteger)pPower 
-         intellect:(NSInteger)pIntellect    defense:(NSInteger)pDefense 
-             speed:(NSInteger)pSpeed        direction:(NSInteger)pDirection 
-       attackRange:(NSInteger)pAttackRange  houseNum:(NSInteger)pHouse;
+- (id) initMonster:(CGPoint)pos             type:(NSInteger)pType
+        monsterNum:(NSInteger)p_num         strength:(NSInteger)pStrength     
+             power:(NSInteger)pPower        intellect:(NSInteger)pIntellect    
+           defense:(NSInteger)pDefense      speed:(NSInteger)pSpeed     
+         direction:(NSInteger)pDirection    attackRange:(NSInteger)pAttackRange  
+          houseNum:(NSInteger)pHouse;
 
 - (void) setMonsterNum:(NSInteger)pNum;
 - (void) setHouseNum:(NSInteger)pHouseNum;

@@ -334,7 +334,6 @@
     [self rangeBombExplosive:[pTrap getPosition]];
 }
 - (void) rangeBombExplosive:(CGPoint)bombPoint {
-    NSLog(@"%f %f", bombPoint.x, bombPoint.y);
     Coordinate *coordinate = [[Coordinate alloc] init];
     for (NSInteger i = bombPoint.x - RANGE_EXPLOSIVE; i < bombPoint.x + RANGE_EXPLOSIVE + 1; i++) {
         for (NSInteger j = bombPoint.y - RANGE_EXPLOSIVE; j < bombPoint.y + RANGE_EXPLOSIVE + 1; j++) {

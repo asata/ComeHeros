@@ -36,11 +36,11 @@
 // 이를 이용할 함수 생성
 // 각 캐릭터마다 사용
 
-- (id) initWarrior:(CGPoint)pos warriorNum:(NSInteger)p_num 
-          strength:(NSInteger)pStrength power:(NSInteger)pPower 
-         intellect:(NSInteger)pIntellect defense:(NSInteger)pDefense 
-             speed:(NSInteger)pSpeed direction:(NSInteger)pDirection 
-       attackRange:(NSInteger)pAttackRange;
+- (id) initWarrior:(CGPoint)pos             type:(NSInteger)pType
+        warriorNum:(NSInteger)p_num         strength:(NSInteger)pStrength 
+             power:(NSInteger)pPower        intellect:(NSInteger)pIntellect 
+           defense:(NSInteger)pDefense      speed:(NSInteger)pSpeed 
+         direction:(NSInteger)pDirection    attackRange:(NSInteger)pAttackRange;
 
 - (void) setWarriorNum:(NSInteger)p_num;
 - (NSInteger) getWarriorNum;

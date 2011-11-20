@@ -84,6 +84,7 @@
     CGPoint startABSPoint = [coordinate convertTileToMap:position];
     // 몬스터 생성
     Monster *tMonster = [[Monster alloc] initMonster:startABSPoint
+                                                type:monsterType
                                           monsterNum:[[commonValue sharedSingleton] getMonsterNum]
                                             strength:[[data objectForKey:@"strength"] intValue] 
                                                power:[[data objectForKey:@"power"] intValue] 

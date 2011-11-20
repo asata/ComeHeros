@@ -9,7 +9,13 @@
 	UIWindow			*window;
     GameLayer           *playGame;
 	RootViewController	*viewController;
+    
+    NSTimer             *fadetime;
+    NSInteger           ftime;
 }
 
 @property (nonatomic, retain) UIWindow *window;
+
+
+- (void) TimeCount;
 @end

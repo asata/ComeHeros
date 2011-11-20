@@ -15,10 +15,10 @@
         self.isTouchEnabled = YES;
     }
     
-    /*File *file = [[File alloc] init];
+    File *file = [[File alloc] init];
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadGameData:path];
-    
+    /*
     if ((self = [super init])) {
         CCMenuItemToggle *techniqueItem1 = [CCMenuItemToggle 
                                             itemWithTarget:self
@@ -42,20 +42,20 @@
 }
 
 - (void) onEnterTransitionDidFinish {
-    titleBackground = [CCSprite spriteWithFile:@"title_screen.png"];
+    titleBackground = [CCSprite spriteWithFile:FILE_INTRO_IMG];
     [titleBackground setPosition:ccp([[commonValue sharedSingleton] getDeviceSize].width / 2,
                                      [[commonValue sharedSingleton] getDeviceSize].height / 2)];
     [self addChild:titleBackground];
 }
 
-- (void) menuCallBack:(id) sender {
+/*- (void) menuCallBack:(id) sender {
     [[commonValue sharedSingleton] setStageLevel:1];
     [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
 }
 
 - (void) stageSelectCallBack:(id)sender {
     [(CCLayerMultiplex*)parent_ switchTo:STAGE_LAYER];
-}
+}*/
 
 @end
 //////////////////////////////////////////////////////////////////////////

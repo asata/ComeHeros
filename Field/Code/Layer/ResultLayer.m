@@ -217,9 +217,11 @@
     if(victory) {
         // 다음 스테이지가 있는지 검사
         NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
-        NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
+        NSInteger totalStageNum = [[info objectForKey:@"StageNum"] intValue];
         
-        if ([[commonValue sharedSingleton] getStageLevel] + 1 <= stageNum) victoryString = @"NEXT";
+        if ([[commonValue sharedSingleton] getStageLevel] + 1 <= totalStageNum) victoryString = @"NEXT";
+        
+        NSLog(@"111 %@ %d %d", victoryString, [[commonValue sharedSingleton] getStageLevel], totalStageNum);
     }
     CCLabelAtlas *label_next = [CCLabelAtlas labelWithString:victoryString
                                                  charMapFile:FILE_NUMBER_IMG 

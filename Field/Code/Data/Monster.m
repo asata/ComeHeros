@@ -15,6 +15,7 @@
     return self;
 }
 - (id) initMonster:(CGPoint)pos 
+              type:(NSInteger)pType
         monsterNum:(NSInteger)p_num 
           strength:(NSInteger)pStrength 
              power:(NSInteger)pPower 
@@ -26,6 +27,7 @@
           houseNum:(NSInteger)pHouse {
     if ((self = [super init])) {
         [super initCharacter:pos 
+                        type:pType
                     strength:pStrength 
                        power:pPower 
                    intellect:pIntellect 

@@ -235,7 +235,8 @@
     [self destoryGame];
     [[CCDirector sharedDirector] resume];
     
-    [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
+    //[(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
+    [(CCLayerMultiplex*)parent_ switchTo:STAGE_LAYER];
 }
 - (void) endQuit {
     [self removeChild:resultLayer cleanup:YES];
@@ -243,7 +244,8 @@
     [[CCDirector sharedDirector] resume];
     [self unscheduleAllSelectors];    
     
-    [(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
+    //[(CCLayerMultiplex*)parent_ switchTo:MAIN_LAYER];
+    [(CCLayerMultiplex*)parent_ switchTo:STAGE_LAYER];
 }
 //////////////////////////////////////////////////////////////////////////
 // 게임 초기화 End                                                        //
@@ -551,12 +553,6 @@
             tPoint.y - TILE_SIZE < mPoint.y && tPoint.y + TILE_SIZE > mPoint.y) return NO;
     }
     
-    // 이동 경로를 가로막는지 검사
-    /*
-     이동 가능한 길이 있는지 검사
-     이동 가능한 길이 있을 경우 그 길을 막는지 검사
-     */
-    
     // 목적지까지 가능 경로가 없을 경우
     NSInteger moveDirection = [[commonValue sharedSingleton] getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
     //[warriorHandling getMoveTable:tileSetupPoint.x y:tileSetupPoint.y];
@@ -617,7 +613,6 @@
     
     [[commonValue sharedSingleton] minusStageMoney:MONEY_HOUSE];
     [[commonValue sharedSingleton] plusStagePoint:POINT_MADE_OBSTACLE];
-    
     
     // monsterHandling에 addHouse 등록하여 처리가 필요
     [houseHandling addHouse:tileSetupPoint type:TILE_MONSTER_HOUSE1];
@@ -774,7 +769,6 @@
             CGFloat tileSize = TILE_SIZE * [pZoom getScale];
             NSInteger num = 0;
             if (convertedLocation.x - tileSize <= 0 && convertedLocation.y + tileSize >= DEVICE_HEIGHT) {
-                NSLog(@"Left Top");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu4 addChild:item];
                     else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu3 addChild:item];      
@@ -783,7 +777,6 @@
                 }
                 menuPrint = MenuLeftTop;
             } else if (convertedLocation.x - tileSize <= 0 && convertedLocation.y - tileSize <= 0) {
-                NSLog(@"Left Bottom");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
                     else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu3 addChild:item];      
@@ -792,7 +785,6 @@
                 }
                 menuPrint = MenuLeftBottom;
             } else if (convertedLocation.x + (2 * tileSize) >= DEVICE_WIDTH && convertedLocation.y + tileSize >= DEVICE_HEIGHT) {
-                NSLog(@"Right Top");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu4 addChild:item];
                     else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu2 addChild:item];      
@@ -801,7 +793,6 @@
                 }
                 menuPrint = MenuRightTop;
             } else if (convertedLocation.x + tileSize >= DEVICE_WIDTH && convertedLocation.y - tileSize <= 0) {
-                NSLog(@"Right Bottom");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
                     else if(num == 1 || num == 2 || num == 3 || num == 4 || num == 5) [menu2 addChild:item];      
@@ -810,7 +801,6 @@
                 }
                 menuPrint = MenuRightBottom;
             } else if (convertedLocation.x - tileSize <= 0) {
-                NSLog(@"Left");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
                     else if(num == 1) [menu4 addChild:item];
@@ -820,7 +810,6 @@
                 }
                 menuPrint = MenuLeft;
             } else if (convertedLocation.x + tileSize >= DEVICE_WIDTH) {
-                NSLog(@"Right");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
                     else if(num == 1) [menu4 addChild:item];
@@ -830,7 +819,6 @@
                 }
                 menuPrint = MenuRigtht;
             } else if (convertedLocation.y - tileSize <= 0) { 
-                NSLog(@"Bottom");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu2 addChild:item];
                     else if(num == 1) [menu3 addChild:item];
@@ -840,7 +828,6 @@
                 }
                 menuPrint = MenuBottom;
             } else if (convertedLocation.y + tileSize >= DEVICE_HEIGHT) {
-                NSLog(@"Top");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu2 addChild:item];
                     else if(num == 1) [menu3 addChild:item];
@@ -850,7 +837,6 @@
                 }
                 menuPrint = MenuTop;
             } else {
-                NSLog(@"Default");
                 for (CCMenuItem *item in trapMenuList) {
                     if (num == 0) [menu1 addChild:item];
                     else if(num == 1) [menu4 addChild:item];

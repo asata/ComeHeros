@@ -39,8 +39,10 @@
 // File Name
 //#define FILE_TILE_MAP               @"sample.tmx"
 
+#define FILE_INTRO_IMG              @"title_screen.png"
+
 #define FILE_STAGE_PLIST            @"Stage_test18.plist"
-#define FILE_CHARATER_PLIST         @"coordinates-character4.plist"
+#define FILE_CHARATER_PLIST         @"coordinates-character.plist"
 #define FILE_MONSTER_PLIST          @"coordinates-monster.plist"
 #define FILE_DEATH_MONSTER_PLIST    @"monster.plist"
 #define FILE_TOMBSTONE_PLIST        @"dead.plist"

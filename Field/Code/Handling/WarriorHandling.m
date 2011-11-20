@@ -3,9 +3,8 @@
 @implementation WarriorHandling
 
 - (id) init {
-    self = [super init];
-    //if ((self = [super init])) {
-    //}
+    if ((self = [super init])) {
+    }
     
     return self;
 }
@@ -19,8 +18,8 @@
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                             spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-1.png", spriteName]];
     
-    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
-    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
     
     return frame;
 }
@@ -38,8 +37,8 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:walkImgList delay:WARRIOR_MOVE_ACTION];
     
-    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
-    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
     
     return animation;
 }
@@ -57,8 +56,8 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:attackImgList delay:WARRIOR_MOVE_ACTION];
     
-    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
-    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
+    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_CHARATER_PLIST];
+    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_CHARATER_IMG];
     
     return animation;
 }
@@ -68,8 +67,8 @@
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
                             spriteFrameByName:[NSString stringWithFormat:@"dead0003.png"]];
     
-    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
-    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
+    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
+    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
     
     return frame;
 }
@@ -85,19 +84,16 @@
     
     CCAnimation *animation = [CCAnimation animationWithFrames:tombstoneImgList delay:INSTALL_TOMBSTONE_TIME];
     
-    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
-    [[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
+    //[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFramesFromFile:FILE_TOMBSTONE_PLIST];
+    //[[CCTextureCache sharedTextureCache] removeTextureForKey:FILE_TOMBSTONE_IMG];
     
     return animation;
 }
 
 - (CCSprite*) createWarrior:(NSDictionary*)wInfo {
-    //CGFloat viewScale = [[commonValue sharedSingleton] getViewScale];
-    //CGPoint mapPosition = [[commonValue sharedSingleton] getMapPosition];
     CGPoint sPoint = [[commonValue sharedSingleton] getStartPoint];
     Coordinate *coordinate = [[Coordinate alloc] init];
     File *file = [[File alloc] init];
-    
     
     NSInteger warriorType = [[wInfo objectForKey:@"Type"] intValue];
     NSArray *warriorName = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
@@ -110,6 +106,7 @@
     CGPoint startABSPoint = [coordinate convertTileToMap:sPoint];
     // 용사 생성
     Warrior *tWarrior = [[Warrior alloc] initWarrior:startABSPoint
+                                                type:warriorType
                                           warriorNum:[[commonValue sharedSingleton] getWarriorNum]
                                             strength:[[data objectForKey:@"strength"] intValue]
                                                power:[[data objectForKey:@"power"] intValue]
@@ -209,6 +206,17 @@
             NSInteger attackEnmy = [self enmyFind:tWarrior];
             if(attackEnmy != -1) {
                 //[tSprite stopAllActions];
+                // 용사 종류에 따라 효과음 재생
+                if ([tWarrior getType] == 0) {
+                    // Aacher
+                    [[SimpleAudioEngine sharedEngine] playEffect:ATTACK_ARROW_SOUND];
+                } else if([tWarrior getType] == 1) {
+                    // Fighter
+                    [[SimpleAudioEngine sharedEngine] playEffect:ATTACK_SWORD_SOUND];
+                } else if([tWarrior getType] == 2) {
+                    // Mage
+                    [[SimpleAudioEngine sharedEngine] playEffect:ATTACK_SWORD_SOUND];
+                }
                 [tSprite runAction:[CCSequence actions:[tWarrior getAttackAnimate], 
                                     [CCCallFunc actionWithTarget:self selector:@selector(attackCompleteHandler)], 
                                     nil]];
