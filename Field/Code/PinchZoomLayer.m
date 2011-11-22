@@ -154,11 +154,10 @@ static const unsigned int WINDOW_WIDTH = 480;
 }
 
 - (void)handleZoomOnDoubleTap:(UITouch *)touch {
+	if (!scalable) return; 
     
-	if (!scalable) { return; }
 	CGFloat minScale = [self getMinScale];
 	CGFloat maxScale = [self getMaxScale];
-	// float minScale = maxScale/2;
 	
     float newScale = contentNode.scale < maxScale ? maxScale : [self getScaleToFit];
     
@@ -167,20 +166,15 @@ static const unsigned int WINDOW_WIDTH = 480;
 
     if (newScale < minScale) {
 		// calculate center point between two touches
-		// CGPoint centerPoint = ccpMidpoint(touch1Location, touch2Location);
 		newScale = minScale;
 	}	
-	// NSLog(@"handleZoomOnDoubleTap newScale %f", newScale);
 
     [self animatedZoomTo:newScale stillPoint:stillPoint];
 };
 
 - (void)handlePitchZoom:(NSSet *)touches withEvent:(UIEvent *)event {
-    
     if (!scalable) { return; }
-    
 	//NSSet *allTouches = [event allTouches];
-
 	
     UITouch* touch1 = [[[event allTouches] allObjects] objectAtIndex:0];
     UITouch* touch2 = [[[event allTouches] allObjects] objectAtIndex:1];
@@ -220,27 +214,15 @@ static const unsigned int WINDOW_WIDTH = 480;
     }
 	
 	[self zoomToCenterFit];
-
-	// [self updateLabelText];
-
 };
 
 
-
 -(void) zoomToCenterFit {
-	
-	// I'm not sure why I even have this here
-	
-	// NSLog(@"size %@", NSStringFromCGSize(size));
-
 }
 
 
 -(void) applyFrameLimits {
-	
-
     //if (!scalable) { return; }
-	
 	
 	// simsize
 	CGSize contentSize = [contentNode contentSize];		
@@ -286,8 +268,8 @@ static const unsigned int WINDOW_WIDTH = 480;
 		posY = frameRect.origin.y;
 		contentNode.position = ccp(posX, posY);
     }
-
 }
+
 - (CGPoint)convertPreviousTouchToNodeSpace:(UITouch *)touch {
 	 CGPoint point = [touch previousLocationInView: [touch view]];
 	 point = [[CCDirector sharedDirector] convertToGL: point];
@@ -316,17 +298,14 @@ static const unsigned int WINDOW_WIDTH = 480;
 	//}
 }
 - (void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    if ([[event allTouches] count] == 1 && [[touches anyObject] tapCount] >= 2) {
-		if(self.allowTapzoom){
-			[self handleZoomOnDoubleTap:[touches anyObject]];
-		}
-    }
+//    if ([[event allTouches] count] == 1 && [[touches anyObject] tapCount] >= 2) {
+//		if(self.allowTapzoom){
+//			[self handleZoomOnDoubleTap:[touches anyObject]];
+//		}
+//    }
 };
 
 - (void) ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    // TO DO: get touches for CCNode
-
     switch ([[event allTouches] count]) {
         case 1:
             // do scroll
