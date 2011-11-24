@@ -228,6 +228,8 @@
     for (Monster *tMonster in dMonstList) {        
         CCSprite *tSprite = [tMonster getSprite];
         
+        // 효과음 재생
+        [[SimpleAudioEngine sharedEngine] playEffect:MONSTER_DIE_SOUND];
         [[commonValue sharedSingleton] plusDieMonsterNum];
         [tSprite runAction:[CCSequence actions:[tMonster getDeathAnimate], 
                             [CCCallFunc actionWithTarget:self selector:@selector(deathCompleteHandler:)], 

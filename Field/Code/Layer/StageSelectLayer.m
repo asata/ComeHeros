@@ -25,7 +25,7 @@
     NSInteger           stageNumber = [[stageData objectForKey:@"StageNum"] intValue];
     
     CCSprite *background = [CCSprite spriteWithFile:FILE_STAGE_IMG];
-    [self addChild:background z:-1];
+    [self addChild:background];
     
     pZoom = [PinchZoomLayer initPinchZoom:background];
     [pZoom scaleToInit:1];

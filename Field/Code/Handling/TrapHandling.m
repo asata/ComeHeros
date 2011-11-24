@@ -198,8 +198,8 @@
         maxPoint = ccp(trapPoint.x, [self findRangeTreasure:trapPoint direction:direction]);
     }
     
-    // 효과음 재생
-    [[SimpleAudioEngine sharedEngine] playEffect:BOMB_SOUND];
+    // 효과음 재생TRAP_FALL_SOUND
+    [[SimpleAudioEngine sharedEngine] playEffect:BOX_SOUND];
     
     // 일정 범위에 있는 용사들의 읽어들여 데미지를 입힘
     for (Warrior *tWarrior in [[commonValue sharedSingleton] getWarriorList]) {

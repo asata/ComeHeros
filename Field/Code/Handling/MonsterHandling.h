@@ -2,6 +2,7 @@
 #import "commonValue.h"
 #import "Warrior.h"
 #import "File.h"
+#import "SimpleAudioEngine.h"
 
 @interface MonsterHandling : NSObject{
     NSMutableArray *removeSpriteList;
