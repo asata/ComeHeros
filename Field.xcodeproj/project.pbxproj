@@ -10,6 +10,7 @@
 		CB017247147E90C100ACB770 /* break_box.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CB017244147E90C100ACB770 /* break_box.mp3 */; };
 		CB017248147E90C100ACB770 /* fall_trap.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB017245147E90C100ACB770 /* fall_trap.wav */; };
 		CB017249147E90C100ACB770 /* monster_die.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB017246147E90C100ACB770 /* monster_die.wav */; };
+		CB0172571481E0C300ACB770 /* StageClear.txt in Resources */ = {isa = PBXBuildFile; fileRef = CB0172561481E0C300ACB770 /* StageClear.txt */; };
 		CB084FD1146169FB003A875A /* PauseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FD0146169FA003A875A /* PauseLayer.m */; };
 		CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FE11461F4E3003A875A /* ResultLayer.m */; };
 		CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0E305B1461F93700D1DE6D /* TutorialLayer.m */; };
@@ -32,7 +33,7 @@
 		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
 		CB2C2D5E1470F675005EBDCE /* SoundDefine.h in Resources */ = {isa = PBXBuildFile; fileRef = CB2C2D5D1470F675005EBDCE /* SoundDefine.h */; };
 		CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2D825314652DAD00B1BEE6 /* bg_result.png */; };
-		CB2D826614653CE300B1BEE6 /* Stage_test18.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test18.plist */; };
+		CB2D826614653CE300B1BEE6 /* Stage_test22.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test22.plist */; };
 		CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */; };
 		CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386442146BF30700C8C019 /* atteck_effect.wav */; };
 		CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386443146BF30700C8C019 /* bomb_trap.wav */; };
@@ -202,6 +203,7 @@
 		CB017244147E90C100ACB770 /* break_box.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = break_box.mp3; sourceTree = "<group>"; };
 		CB017245147E90C100ACB770 /* fall_trap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fall_trap.wav; sourceTree = "<group>"; };
 		CB017246147E90C100ACB770 /* monster_die.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = monster_die.wav; sourceTree = "<group>"; };
+		CB0172561481E0C300ACB770 /* StageClear.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StageClear.txt; path = Resources/StageClear.txt; sourceTree = "<group>"; };
 		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDefine.h; path = Code/Define/MapDefine.h; sourceTree = "<group>"; };
 		CB084FCF146169F9003A875A /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseLayer.h; path = Code/Layer/PauseLayer.h; sourceTree = "<group>"; };
 		CB084FD0146169FA003A875A /* PauseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PauseLayer.m; path = Code/Layer/PauseLayer.m; sourceTree = "<group>"; };
@@ -234,7 +236,7 @@
 		CB29B9721451BF2F005D7C1E /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Coordinate.m; path = Code/CommonFunction/Coordinate.m; sourceTree = "<group>"; };
 		CB2C2D5D1470F675005EBDCE /* SoundDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundDefine.h; path = Code/Define/SoundDefine.h; sourceTree = "<group>"; };
 		CB2D825314652DAD00B1BEE6 /* bg_result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_result.png; sourceTree = "<group>"; };
-		CB2D826514653CE300B1BEE6 /* Stage_test18.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test18.plist; path = Resources/StageInfo/Stage_test18.plist; sourceTree = "<group>"; };
+		CB2D826514653CE300B1BEE6 /* Stage_test22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test22.plist; path = Resources/StageInfo/Stage_test22.plist; sourceTree = "<group>"; };
 		CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ChareaterInfo.plist; path = Resources/ChareaterInfo.plist; sourceTree = "<group>"; };
 		CB386442146BF30700C8C019 /* atteck_effect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atteck_effect.wav; sourceTree = "<group>"; };
 		CB386443146BF30700C8C019 /* bomb_trap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb_trap.wav; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 		CB7B7F5B13ED7B2200FADB50 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CB0172561481E0C300ACB770 /* StageClear.txt */,
 				CB386440146BF30700C8C019 /* Music */,
 				CB1E729A1462DDA100CAE737 /* Image */,
 				CB22955E14601BF400BA7EF5 /* fire.png */,
@@ -1124,7 +1127,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CB2D826514653CE300B1BEE6 /* Stage_test18.plist */,
+				CB2D826514653CE300B1BEE6 /* Stage_test22.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -1211,7 +1214,7 @@
 				CBC72D011464E68D00FB5ECA /* Localizable.strings in Resources */,
 				CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */,
 				CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */,
-				CB2D826614653CE300B1BEE6 /* Stage_test18.plist in Resources */,
+				CB2D826614653CE300B1BEE6 /* Stage_test22.plist in Resources */,
 				CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */,
 				CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */,
 				CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */,
@@ -1231,6 +1234,7 @@
 				CB017247147E90C100ACB770 /* break_box.mp3 in Resources */,
 				CB017248147E90C100ACB770 /* fall_trap.wav in Resources */,
 				CB017249147E90C100ACB770 /* monster_die.wav in Resources */,
+				CB0172571481E0C300ACB770 /* StageClear.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

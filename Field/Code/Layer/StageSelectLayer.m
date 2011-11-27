@@ -21,7 +21,8 @@
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadGameData:path];
     
-    NSMutableDictionary *stageData  = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
+    NSMutableDictionary *frames     = [[[commonValue sharedSingleton] getGameData] objectForKey:@"frames"];
+    NSMutableDictionary *stageData  = [frames objectForKey:@"Info"];
     NSInteger           stageNumber = [[stageData objectForKey:@"StageNum"] intValue];
     
     CCSprite *background = [CCSprite spriteWithFile:FILE_STAGE_IMG];
@@ -36,11 +37,13 @@
     
     for (NSInteger i = 1; i <= stageNumber; i++) {
         NSString *stageNum = [NSString stringWithFormat:@"%d", i];
-        NSMutableDictionary *stageData = [[[commonValue sharedSingleton] getGameData] objectForKey:stageNum];
+        NSMutableDictionary *metadata  = [[[commonValue sharedSingleton] getGameData] objectForKey:@"metadata"];
+        NSMutableDictionary *stageData = [metadata objectForKey:stageNum];
         BOOL isClear = [[stageData objectForKey:@"isCleared"] boolValue];
         NSInteger positionX = [[stageData objectForKey:@"PositionX"] intValue];
         NSInteger positionY = [[stageData objectForKey:@"PositionY"] intValue];
         
+        NSLog(@"%d %d %d", i, positionX, positionY);
         CCSprite *stage;
         
         if (isClear) {
@@ -74,8 +77,6 @@
             [(CCLayerMultiplex*)parent_ switchTo:GAME_LAYER];
         }
     }
-    
-    NSLog(@"%f %f", location.x, location.y);
 }
 
 - (void) stageStart:(id)sender {

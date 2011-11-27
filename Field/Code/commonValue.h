@@ -45,6 +45,7 @@
 - (NSString*) getMapName;
 - (void) setGameData:(NSDictionary*)pData;
 - (NSDictionary*) getGameData;
+- (void) initGameData;
 
 - (void) setGamePause:(BOOL)flag;
 - (BOOL) getGamePause;

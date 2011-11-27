@@ -12,4 +12,7 @@
 - (void) loadStageData:(NSString *)path;
 - (NSDictionary *) loadWarriorInfo:(NSInteger)index;
 
+//- (void) readFile;
+//- (void) changeFile:(NSInteger)stageNum;
+
 @end

@@ -27,7 +27,8 @@
     [self addChild:background z:rBackgroundLayer];
     
     NSString *stageNum = [NSString stringWithFormat:@"%d", [[commonValue sharedSingleton] getStageLevel]];
-    NSMutableDictionary *stageData = [[[commonValue sharedSingleton] getGameData] objectForKey:stageNum];
+    NSMutableDictionary *metadata = [[[commonValue sharedSingleton] getGameData] objectForKey:@"metadata"];
+    NSMutableDictionary *stageData = [metadata objectForKey:stageNum];
     NSInteger   clearPoint  = [[stageData objectForKey:@"Point"] intValue];
     BOOL        isClear     = [[stageData objectForKey:@"isCleared"] boolValue];
     
@@ -216,7 +217,8 @@
     NSString *victoryString = @"";
     if(victory) {
         // 다음 스테이지가 있는지 검사
-        NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
+        NSDictionary *frames = [[[commonValue sharedSingleton] getGameData] objectForKey:@"frames"];
+        NSDictionary *info = [frames objectForKey:@"Info"];
         NSInteger totalStageNum = [[info objectForKey:@"StageNum"] intValue];
         
         if ([[commonValue sharedSingleton] getStageLevel] + 1 <= totalStageNum) victoryString = @"NEXT";
@@ -260,7 +262,7 @@
         File *file = [[File alloc] init];
         NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
         NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
-        [data setObject:stageData forKey:[NSString stringWithFormat:@"%d", stageNum]];
+        [data setObject:metadata forKey:@"metadata"];
         [data writeToFile:path atomically:YES];
         [data release];
         
