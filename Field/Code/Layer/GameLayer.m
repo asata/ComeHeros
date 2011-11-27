@@ -230,7 +230,8 @@
     [[SimpleAudioEngine sharedEngine] playEffect:MENU_SOUND];
     
     // 다음 스테이지가 있는지 검사
-    NSDictionary *info = [[[commonValue sharedSingleton] getGameData] objectForKey:@"Info"];
+    NSDictionary *frames = [[[commonValue sharedSingleton] getGameData] objectForKey:@"frames"];
+    NSDictionary *info = [frames objectForKey:@"Info"];
     NSInteger stageNum = [[info objectForKey:@"StageNum"] intValue];
     NSInteger nextStageNum = [[commonValue sharedSingleton] getStageLevel] + 1;
     
