@@ -24,7 +24,7 @@
 			<key>PositionY</key>
 			<integer>246</integer>
 			<key>MapName</key>
-			<string>sample.tmx</string>
+			<string>stage_1.tmx</string>
 			<key>Tutorial</key>
 			<dict/>
 			<key>Point</key>
@@ -62,7 +62,7 @@
 			<key>PositionY</key>
 			<integer>193</integer>
 			<key>MapName</key>
-			<string>sample.tmx</string>
+			<string>stage_2.tmx</string>
 			<key>Tutorial</key>
 			<dict/>
 			<key>Point</key>
@@ -100,7 +100,7 @@
 			<key>PositionY</key>
 			<integer>76</integer>
 			<key>MapName</key>
-			<string>sample.tmx</string>
+			<string>stage_3.tmx</string>
 			<key>Tutorial</key>
 			<dict/>
 			<key>Point</key>
@@ -159,7 +159,7 @@
 			<key>PositionY</key>
 			<integer>100</integer>
 			<key>MapName</key>
-			<string>sample.tmx</string>
+			<string>stage_4.tmx</string>
 			<key>Tutorial</key>
 			<dict/>
 			<key>Point</key>
@@ -218,7 +218,7 @@
 			<key>PositionY</key>
 			<integer>103</integer>
 			<key>MapName</key>
-			<string>sample.tmx</string>
+			<string>stage_5.tmx</string>
 			<key>Tutorial</key>
 			<dict/>
 			<key>Point</key>
