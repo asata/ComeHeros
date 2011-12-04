@@ -21,6 +21,12 @@
     NSString *path = [file loadFilePath:FILE_STAGE_PLIST];
     [file loadGameData:path];
     
+    if([Function isGameCenterAvailable]) {
+        NSLog(@"Game Center Connect");
+        [Function connectGameCenter];
+    }
+
+    
     NSMutableDictionary *frames     = [[[commonValue sharedSingleton] getGameData] objectForKey:@"frames"];
     NSMutableDictionary *stageData  = [frames objectForKey:@"Info"];
     NSInteger           stageNumber = [[stageData objectForKey:@"StageNum"] intValue];
@@ -43,7 +49,7 @@
         NSInteger positionX = [[stageData objectForKey:@"PositionX"] intValue];
         NSInteger positionY = [[stageData objectForKey:@"PositionY"] intValue];
         
-        NSLog(@"%d %d %d", i, positionX, positionY);
+        //NSLog(@"%d %d %d", i, positionX, positionY);
         CCSprite *stage;
         
         if (isClear) {

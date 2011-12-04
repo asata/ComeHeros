@@ -10,6 +10,16 @@
 		CB017247147E90C100ACB770 /* break_box.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CB017244147E90C100ACB770 /* break_box.mp3 */; };
 		CB017248147E90C100ACB770 /* fall_trap.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB017245147E90C100ACB770 /* fall_trap.wav */; };
 		CB017249147E90C100ACB770 /* monster_die.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB017246147E90C100ACB770 /* monster_die.wav */; };
+		CB01725D148AEF4900ACB770 /* walk1.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB01725C148AEF4900ACB770 /* walk1.wav */; };
+		CB017264148B817700ACB770 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB017263148B817700ACB770 /* GameKit.framework */; };
+		CB017272148B81D100ACB770 /* GKAchievementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CB017268148B81D100ACB770 /* GKAchievementHandler.m */; };
+		CB017273148B81D100ACB770 /* GKAchievementNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = CB01726A148B81D100ACB770 /* GKAchievementNotification.m */; };
+		CB017274148B81D100ACB770 /* gk-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB01726C148B81D100ACB770 /* gk-icon.png */; };
+		CB017275148B81D100ACB770 /* gk-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB01726D148B81D100ACB770 /* gk-icon@2x.png */; };
+		CB017276148B81D100ACB770 /* gk-notification.png in Resources */ = {isa = PBXBuildFile; fileRef = CB01726E148B81D100ACB770 /* gk-notification.png */; };
+		CB017277148B81D100ACB770 /* gk-notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB01726F148B81D100ACB770 /* gk-notification@2x.png */; };
+		CB017278148B81D100ACB770 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = CB017270148B81D100ACB770 /* LICENSE */; };
+		CB017279148B81D100ACB770 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CB017271148B81D100ACB770 /* README.md */; };
 		CB084FD1146169FB003A875A /* PauseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FD0146169FA003A875A /* PauseLayer.m */; };
 		CB084FE21461F4E3003A875A /* ResultLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB084FE11461F4E3003A875A /* ResultLayer.m */; };
 		CB0E305C1461F93700D1DE6D /* TutorialLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB0E305B1461F93700D1DE6D /* TutorialLayer.m */; };
@@ -32,7 +42,7 @@
 		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
 		CB2C2D5E1470F675005EBDCE /* SoundDefine.h in Resources */ = {isa = PBXBuildFile; fileRef = CB2C2D5D1470F675005EBDCE /* SoundDefine.h */; };
 		CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2D825314652DAD00B1BEE6 /* bg_result.png */; };
-		CB2D826614653CE300B1BEE6 /* Stage_test22.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test22.plist */; };
+		CB2D826614653CE300B1BEE6 /* Stage_test23.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test23.plist */; };
 		CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */; };
 		CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386442146BF30700C8C019 /* atteck_effect.wav */; };
 		CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386443146BF30700C8C019 /* bomb_trap.wav */; };
@@ -202,6 +212,18 @@
 		CB017244147E90C100ACB770 /* break_box.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = break_box.mp3; sourceTree = "<group>"; };
 		CB017245147E90C100ACB770 /* fall_trap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fall_trap.wav; sourceTree = "<group>"; };
 		CB017246147E90C100ACB770 /* monster_die.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = monster_die.wav; sourceTree = "<group>"; };
+		CB01725C148AEF4900ACB770 /* walk1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = walk1.wav; sourceTree = "<group>"; };
+		CB017263148B817700ACB770 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		CB017267148B81D100ACB770 /* GKAchievementHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKAchievementHandler.h; sourceTree = "<group>"; };
+		CB017268148B81D100ACB770 /* GKAchievementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKAchievementHandler.m; sourceTree = "<group>"; };
+		CB017269148B81D100ACB770 /* GKAchievementNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKAchievementNotification.h; sourceTree = "<group>"; };
+		CB01726A148B81D100ACB770 /* GKAchievementNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKAchievementNotification.m; sourceTree = "<group>"; };
+		CB01726C148B81D100ACB770 /* gk-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gk-icon.png"; sourceTree = "<group>"; };
+		CB01726D148B81D100ACB770 /* gk-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gk-icon@2x.png"; sourceTree = "<group>"; };
+		CB01726E148B81D100ACB770 /* gk-notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gk-notification.png"; sourceTree = "<group>"; };
+		CB01726F148B81D100ACB770 /* gk-notification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gk-notification@2x.png"; sourceTree = "<group>"; };
+		CB017270148B81D100ACB770 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		CB017271148B81D100ACB770 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		CB084FCB146142A0003A875A /* MapDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDefine.h; path = Code/Define/MapDefine.h; sourceTree = "<group>"; };
 		CB084FCF146169F9003A875A /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseLayer.h; path = Code/Layer/PauseLayer.h; sourceTree = "<group>"; };
 		CB084FD0146169FA003A875A /* PauseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PauseLayer.m; path = Code/Layer/PauseLayer.m; sourceTree = "<group>"; };
@@ -234,7 +256,7 @@
 		CB29B9721451BF2F005D7C1E /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Coordinate.m; path = Code/CommonFunction/Coordinate.m; sourceTree = "<group>"; };
 		CB2C2D5D1470F675005EBDCE /* SoundDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundDefine.h; path = Code/Define/SoundDefine.h; sourceTree = "<group>"; };
 		CB2D825314652DAD00B1BEE6 /* bg_result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_result.png; sourceTree = "<group>"; };
-		CB2D826514653CE300B1BEE6 /* Stage_test22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test22.plist; path = Resources/StageInfo/Stage_test22.plist; sourceTree = "<group>"; };
+		CB2D826514653CE300B1BEE6 /* Stage_test23.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test23.plist; path = Resources/StageInfo/Stage_test23.plist; sourceTree = "<group>"; };
 		CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ChareaterInfo.plist; path = Resources/ChareaterInfo.plist; sourceTree = "<group>"; };
 		CB386442146BF30700C8C019 /* atteck_effect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atteck_effect.wav; sourceTree = "<group>"; };
 		CB386443146BF30700C8C019 /* bomb_trap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb_trap.wav; sourceTree = "<group>"; };
@@ -529,6 +551,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB017264148B817700ACB770 /* GameKit.framework in Frameworks */,
 				CB7B7F4B13ED7B2200FADB50 /* QuartzCore.framework in Frameworks */,
 				CB7B7F4D13ED7B2200FADB50 /* OpenGLES.framework in Frameworks */,
 				CB7B7F4F13ED7B2200FADB50 /* OpenAL.framework in Frameworks */,
@@ -543,6 +566,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB017266148B81D100ACB770 /* GKAchievementNotification */ = {
+			isa = PBXGroup;
+			children = (
+				CB017267148B81D100ACB770 /* GKAchievementHandler.h */,
+				CB017268148B81D100ACB770 /* GKAchievementHandler.m */,
+				CB017269148B81D100ACB770 /* GKAchievementNotification.h */,
+				CB01726A148B81D100ACB770 /* GKAchievementNotification.m */,
+				CB01726B148B81D100ACB770 /* images */,
+				CB017270148B81D100ACB770 /* LICENSE */,
+				CB017271148B81D100ACB770 /* README.md */,
+			);
+			name = GKAchievementNotification;
+			path = Code/GKAchievementNotification;
+			sourceTree = "<group>";
+		};
+		CB01726B148B81D100ACB770 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CB01726C148B81D100ACB770 /* gk-icon.png */,
+				CB01726D148B81D100ACB770 /* gk-icon@2x.png */,
+				CB01726E148B81D100ACB770 /* gk-notification.png */,
+				CB01726F148B81D100ACB770 /* gk-notification@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		CB084FD214618383003A875A /* Define */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,6 +714,7 @@
 			isa = PBXGroup;
 			children = (
 				CB386442146BF30700C8C019 /* atteck_effect.wav */,
+				CB01725C148AEF4900ACB770 /* walk1.wav */,
 				CB017244147E90C100ACB770 /* break_box.mp3 */,
 				CB017245147E90C100ACB770 /* fall_trap.wav */,
 				CB017246147E90C100ACB770 /* monster_die.wav */,
@@ -701,6 +751,7 @@
 		CB7B7F3B13ED7B2100FADB50 = {
 			isa = PBXGroup;
 			children = (
+				CB017263148B817700ACB770 /* GameKit.framework */,
 				CB7B7F5A13ED7B2200FADB50 /* Field */,
 				CB7B7F4913ED7B2200FADB50 /* Frameworks */,
 				CB7B7F4713ED7B2200FADB50 /* Products */,
@@ -1083,6 +1134,7 @@
 		CB7B80BF13ED7B7C00FADB50 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				CB017266148B81D100ACB770 /* GKAchievementNotification */,
 				CBDC21BF1466B7810072F162 /* PinchZoomLayer.h */,
 				CBDC21C01466B7820072F162 /* PinchZoomLayer.m */,
 				CBDC21C11466B7820072F162 /* ScaleRestricted.h */,
@@ -1124,7 +1176,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CB2D826514653CE300B1BEE6 /* Stage_test22.plist */,
+				CB2D826514653CE300B1BEE6 /* Stage_test23.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -1211,7 +1263,7 @@
 				CBC72D011464E68D00FB5ECA /* Localizable.strings in Resources */,
 				CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */,
 				CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */,
-				CB2D826614653CE300B1BEE6 /* Stage_test22.plist in Resources */,
+				CB2D826614653CE300B1BEE6 /* Stage_test23.plist in Resources */,
 				CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */,
 				CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */,
 				CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */,
@@ -1231,6 +1283,13 @@
 				CB017247147E90C100ACB770 /* break_box.mp3 in Resources */,
 				CB017248147E90C100ACB770 /* fall_trap.wav in Resources */,
 				CB017249147E90C100ACB770 /* monster_die.wav in Resources */,
+				CB01725D148AEF4900ACB770 /* walk1.wav in Resources */,
+				CB017274148B81D100ACB770 /* gk-icon.png in Resources */,
+				CB017275148B81D100ACB770 /* gk-icon@2x.png in Resources */,
+				CB017276148B81D100ACB770 /* gk-notification.png in Resources */,
+				CB017277148B81D100ACB770 /* gk-notification@2x.png in Resources */,
+				CB017278148B81D100ACB770 /* LICENSE in Resources */,
+				CB017279148B81D100ACB770 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1360,6 +1419,8 @@
 				CBDC21C31466B7820072F162 /* PinchZoomLayer.m in Sources */,
 				CBDC21C41466B7820072F162 /* ScaleRestricted.m in Sources */,
 				CB690EF314731FCB00EE08D1 /* Character.m in Sources */,
+				CB017272148B81D100ACB770 /* GKAchievementHandler.m in Sources */,
+				CB017273148B81D100ACB770 /* GKAchievementNotification.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

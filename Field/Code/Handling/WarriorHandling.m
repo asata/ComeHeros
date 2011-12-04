@@ -221,6 +221,12 @@
                 tSprite.position = movePosition;
                 [tWarrior setSprite:tSprite];
                 
+                
+                // 효과음 재생
+                [[SimpleAudioEngine sharedEngine] playEffect:WALK1_SOUND];
+
+                
+                
                 [tWarrior plusMoveLength];
                 [tWarrior setPosition:movePosition];
             }

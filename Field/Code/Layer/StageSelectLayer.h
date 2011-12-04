@@ -2,6 +2,7 @@
 #import "cocos2d.h"
 
 #import "File.h"
+#import "Function.h"
 #import "commonValue.h"
 #import "PinchZoomLayer.h"
 //#import "CCScrollLayer.h"
