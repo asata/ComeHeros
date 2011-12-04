@@ -42,7 +42,7 @@
 		CB29B9731451BF2F005D7C1E /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = CB29B9721451BF2F005D7C1E /* Coordinate.m */; };
 		CB2C2D5E1470F675005EBDCE /* SoundDefine.h in Resources */ = {isa = PBXBuildFile; fileRef = CB2C2D5D1470F675005EBDCE /* SoundDefine.h */; };
 		CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */ = {isa = PBXBuildFile; fileRef = CB2D825314652DAD00B1BEE6 /* bg_result.png */; };
-		CB2D826614653CE300B1BEE6 /* Stage_test23.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test23.plist */; };
+		CB2D826614653CE300B1BEE6 /* Stage_test25.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826514653CE300B1BEE6 /* Stage_test25.plist */; };
 		CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */; };
 		CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386442146BF30700C8C019 /* atteck_effect.wav */; };
 		CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */ = {isa = PBXBuildFile; fileRef = CB386443146BF30700C8C019 /* bomb_trap.wav */; };
@@ -185,6 +185,11 @@
 		CBBBEF47144443910079525D /* sample.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBBBEF46144443910079525D /* sample.tmx */; };
 		CBC72D011464E68D00FB5ECA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CBC72D031464E68D00FB5ECA /* Localizable.strings */; };
 		CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */ = {isa = PBXBuildFile; fileRef = CBC72D051464E85A00FB5ECA /* num_and_alpa.png */; };
+		CBD8E0EB148B9547004E9FF2 /* stage_1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBD8E0EA148B9547004E9FF2 /* stage_1.tmx */; };
+		CBD8E0F1148C143B004E9FF2 /* stage_2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBD8E0ED148C143B004E9FF2 /* stage_2.tmx */; };
+		CBD8E0F2148C143B004E9FF2 /* stage_3.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBD8E0EE148C143B004E9FF2 /* stage_3.tmx */; };
+		CBD8E0F3148C143B004E9FF2 /* stage_4.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBD8E0EF148C143B004E9FF2 /* stage_4.tmx */; };
+		CBD8E0F4148C143B004E9FF2 /* stage_5.tmx in Resources */ = {isa = PBXBuildFile; fileRef = CBD8E0F0148C143B004E9FF2 /* stage_5.tmx */; };
 		CBDC21C31466B7820072F162 /* PinchZoomLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDC21C01466B7820072F162 /* PinchZoomLayer.m */; };
 		CBDC21C41466B7820072F162 /* ScaleRestricted.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDC21C21466B7820072F162 /* ScaleRestricted.m */; };
 		CBE6509D1460F6C1004C9E1E /* ModifyList in Resources */ = {isa = PBXBuildFile; fileRef = CBE6509C1460F6C1004C9E1E /* ModifyList */; };
@@ -256,7 +261,7 @@
 		CB29B9721451BF2F005D7C1E /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Coordinate.m; path = Code/CommonFunction/Coordinate.m; sourceTree = "<group>"; };
 		CB2C2D5D1470F675005EBDCE /* SoundDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundDefine.h; path = Code/Define/SoundDefine.h; sourceTree = "<group>"; };
 		CB2D825314652DAD00B1BEE6 /* bg_result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_result.png; sourceTree = "<group>"; };
-		CB2D826514653CE300B1BEE6 /* Stage_test23.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test23.plist; path = Resources/StageInfo/Stage_test23.plist; sourceTree = "<group>"; };
+		CB2D826514653CE300B1BEE6 /* Stage_test25.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stage_test25.plist; path = Resources/StageInfo/Stage_test25.plist; sourceTree = "<group>"; };
 		CB2D826714654D2A00B1BEE6 /* ChareaterInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ChareaterInfo.plist; path = Resources/ChareaterInfo.plist; sourceTree = "<group>"; };
 		CB386442146BF30700C8C019 /* atteck_effect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = atteck_effect.wav; sourceTree = "<group>"; };
 		CB386443146BF30700C8C019 /* bomb_trap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb_trap.wav; sourceTree = "<group>"; };
@@ -532,6 +537,11 @@
 		CBC72D041464E69500FB5ECA /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CBC72D051464E85A00FB5ECA /* num_and_alpa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = num_and_alpa.png; sourceTree = "<group>"; };
 		CBC72D091464EEC800FB5ECA /* ResultDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResultDefine.h; path = Code/Define/ResultDefine.h; sourceTree = "<group>"; };
+		CBD8E0EA148B9547004E9FF2 /* stage_1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = stage_1.tmx; path = Resources/TileMap/stage_1.tmx; sourceTree = "<group>"; };
+		CBD8E0ED148C143B004E9FF2 /* stage_2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = stage_2.tmx; path = Resources/TileMap/stage_2.tmx; sourceTree = "<group>"; };
+		CBD8E0EE148C143B004E9FF2 /* stage_3.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = stage_3.tmx; path = Resources/TileMap/stage_3.tmx; sourceTree = "<group>"; };
+		CBD8E0EF148C143B004E9FF2 /* stage_4.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = stage_4.tmx; path = Resources/TileMap/stage_4.tmx; sourceTree = "<group>"; };
+		CBD8E0F0148C143B004E9FF2 /* stage_5.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = stage_5.tmx; path = Resources/TileMap/stage_5.tmx; sourceTree = "<group>"; };
 		CBDC21BF1466B7810072F162 /* PinchZoomLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchZoomLayer.h; path = Code/PinchZoomLayer.h; sourceTree = "<group>"; };
 		CBDC21C01466B7820072F162 /* PinchZoomLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchZoomLayer.m; path = Code/PinchZoomLayer.m; sourceTree = "<group>"; };
 		CBDC21C11466B7820072F162 /* ScaleRestricted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScaleRestricted.h; path = Code/ScaleRestricted.h; sourceTree = "<group>"; };
@@ -751,7 +761,6 @@
 		CB7B7F3B13ED7B2100FADB50 = {
 			isa = PBXGroup;
 			children = (
-				CB017263148B817700ACB770 /* GameKit.framework */,
 				CB7B7F5A13ED7B2200FADB50 /* Field */,
 				CB7B7F4913ED7B2200FADB50 /* Frameworks */,
 				CB7B7F4713ED7B2200FADB50 /* Products */,
@@ -769,6 +778,7 @@
 		CB7B7F4913ED7B2200FADB50 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB017263148B817700ACB770 /* GameKit.framework */,
 				CB7B7F4A13ED7B2200FADB50 /* QuartzCore.framework */,
 				CB7B7F4C13ED7B2200FADB50 /* OpenGLES.framework */,
 				CB7B7F4E13ED7B2200FADB50 /* OpenAL.framework */,
@@ -1154,6 +1164,11 @@
 		CB7B80C313ED7D0F00FADB50 /* TileMap */ = {
 			isa = PBXGroup;
 			children = (
+				CBD8E0EA148B9547004E9FF2 /* stage_1.tmx */,
+				CBD8E0ED148C143B004E9FF2 /* stage_2.tmx */,
+				CBD8E0EE148C143B004E9FF2 /* stage_3.tmx */,
+				CBD8E0EF148C143B004E9FF2 /* stage_4.tmx */,
+				CBD8E0F0148C143B004E9FF2 /* stage_5.tmx */,
 				CB2295651460A7EC00BA7EF5 /* tile-wall.plist */,
 				CB2295661460A7EC00BA7EF5 /* tile-wall.png */,
 				CB96AD74145812C400CAA1C5 /* Tile */,
@@ -1176,7 +1191,7 @@
 		CBF4D3F6141B5C13001528FA /* StageInfo */ = {
 			isa = PBXGroup;
 			children = (
-				CB2D826514653CE300B1BEE6 /* Stage_test23.plist */,
+				CB2D826514653CE300B1BEE6 /* Stage_test25.plist */,
 			);
 			name = StageInfo;
 			sourceTree = "<group>";
@@ -1263,7 +1278,7 @@
 				CBC72D011464E68D00FB5ECA /* Localizable.strings in Resources */,
 				CBC72D061464E85A00FB5ECA /* num_and_alpa.png in Resources */,
 				CB2D825414652DAD00B1BEE6 /* bg_result.png in Resources */,
-				CB2D826614653CE300B1BEE6 /* Stage_test23.plist in Resources */,
+				CB2D826614653CE300B1BEE6 /* Stage_test25.plist in Resources */,
 				CB2D826814654D2B00B1BEE6 /* ChareaterInfo.plist in Resources */,
 				CB386446146BF30700C8C019 /* atteck_effect.wav in Resources */,
 				CB386447146BF30700C8C019 /* bomb_trap.wav in Resources */,
@@ -1290,6 +1305,11 @@
 				CB017277148B81D100ACB770 /* gk-notification@2x.png in Resources */,
 				CB017278148B81D100ACB770 /* LICENSE in Resources */,
 				CB017279148B81D100ACB770 /* README.md in Resources */,
+				CBD8E0EB148B9547004E9FF2 /* stage_1.tmx in Resources */,
+				CBD8E0F1148C143B004E9FF2 /* stage_2.tmx in Resources */,
+				CBD8E0F2148C143B004E9FF2 /* stage_3.tmx in Resources */,
+				CBD8E0F3148C143B004E9FF2 /* stage_4.tmx in Resources */,
+				CBD8E0F4148C143B004E9FF2 /* stage_5.tmx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
