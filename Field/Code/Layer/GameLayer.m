@@ -303,7 +303,7 @@
     [self loadTileMap];
     
     // 이동 경로 탐색
-    //[warriorHandling createMoveTable];
+    [warriorHandling createMoveTable];
 }
 
 // 타일맵에 있는 타일을 읽어들임

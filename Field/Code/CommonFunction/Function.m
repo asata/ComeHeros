@@ -16,13 +16,12 @@
 
 //GameCenter 로그인
 + (void) connectGameCenter{
-    NSLog(@"connect... to gamecenter");
     if([GKLocalPlayer localPlayer].authenticated == NO) { //게임센터 로그인이 아직일때
         [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError* error){
             if(error == NULL){
-                NSLog(@"게임센터 로그인 성공~");
+                NSLog(@"Game Center Login Success");
             } else {
-                NSLog(@"게임센터 로그인 에러. 별다른 처리는 하지 않는다.");
+                NSLog(@"Game Center Login Fail");
             }
         }];
     }

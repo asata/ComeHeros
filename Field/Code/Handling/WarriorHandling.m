@@ -573,33 +573,51 @@
         return;       
     }
     
+    NSInteger direction = MoveNone;
+    NSInteger minValue = 9999;
+    
     if(tMoveValue[x][y] > tMoveValue[x][y - 1]) {
-        [[commonValue sharedSingleton] setMoveTable:x y:(y - 1) direction:MoveDown];
-        [self calcuatioDirection:x y:(y - 1)];
+        if (minValue > tMoveValue[x][y - 1]) {
+            minValue = tMoveValue[x][y - 1];
+            direction = MoveDown;
+        }
     }
     
     if(tMoveValue[x][y] > tMoveValue[x][y + 1]) {
-        [[commonValue sharedSingleton] setMoveTable:x y:(y + 1) direction:MoveUp];
-        [self calcuatioDirection:x y:(y + 1)];
-    }
+        if (minValue > tMoveValue[x][y + 1]) {
+            minValue = tMoveValue[x][y + 1];
+            direction = MoveUp;
+        }
+    } 
     
     if(tMoveValue[x][y] > tMoveValue[x - 1][y]) {
-        [[commonValue sharedSingleton] setMoveTable:(x - 1) y:y direction:MoveRight];
-        [self calcuatioDirection:(x - 1) y:y];
+        if (minValue > tMoveValue[x - 1][y]) {
+            minValue = tMoveValue[x - 1][y];
+            direction = MoveRight;
+        }
     }
     
     if(tMoveValue[x][y] > tMoveValue[x + 1][y]) {
+        if (minValue > tMoveValue[x + 1][y]) {
+            minValue = tMoveValue[x + 1][y];
+            direction = MoveLeft;
+        }
+    }
+    
+    if (direction == MoveDown) {
+        [[commonValue sharedSingleton] setMoveTable:x y:(y - 1) direction:MoveDown];
+        [self calcuatioDirection:x y:(y - 1)];
+    } else if(direction == MoveUp) {
+        [[commonValue sharedSingleton] setMoveTable:x y:(y + 1) direction:MoveUp];
+        [self calcuatioDirection:x y:(y + 1)];
+    } else if(direction == MoveRight) {
+        [[commonValue sharedSingleton] setMoveTable:(x - 1) y:y direction:MoveRight];
+        [self calcuatioDirection:(x - 1) y:y];
+    } else if(direction == MoveLeft) {
         [[commonValue sharedSingleton] setMoveTable:(x + 1) y:y direction:MoveLeft];
         [self calcuatioDirection:(x + 1) y:y];
     }
 }
-
-/*- (void) setMoveTable:(NSInteger)x y:(NSInteger)y value:(NSInteger)value {
-    moveTable[x][y] = value;
-}
-- (NSInteger) getMoveTable:(NSInteger)x y:(NSInteger)y {
-    return moveTable[x][y];
-}*/
 //////////////////////////////////////////////////////////////////////////
 // 이동 경로 계산 End                                                     //
 //////////////////////////////////////////////////////////////////////////

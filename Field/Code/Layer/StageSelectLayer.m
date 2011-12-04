@@ -22,10 +22,8 @@
     [file loadGameData:path];
     
     if([Function isGameCenterAvailable]) {
-        NSLog(@"Game Center Connect");
         [Function connectGameCenter];
     }
-
     
     NSMutableDictionary *frames     = [[[commonValue sharedSingleton] getGameData] objectForKey:@"frames"];
     NSMutableDictionary *stageData  = [frames objectForKey:@"Info"];
