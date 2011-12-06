@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="30" height="30" tilewidth="8" tileheight="8">
  <tileset firstgid="1" name="tile-wall" tilewidth="8" tileheight="8">
-  <image source="tile-wall.png" width="128" height="128"/>
+  <image source="tile-wall.png" width="128" height="64"/>
  </tileset>
  <layer name="Layer 1" width="30" height="30">
   <data encoding="base64" compression="zlib">
@@ -10,7 +10,7 @@
  </layer>
  <layer name="New Layer" width="30" height="30">
   <data encoding="base64" compression="zlib">
-   eJztk10KgDAMg8tuovc/pO9Cf2LSzcECfdGSL3FzmNlYNJEqu1XG/dpnhXbr6Is8r2ZGuZ66ud19s17I+a76jw7Xn0uUQZEb9TlcnhvlYbP+iZvl2bVvdkciv925nmZz1ftqH4bJeEW7nlhu5vv1fSUf46vmVv3U3O7vPHMeRxEExg==
+   eJzVlUsOgDAIRHHjPfT+hzQmmhjSgZmWqCVhVcrj17KY2ZLoeilj01J0JxLGluGesjufo3JzUR08ozpf5D/isv1VuEg8N+pRxo3yUvNluVFean8RV1X1HTF1H9FZuafdFtSS/cOMuMPOmupDqfFfueycm9XWuXUe/W8zc6N4Zs4XvUU/q6256uW2YvAc5K+Si+RtrrpXK7nMbDxjzOYn27NM/Ggmsj2d2Wf7qecdsudPu0ouKyqX8fdFvqPcN/TmHc98CFw=
   </data>
  </layer>
 </map>
