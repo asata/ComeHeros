@@ -26,6 +26,11 @@
                                 [[commonValue sharedSingleton] getDeviceSize].height / 2)];
     [self addChild:background z:rBackgroundLayer];
     
+    CCSprite *titleground = [CCSprite spriteWithFile:FILE_RESULT_TITLE_BACKGROUND];
+    [titleground setPosition:ccp([[commonValue sharedSingleton] getDeviceSize].width / 2,
+                                [[commonValue sharedSingleton] getDeviceSize].height / 2)];
+    [self addChild:titleground z:rBackgroundLayer];
+    
     NSString *stageNum = [NSString stringWithFormat:@"%d", [[commonValue sharedSingleton] getStageLevel]];
     NSMutableDictionary *metadata = [[[commonValue sharedSingleton] getGameData] objectForKey:@"metadata"];
     NSMutableDictionary *stageData = [metadata objectForKey:stageNum];
@@ -35,69 +40,16 @@
     NSString *victoryTitle = @"WIN";
     if(!victory) victoryTitle = @"LOSE";
     
-    NSString *resultTitle = [NSString stringWithFormat:@"STAGE%d %@", [[commonValue sharedSingleton] getStageLevel], victoryTitle];
+    NSString *resultTitle = [NSString stringWithFormat:@"%d", [[commonValue sharedSingleton] getStageLevel]];
     labelTitle = [CCLabelAtlas labelWithString:resultTitle
                                    charMapFile:FILE_NUMBER_IMG 
                                      itemWidth:32
                                     itemHeight:32
                                   startCharMap:'.'];
-    
-    [labelTitle setColor:ccc3(00, 00, 255)];
-    labelResult = [CCLabelAtlas labelWithString:@"RESULT"
-                                    charMapFile:FILE_NUMBER_IMG 
-                                      itemWidth:32
-                                     itemHeight:32
-                                   startCharMap:'.'];
-    labelScore = [CCLabelAtlas labelWithString:@"SCORE"
-                                   charMapFile:FILE_NUMBER_IMG 
-                                     itemWidth:32
-                                    itemHeight:32
-                                  startCharMap:'.'];
-    labelTitle.position = ccp(240, 280);
+    labelTitle.position = ccp(225, 275);
     labelTitle.anchorPoint = ccp(0.5, 0.5);
-    labelResult.position = ccp(200, 220);
-    labelScore.position = ccp(330, 220);
-    labelTitle.scale = 0.8;
-    labelResult.scale = 0.5;
-    labelScore.scale = 0.5;
+    labelTitle.scale = 0.65;
     [self addChild:labelTitle z:rMainLabelLayer];
-    [self addChild:labelResult z:rMainLabelLayer];
-    [self addChild:labelScore z:rMainLabelLayer];
-    
-    
-    labelTrap = [CCLabelAtlas labelWithString:@"TRAP"
-                                  charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:32
-                                   itemHeight:32
-                                 startCharMap:'.'];
-    labelMonster = [CCLabelAtlas labelWithString:@"MONSTER"
-                                     charMapFile:FILE_NUMBER_IMG 
-                                       itemWidth:32
-                                      itemHeight:32
-                                    startCharMap:'.'];
-    labelHero = [CCLabelAtlas labelWithString:@"HERO"
-                                  charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:32
-                                   itemHeight:32
-                                 startCharMap:'.'];
-    labelTime = [CCLabelAtlas labelWithString:@"TIME"
-                                  charMapFile:FILE_NUMBER_IMG 
-                                    itemWidth:32
-                                   itemHeight:32
-                                 startCharMap:'.'];
-    labelTrap.position = ccp(60, 190);
-    labelMonster.position = ccp(60, 160);
-    labelHero.position = ccp(60, 130);
-    labelTime.position = ccp(60, 100);
-    labelTrap.scale = 0.5;
-    labelMonster.scale = 0.5;
-    labelHero.scale = 0.5;
-    labelTime.scale = 0.5;
-    [self addChild:labelTrap z:rMainLabelLayer];
-    [self addChild:labelMonster z:rMainLabelLayer];
-    [self addChild:labelHero z:rMainLabelLayer];
-    [self addChild:labelTime z:rMainLabelLayer];
-    
     
     NSInteger pointTrap = [[commonValue sharedSingleton] getUseObstacleNum];
     NSInteger totalTrap = [[commonValue sharedSingleton] getObstacleNum];

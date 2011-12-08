@@ -274,6 +274,7 @@
     [[commonValue sharedSingleton] setGamePause:YES];
     [[CCDirector sharedDirector] pause];
     self.isTouchEnabled = NO;
+    menuPause.visible = NO;
     [resultLayer setVictory:victory];
     [self addChild:resultLayer z:kPauseLayer];
 }
