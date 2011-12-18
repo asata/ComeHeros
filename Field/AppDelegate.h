@@ -17,5 +17,6 @@
 @property (nonatomic, retain) UIWindow *window;
 
 
+- (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName;
 - (void) TimeCount;
 @end

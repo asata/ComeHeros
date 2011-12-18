@@ -61,25 +61,25 @@
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	[self removeStartupFlicker];
     
-//	//로고 페이드 인   
-//    UIImage* backImage=[UIImage imageNamed:@"Default.png"];   //로고  
-//    UIView* backView=[[UIImageView alloc] initWithImage:backImage]; 
-//    fadetime = [NSTimer scheduledTimerWithTimeInterval:1.0 
-//                                                target:self 
-//                                              selector:@selector(TimeCount) 
-//                                              userInfo:nil 
-//                                               repeats:YES];
-//    [backView setFrame:CGRectMake(0, 0, 320, 480)];            //로고 위치 
-//    [window addSubview:backView]; //로고를 뷰에 띄운다. 
-//    [UIView beginAnimations:@"CWFadeIn" context:(void*)backView]; //로고 페이드인 애니메이션 
-//    [UIView setAnimationDelegate:self]; 
-//    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]; 
-//    [UIView setAnimationDuration:3.0f]; //로고 페이드인 애니메이션 시간 설정 
-//    backView.alpha = 0; //로고를 투명으로 
-//    [UIView commitAnimations];     
-//    // Override point for customization after application launch
-//    [window makeKeyAndVisible]; 
-//    ftime = 0; //페이드타임 초기화 
+	//로고 페이드 인   
+    UIImage* backImage=[UIImage imageNamed:@"bg-title.png"];   //로고  
+    UIView* backView=[[UIImageView alloc] initWithImage:backImage]; 
+    fadetime = [NSTimer scheduledTimerWithTimeInterval:1.0 
+                                                target:self 
+                                              selector:@selector(TimeCount) 
+                                              userInfo:nil 
+                                               repeats:YES];
+    [backView setFrame:CGRectMake(0, 0, 320, 480)];            //로고 위치 
+    [window addSubview:backView]; //로고를 뷰에 띄운다. 
+    [UIView beginAnimations:@"CWFadeIn" context:(void*)backView]; //로고 페이드인 애니메이션 
+    [UIView setAnimationDelegate:self]; 
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]; 
+    [UIView setAnimationDuration:20.0f]; //로고 페이드인 애니메이션 시간 설정 
+    backView.alpha = 0; //로고를 투명으로 
+    [UIView commitAnimations];     
+    // Override point for customization after application launch
+    [window makeKeyAndVisible]; 
+    ftime = 0; //페이드타임 초기화 
     
     CCScene *scene = [CCScene node];
     
@@ -95,14 +95,36 @@
 
 //페이드 인 효과를 위한 함수 
 -(void) TimeCount { 
-    ftime+=1; //1초마다 페이드 타임 1씩증가 
+    ftime += 1; //1초마다 페이드 타임 1씩증가 
     
-    if(ftime == 3) //3이 되면 로고 사운드 멈추고 메인화면으로 뷰이동. 
+    // 시간에 맞춰 용사 등록
+    NSArray *warriorName = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
+    CCSprite *tSprite = [CCSprite spriteWithSpriteFrame:[self loadWarriorSprite:[warriorName objectAtIndex:ftime % 3]]];
+    tSprite.position = ccp(20, 0); 
+    // 용사 출력
+    
+    // 용사 목록 배열에 기록
+    
+    
+    // 용사 이동
+    
+    
+    if(ftime == 20) //3이 되면 로고 사운드 멈추고 메인화면으로 뷰이동. 
     { 
         NSLog(@"Fade In"); 
         [window addSubview: viewController.view]; 
         //[[CCDirector sharedDirector] runWithScene: [MenuLayer scene]];     
+        // 등록된 용사 제거
     } 
+}
+
+- (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName {
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:FILE_CHARATER_PLIST textureFile:FILE_CHARATER_IMG];
+    
+    CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
+                            spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-1.png", spriteName]];
+    
+    return frame;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
