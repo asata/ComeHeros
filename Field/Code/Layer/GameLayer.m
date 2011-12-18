@@ -319,7 +319,7 @@
             
             // 타일맵에 위치한 타일 타입을 읽어들임
             if(tileType != TILE_NONE) {
-                if(tileType == TILE_WALL10) {
+                if(tileType == TILE_WALL10 || tileType == TILE_BLANK01) {
                     [[commonValue sharedSingleton] setMapInfo:i y:j tileType:TILE_WALL10];
                     
                     NSInteger r = arc4random() % 4;

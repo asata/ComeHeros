@@ -74,7 +74,7 @@
     [UIView beginAnimations:@"CWFadeIn" context:(void*)backView]; //로고 페이드인 애니메이션 
     [UIView setAnimationDelegate:self]; 
     [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)]; 
-    [UIView setAnimationDuration:20.0f]; //로고 페이드인 애니메이션 시간 설정 
+    [UIView setAnimationDuration:3.0f]; //로고 페이드인 애니메이션 시간 설정 
     backView.alpha = 0; //로고를 투명으로 
     [UIView commitAnimations];     
     // Override point for customization after application launch
@@ -109,7 +109,7 @@
     // 용사 이동
     
     
-    if(ftime == 20) //3이 되면 로고 사운드 멈추고 메인화면으로 뷰이동. 
+    if(ftime == 3) //3이 되면 로고 사운드 멈추고 메인화면으로 뷰이동. 
     { 
         NSLog(@"Fade In"); 
         [window addSubview: viewController.view]; 
