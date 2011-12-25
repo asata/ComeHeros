@@ -39,17 +39,17 @@
 // File Name
 //#define FILE_TILE_MAP               @"sample.tmx"
 
-#define FILE_INTRO_IMG              @"title_screen.png"
+#define FILE_INTRO_IMG              @"bg-title.png"    //@"title_screen.png"
 
 #define FILE_STAGE_PLIST            @"Stage_test25.plist"
-#define FILE_CHARATER_PLIST         @"coordinates-character.plist"
+#define FILE_CHARATER_PLIST         @"hero_default.plist" //coordinates-character.plist"
 #define FILE_MONSTER_PLIST          @"coordinates-monster.plist"
 #define FILE_DEATH_MONSTER_PLIST    @"monster.plist"
 #define FILE_TOMBSTONE_PLIST        @"dead.plist"
 #define FILE_TILE_PLIST             @"tile-wall.plist"
 #define FILE_FLAME_PLIST            @"effect.plist"
 
-#define FILE_CHARATER_IMG           @"texture-character.png"
+#define FILE_CHARATER_IMG           @"hero_default.png" //texture-character.png"
 #define FILE_MONSTER_IMG            @"texture-monster.png"
 #define FILE_DEATH_MONSTER_IMG      @"monster.png"
 #define FILE_TOMBSTONE_IMG          @"dead.png"

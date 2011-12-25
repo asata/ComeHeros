@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "cocos2d.h"
 #import "MainLayer.h"
 #import "GameLayer.h"
 #import "StageSelectLayer.h"

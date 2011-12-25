@@ -122,15 +122,6 @@
     coinSprite.position = COIN_IMG_POSITION;
     coinSprite.scale = 0.5;
     [self addChild:coinSprite z:kMainLabelLayer];
-    
-    /*labelPoint = [CCLabelAtlas labelWithString:[[commonValue sharedSingleton] getStagePointString]
-                                   charMapFile:FILE_NUMBER_IMG 
-                                     itemWidth:32
-                                    itemHeight:32
-                                  startCharMap:'.'];
-    labelPoint.position = POINT_LABEL_POSITION;
-    labelPoint.scale = 0.5;
-    [self addChild:labelPoint z:kMainLabelLayer];*/
 }
 - (void) initMenu {
     CCMenuItem *pause = [CCMenuItemImage itemFromNormalImage:FILE_PAUSE_IMG 

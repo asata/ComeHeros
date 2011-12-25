@@ -23,7 +23,7 @@
 //////////////////////////////////////////////////////////////////////////
 - (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName {
     CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
-                            spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-1.png", spriteName]];
+                            spriteFrameByName:[NSString stringWithFormat:@"%@000.png", spriteName]];
     
     return frame;
 }
@@ -31,10 +31,10 @@
 - (CCAnimation*) loadWarriorWalk:(NSString*)spriteName {
     NSMutableArray* walkImgList = [NSMutableArray array];
     
-    for(NSInteger i = 1; i < 3; i++) {
+    for(NSInteger i = 2; i < 4; i++) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
-                                spriteFrameByName:[NSString stringWithFormat:@"character-%@-idle-%d.png", spriteName, i]];
-        
+                                spriteFrameByName:[NSString stringWithFormat:@"%@00%d.png", spriteName, i]];
+
         [walkImgList addObject:frame];
     }
     
@@ -46,10 +46,10 @@
 - (CCAnimation*) loadWarriorAttack:(NSString*)spriteName {
     NSMutableArray* attackImgList = [NSMutableArray array];
     
-    for(NSInteger i = 1; i < 3; i++) {
+    for(NSInteger i = 0; i < 2; i++) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] 
-                                spriteFrameByName:[NSString stringWithFormat:@"character-%@-attack-%d.png", spriteName, i]];
-        
+                                spriteFrameByName:[NSString stringWithFormat:@"%@00%d.png", spriteName, i]];
+        [frame setOriginalSizeInPixels:CGSizeMake(32, 32)];
         [attackImgList addObject:frame];
     }
     
@@ -83,7 +83,11 @@
     File *file = [[File alloc] init];
     
     NSInteger warriorType = [[wInfo objectForKey:@"Type"] intValue];
-    NSArray *warriorName = [NSArray arrayWithObjects: @"acher", @"fighter", @"mage", nil];
+    NSArray *warriorName = [NSArray arrayWithObjects: @"acher0", @"fighter0", @"mage0", 
+                            @"acher1", @"fighter1", @"mage1", 
+                            @"acher2", @"fighter2", @"mage2", 
+                            @"acher3", @"fighter3", @"mage3", 
+                            @"fighter4", nil];
     
     NSString *path = [file loadFilePath:@"ChareaterInfo.plist"];
     NSDictionary *chareterList = [[NSMutableDictionary alloc] initWithContentsOfFile: path];

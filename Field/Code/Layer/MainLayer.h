@@ -3,10 +3,15 @@
 
 // 메인 화면
 @interface MainLayer : CCLayer {
-    CCSprite *titleBackground;
+    CCSprite        *titleBackground;
+    NSMutableArray  *warriorList;
+    NSMutableArray  *warriorName;
 }
 
-//- (void) menuCallBack:(id) sender;
-//- (void) stageSelectCallBack:(id)sender;
+- (void) addWarrior;
+- (void) titleWarrior:(id)sender;
+- (void) moveWarrior:(id)sender;
+- (CCSpriteFrame*) loadWarriorSprite:(NSString*)spriteName;
+- (CCAnimation*) loadWarriorWalk:(NSString*)spriteName;
 
 @end

@@ -4,7 +4,7 @@
 <dict>
 	<key>Warrior</key>
 	<dict>
-		<key>acher</key>
+		<key>acher0</key>
 		<dict>
 			<key>strength</key>
 			<integer>100</integer>
@@ -19,7 +19,7 @@
 			<key>range</key>
 			<integer>3</integer>
 		</dict>
-		<key>fighter</key>
+		<key>fighter0</key>
 		<dict>
 			<key>strength</key>
 			<integer>120</integer>
@@ -34,7 +34,7 @@
 			<key>range</key>
 			<integer>1</integer>
 		</dict>
-		<key>mage</key>
+		<key>mage0</key>
 		<dict>
 			<key>strength</key>
 			<integer>90</integer>
